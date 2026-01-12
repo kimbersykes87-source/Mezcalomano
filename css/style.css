@@ -5,10 +5,17 @@
     --bg-color: #f9f7f2;
 }
 
+/* Custom font for branding if available locally */
+.brand-font {
+    font-family: 'Gotham Condensed', 'Arial Narrow', sans-serif;
+    font-weight: 500; /* Medium */
+    text-transform: uppercase;
+}
+
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
     display: flex;
@@ -30,7 +37,8 @@ body {
 }
 
 .hero h2 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
     font-size: 2rem;
     margin-bottom: 1rem;
     color: var(--primary-color);
