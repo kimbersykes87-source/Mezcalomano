@@ -32,9 +32,9 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100vh;
-    text-align: center;
+    text-align: left;
 }
 
 .container {
@@ -44,6 +44,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: flex-start;
 }
 
 .logo-img {
@@ -71,17 +72,19 @@ body {
 .button {
     display: inline-block;
     padding: 1rem 2.5rem;
-    background-color: var(--yellow-agave);
+    background-color: transparent;
     color: var(--primary-text);
+    border: 2px solid var(--yellow-agave);
     text-decoration: none;
     font-weight: bold;
     border-radius: 4px;
-    transition: background-color 0.3s ease;
+    transition: border-color 0.3s ease, color 0.3s ease;
     font-family: 'Open Sans', sans-serif;
 }
 
 .button:hover {
-    background-color: var(--terracotta);
+    border-color: var(--terracotta);
+    color: var(--terracotta);
 }
 
 footer {
