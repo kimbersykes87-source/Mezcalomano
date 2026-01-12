@@ -1,4 +1,0 @@
-# Cloudflare Pages redirects
-# Only redirect non-existent HTML routes to index.html
-# Static assets (SVG, PNG, CSS, etc.) will be served directly
-/404.html    /index.html   404
