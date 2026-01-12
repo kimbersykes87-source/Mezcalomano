@@ -23,11 +23,9 @@ body {
     padding: 2rem;
 }
 
-.logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 3.5rem;
-    letter-spacing: 0.2rem;
-    color: var(--primary-color);
+.logo-img {
+    max-width: 300px;
+    height: auto;
     margin-bottom: 2rem;
 }
 
