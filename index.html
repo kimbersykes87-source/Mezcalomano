@@ -27,52 +27,5 @@
             <p>&copy; 2026 <span class="brand-font">Mezcalómano</span>. All rights reserved.</p>
         </footer>
     </div>
-    <script>
-        // Check background image loading
-        const bgImageUrl = '/assets/desktop.jpg';
-        const img = new Image();
-        
-        img.onload = function() {
-            console.log('✓ Background image loaded successfully:', bgImageUrl);
-        };
-        
-        img.onerror = function() {
-            console.error('✗ Background image failed to load:', bgImageUrl);
-            console.error('Checking alternative paths...');
-            
-            // Try alternative paths
-            const alternatives = [
-                'assets/desktop.jpg',
-                './assets/desktop.jpg',
-                '../assets/desktop.jpg'
-            ];
-            
-            alternatives.forEach(function(path) {
-                const testImg = new Image();
-                testImg.onload = function() {
-                    console.log('✓ Found image at:', path);
-                };
-                testImg.onerror = function() {
-                    console.error('✗ Not found at:', path);
-                };
-                testImg.src = path;
-            });
-        };
-        
-        img.src = bgImageUrl;
-        
-        // Also check if the image exists via fetch
-        fetch(bgImageUrl)
-            .then(response => {
-                if (response.ok) {
-                    console.log('✓ Background image accessible via fetch:', bgImageUrl, 'Status:', response.status);
-                } else {
-                    console.error('✗ Background image fetch failed:', bgImageUrl, 'Status:', response.status);
-                }
-            })
-            .catch(error => {
-                console.error('✗ Background image fetch error:', bgImageUrl, error);
-            });
-    </script>
 </body>
 </html>

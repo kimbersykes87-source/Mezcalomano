@@ -37,6 +37,22 @@ body {
     text-align: left;
 }
 
+/* Tablet background */
+@media (max-width: 1024px) {
+    body {
+        background-image: url('/assets/tablet.jpg');
+        background-attachment: scroll;
+    }
+}
+
+/* Mobile background */
+@media (max-width: 768px) {
+    body {
+        background-image: url('/assets/mobile.jpg');
+        background-attachment: scroll;
+    }
+}
+
 .container {
     max-width: 800px;
     padding: 2rem;
