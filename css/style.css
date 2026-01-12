@@ -1,14 +1,16 @@
 :root {
-    --primary-color: #2c1810; /* Dark mezcal/wood tone */
-    --accent-color: #d4af37;  /* Gold/Agave heart tone */
-    --text-color: #333;
-    --bg-color: #f9f7f2;
+    --bg-color: #3D4039; /* Dark Grey - Background */
+    --primary-text: #FFFFFF; /* White - Primary text colour */
+    --muted-olive: #78815C; /* Muted Olive Green - Primary */
+    --yellow-agave: #A29037; /* Yellow Agave Leaf - Secondary */
+    --terracotta: #B86744; /* Terracotta - Secondary */
+    --text-muted: #CCCCCC; /* Light grey for secondary text */
 }
 
-/* Custom font for branding if available locally */
+/* Brand font styling */
 .brand-font {
-    font-family: 'Gotham Condensed', 'Arial Narrow', sans-serif;
-    font-weight: 500; /* Medium */
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
     text-transform: uppercase;
 }
 
@@ -17,7 +19,7 @@ body {
     padding: 0;
     font-family: 'Open Sans', sans-serif;
     background-color: var(--bg-color);
-    color: var(--text-color);
+    color: var(--primary-text);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,7 +33,7 @@ body {
 }
 
 .logo-img {
-    max-width: 400px;
+    max-width: 600px;
     width: 100%;
     height: auto;
     margin-bottom: 2rem;
@@ -42,35 +44,37 @@ body {
     font-weight: 700;
     font-size: 2rem;
     margin-bottom: 1rem;
-    color: var(--primary-color);
+    color: var(--primary-text);
 }
 
 .hero p {
     font-size: 1.2rem;
     line-height: 1.6;
     margin-bottom: 2.5rem;
-    color: #666;
+    color: var(--text-muted);
 }
 
 .button {
     display: inline-block;
     padding: 1rem 2.5rem;
-    background-color: var(--primary-color);
-    color: white;
+    background-color: var(--yellow-agave);
+    color: var(--primary-text);
     text-decoration: none;
     font-weight: bold;
     border-radius: 4px;
     transition: background-color 0.3s ease;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .button:hover {
-    background-color: #4a2c1d;
+    background-color: var(--terracotta);
 }
 
 footer {
     margin-top: 4rem;
     font-size: 0.9rem;
-    color: #999;
+    color: var(--text-muted);
+    font-family: 'Open Sans', sans-serif;
 }
 
 @media (max-width: 600px) {
