@@ -30,11 +30,9 @@ body {
     background-attachment: fixed;
     color: var(--primary-text);
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: row;
     min-height: 100vh;
-    text-align: left;
+    text-align: center;
 }
 
 /* Tablet background */
