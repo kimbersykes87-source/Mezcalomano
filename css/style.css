@@ -65,6 +65,15 @@ body {
     overflow: hidden;
 }
 
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-height: 0;
+}
+
 .logo-img {
     width: 600px; /* 3x the original 200px */
     height: auto;
@@ -105,12 +114,13 @@ body {
 }
 
 footer {
-    margin-top: auto;
-    padding-top: 2rem;
+    padding-top: 1rem;
     font-size: 0.9rem;
     color: var(--text-muted);
     font-family: 'Open Sans', sans-serif;
     width: 100%;
+    text-align: center;
+    flex-shrink: 0;
 }
 
 @media (max-width: 768px) {
