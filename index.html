@@ -27,38 +27,5 @@
             <p>&copy; 2026 <span class="brand-font">Mezcalómano</span>. All rights reserved.</p>
         </footer>
     </div>
-    <script>
-        // Debug background image loading
-        console.log('Checking background image paths...');
-        
-        const imagePaths = [
-            '/assets/desktop.jpg',
-            'assets/desktop.jpg',
-            './assets/desktop.jpg'
-        ];
-        
-        imagePaths.forEach(function(path) {
-            const img = new Image();
-            img.onload = function() {
-                console.log('✓ Image loaded successfully:', path);
-                // Update CSS if this path works
-                if (path !== '/assets/desktop.jpg') {
-                    document.body.style.backgroundImage = 'url(' + path + ')';
-                    console.log('Updated background to:', path);
-                }
-            };
-            img.onerror = function() {
-                console.error('✗ Image failed to load:', path);
-            };
-            img.src = path;
-        });
-        
-        // Check current computed background image
-        setTimeout(function() {
-            const computed = window.getComputedStyle(document.body);
-            console.log('Current background-image:', computed.backgroundImage);
-            console.log('Current background-color:', computed.backgroundColor);
-        }, 1000);
-    </script>
 </body>
 </html>
