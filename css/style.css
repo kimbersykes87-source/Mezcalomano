@@ -52,7 +52,7 @@ body {
 }
 
 .container {
-    width: 50%;
+    width: 450px;
     height: 100vh;
     padding: 2rem;
     background-color: var(--bg-color);
