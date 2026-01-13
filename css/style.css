@@ -1,10 +1,10 @@
 :root {
     --bg-color: #272926; /* Dark Grey - Background */
-    --primary-text: #FFFFFF; /* White - Primary text colour */
+    --primary-text: #000000; /* Black - Primary text colour */
     --muted-olive: #78815C; /* Muted Olive Green - Primary */
     --yellow-agave: #A29037; /* Yellow Agave Leaf - Secondary */
     --terracotta: #B86744; /* Terracotta - Secondary */
-    --text-muted: #CCCCCC; /* Light grey for secondary text */
+    --text-muted: #000000; /* Black for secondary text */
 }
 
 /* Brand font styling */
@@ -64,8 +64,7 @@ body {
 }
 
 .logo-img {
-    max-width: 600px;
-    width: 100%;
+    width: 600px; /* 3x the original 200px */
     height: auto;
     margin-bottom: 2rem;
 }
@@ -88,19 +87,18 @@ body {
 .button {
     display: inline-block;
     padding: 1rem 2.5rem;
-    background-color: transparent;
+    background-color: var(--yellow-agave);
     color: var(--primary-text);
-    border: 2px solid var(--yellow-agave);
+    border: none;
     text-decoration: none;
     font-weight: bold;
     border-radius: 4px;
-    transition: border-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease;
     font-family: 'Open Sans', sans-serif;
 }
 
 .button:hover {
-    border-color: var(--terracotta);
-    color: var(--terracotta);
+    background-color: var(--terracotta);
 }
 
 footer {
