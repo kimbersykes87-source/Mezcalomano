@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/admin-auth";
 import { writeAuditLog } from "@/lib/audit";
 
+export const runtime = "edge";
+
 export async function POST(request: Request) {
   void request;
   const admin = await requireAdmin();

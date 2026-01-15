@@ -5,6 +5,8 @@ import { writeAuditLog } from "@/lib/audit";
 import { getRequestContext } from "@cloudflare/next-on-pages";
 import "@/lib/cloudflare-env";
 
+export const runtime = "edge";
+
 export async function POST(request: Request) {
   const admin = await requireAdmin();
   const formData = await request.formData();

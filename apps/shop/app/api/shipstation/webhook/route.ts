@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+export const runtime = "edge";
+
 export async function POST() {
   // ShipStation webhooks are intentionally disabled until ShipStation is configured.
   // See docs/NEXT_STEPS.md

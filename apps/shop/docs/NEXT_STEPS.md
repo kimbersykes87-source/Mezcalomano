@@ -21,6 +21,7 @@ The endpoints below are currently **disabled** until you configure the integrati
 ## ShipStation (fulfillment + tracking)
 
 - **Enable ShipStation webhook**: `app/api/shipstation/webhook/route.ts`
+- **Re-enable admin “resync to ShipStation”**: `app/api/admin/orders/resync-shipstation/route.ts`
 - Cloudflare env vars to add:
   - `SHIPSTATION_API_KEY`
   - `SHIPSTATION_API_SECRET`
@@ -39,6 +40,7 @@ The endpoints below are currently **disabled** until you configure the integrati
 - Re-enable:
   - `app/api/account/request-magic/route.ts`
   - `app/api/admin/request-magic/route.ts`
+  - `app/api/admin/orders/resend-email/route.ts`
   - Order emails in Stripe webhook handler (when Stripe is enabled)
 
 ## Cloudflare Turnstile (public form protection)

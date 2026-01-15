@@ -6,6 +6,8 @@ import { bundleItems } from "@/db/schema";
 import { createId } from "@/lib/ids";
 import { writeAuditLog } from "@/lib/audit";
 
+export const runtime = "edge";
+
 export async function POST(request: Request) {
   const admin = await requireAdmin();
   const formData = await request.formData();

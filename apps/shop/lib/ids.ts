@@ -1,3 +1,1 @@
-import { randomUUID } from "crypto";
-
-export const createId = (prefix: string) => `${prefix}_${randomUUID()}`;
+export const createId = (prefix: string) => `${prefix}_${crypto.randomUUID()}`;

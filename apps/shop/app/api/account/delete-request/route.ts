@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 
 import { writeAuditLog } from "@/lib/audit";
 
+export const runtime = "edge";
+
 export async function POST(request: Request) {
   const formData = await request.formData();
   const email = String(formData.get("email") ?? "").toLowerCase();

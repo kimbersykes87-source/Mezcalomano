@@ -4,6 +4,8 @@ import { getDb } from "@/db";
 import { consentLog } from "@/db/schema";
 import { createId } from "@/lib/ids";
 
+export const runtime = "edge";
+
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => null)) as { consent?: string } | null;
   const consent = body?.consent === "accepted" ? "accepted" : "rejected";
