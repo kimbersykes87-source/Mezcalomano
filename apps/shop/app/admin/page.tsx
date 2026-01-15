@@ -2,6 +2,7 @@ import { requireAdmin } from "@/lib/admin-auth";
 import { getDb } from "@/db";
 import { orders } from "@/db/schema";
 import { formatCurrency } from "@/lib/money";
+import Link from "next/link";
 
 export default async function AdminDashboard() {
   await requireAdmin();
@@ -15,15 +16,15 @@ export default async function AdminDashboard() {
         <div className="rounded-2xl border border-slate-200 p-6">
           <h2 className="text-lg font-semibold">Catalog & shipping</h2>
           <div className="mt-4 flex flex-wrap gap-3 text-sm">
-            <a className="rounded-md border border-slate-200 px-3 py-2 text-slate-700" href="/admin/products">
+            <Link className="rounded-md border border-slate-200 px-3 py-2 text-slate-700" href="/admin/products">
               Products & inventory
-            </a>
-            <a className="rounded-md border border-slate-200 px-3 py-2 text-slate-700" href="/admin/bundles">
+            </Link>
+            <Link className="rounded-md border border-slate-200 px-3 py-2 text-slate-700" href="/admin/bundles">
               Bundles
-            </a>
-            <a className="rounded-md border border-slate-200 px-3 py-2 text-slate-700" href="/admin/shipping">
+            </Link>
+            <Link className="rounded-md border border-slate-200 px-3 py-2 text-slate-700" href="/admin/shipping">
               Shipping zones & rates
-            </a>
+            </Link>
           </div>
         </div>
         <div className="rounded-2xl border border-slate-200 p-6">

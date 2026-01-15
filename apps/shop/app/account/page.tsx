@@ -4,6 +4,7 @@ import { requireCustomer } from "@/lib/customer-auth";
 import { getDb } from "@/db";
 import { customers, orders } from "@/db/schema";
 import { formatCurrency } from "@/lib/money";
+import Link from "next/link";
 
 export default async function AccountPage() {
   const session = await requireCustomer();
@@ -33,9 +34,9 @@ export default async function AccountPage() {
                   </div>
                   <div className="text-right">
                     <p>{formatCurrency(order.totalAmount, order.currency)}</p>
-                    <a className="text-xs text-slate-900 underline" href={`/order/${order.id}`}>
+                    <Link className="text-xs text-slate-900 underline" href={`/order/${order.id}`}>
                       View status
-                    </a>
+                    </Link>
                   </div>
                 </div>
               ))}
