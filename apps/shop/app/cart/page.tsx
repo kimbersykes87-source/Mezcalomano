@@ -30,16 +30,16 @@ export default async function CartPage() {
     <section className="mx-auto w-full max-w-5xl px-6 py-16">
       <div className="flex flex-col gap-10 lg:flex-row">
         <div className="flex-1">
-          <h1 className="text-2xl font-semibold text-slate-900">Your cart</h1>
+          <h1 className="text-2xl font-brand-bold" style={{ color: 'var(--foreground)' }}>Your cart</h1>
           {items.length === 0 ? (
-            <p className="mt-4 text-slate-600">Your cart is empty.</p>
+            <p className="mt-4" style={{ color: 'var(--accent-muted)' }}>Your cart is empty.</p>
           ) : (
             <div className="mt-6 space-y-4">
               {items.map((item) => (
-                <div key={item!.productId} className="flex items-center justify-between rounded-xl border p-4">
+                <div key={item!.productId} className="flex items-center justify-between rounded-xl border p-4" style={{ borderColor: 'var(--border-color)' }}>
                   <div>
-                    <p className="font-semibold text-slate-900">{item!.name}</p>
-                    <p className="text-sm text-slate-500">
+                    <p className="font-brand-bold" style={{ color: 'var(--foreground)' }}>{item!.name}</p>
+                    <p className="text-sm" style={{ color: 'var(--accent-muted)' }}>
                       {formatCurrency(item!.unitAmount, item!.currency)} each
                     </p>
                   </div>
@@ -51,15 +51,16 @@ export default async function CartPage() {
                         type="number"
                         min={1}
                         defaultValue={item!.quantity}
-                        className="w-16 rounded-md border border-slate-200 px-2 py-1 text-sm"
+                        className="w-16 rounded-md border px-2 py-1 text-sm"
+                        style={{ borderColor: 'var(--border-color)' }}
                       />
-                      <button className="text-sm font-semibold text-slate-700 hover:text-slate-900" type="submit">
+                      <button className="text-sm font-brand transition-opacity hover:opacity-80" style={{ color: 'var(--accent-muted)' }} type="submit">
                         Update
                       </button>
                     </form>
                     <form action={removeFromCartAction}>
                       <input type="hidden" name="productId" value={item!.productId} />
-                      <button className="text-sm text-slate-500 hover:text-slate-700" type="submit">
+                      <button className="text-sm transition-opacity hover:opacity-80" style={{ color: 'var(--accent-muted)' }} type="submit">
                         Remove
                       </button>
                     </form>
@@ -68,24 +69,26 @@ export default async function CartPage() {
               ))}
             </div>
           )}
-          <div className="mt-10 rounded-xl border border-slate-200 p-4">
-            <h2 className="text-sm font-semibold uppercase text-slate-700">Shipping</h2>
+          <div className="mt-10 rounded-xl border p-4" style={{ borderColor: 'var(--border-color)' }}>
+            <h2 className="text-sm font-brand uppercase" style={{ color: 'var(--accent-muted)' }}>Shipping</h2>
             <form action={updateShippingAction} className="mt-4 grid gap-4 md:grid-cols-2">
               <div>
-                <label className="text-xs font-semibold text-slate-600">Country code</label>
+                <label className="text-xs font-brand" style={{ color: 'var(--accent-muted)' }}>Country code</label>
                 <input
                   name="shippingCountry"
                   placeholder="US"
                   defaultValue={cart.shippingCountry ?? ""}
-                  className="mt-2 w-full rounded-md border border-slate-200 px-3 py-2 text-sm uppercase"
+                  className="mt-2 w-full rounded-md border px-3 py-2 text-sm uppercase"
+                  style={{ borderColor: 'var(--border-color)' }}
                 />
               </div>
               <div>
-                <label className="text-xs font-semibold text-slate-600">Service</label>
+                <label className="text-xs font-brand" style={{ color: 'var(--accent-muted)' }}>Service</label>
                 <select
                   name="shippingService"
                   defaultValue={cart.shippingService ?? "standard"}
-                  className="mt-2 w-full rounded-md border border-slate-200 px-3 py-2 text-sm"
+                  className="mt-2 w-full rounded-md border px-3 py-2 text-sm"
+                  style={{ borderColor: 'var(--border-color)' }}
                 >
                   <option value="standard">Standard</option>
                   <option value="express">Express</option>
@@ -93,19 +96,31 @@ export default async function CartPage() {
               </div>
               <button
                 type="submit"
-                className="md:col-span-2 rounded-md border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300"
+                className="md:col-span-2 rounded-md border px-3 py-2 text-sm font-brand transition-colors"
+                style={{ 
+                  borderColor: 'var(--accent-muted)',
+                  color: 'var(--accent-muted)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--accent-muted)';
+                  e.currentTarget.style.color = 'var(--primary-text)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = 'var(--accent-muted)';
+                }}
               >
                 Update shipping
               </button>
             </form>
-            <p className="mt-4 text-xs text-slate-500">
+            <p className="mt-4 text-xs" style={{ color: 'var(--accent-muted)' }}>
               Duties and taxes not included for international shipments. Customers may be charged on delivery.
             </p>
           </div>
         </div>
-        <aside className="w-full max-w-sm rounded-2xl border border-slate-200 p-6">
-          <h2 className="text-lg font-semibold text-slate-900">Order summary</h2>
-          <div className="mt-4 space-y-3 text-sm text-slate-600">
+        <aside className="w-full max-w-sm rounded-2xl border p-6" style={{ borderColor: 'var(--border-color)' }}>
+          <h2 className="text-lg font-brand-bold" style={{ color: 'var(--foreground)' }}>Order summary</h2>
+          <div className="mt-4 space-y-3 text-sm" style={{ color: 'var(--accent-muted)' }}>
             <div className="flex items-center justify-between">
               <span>Subtotal</span>
               <span>{formatCurrency(subtotal)}</span>
@@ -114,7 +129,7 @@ export default async function CartPage() {
               <span>Shipping</span>
               <span>{formatCurrency(shippingAmount)}</span>
             </div>
-            <div className="flex items-center justify-between border-t border-slate-200 pt-3 font-semibold text-slate-900">
+            <div className="flex items-center justify-between border-t pt-3 font-brand-bold" style={{ borderColor: 'var(--border-color)', color: 'var(--foreground)' }}>
               <span>Total (excl. tax)</span>
               <span>{formatCurrency(subtotal + shippingAmount)}</span>
             </div>
@@ -122,13 +137,14 @@ export default async function CartPage() {
           <form action="/api/checkout" method="post" className="mt-6">
             <button
               disabled
-              className="w-full rounded-full bg-slate-400 px-6 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed"
+              className="w-full rounded-full px-6 py-3 text-sm font-brand text-white disabled:cursor-not-allowed opacity-50"
+              style={{ backgroundColor: 'var(--accent-muted)' }}
               type="submit"
             >
               Checkout (coming soon)
             </button>
           </form>
-          <div className="mt-6 text-xs text-slate-500">
+          <div className="mt-6 text-xs" style={{ color: 'var(--accent-muted)' }}>
             Checkout, payments, and shipping integrations will be enabled once Stripe is configured.
           </div>
         </aside>

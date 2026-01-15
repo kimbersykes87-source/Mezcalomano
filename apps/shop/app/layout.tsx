@@ -20,39 +20,39 @@ export default async function RootLayout({
   const gaId = process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID;
 
   return (
-    <html lang="en" className="h-full bg-white text-slate-900">
-      <body className="min-h-full antialiased">
+    <html lang="en" className="h-full bg-white" style={{ color: 'var(--foreground)' }}>
+      <body className="min-h-full antialiased" style={{ fontFamily: "'Open Sans', sans-serif" }}>
         <div className="flex min-h-screen flex-col">
-          <header className="border-b border-slate-200">
+          <header className="border-b" style={{ borderColor: 'var(--border-color)' }}>
             <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-4">
-              <Link href="/" className="text-lg font-semibold tracking-tight">
-                Mezcalomano
+              <Link href="/" className="text-lg font-brand tracking-tight" style={{ color: 'var(--foreground)' }}>
+                Mezcalómano
               </Link>
-              <nav className="flex items-center gap-4 text-sm text-slate-600">
-                <Link className="hover:text-slate-900" href="/cart">
+              <nav className="flex items-center gap-4 text-sm" style={{ color: 'var(--accent-muted)' }}>
+                <Link className="hover:opacity-80 transition-opacity" style={{ color: 'var(--accent-muted)' }} href="/cart">
                   Cart
                 </Link>
-                <Link className="hover:text-slate-900" href="/legal/terms">
+                <Link className="hover:opacity-80 transition-opacity" style={{ color: 'var(--accent-muted)' }} href="/legal/terms">
                   Terms
                 </Link>
-                <Link className="hover:text-slate-900" href="/legal/privacy">
+                <Link className="hover:opacity-80 transition-opacity" style={{ color: 'var(--accent-muted)' }} href="/legal/privacy">
                   Privacy
                 </Link>
               </nav>
             </div>
           </header>
           <main className="flex-1">{children}</main>
-          <footer className="border-t border-slate-200">
-            <div className="mx-auto flex w-full max-w-5xl flex-col gap-2 px-6 py-6 text-sm text-slate-600 md:flex-row md:items-center md:justify-between">
-              <span>© {new Date().getFullYear()} Mezcalomano</span>
+          <footer className="border-t" style={{ borderColor: 'var(--border-color)' }}>
+            <div className="mx-auto flex w-full max-w-5xl flex-col gap-2 px-6 py-6 text-sm md:flex-row md:items-center md:justify-between" style={{ color: 'var(--accent-muted)' }}>
+              <span>© {new Date().getFullYear()} <span className="font-brand">Mezcalómano</span>. All rights reserved.</span>
               <div className="flex items-center gap-4">
-                <Link className="hover:text-slate-900" href="/legal/shipping">
+                <Link className="hover:opacity-80 transition-opacity" style={{ color: 'var(--accent-muted)' }} href="/legal/shipping">
                   Shipping policy
                 </Link>
-                <Link className="hover:text-slate-900" href="/legal/returns">
+                <Link className="hover:opacity-80 transition-opacity" style={{ color: 'var(--accent-muted)' }} href="/legal/returns">
                   Returns
                 </Link>
-                <Link className="hover:text-slate-900" href="/legal/cookies">
+                <Link className="hover:opacity-80 transition-opacity" style={{ color: 'var(--accent-muted)' }} href="/legal/cookies">
                   Manage cookies
                 </Link>
               </div>

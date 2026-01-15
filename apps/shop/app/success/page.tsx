@@ -22,20 +22,23 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
 
   return (
     <section className="mx-auto w-full max-w-3xl px-6 py-16">
-      <div className="rounded-2xl border border-slate-200 p-8">
-        <h1 className="text-2xl font-semibold text-slate-900">Thanks for your order</h1>
-        <p className="mt-3 text-slate-600">
-          We are preparing your Mezcalomano Discovery Deck. You will receive a confirmation email shortly.
+      <div className="rounded-2xl border p-8" style={{ borderColor: 'var(--border-color)' }}>
+        <h1 className="text-2xl font-brand-bold" style={{ color: 'var(--foreground)' }}>Thanks for your order</h1>
+        <p className="mt-3" style={{ color: 'var(--accent-muted)' }}>
+          We are preparing your Mezcalómano Discovery Deck. You will receive a confirmation email shortly.
         </p>
         {orderId ? (
           <a
             href={`/order/${orderId}`}
-            className="mt-6 inline-flex rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-800"
+            className="mt-6 inline-flex rounded-full px-6 py-3 text-sm font-brand text-white transition-colors"
+            style={{ backgroundColor: 'var(--accent-primary)' }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-secondary)'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-primary)'}
           >
             View order status
           </a>
         ) : (
-          <p className="mt-6 text-sm text-slate-500">Order details will appear once payment is confirmed.</p>
+          <p className="mt-6 text-sm" style={{ color: 'var(--accent-muted)' }}>Order details will appear once payment is confirmed.</p>
         )}
       </div>
     </section>
