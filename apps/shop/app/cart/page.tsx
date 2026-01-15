@@ -5,7 +5,7 @@ import { formatCurrency } from "@/lib/money";
 import { getShippingRatesForCountry } from "@/lib/shipping";
 
 export default async function CartPage() {
-  const cart = getCart();
+  const cart = await getCart();
   const products = await getProductsByIds(cart.items.map((item) => item.productId));
   const items = cart.items
     .map((item) => {

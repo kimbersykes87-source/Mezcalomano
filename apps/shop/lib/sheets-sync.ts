@@ -14,12 +14,11 @@ import {
 
 const getSheetsClient = () => {
   const privateKey = env.GOOGLE_SHEETS_PRIVATE_KEY.replace(/\\n/g, "\n");
-  const auth = new google.auth.JWT(
-    env.GOOGLE_SHEETS_CLIENT_EMAIL,
-    undefined,
-    privateKey,
-    ["https://www.googleapis.com/auth/spreadsheets"],
-  );
+  const auth = new google.auth.JWT({
+    email: env.GOOGLE_SHEETS_CLIENT_EMAIL,
+    key: privateKey,
+    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+  });
   return google.sheets({ version: "v4", auth });
 };
 

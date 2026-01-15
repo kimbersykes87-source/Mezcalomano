@@ -11,12 +11,12 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://shop.mezcalomano.com"),
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const consent = cookies().get("consent_state")?.value ?? "unset";
+  const consent = (await cookies()).get("consent_state")?.value ?? "unset";
   const gaId = process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID;
 
   return (

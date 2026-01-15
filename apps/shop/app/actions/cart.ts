@@ -9,9 +9,9 @@ export const addToCartAction = async (formData: FormData) => {
   const priceId = String(formData.get("priceId") ?? "");
   if (!productId || !priceId) return;
 
-  const cart = getCart();
+  const cart = await getCart();
   const updated = addItem(cart, { productId, priceId, quantity: 1 });
-  setCart(updated);
+  await setCart(updated);
   revalidatePath("/cart");
 };
 
@@ -19,32 +19,32 @@ export const updateQuantityAction = async (formData: FormData) => {
   const productId = String(formData.get("productId") ?? "");
   const quantity = Number(formData.get("quantity") ?? 0);
   if (!productId) return;
-  const cart = getCart();
+  const cart = await getCart();
   const updated = updateItemQuantity(cart, productId, Number.isNaN(quantity) ? 1 : quantity);
-  setCart(updated);
+  await setCart(updated);
   revalidatePath("/cart");
 };
 
 export const removeFromCartAction = async (formData: FormData) => {
   const productId = String(formData.get("productId") ?? "");
   if (!productId) return;
-  const cart = getCart();
+  const cart = await getCart();
   const updated = removeItem(cart, productId);
-  setCart(updated);
+  await setCart(updated);
   revalidatePath("/cart");
 };
 
 export const updateShippingAction = async (formData: FormData) => {
   const shippingCountry = String(formData.get("shippingCountry") ?? "");
   const shippingService = String(formData.get("shippingService") ?? "");
-  const cart = getCart();
+  const cart = await getCart();
   cart.shippingCountry = shippingCountry || undefined;
   cart.shippingService = shippingService === "express" ? "express" : "standard";
-  setCart(cart);
+  await setCart(cart);
   revalidatePath("/cart");
 };
 
 export const clearCartAction = async () => {
-  setCart({ items: [] });
+  await setCart({ items: [] });
   revalidatePath("/cart");
 };

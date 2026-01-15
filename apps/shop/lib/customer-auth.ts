@@ -6,7 +6,7 @@ import { getSession } from "@/lib/sessions";
 const CUSTOMER_COOKIE = "customer_session";
 
 export const getCustomerSession = async () => {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get(CUSTOMER_COOKIE)?.value;
   if (!token) return null;
   return getSession("customer", token);

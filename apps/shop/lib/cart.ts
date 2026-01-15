@@ -20,8 +20,8 @@ const normalizeCart = (cart: Cart): Cart => ({
   shippingService: cart.shippingService,
 });
 
-export const getCart = () => {
-  const cookieStore = cookies();
+export const getCart = async () => {
+  const cookieStore = await cookies();
   const raw = cookieStore.get(CART_COOKIE)?.value;
   if (!raw) return { items: [] } satisfies Cart;
   try {
@@ -32,8 +32,8 @@ export const getCart = () => {
   }
 };
 
-export const setCart = (cart: Cart) => {
-  const cookieStore = cookies();
+export const setCart = async (cart: Cart) => {
+  const cookieStore = await cookies();
   const value = JSON.stringify(normalizeCart(cart));
   cookieStore.set(CART_COOKIE, value, {
     httpOnly: true,

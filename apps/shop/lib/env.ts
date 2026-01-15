@@ -22,9 +22,33 @@ const serverSchema = z.object({
 export type ServerEnv = z.infer<typeof serverSchema>;
 
 const isTest = process.env.NODE_ENV === "test";
+const isNextBuildPhase = typeof process.env.NEXT_PHASE === "string" && process.env.NEXT_PHASE.length > 0;
 
-export const env = isTest
-  ? ({
+const readProcessEnv = () => ({
+  NODE_ENV: process.env.NODE_ENV,
+  NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+  STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+  STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
+  STRIPE_TAX_CODE: process.env.STRIPE_TAX_CODE,
+  SHIPSTATION_API_KEY: process.env.SHIPSTATION_API_KEY,
+  SHIPSTATION_API_SECRET: process.env.SHIPSTATION_API_SECRET,
+  SHIPSTATION_STORE_ID: process.env.SHIPSTATION_STORE_ID,
+  SHIPSTATION_WEBHOOK_SECRET: process.env.SHIPSTATION_WEBHOOK_SECRET,
+  RESEND_API_KEY: process.env.RESEND_API_KEY,
+  EMAIL_FROM: process.env.EMAIL_FROM,
+  TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY,
+  GOOGLE_SHEETS_CLIENT_EMAIL: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
+  GOOGLE_SHEETS_PRIVATE_KEY: process.env.GOOGLE_SHEETS_PRIVATE_KEY,
+  GOOGLE_SHEETS_SPREADSHEET_ID: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
+  ADMIN_EMAIL_ALLOWLIST: process.env.ADMIN_EMAIL_ALLOWLIST,
+});
+
+let cachedEnv: ServerEnv | null = null;
+const loadEnv = (): ServerEnv => {
+  if (cachedEnv) return cachedEnv;
+
+  if (isTest) {
+    cachedEnv = {
       NODE_ENV: "test",
       NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
       STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY ?? "test",
@@ -41,22 +65,46 @@ export const env = isTest
       GOOGLE_SHEETS_PRIVATE_KEY: process.env.GOOGLE_SHEETS_PRIVATE_KEY ?? "test",
       GOOGLE_SHEETS_SPREADSHEET_ID: process.env.GOOGLE_SHEETS_SPREADSHEET_ID ?? "test",
       ADMIN_EMAIL_ALLOWLIST: process.env.ADMIN_EMAIL_ALLOWLIST,
-    } as ServerEnv)
-  : serverSchema.parse({
+    };
+    return cachedEnv;
+  }
+
+  const parsed = serverSchema.safeParse(readProcessEnv());
+  if (parsed.success) {
+    cachedEnv = parsed.data;
+    return cachedEnv;
+  }
+
+  // During `next build`/page data collection, env vars may not be present in CI.
+  // Defer strict validation to runtime where Cloudflare injects bindings/env vars.
+  if (isNextBuildPhase) {
+    cachedEnv = {
       NODE_ENV: process.env.NODE_ENV,
-      NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
-      STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
-      STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
+      NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+      STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY ?? "build",
+      STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET ?? "build",
       STRIPE_TAX_CODE: process.env.STRIPE_TAX_CODE,
-      SHIPSTATION_API_KEY: process.env.SHIPSTATION_API_KEY,
-      SHIPSTATION_API_SECRET: process.env.SHIPSTATION_API_SECRET,
-      SHIPSTATION_STORE_ID: process.env.SHIPSTATION_STORE_ID,
-      SHIPSTATION_WEBHOOK_SECRET: process.env.SHIPSTATION_WEBHOOK_SECRET,
-      RESEND_API_KEY: process.env.RESEND_API_KEY,
-      EMAIL_FROM: process.env.EMAIL_FROM,
-      TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY,
-      GOOGLE_SHEETS_CLIENT_EMAIL: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
-      GOOGLE_SHEETS_PRIVATE_KEY: process.env.GOOGLE_SHEETS_PRIVATE_KEY,
-      GOOGLE_SHEETS_SPREADSHEET_ID: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
+      SHIPSTATION_API_KEY: process.env.SHIPSTATION_API_KEY ?? "build",
+      SHIPSTATION_API_SECRET: process.env.SHIPSTATION_API_SECRET ?? "build",
+      SHIPSTATION_STORE_ID: process.env.SHIPSTATION_STORE_ID ?? "1",
+      SHIPSTATION_WEBHOOK_SECRET: process.env.SHIPSTATION_WEBHOOK_SECRET ?? "build",
+      RESEND_API_KEY: process.env.RESEND_API_KEY ?? "build",
+      EMAIL_FROM: process.env.EMAIL_FROM ?? "build@example.com",
+      TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY ?? "build",
+      GOOGLE_SHEETS_CLIENT_EMAIL: process.env.GOOGLE_SHEETS_CLIENT_EMAIL ?? "build@example.com",
+      GOOGLE_SHEETS_PRIVATE_KEY: process.env.GOOGLE_SHEETS_PRIVATE_KEY ?? "build",
+      GOOGLE_SHEETS_SPREADSHEET_ID: process.env.GOOGLE_SHEETS_SPREADSHEET_ID ?? "build",
       ADMIN_EMAIL_ALLOWLIST: process.env.ADMIN_EMAIL_ALLOWLIST,
-    });
+    };
+    return cachedEnv;
+  }
+
+  throw parsed.error;
+};
+
+export const env: ServerEnv = new Proxy({} as ServerEnv, {
+  get(_target, prop) {
+    const loaded = loadEnv() as unknown as Record<string, unknown>;
+    return loaded[prop as string];
+  },
+}) as ServerEnv;

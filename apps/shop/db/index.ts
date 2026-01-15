@@ -1,11 +1,11 @@
 import { drizzle } from "drizzle-orm/d1";
 import { getRequestContext } from "@cloudflare/next-on-pages";
 
-import { CloudflareEnv } from "@/lib/cloudflare-env";
+import "@/lib/cloudflare-env";
 import * as schema from "./schema";
 
 export const getDb = () => {
-  const { env } = getRequestContext<CloudflareEnv>();
+  const { env } = getRequestContext();
   return drizzle(env.DB, { schema });
 };
 

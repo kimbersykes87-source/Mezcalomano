@@ -20,9 +20,13 @@ import { env } from "@/lib/env";
 import { createShipStationOrder } from "@/lib/shipstation";
 import { sendOrderConfirmation, sendRefundConfirmation } from "@/lib/email";
 import { getRequestContext } from "@cloudflare/next-on-pages";
-import { CloudflareEnv } from "@/lib/cloudflare-env";
+import "@/lib/cloudflare-env";
 
 const toTimestamp = () => Date.now();
+
+type SessionWithShippingDetails = Stripe.Checkout.Session & {
+  shipping_details?: { name?: string | null; address?: Stripe.Address | null } | null;
+};
 
 const upsertCustomer = async (db: ReturnType<typeof getDb>, session: Stripe.Checkout.Session) => {
   const email = session.customer_details?.email ?? session.customer_email ?? null;
@@ -52,7 +56,7 @@ const insertAddresses = async (
   customerId: string | null,
   session: Stripe.Checkout.Session,
 ) => {
-  const shipping = session.shipping_details;
+  const shipping = (session as SessionWithShippingDetails).shipping_details;
   const billing = session.customer_details;
 
   if (shipping?.address) {
@@ -94,10 +98,11 @@ const insertAddresses = async (
 
 const handleCheckoutCompleted = async (session: Stripe.Checkout.Session) => {
   const db = getDb();
-  const { env: cfEnv } = getRequestContext<CloudflareEnv>();
+  const { env: cfEnv } = getRequestContext();
   const reservationId = session.metadata?.reservation_id;
   const reservationRaw = reservationId ? await cfEnv.KV.get(`reservation:${reservationId}`) : null;
   const reservation = reservationRaw ? JSON.parse(reservationRaw) : null;
+  const shipping = (session as SessionWithShippingDetails).shipping_details;
 
   const lineItems = await stripe.checkout.sessions.listLineItems(session.id, {
     expand: ["data.price.product"],
@@ -113,7 +118,7 @@ const handleCheckoutCompleted = async (session: Stripe.Checkout.Session) => {
     paymentStatus: "paid",
     fulfillmentStatus: "pending",
     customerEmail: customerRecord?.email ?? session.customer_details?.email ?? null,
-    shippingCountry: session.shipping_details?.address?.country ?? null,
+    shippingCountry: shipping?.address?.country ?? null,
     shippingService: session.metadata?.shipping_service ?? null,
     currency: (session.currency ?? "usd").toUpperCase(),
     subtotalAmount: session.amount_subtotal ?? 0,
@@ -176,10 +181,10 @@ const handleCheckoutCompleted = async (session: Stripe.Checkout.Session) => {
     await cfEnv.KV.delete(`reservation:${reservationId}`);
   }
 
-  const shippingAddress = session.shipping_details?.address;
+  const shippingAddress = shipping?.address;
   const billingAddress = session.customer_details?.address;
   const shipTo = {
-    name: session.shipping_details?.name ?? session.customer_details?.name ?? "Customer",
+    name: shipping?.name ?? session.customer_details?.name ?? "Customer",
     street1: shippingAddress?.line1 ?? "",
     street2: shippingAddress?.line2 ?? null,
     city: shippingAddress?.city ?? "",
@@ -272,7 +277,7 @@ const handleCheckoutCompleted = async (session: Stripe.Checkout.Session) => {
 };
 
 const handleCheckoutExpired = async (session: Stripe.Checkout.Session) => {
-  const { env: cfEnv } = getRequestContext<CloudflareEnv>();
+  const { env: cfEnv } = getRequestContext();
   const reservationId = session.metadata?.reservation_id;
   if (!reservationId) return;
   const reservationRaw = await cfEnv.KV.get(`reservation:${reservationId}`);

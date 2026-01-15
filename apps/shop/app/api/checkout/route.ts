@@ -10,10 +10,10 @@ import { getShippingRatesForCountry } from "@/lib/shipping";
 import { stripe } from "@/lib/stripe";
 import { env } from "@/lib/env";
 import { getRequestContext } from "@cloudflare/next-on-pages";
-import { CloudflareEnv } from "@/lib/cloudflare-env";
+import "@/lib/cloudflare-env";
 
 export async function POST() {
-  const cart = getCart();
+  const cart = await getCart();
   if (cart.items.length === 0) {
     return NextResponse.redirect(new URL("/cart", env.NEXT_PUBLIC_SITE_URL));
   }
@@ -61,7 +61,7 @@ export async function POST() {
   );
 
   const reservationId = createId("resv");
-  const { env: cfEnv } = getRequestContext<CloudflareEnv>();
+  const { env: cfEnv } = getRequestContext();
 
   try {
     const shippingRateData: Stripe.Checkout.SessionCreateParams.ShippingOption.ShippingRateData = {
@@ -87,7 +87,8 @@ export async function POST() {
       tax_id_collection: { enabled: true },
       automatic_tax: { enabled: true },
       shipping_address_collection: {
-        allowed_countries: ALLOWED_COUNTRIES,
+        allowed_countries:
+          ALLOWED_COUNTRIES as Stripe.Checkout.SessionCreateParams.ShippingAddressCollection.AllowedCountry[],
       },
       shipping_options: [
         {

@@ -9,7 +9,7 @@ type SuccessPageProps = {
 };
 
 export default async function SuccessPage({ searchParams }: SuccessPageProps) {
-  setCart({ items: [] });
+  await setCart({ items: [] });
   const params = await searchParams;
   const sessionId = params?.session_id;
   let orderId: string | null = null;
