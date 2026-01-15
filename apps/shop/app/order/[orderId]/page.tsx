@@ -5,12 +5,13 @@ import { orderItems, orders, shipments } from "@/db/schema";
 import { formatCurrency } from "@/lib/money";
 
 type OrderPageProps = {
-  params: { orderId: string };
+  params: Promise<{ orderId: string }>;
 };
 
 export default async function OrderPage({ params }: OrderPageProps) {
+  const { orderId } = await params;
   const db = getDb();
-  const [order] = await db.select().from(orders).where(eq(orders.id, params.orderId));
+  const [order] = await db.select().from(orders).where(eq(orders.id, orderId));
   if (!order) {
     return (
       <section className="mx-auto w-full max-w-3xl px-6 py-16">
