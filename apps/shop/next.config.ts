@@ -11,7 +11,7 @@ const securityHeaders = [
       "img-src 'self' data: https:",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' data: https://fonts.gstatic.com",
-      "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
+      "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://static.cloudflareinsights.com",
       "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://api.stripe.com https://r.stripe.com",
       "frame-src 'self' https://js.stripe.com",
     ].join("; "),
