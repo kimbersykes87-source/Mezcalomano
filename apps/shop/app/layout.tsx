@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { cookies } from "next/headers";
 import "./globals.css";
 
@@ -24,19 +25,19 @@ export default function RootLayout({
         <div className="flex min-h-screen flex-col">
           <header className="border-b border-slate-200">
             <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-4">
-              <a href="/" className="text-lg font-semibold tracking-tight">
+              <Link href="/" className="text-lg font-semibold tracking-tight">
                 Mezcalomano
-              </a>
+              </Link>
               <nav className="flex items-center gap-4 text-sm text-slate-600">
-                <a className="hover:text-slate-900" href="/cart">
+                <Link className="hover:text-slate-900" href="/cart">
                   Cart
-                </a>
-                <a className="hover:text-slate-900" href="/legal/terms">
+                </Link>
+                <Link className="hover:text-slate-900" href="/legal/terms">
                   Terms
-                </a>
-                <a className="hover:text-slate-900" href="/legal/privacy">
+                </Link>
+                <Link className="hover:text-slate-900" href="/legal/privacy">
                   Privacy
-                </a>
+                </Link>
               </nav>
             </div>
           </header>
@@ -45,15 +46,15 @@ export default function RootLayout({
             <div className="mx-auto flex w-full max-w-5xl flex-col gap-2 px-6 py-6 text-sm text-slate-600 md:flex-row md:items-center md:justify-between">
               <span>© {new Date().getFullYear()} Mezcalomano</span>
               <div className="flex items-center gap-4">
-                <a className="hover:text-slate-900" href="/legal/shipping">
+                <Link className="hover:text-slate-900" href="/legal/shipping">
                   Shipping policy
-                </a>
-                <a className="hover:text-slate-900" href="/legal/returns">
+                </Link>
+                <Link className="hover:text-slate-900" href="/legal/returns">
                   Returns
-                </a>
-                <a className="hover:text-slate-900" href="/legal/cookies">
+                </Link>
+                <Link className="hover:text-slate-900" href="/legal/cookies">
                   Manage cookies
-                </a>
+                </Link>
               </div>
             </div>
           </footer>

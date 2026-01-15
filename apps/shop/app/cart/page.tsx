@@ -1,4 +1,4 @@
-import { addToCartAction, removeFromCartAction, updateQuantityAction, updateShippingAction } from "@/app/actions/cart";
+import { removeFromCartAction, updateQuantityAction, updateShippingAction } from "@/app/actions/cart";
 import { getCart } from "@/lib/cart";
 import { getProductsByIds } from "@/lib/catalog";
 import { formatCurrency } from "@/lib/money";

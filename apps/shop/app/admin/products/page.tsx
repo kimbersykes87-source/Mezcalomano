@@ -1,7 +1,6 @@
 import { requireAdmin } from "@/lib/admin-auth";
 import { getDb } from "@/db";
 import { inventory, prices, products } from "@/db/schema";
-import { eq } from "drizzle-orm";
 
 export default async function AdminProductsPage() {
   await requireAdmin();
