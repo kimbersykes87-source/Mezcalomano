@@ -1,4 +1,4 @@
-import { getRequestContext } from "@cloudflare/next-on-pages";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 import "@/lib/cloudflare-env";
 
@@ -14,7 +14,7 @@ const ensureInventoryUpdated = (changes: number | undefined) => {
 };
 
 export const reserveInventory = async (items: InventoryReservationItem[]) => {
-  const { env } = getRequestContext();
+  const { env } = getCloudflareContext();
   const checks = await Promise.all(
     items.map((item) =>
       env.DB.prepare("SELECT on_hand, reserved FROM inventory WHERE product_id = ?")
@@ -38,7 +38,7 @@ export const reserveInventory = async (items: InventoryReservationItem[]) => {
 };
 
 export const commitInventory = async (items: InventoryReservationItem[]) => {
-  const { env } = getRequestContext();
+  const { env } = getCloudflareContext();
   const statements = items.map((item) =>
     env.DB.prepare(
       "UPDATE inventory SET on_hand = on_hand - ?, reserved = reserved - ? WHERE product_id = ? AND reserved >= ?",
@@ -49,7 +49,7 @@ export const commitInventory = async (items: InventoryReservationItem[]) => {
 };
 
 export const releaseInventory = async (items: InventoryReservationItem[]) => {
-  const { env } = getRequestContext();
+  const { env } = getCloudflareContext();
   const statements = items.map((item) =>
     env.DB.prepare(
       "UPDATE inventory SET reserved = CASE WHEN reserved >= ? THEN reserved - ? ELSE 0 END WHERE product_id = ?",

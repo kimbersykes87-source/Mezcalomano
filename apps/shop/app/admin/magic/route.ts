@@ -3,8 +3,6 @@ import { NextResponse } from "next/server";
 import { env } from "@/lib/env";
 import { consumeMagicToken, createSession } from "@/lib/sessions";
 
-export const runtime = "edge";
-
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const token = url.searchParams.get("token");

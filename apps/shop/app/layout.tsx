@@ -11,8 +11,6 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://shop.mezcalomano.com"),
 };
 
-export const runtime = "edge";
-
 export default async function RootLayout({
   children,
 }: Readonly<{

@@ -6,8 +6,6 @@ import { getDb } from "@/db";
 import { addresses, customers, orders, orderItems, shipments } from "@/db/schema";
 import { writeAuditLog } from "@/lib/audit";
 
-export const runtime = "edge";
-
 export async function POST(request: Request) {
   const admin = await requireAdmin();
   const formData = await request.formData();

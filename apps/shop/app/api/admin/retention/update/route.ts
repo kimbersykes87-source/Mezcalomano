@@ -2,10 +2,8 @@ import { NextResponse } from "next/server";
 
 import { requireAdmin } from "@/lib/admin-auth";
 import { writeAuditLog } from "@/lib/audit";
-import { getRequestContext } from "@cloudflare/next-on-pages";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 import "@/lib/cloudflare-env";
-
-export const runtime = "edge";
 
 export async function POST(request: Request) {
   const admin = await requireAdmin();
@@ -13,7 +11,7 @@ export async function POST(request: Request) {
   const days = Number(formData.get("days") ?? 365);
   const retentionDays = Number.isFinite(days) ? Math.max(30, days) : 365;
 
-  const { env } = getRequestContext();
+  const { env } = getCloudflareContext();
   await env.KV.put("retention:days", String(retentionDays));
 
   await writeAuditLog({

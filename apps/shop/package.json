@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "pages:build": "next build && npx @cloudflare/next-on-pages",
-    "pages:preview": "wrangler pages dev .vercel/output/static",
+    "pages:build": "opennextjs-cloudflare build",
+    "pages:preview": "opennextjs-cloudflare preview",
     "db:generate": "drizzle-kit generate",
     "db:migrate:local": "wrangler d1 migrations apply mezcalomano-shop --local",
     "db:migrate:remote": "wrangler d1 migrations apply mezcalomano-shop",
@@ -18,7 +18,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@cloudflare/next-on-pages": "^1.13.16",
     "drizzle-orm": "^0.45.1",
     "googleapis": "^170.0.0",
     "next": "^15.5.9",
@@ -31,6 +30,7 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260114.0",
     "@eslint/eslintrc": "^3.3.3",
+    "@opennextjs/cloudflare": "^1.14.8",
     "@playwright/test": "^1.57.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
@@ -38,6 +38,7 @@
     "@types/react-dom": "^18",
     "@vitest/ui": "^4.0.17",
     "drizzle-kit": "^0.31.8",
+    "esbuild": "^0.27.2",
     "eslint": "^9",
     "eslint-config-next": "^15.5.9",
     "tailwindcss": "^4",

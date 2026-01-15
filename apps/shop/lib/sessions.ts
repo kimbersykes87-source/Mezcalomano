@@ -1,4 +1,4 @@
-import { getRequestContext } from "@cloudflare/next-on-pages";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 import { createId } from "@/lib/ids";
 import "@/lib/cloudflare-env";
@@ -10,7 +10,7 @@ const buildKey = (kind: SessionKind, type: "token" | "session", value: string) =
 
 export const createMagicToken = async (kind: SessionKind, email: string, ttlSeconds: number) => {
   const token = createId(`${kind}_token`);
-  const { env } = getRequestContext();
+  const { env } = getCloudflareContext();
   await env.KV.put(buildKey(kind, "token", token), JSON.stringify({ email }), {
     expirationTtl: ttlSeconds,
   });
@@ -18,7 +18,7 @@ export const createMagicToken = async (kind: SessionKind, email: string, ttlSeco
 };
 
 export const consumeMagicToken = async (kind: SessionKind, token: string) => {
-  const { env } = getRequestContext();
+  const { env } = getCloudflareContext();
   const key = buildKey(kind, "token", token);
   const raw = await env.KV.get(key);
   if (!raw) return null;
@@ -28,7 +28,7 @@ export const consumeMagicToken = async (kind: SessionKind, token: string) => {
 
 export const createSession = async (kind: SessionKind, email: string, ttlSeconds: number) => {
   const sessionToken = createId(`${kind}_session`);
-  const { env } = getRequestContext();
+  const { env } = getCloudflareContext();
   await env.KV.put(buildKey(kind, "session", sessionToken), JSON.stringify({ email }), {
     expirationTtl: ttlSeconds,
   });
@@ -36,7 +36,7 @@ export const createSession = async (kind: SessionKind, email: string, ttlSeconds
 };
 
 export const getSession = async (kind: SessionKind, sessionToken: string) => {
-  const { env } = getRequestContext();
+  const { env } = getCloudflareContext();
   const raw = await env.KV.get(buildKey(kind, "session", sessionToken));
   if (!raw) return null;
   return JSON.parse(raw) as { email: string };
