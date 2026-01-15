@@ -18,14 +18,25 @@ if (!fs.existsSync(outputDir)) {
   process.exit(1);
 }
 
-// 1. Check if worker.js exists and ensure it's accessible
-// Cloudflare Pages uses worker.js from the output directory
+// 1. Copy worker.js to _worker.js for Cloudflare Pages advanced mode
+// Cloudflare Pages requires _worker.js in the output directory root
 const workerJs = path.join(outputDir, 'worker.js');
+const workerJsPages = path.join(outputDir, '_worker.js');
+
 if (fs.existsSync(workerJs)) {
   console.log('✓ Worker file found: worker.js');
+  // Copy to _worker.js for Pages advanced mode
+  if (!fs.existsSync(workerJsPages)) {
+    console.log('Creating _worker.js for Cloudflare Pages advanced mode...');
+    fs.copyFileSync(workerJs, workerJsPages);
+    console.log('✓ Created _worker.js');
+  } else {
+    console.log('✓ _worker.js already exists');
+  }
 } else {
-  console.warn('⚠ Warning: worker.js not found in .open-next');
-  console.warn('   This may cause routing issues. Check your build output.');
+  console.error('❌ Error: worker.js not found in .open-next');
+  console.error('   The OpenNext build may have failed or the output structure changed.');
+  process.exit(1);
 }
 
 // 2. Create _routes.json to exclude static assets from Worker
@@ -59,5 +70,5 @@ console.log('Creating _routes.json for static asset routing...');
 fs.writeFileSync(routesJsonPath, JSON.stringify(routesJson, null, 2));
 
 console.log('✅ Post-build fixes applied successfully!');
-console.log('   - Worker file: _worker.js');
+console.log('   - Worker file: _worker.js (for Pages advanced mode)');
 console.log('   - Routes config: _routes.json');
