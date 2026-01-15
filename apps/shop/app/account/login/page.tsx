@@ -1,4 +1,9 @@
-export default function AccountLoginPage({ searchParams }: { searchParams?: { sent?: string } }) {
+export default async function AccountLoginPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ sent?: string }>;
+}) {
+  const params = await searchParams;
   return (
     <section className="mx-auto w-full max-w-md px-6 py-16">
       <h1 className="text-2xl font-semibold text-slate-900">Account access</h1>
@@ -24,7 +29,7 @@ export default function AccountLoginPage({ searchParams }: { searchParams?: { se
           Send magic link
         </button>
       </form>
-      {searchParams?.sent ? <p className="mt-4 text-sm text-slate-500">Check your inbox.</p> : null}
+      {params?.sent ? <p className="mt-4 text-sm text-slate-500">Check your inbox.</p> : null}
     </section>
   );
 }

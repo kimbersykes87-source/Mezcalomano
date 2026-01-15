@@ -5,12 +5,13 @@ import { orders } from "@/db/schema";
 import { setCart } from "@/lib/cart";
 
 type SuccessPageProps = {
-  searchParams?: { session_id?: string };
+  searchParams?: Promise<{ session_id?: string }>;
 };
 
 export default async function SuccessPage({ searchParams }: SuccessPageProps) {
   setCart({ items: [] });
-  const sessionId = searchParams?.session_id;
+  const params = await searchParams;
+  const sessionId = params?.session_id;
   let orderId: string | null = null;
 
   if (sessionId) {
