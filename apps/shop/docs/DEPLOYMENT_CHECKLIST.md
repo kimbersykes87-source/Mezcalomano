@@ -19,8 +19,8 @@
    - **Project name**: `mezcalomano-shop`
    - **Production branch**: `main` (or your default branch)
    - **Root directory**: `apps/shop`
-   - **Build command**: `npm run pages:build`
-   - **Build output directory**: `.vercel/output/static`
+   - **Build command**: `npm ci && npm run pages:build`
+   - **Build output directory**: `.open-next`
 7. Click **Save and Deploy**
 
 ### 4. Add Bindings to Pages Project

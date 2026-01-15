@@ -32,7 +32,7 @@ git push
 3. Verify these settings:
    - **Root directory**: `apps/shop` ✅
    - **Build command**: `npm ci && npm run pages:build`
-   - **Build output directory**: `.vercel/output/static`
+   - **Build output directory**: `.open-next`
    - **Node version**: `20` (or latest LTS)
 
 ### Step 3: Re-trigger Build
@@ -56,7 +56,7 @@ And set **Root directory** to: `.` (repo root)
 
 After the build succeeds, you should see:
 - ✅ Build completes successfully
-- ✅ Output directory contains `.vercel/output/static`
+- ✅ Output directory contains `.open-next`
 - ✅ No "Cannot find cwd" errors
 
 ## Next Steps After Build Succeeds

@@ -10,8 +10,8 @@ For local development and webhook forwarding, see `docs/LOCAL_DEV.md`.
 ## Cloudflare Pages setup
 
 1. Create a Pages project pointing to `apps/shop`.
-2. Build command: `npm run pages:build`.
-3. Build output directory: `.vercel/output/static`.
+2. Build command: `npm ci && npm run pages:build`.
+3. Build output directory: `.open-next`.
 4. Add D1 binding `DB` and KV binding `KV`.
 5. Add environment variables listed in `docs/ENVIRONMENT.md`.
 6. Set `NODE_ENV=production`.
