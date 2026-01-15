@@ -69,6 +69,74 @@ const routesJsonPath = path.join(outputDir, '_routes.json');
 console.log('Creating _routes.json for static asset routing...');
 fs.writeFileSync(routesJsonPath, JSON.stringify(routesJson, null, 2));
 
+// 3. Ensure _next directory exists and static files are accessible
+// OpenNext may put static files in different locations depending on version
+// We need to ensure they're at .open-next/_next/static/ for Cloudflare Pages
+const nextStaticDest = path.join(outputDir, '_next', 'static');
+const possibleSources = [
+  path.join(outputDir, '.next', 'static'),
+  path.join(outputDir, '_next', 'static'),
+];
+
+let staticSource = null;
+for (const source of possibleSources) {
+  if (fs.existsSync(source)) {
+    staticSource = source;
+    break;
+  }
+}
+
+if (staticSource && staticSource !== nextStaticDest) {
+  console.log(`Found static files in ${path.relative(outputDir, staticSource)}`);
+  console.log('Ensuring _next/static exists at correct location...');
+  
+  // Create _next directory if it doesn't exist
+  const nextDir = path.join(outputDir, '_next');
+  if (!fs.existsSync(nextDir)) {
+    fs.mkdirSync(nextDir, { recursive: true });
+  }
+  
+  // Copy static files if _next/static doesn't exist or is different
+  if (!fs.existsSync(nextStaticDest)) {
+    console.log('Copying static files to _next/static...');
+    
+    // Recursive copy function
+    function copyRecursive(src, dest) {
+      const exists = fs.existsSync(src);
+      const stats = exists && fs.statSync(src);
+      const isDirectory = exists && stats.isDirectory();
+      
+      if (isDirectory) {
+        if (!fs.existsSync(dest)) {
+          fs.mkdirSync(dest, { recursive: true });
+        }
+        fs.readdirSync(src).forEach((childItemName) => {
+          copyRecursive(
+            path.join(src, childItemName),
+            path.join(dest, childItemName)
+          );
+        });
+      } else {
+        fs.copyFileSync(src, dest);
+      }
+    }
+    
+    copyRecursive(staticSource, nextStaticDest);
+    console.log('✓ Static files copied to _next/static');
+  } else {
+    console.log('✓ _next/static already exists');
+  }
+} else if (fs.existsSync(nextStaticDest)) {
+  console.log('✓ _next/static exists at correct location');
+} else {
+  console.log('⚠ Warning: Static files not found. They may be generated during build.');
+  console.log('   Checked locations:');
+  possibleSources.forEach(src => {
+    console.log(`   - ${path.relative(outputDir, src)}`);
+  });
+}
+
 console.log('✅ Post-build fixes applied successfully!');
 console.log('   - Worker file: _worker.js (for Pages advanced mode)');
 console.log('   - Routes config: _routes.json');
+console.log('   - Static files: _next/static/');
