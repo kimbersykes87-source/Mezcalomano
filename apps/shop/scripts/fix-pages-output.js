@@ -72,10 +72,13 @@ fs.writeFileSync(routesJsonPath, JSON.stringify(routesJson, null, 2));
 // 3. Ensure _next directory exists and static files are accessible
 // OpenNext may put static files in different locations depending on version
 // We need to ensure they're at .open-next/_next/static/ for Cloudflare Pages
+// Check both the OpenNext output directory and the original Next.js build directory
 const nextStaticDest = path.join(outputDir, '_next', 'static');
+const appDir = process.cwd(); // This should be apps/shop when running the build
 const possibleSources = [
-  path.join(outputDir, '.next', 'static'),
-  path.join(outputDir, '_next', 'static'),
+  path.join(outputDir, '.next', 'static'), // OpenNext might copy here
+  path.join(outputDir, '_next', 'static'), // Already in correct location
+  path.join(appDir, '.next', 'static'), // Original Next.js build output
 ];
 
 let staticSource = null;
@@ -129,11 +132,49 @@ if (staticSource && staticSource !== nextStaticDest) {
 } else if (fs.existsSync(nextStaticDest)) {
   console.log('✓ _next/static exists at correct location');
 } else {
-  console.log('⚠ Warning: Static files not found. They may be generated during build.');
-  console.log('   Checked locations:');
-  possibleSources.forEach(src => {
-    console.log(`   - ${path.relative(outputDir, src)}`);
-  });
+  // If static files still not found, check if we need to copy from the Next.js .next directory
+  // Next.js builds to .next/static in the app directory
+  const nextBuildStatic = path.join(appDir, '.next', 'static');
+  if (fs.existsSync(nextBuildStatic)) {
+    console.log(`Found static files in Next.js build output: ${path.relative(appDir, nextBuildStatic)}`);
+    console.log('Copying to _next/static for Cloudflare Pages...');
+    
+    const nextDir = path.join(outputDir, '_next');
+    if (!fs.existsSync(nextDir)) {
+      fs.mkdirSync(nextDir, { recursive: true });
+    }
+    
+    // Recursive copy function
+    function copyRecursive(src, dest) {
+      const exists = fs.existsSync(src);
+      const stats = exists && fs.statSync(src);
+      const isDirectory = exists && stats.isDirectory();
+      
+      if (isDirectory) {
+        if (!fs.existsSync(dest)) {
+          fs.mkdirSync(dest, { recursive: true });
+        }
+        fs.readdirSync(src).forEach((childItemName) => {
+          copyRecursive(
+            path.join(src, childItemName),
+            path.join(dest, childItemName)
+          );
+        });
+      } else {
+        fs.copyFileSync(src, dest);
+      }
+    }
+    
+    copyRecursive(nextBuildStatic, nextStaticDest);
+    console.log('✓ Static files copied from Next.js build to _next/static');
+  } else {
+    console.log('⚠ Warning: Static files not found. They may be generated during build.');
+    console.log('   Checked locations:');
+    possibleSources.forEach(src => {
+      console.log(`   - ${src}`);
+    });
+    console.log(`   - ${nextBuildStatic} (Next.js build output)`);
+  }
 }
 
 console.log('✅ Post-build fixes applied successfully!');
