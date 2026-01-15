@@ -121,15 +121,15 @@ export default async function CartPage() {
           </div>
           <form action="/api/checkout" method="post" className="mt-6">
             <button
-              disabled={items.length === 0}
-              className="w-full rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400"
+              disabled
+              className="w-full rounded-full bg-slate-400 px-6 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed"
               type="submit"
             >
-              Checkout
+              Checkout (coming soon)
             </button>
           </form>
           <div className="mt-6 text-xs text-slate-500">
-            Taxes are calculated at checkout. Stripe Tax will collect the required billing details.
+            Checkout, payments, and shipping integrations will be enabled once Stripe is configured.
           </div>
         </aside>
       </div>

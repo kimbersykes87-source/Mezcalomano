@@ -1,6 +1,7 @@
 import { addToCartAction } from "@/app/actions/cart";
 import { getActiveProductWithPrice } from "@/lib/catalog";
 import { formatCurrency } from "@/lib/money";
+import Link from "next/link";
 
 export default async function Home() {
   const product = await getActiveProductWithPrice("prod_discovery_deck");
@@ -44,12 +45,12 @@ export default async function Home() {
           >
             Add to cart
           </button>
-          <a
+          <Link
             href="/cart"
             className="w-full rounded-full border border-slate-200 px-6 py-3 text-center text-sm font-semibold text-slate-700 hover:border-slate-300"
           >
             View cart
-          </a>
+          </Link>
         </form>
         <div className="grid gap-4 text-sm text-slate-600 sm:grid-cols-2">
           <div className="rounded-lg border border-slate-200 p-4">
