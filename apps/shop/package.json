@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "pages:build": "opennextjs-cloudflare build",
+    "pages:build": "opennextjs-cloudflare build && node scripts/fix-pages-output.js",
     "pages:preview": "opennextjs-cloudflare preview",
     "db:generate": "drizzle-kit generate",
     "db:migrate:local": "wrangler d1 migrations apply mezcalomano-shop --local",
