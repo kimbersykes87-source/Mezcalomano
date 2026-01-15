@@ -18,13 +18,14 @@ if (!fs.existsSync(outputDir)) {
   process.exit(1);
 }
 
-// 1. Check if worker.js exists - keep it as is (OpenNext handles this correctly)
-// Cloudflare Pages will use worker.js from the output directory
+// 1. Check if worker.js exists and ensure it's accessible
+// Cloudflare Pages uses worker.js from the output directory
 const workerJs = path.join(outputDir, 'worker.js');
 if (fs.existsSync(workerJs)) {
   console.log('✓ Worker file found: worker.js');
 } else {
   console.warn('⚠ Warning: worker.js not found in .open-next');
+  console.warn('   This may cause routing issues. Check your build output.');
 }
 
 // 2. Create _routes.json to exclude static assets from Worker
