@@ -1,4 +1,3 @@
-# This file is here for Cloudflare Pages to detect the project structure
-# The actual configuration is in apps/shop/wrangler.toml
-name = "mezcalomano-shop"
+# Cloudflare Pages configuration for Mezcalomano marketing site
+name = "mezcalomano"
 compatibility_date = "2026-01-14"

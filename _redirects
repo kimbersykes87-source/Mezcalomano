@@ -1,0 +1,12 @@
+# Cloudflare Pages redirects for Shopify integration
+# Marketing site paths that redirect to Shopify store
+
+/buy 302 https://shop.mezcalomano.com/products/discovery-deck
+/shop 302 https://shop.mezcalomano.com
+
+# Legacy routes - redirect any old custom shop routes to home
+/api/* 301 /
+/checkout 301 /
+/orders 301 /
+/webhook/* 301 /
+/admin/* 301 /
