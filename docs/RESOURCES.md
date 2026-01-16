@@ -43,8 +43,10 @@ To host your code on GitHub:
 
 ## 3. Email Signature
 
-You can find your email signature template in `email_signature.html`.
-1. Open `email_signature.html` in a browser.
+You can find your email signature template in `docs/email-signature.html`.
+1. Open `docs/email-signature.html` in a browser.
 2. Select all and copy.
 3. In Gmail, go to **Settings** > **See all settings** > **General** > **Signature**.
 4. Paste into the signature box.
+
+**Note**: Once your site is live, update image URLs in the signature to use absolute URLs like `https://mezcalomano.com/Logos/email_sig_180x40px.png`.

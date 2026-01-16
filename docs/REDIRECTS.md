@@ -20,6 +20,8 @@ This document explains the redirect paths configured for the Mezcalómano market
 
 Redirects are configured in `_redirects` (root directory), which is automatically processed by Cloudflare Pages.
 
+**Important**: The `_redirects` file must be in the root directory for Cloudflare Pages to process it.
+
 ## Updating Shopify URLs
 
 If you need to change the Shopify store URLs in the future:

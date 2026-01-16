@@ -2,11 +2,13 @@
 
 This document contains the exact steps to connect your Shopify store to `shop.mezcalomano.com` once your Shopify store setup is complete.
 
-## 📍 Where to Paste Shopify URLs
+## 📍 Shopify URL Configuration
+
+**Note**: URLs are already configured. This section is for reference if you need to update them in the future.
 
 ### Primary Location: `js/shopify-config.js`
 
-Update the following lines in `js/shopify-config.js` (lines 10-13):
+The Shopify URLs are configured in `js/shopify-config.js` (lines 11-13):
 
 ```javascript
 const SHOPIFY_CONFIG = {
@@ -17,31 +19,29 @@ const SHOPIFY_CONFIG = {
 };
 ```
 
-**Example after update:**
+**Current configuration (already set):**
 ```javascript
 const SHOPIFY_CONFIG = {
-    STORE_URL: "https://mezcalomano.myshopify.com",
-    PRODUCT_URL: "https://mezcalomano.myshopify.com/products/discovery-deck",
+    STORE_URL: "https://shop.mezcalomano.com",
+    PRODUCT_URL: "https://shop.mezcalomano.com/products/discovery-deck",
     DOMAIN_URL: "https://shop.mezcalomano.com",
     BUY_PATH: "/buy"
 };
 ```
 
-### Secondary Location: `_redirects`
+### Secondary Location: `_redirects` (root directory)
 
-Update the following lines in `_redirects` (lines 5-7) with the **same URLs**:
+The redirects are configured in `_redirects` (lines 4-5):
 
 ```
 /buy 302 https://REPLACE_ME.myshopify.com/products/REPLACE_ME  ← Replace this
 /shop 302 https://REPLACE_ME.myshopify.com  ← Replace this
-/cart 302 https://REPLACE_ME.myshopify.com  ← Replace this
 ```
 
-**Example after update:**
+**Current configuration (already set):**
 ```
-/buy 302 https://mezcalomano.myshopify.com/products/discovery-deck
-/shop 302 https://mezcalomano.myshopify.com
-/cart 302 https://mezcalomano.myshopify.com
+/buy 302 https://shop.mezcalomano.com/products/discovery-deck
+/shop 302 https://shop.mezcalomano.com
 ```
 
 ## 🌐 DNS Configuration in Cloudflare
