@@ -63,8 +63,8 @@ RECAPTCHA_SECRET=your_secret_key_here
 
 1. Pages Project → Settings → Environment Variables
 2. Under **Production**, you should see:
-   - `PUBLIC_RECAPTCHA_SITE_KEY` = `6Ldc4k4sAAAAADW0Vpjg0...`
-   - `RECAPTCHA_SECRET` = `6Ldc4k4sAAAAAHN7JiEt1z...`
+   - `PUBLIC_RECAPTCHA_SITE_KEY` = `[Value encrypted]` or shows your site key
+   - `RECAPTCHA_SECRET` = `[Value encrypted]` or shows your secret key
 
 ### Check Local .env (if created):
 
