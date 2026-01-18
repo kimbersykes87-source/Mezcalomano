@@ -8,8 +8,10 @@
 
 ## 🔑 Your Keys
 
-- **Site Key**: `6Ldc4k4sAAAAADW0Vpjg0KmHUwiGSiDH5VOTKauf`
-- **Secret Key**: `6Ldc4k4sAAAAAHN7JiEt1zxhbNH7sC1F1gzpHX0K`
+⚠️ **SECURITY NOTE**: Never commit actual keys to git. Store them only in Cloudflare Pages environment variables or local `.env` file (which is gitignored).
+
+- **Site Key**: `[Your reCAPTCHA Site Key]` - Get from Google reCAPTCHA Admin Console
+- **Secret Key**: `[Your reCAPTCHA Secret Key]` - Get from Google reCAPTCHA Admin Console
 
 ---
 
@@ -25,12 +27,12 @@
 
    **Variable 1:**
    - Name: `PUBLIC_RECAPTCHA_SITE_KEY`
-   - Value: `6Ldc4k4sAAAAADW0Vpjg0KmHUwiGSiDH5VOTKauf`
+   - Value: `[Your reCAPTCHA Site Key from Google Admin Console]`
    - Click **Save**
 
    **Variable 2:**
    - Name: `RECAPTCHA_SECRET`
-   - Value: `6Ldc4k4sAAAAAHN7JiEt1zxhbNH7sC1F1gzpHX0K`
+   - Value: `[Your reCAPTCHA Secret Key from Google Admin Console]`
    - Click **Save**
 
 4. **Redeploy** your site after adding variables (push a new commit or retry deployment)
@@ -43,9 +45,11 @@
 2. Add these lines:
 
 ```
-PUBLIC_RECAPTCHA_SITE_KEY=6Ldc4k4sAAAAADW0Vpjg0KmHUwiGSiDH5VOTKauf
-RECAPTCHA_SECRET=6Ldc4k4sAAAAAHN7JiEt1zxhbNH7sC1F1gzpHX0K
+PUBLIC_RECAPTCHA_SITE_KEY=your_site_key_here
+RECAPTCHA_SECRET=your_secret_key_here
 ```
+
+⚠️ **Never commit this file** - it contains secrets. The `.env` file is already in `.gitignore`.
 
 3. **Important**: The `.env` file should be in `.gitignore` (already added)
    - This prevents committing secrets to git
