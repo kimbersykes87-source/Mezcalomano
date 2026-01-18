@@ -1,0 +1,164 @@
+---
+---
+
+<header class="site-header" id="main-header">
+  <nav class="header-nav" aria-label="Main navigation">
+    <a href="/" class="logo-link" aria-label="Mezcalómano Home">
+      <img src="/Logos/Fullmark_1200x600.svg" alt="MEZCALÓMANO" class="logo-img" />
+    </a>
+    <button class="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false" id="menu-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul class="nav-list" id="nav-list">
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/map">Map</a></li>
+      <li><a href="/resources">Resources</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li><a href="https://shop.mezcalomano.com" class="button button-cta">Shop</a></li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const menuToggle = document.getElementById('menu-toggle');
+  const navList = document.getElementById('nav-list');
+  
+  if (menuToggle && navList) {
+    menuToggle.addEventListener('click', () => {
+      const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', !isExpanded);
+      navList.classList.toggle('nav-open');
+      menuToggle.classList.toggle('menu-open');
+    });
+  }
+
+  // Close mobile menu on window resize
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768 && navList) {
+      navList.classList.remove('nav-open');
+      if (menuToggle) {
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.classList.remove('menu-open');
+      }
+    }
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-color);
+    z-index: 99;
+    border-bottom: 1px solid rgba(120, 129, 92, 0.3);
+  }
+
+  .header-nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .logo-link {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo-img {
+    height: 50px;
+    width: auto;
+    max-width: 200px;
+  }
+
+  .mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 101;
+  }
+
+  .mobile-menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background-color: var(--primary-text);
+    transition: all 0.3s ease;
+  }
+
+  .mobile-menu-toggle.menu-open span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+  }
+
+  .mobile-menu-toggle.menu-open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-menu-toggle.menu-open span:nth-child(3) {
+    transform: rotate(-45deg) translate(8px, -8px);
+  }
+
+  .nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .nav-list a {
+    color: var(--primary-text);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+  }
+
+  .nav-list a:hover {
+    color: var(--yellow-agave);
+  }
+
+  .nav-list .button-cta {
+    margin-left: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .mobile-menu-toggle {
+      display: flex;
+    }
+
+    .nav-list {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      height: 100vh;
+      width: 280px;
+      background-color: var(--bg-color);
+      flex-direction: column;
+      padding: 4rem 2rem 2rem;
+      gap: 1.5rem;
+      align-items: flex-start;
+      transition: right 0.3s ease;
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-list.nav-open {
+      right: 0;
+    }
+
+    .nav-list .button-cta {
+      margin-left: 0;
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>

@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Section from '../components/Section.astro';
+import Button from '../components/Button.astro';
+---
+
+<Layout title="Mezcal Store Directory - Coming Soon - Mezcalómano" description="Find mezcal stores stocking non-espadín expressions. Coming soon: a directory of places celebrating agave diversity.">
+  <Section class="map-section" id="map">
+    <h1 data-scroll class="fade-in">Mezcal Store Directory</h1>
+    <div class="map-content" data-scroll class="slide-up">
+      <p class="lead">Coming Soon</p>
+      
+      <p>We're building a directory of mezcal stores, bars, and retailers that stock expressions beyond espadín. This map will help you find places celebrating agave diversity, from wild-harvested Tobalá to rare landraces and everything in between.</p>
+      
+      <p>Whether you're looking for your first non-espadín bottle or hunting for something specific, this directory will connect you with places that share our passion for mezcal's incredible variety.</p>
+      
+      <div class="cta-group">
+        <Button href="https://shop.mezcalomano.com" variant="cta">Shop the Deck</Button>
+        <Button href="mailto:hola@mezcalomano.com?subject=Map Notification Request" variant="secondary">Get Notified</Button>
+      </div>
+    </div>
+  </Section>
+</Layout>
+
+<script>
+  import '../scripts/scroll-observer';
+</script>
+
+<style>
+  .map-section {
+    max-width: 900px;
+    margin: 4rem auto;
+    text-align: center;
+  }
+
+  .map-section h1 {
+    margin-bottom: 3rem;
+    color: var(--yellow-agave);
+  }
+
+  .map-content {
+    text-align: left;
+  }
+
+  .lead {
+    font-size: 1.75rem;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: var(--muted-olive);
+  }
+
+  .map-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+  }
+
+  .cta-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 768px) {
+    .map-section {
+      margin: 3rem auto;
+    }
+
+    .lead {
+      font-size: 1.5rem;
+    }
+
+    .map-content p {
+      font-size: 1rem;
+    }
+
+    .cta-group {
+      flex-direction: column;
+    }
+
+    .cta-group .button {
+      width: 100%;
+    }
+  }
+</style>

@@ -1,0 +1,96 @@
+---
+---
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <p>&copy; 2026 <span class="brand-font">Mezcalómano</span>. All rights reserved.</p>
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/map">Map</a>
+      <a href="/resources">Resources</a>
+      <a href="/contact">Contact</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a href="/shipping">Shipping</a>
+      <a href="/returns">Returns</a>
+    </nav>
+    <div class="social-links">
+      <!-- Social link placeholders -->
+      <a href="#" aria-label="Instagram" class="social-link">Instagram</a>
+      <a href="#" aria-label="Twitter" class="social-link">Twitter</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: rgba(39, 41, 38, 0.9);
+    padding: 2rem 1rem;
+    margin-top: 4rem;
+    border-top: 1px solid rgba(120, 129, 92, 0.3);
+  }
+
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .footer-content p {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    margin: 1.5rem 0;
+  }
+
+  .footer-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: opacity 0.2s, color 0.2s;
+  }
+
+  .footer-nav a:hover {
+    color: var(--yellow-agave);
+    opacity: 1;
+  }
+
+  .social-links {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .social-link {
+    color: var(--muted-olive);
+    font-size: 0.85rem;
+  }
+
+  .social-link:hover {
+    color: var(--yellow-agave);
+  }
+
+  @media (max-width: 768px) {
+    .site-footer {
+      padding: 1.5rem 1rem;
+    }
+
+    .footer-nav {
+      gap: 1rem;
+      font-size: 0.85rem;
+    }
+
+    .footer-content p {
+      font-size: 0.85rem;
+    }
+  }
+</style>

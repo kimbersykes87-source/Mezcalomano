@@ -1,0 +1,89 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Section from '../components/Section.astro';
+---
+
+<Layout title="Returns Policy - Mezcalómano" description="Returns and refund policy for Mezcalómano. Learn about our return process and conditions.">
+  <Section class="policy-section" id="returns">
+    <h1 data-scroll class="fade-in">Returns Policy</h1>
+    <div class="policy-content" data-scroll class="slide-up">
+      <p><strong>Last updated:</strong> January 2026</p>
+      
+      <h2>Returns Overview</h2>
+      <p>We want you to be completely satisfied with your purchase. If you're not happy with your order, we're here to help. Please review the following return policy.</p>
+      
+      <h2>Return Window</h2>
+      <p>You may return unopened, unused items in their original packaging within <strong>30 days</strong> of delivery for a refund or exchange. Items must be in resalable condition.</p>
+      
+      <h2>Return Process</h2>
+      <p>To initiate a return, please contact us at <a href="mailto:hola@mezcalomano.com">hola@mezcalomano.com</a> with your order number and reason for return. We will provide you with return instructions and a return authorization.</p>
+      
+      <h2>Return Shipping</h2>
+      <p>Return shipping costs are the responsibility of the customer unless the item is defective or we made an error in fulfillment. We recommend using a trackable shipping method for returns.</p>
+      
+      <h2>Refunds</h2>
+      <p>Once we receive and inspect your return, we will process your refund within 5-10 business days. Refunds will be issued to the original payment method. Shipping costs are non-refundable unless the return is due to our error.</p>
+      
+      <h2>Exchanges</h2>
+      <p>We are happy to exchange items for a different size or product, subject to availability. Please contact us to arrange an exchange.</p>
+      
+      <h2>Damaged or Defective Items</h2>
+      <p>If you receive a damaged or defective item, please contact us immediately at <a href="mailto:hola@mezcalomano.com">hola@mezcalomano.com</a> with photos of the damage. We will work with you to resolve the issue, including covering return shipping costs if needed.</p>
+      
+      <h2>Non-Returnable Items</h2>
+      <p>Custom or personalised items, items purchased during sales or promotions (unless specified), and items that have been used or are not in original condition may not be eligible for return.</p>
+      
+      <h2>Contact Us</h2>
+      <p>If you have questions about returns, please contact us at <a href="mailto:hola@mezcalomano.com">hola@mezcalomano.com</a>.</p>
+    </div>
+  </Section>
+</Layout>
+
+<script>
+  import '../scripts/scroll-observer';
+</script>
+
+<style>
+  .policy-section {
+    max-width: 900px;
+    margin: 4rem auto;
+  }
+
+  .policy-section h1 {
+    margin-bottom: 2rem;
+    text-align: center;
+    color: var(--yellow-agave);
+  }
+
+  .policy-content {
+    text-align: left;
+  }
+
+  .policy-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--yellow-agave);
+    font-size: 1.5rem;
+  }
+
+  .policy-content p {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+  }
+
+  .policy-content a {
+    color: var(--yellow-agave);
+  }
+
+  @media (max-width: 768px) {
+    .policy-section {
+      margin: 3rem auto;
+    }
+
+    .policy-content h2 {
+      font-size: 1.25rem;
+    }
+  }
+</style>

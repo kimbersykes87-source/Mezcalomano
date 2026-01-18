@@ -1,0 +1,181 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Section from '../components/Section.astro';
+import Button from '../components/Button.astro';
+---
+
+<Layout title="Mezcalómano - Go Beyond Espadín" description="Discover 40 agave species that make mezcal rich, complex, and endlessly fascinating. Design-driven goods for mezcal lovers and the mezcal-curious.">
+  <Section class="hero-section" id="hero">
+    <div class="hero-content" data-scroll class="fade-in">
+      <h1>Go Beyond Espadín</h1>
+      <p class="hero-subtitle">For mezcal lovers and the mezcal-curious, Mezcalómano creates design-driven goods that bring the spirit's hidden diversity to the table, featuring 40 agave plants that make mezcal so rich, complex, and endlessly fascinating.</p>
+      <div class="hero-cta">
+        <Button href="https://shop.mezcalomano.com" variant="cta">Shop Now</Button>
+        <Button href="/map" variant="secondary">Find Stores</Button>
+        <Button href="/resources" variant="secondary">Explore Agaves</Button>
+      </div>
+    </div>
+  </Section>
+
+  <Section class="content-block" data-scroll class="slide-up">
+    <h2>Go Beyond Espadín</h2>
+    <p>Mezcal's story is so much richer than one plant. Our Discovery Deck celebrates 40 agave species, each with its own character, habitat, and contribution to mezcal's incredible diversity. We're here to spark curiosity and bring more joy (and mezcal knowledge) to your next pour.</p>
+    <p>Life's too short for just one agave.</p>
+    <Button href="/about">Learn More</Button>
+  </Section>
+
+  <Section class="content-block" data-scroll class="slide-up">
+    <h2>40 Agaves</h2>
+    <p>From the wild Tobalá to the towering Arroqueño, from the karwinskii family to rare landraces, discover the plants behind the spirit. Our Agave Species Index covers habitat, elevation, conservation status, and mezcal use for each species.</p>
+    <Button href="/resources">Explore the Index</Button>
+  </Section>
+
+  <Section class="content-block" data-scroll class="slide-up">
+    <h2>Made for the Curious</h2>
+    <p>Whether you're a bartender building your mezcal knowledge, a spirits enthusiast exploring agave diversity, or looking for the perfect gift for a mezcal lover, the Discovery Deck is designed to be both educational and beautiful.</p>
+    <div class="value-points">
+      <div class="value-point">
+        <strong>Education</strong> - Learn about the diverse agave species behind every bottle
+      </div>
+      <div class="value-point">
+        <strong>Gifting</strong> - Perfect for mezcal lovers, bartenders, and spirit enthusiasts
+      </div>
+      <div class="value-point">
+        <strong>Bar Culture</strong> - Bring authentic mezcal knowledge to your home bar
+      </div>
+    </div>
+    <Button href="https://shop.mezcalomano.com" variant="cta">Shop the Deck</Button>
+  </Section>
+
+  <Section class="featured-section" data-scroll class="fade-in">
+    <h2>Featured Product</h2>
+    <p>Discovery Deck - 54 cards celebrating mezcal culture</p>
+    <Button href="https://shop.mezcalomano.com" variant="cta">Visit Shop</Button>
+  </Section>
+
+  <Section class="social-proof" data-scroll class="fade-in">
+    <p>Loved by bartenders, mezcal enthusiasts, and the mezcal-curious worldwide.</p>
+  </Section>
+</Layout>
+
+<script>
+  import '../scripts/scroll-observer';
+</script>
+
+<style>
+  .hero-section {
+    padding: 6rem 1rem;
+    text-align: center;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-content {
+    max-width: 800px;
+  }
+
+  .hero-section h1 {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    color: var(--text-muted);
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .content-block {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 4rem;
+  }
+
+  .content-block h2 {
+    margin-bottom: 1.5rem;
+    color: var(--yellow-agave);
+  }
+
+  .content-block p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .value-points {
+    text-align: left;
+    max-width: 600px;
+    margin: 2rem auto;
+  }
+
+  .value-point {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    color: var(--text-muted);
+  }
+
+  .value-point strong {
+    color: var(--yellow-agave);
+    font-weight: 600;
+  }
+
+  .featured-section {
+    text-align: center;
+    background: rgba(120, 129, 92, 0.1);
+    padding: 4rem 2rem;
+    border-radius: 8px;
+    margin: 4rem auto;
+  }
+
+  .social-proof {
+    text-align: center;
+    padding: 3rem 1rem;
+    font-style: italic;
+    color: var(--muted-olive);
+  }
+
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 4rem 1rem;
+      min-height: 50vh;
+    }
+
+    .hero-section h1 {
+      font-size: 2rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+    }
+
+    .hero-cta {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .hero-cta .button {
+      width: 100%;
+    }
+
+    .content-block p {
+      font-size: 1rem;
+    }
+
+    .value-points {
+      text-align: center;
+    }
+  }
+</style>

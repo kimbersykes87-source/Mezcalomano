@@ -1,0 +1,302 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Section from '../components/Section.astro';
+---
+
+<Layout title="Resources - Agave Species Index - Mezcalómano" description="Explore 40 agave species that make mezcal. Search and filter by scientific name, common name, region, management category, and more.">
+  <Section class="resources-section" id="resources">
+    <h1 data-scroll class="fade-in">Resources</h1>
+    
+    <div class="resources-intro" data-scroll class="slide-up">
+      <p class="lead">Taxonomy isn't set in stone. Tasting profiles are your compass.</p>
+      <p>Agave taxonomy remains fluid, with ongoing research revealing new relationships and landraces. What matters most isn't the perfect Latin name, but understanding each plant's character, habitat, and the unique mezcal it produces. Use this index as a starting point for exploring mezcal's incredible diversity.</p>
+    </div>
+
+    <div class="species-index-header" data-scroll class="slide-up">
+      <h2>Agave Species Index</h2>
+      
+      <div class="filters-container">
+        <div class="search-box">
+          <label for="species-search" class="sr-only">Search species</label>
+          <input 
+            type="search" 
+            id="species-search" 
+            placeholder="Search by scientific name, common name, or region..." 
+            aria-label="Search species"
+          />
+        </div>
+        
+        <div class="filter-controls">
+          <label for="management-filter">Management Category:</label>
+          <select id="management-filter" aria-label="Filter by management category">
+            <option value="">All</option>
+            <option value="Cultivated_workhorse">Cultivated Workhorse</option>
+            <option value="Managed_wild">Managed Wild</option>
+            <option value="Wild_stable">Wild Stable</option>
+            <option value="Wild_at_risk">Wild at Risk</option>
+          </select>
+          
+          <label for="suit-filter">Suit:</label>
+          <select id="suit-filter" aria-label="Filter by suit">
+            <option value="">All</option>
+            <option value="Compact_rosettes">Compact Rosettes</option>
+            <option value="Columns">Columns</option>
+            <option value="Giants">Giants</option>
+            <option value="Spines_lechuguillas">Spines/Lechuguillas</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="results-count">
+        <span id="results-count">Loading...</span> species
+      </div>
+    </div>
+
+    <div class="species-container">
+      <div id="species-loading">Loading species data...</div>
+      <div id="species-table-container" class="hidden"></div>
+      <div id="species-cards-container" class="hidden"></div>
+      <div id="no-results" class="hidden">No species found matching your filters.</div>
+    </div>
+  </Section>
+</Layout>
+
+<script>
+  import '../scripts/scroll-observer';
+  import '../scripts/resources-filter';
+</script>
+
+<style>
+  .resources-section {
+    max-width: 1400px;
+    margin: 4rem auto;
+  }
+
+  .resources-section h1 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--yellow-agave);
+  }
+
+  .resources-intro {
+    max-width: 900px;
+    margin: 0 auto 4rem;
+    text-align: center;
+  }
+
+  .lead {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    color: var(--muted-olive);
+    font-style: italic;
+  }
+
+  .resources-intro p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text-muted);
+  }
+
+  .species-index-header {
+    margin-bottom: 2rem;
+  }
+
+  .species-index-header h2 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: var(--yellow-agave);
+  }
+
+  .filters-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  .search-box input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--muted-olive);
+    background-color: rgba(39, 41, 38, 0.8);
+    color: var(--primary-text);
+    border-radius: 4px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+  }
+
+  .filter-controls {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-controls label {
+    display: flex;
+    align-items: center;
+    color: var(--primary-text);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .filter-controls select {
+    padding: 0.5rem;
+    border: 2px solid var(--muted-olive);
+    background-color: rgba(39, 41, 38, 0.8);
+    color: var(--primary-text);
+    border-radius: 4px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.95rem;
+    min-width: 180px;
+  }
+
+  .results-count {
+    text-align: center;
+    color: var(--muted-olive);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  #species-loading {
+    text-align: center;
+    padding: 3rem;
+    color: var(--muted-olive);
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  #species-table-container {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(39, 41, 38, 0.6);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  thead {
+    background-color: var(--muted-olive);
+    position: sticky;
+    top: 0;
+  }
+
+  th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--primary-text);
+    border-bottom: 2px solid var(--bg-color);
+  }
+
+  td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(120, 129, 92, 0.3);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  tr:hover {
+    background-color: rgba(120, 129, 92, 0.1);
+  }
+
+  .species-card {
+    background-color: rgba(39, 41, 38, 0.6);
+    border: 1px solid var(--muted-olive);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .species-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    cursor: pointer;
+  }
+
+  .species-card-header h3 {
+    margin: 0;
+    color: var(--yellow-agave);
+    font-size: 1.25rem;
+  }
+
+  .species-card-header .expand-icon {
+    color: var(--muted-olive);
+    font-size: 1.5rem;
+    transition: transform 0.3s;
+  }
+
+  .species-card.expanded .expand-icon {
+    transform: rotate(180deg);
+  }
+
+  .species-card-body {
+    display: none;
+  }
+
+  .species-card.expanded .species-card-body {
+    display: block;
+  }
+
+  .species-card-body p {
+    margin: 0.5rem 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .species-card-body strong {
+    color: var(--yellow-agave);
+    font-weight: 600;
+  }
+
+  #no-results {
+    text-align: center;
+    padding: 3rem;
+    color: var(--muted-olive);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  @media (min-width: 769px) {
+    #species-cards-container {
+      display: none !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    #species-table-container {
+      display: none !important;
+    }
+    
+    .filter-controls {
+      flex-direction: column;
+    }
+
+    .filter-controls select {
+      width: 100%;
+    }
+  }
+</style>

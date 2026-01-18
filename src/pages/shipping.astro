@@ -1,0 +1,102 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Section from '../components/Section.astro';
+---
+
+<Layout title="Shipping Policy - Mezcalómano" description="Shipping information for Mezcalómano. Free US shipping, international flat rates, and shipping details.">
+  <Section class="policy-section" id="shipping">
+    <h1 data-scroll class="fade-in">Shipping Policy</h1>
+    <div class="policy-content" data-scroll class="slide-up">
+      <p><strong>Last updated:</strong> January 2026</p>
+      
+      <h2>Shipping Overview</h2>
+      <p>We ship from the United States via our Pennsylvania-based 3PL (third-party logistics) partner. All orders are processed and shipped within 2-3 business days of order confirmation.</p>
+      
+      <h2>United States Shipping</h2>
+      <p><strong>Free shipping</strong> is available on all orders shipped within the United States. Delivery typically takes 5-7 business days via standard shipping, though transit times may vary depending on your location.</p>
+      
+      <h2>International Shipping</h2>
+      <p>We offer international shipping to select countries. International orders use <strong>flat-rate shipping</strong>. Please note that:</p>
+      <ul>
+        <li>International shipping costs vary by destination</li>
+        <li>Delivery times typically range from 10-21 business days</li>
+        <li><strong>Duties and taxes are not included</strong> in the shipping price and are the responsibility of the recipient</li>
+        <li>Customs processing may cause additional delays</li>
+      </ul>
+      
+      <h2>Shipping Charges</h2>
+      <p>Shipping charges (for international orders) are calculated at checkout based on your delivery address. Free US shipping applies automatically to domestic orders.</p>
+      
+      <h2>Order Tracking</h2>
+      <p>Once your order ships, you will receive a tracking number via email. You can use this number to track your package on the carrier's website.</p>
+      
+      <h2>Shipping Restrictions</h2>
+      <p>Some destinations may have restrictions on alcohol-related products. Please check your local regulations before ordering. We are not responsible for packages that cannot be delivered due to local restrictions.</p>
+      
+      <h2>Lost or Damaged Packages</h2>
+      <p>If your package is lost or arrives damaged, please contact us immediately at <a href="mailto:hola@mezcalomano.com">hola@mezcalomano.com</a>. We will work with you to resolve the issue.</p>
+      
+      <h2>Contact Us</h2>
+      <p>If you have questions about shipping, please contact us at <a href="mailto:hola@mezcalomano.com">hola@mezcalomano.com</a>.</p>
+    </div>
+  </Section>
+</Layout>
+
+<script>
+  import '../scripts/scroll-observer';
+</script>
+
+<style>
+  .policy-section {
+    max-width: 900px;
+    margin: 4rem auto;
+  }
+
+  .policy-section h1 {
+    margin-bottom: 2rem;
+    text-align: center;
+    color: var(--yellow-agave);
+  }
+
+  .policy-content {
+    text-align: left;
+  }
+
+  .policy-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--yellow-agave);
+    font-size: 1.5rem;
+  }
+
+  .policy-content p {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+  }
+
+  .policy-content ul {
+    margin: 1rem 0 1.5rem 2rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  .policy-content li {
+    margin-bottom: 0.5rem;
+  }
+
+  .policy-content a {
+    color: var(--yellow-agave);
+  }
+
+  @media (max-width: 768px) {
+    .policy-section {
+      margin: 3rem auto;
+    }
+
+    .policy-content h2 {
+      font-size: 1.25rem;
+    }
+  }
+</style>
