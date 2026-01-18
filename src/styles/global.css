@@ -27,29 +27,8 @@ body {
   padding: 0;
   font-family: 'Open Sans', sans-serif;
   background-color: var(--bg-color);
-  background-image: url('/assets/desktop.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
   color: var(--primary-text);
   min-height: 100vh;
-}
-
-/* Tablet background */
-@media (max-width: 1024px) {
-  body {
-    background-image: url('/assets/tablet.jpg');
-    background-attachment: scroll;
-  }
-}
-
-/* Mobile background */
-@media (max-width: 768px) {
-  body {
-    background-image: url('/assets/mobile.jpg');
-    background-attachment: scroll;
-  }
 }
 
 /* Skip to content link */
