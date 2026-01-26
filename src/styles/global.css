@@ -103,6 +103,17 @@ p {
   margin-bottom: var(--space-4);
 }
 
+.lead {
+  font-size: 1.25rem;
+  line-height: 1.7;
+}
+
+@media (min-width: 768px) {
+  .lead {
+    font-size: 1.375rem;
+  }
+}
+
 a {
   color: var(--color-white);
   text-decoration: none;

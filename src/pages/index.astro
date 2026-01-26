@@ -5,16 +5,17 @@ import homeHero from '../../assets/photos/home_hero_01_1600w.webp';
 ---
 
 <BaseLayout title="Mezcalómano | Discover the Agave Species Behind Mezcal">
-  <section class="hero">
+  <section class="hero hero--fullscreen">
     <Image
       src={homeHero}
-      alt="Mezcalómano"
-      class="hero-image"
+      alt=""
+      class="hero-bg"
       loading="eager"
       formats={['webp', 'avif']}
       width={1600}
-      height={900}
+      height={1600}
     />
+    <div class="hero-overlay"></div>
     <div class="hero-content">
       <h1>Mezcalómano</h1>
       <p>Discover the agave species behind mezcal. Explore 40 species in our interactive matrix.</p>

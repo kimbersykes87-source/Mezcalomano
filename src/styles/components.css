@@ -25,12 +25,13 @@
 .header-logo {
   display: flex;
   align-items: center;
-  height: 32px;
+  height: 40px;
 }
 
 .header-logo img {
   height: 100%;
   width: auto;
+  max-width: 120px;
 }
 
 .header-nav {
@@ -68,9 +69,11 @@
   padding: 0;
 }
 
+.header-burger img,
 .header-burger svg {
   width: 24px;
   height: 24px;
+  filter: brightness(0) invert(1);
 }
 
 @media (min-width: 768px) {
@@ -122,9 +125,11 @@
   padding: 0;
 }
 
+.mobile-nav-close img,
 .mobile-nav-close svg {
   width: 24px;
   height: 24px;
+  filter: brightness(0) invert(1);
 }
 
 .mobile-nav-list {
@@ -200,9 +205,11 @@
   opacity: 1;
 }
 
-.footer-social svg {
+.footer-social svg,
+.footer-social img {
   width: 24px;
   height: 24px;
+  filter: brightness(0) invert(1);
 }
 
 .footer-copyright {
@@ -217,7 +224,7 @@
   min-height: calc(100vh - 64px);
 }
 
-/* Hero Section */
+/* Hero Section - Full Background Image */
 .hero {
   position: relative;
   width: 100%;
@@ -228,19 +235,43 @@
   overflow: hidden;
 }
 
-.hero-image {
+.hero--fullscreen {
+  min-height: calc(100vh - 64px);
+}
+
+.hero--page {
+  min-height: 50vh;
+}
+
+.hero-bg {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   z-index: 0;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(39, 41, 38, 0.3) 0%,
+    rgba(39, 41, 38, 0.6) 50%,
+    rgba(39, 41, 38, 0.85) 100%
+  );
+  z-index: 1;
 }
 
 .hero-content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   text-align: center;
   padding: var(--space-8) var(--space-4);
   max-width: 800px;
@@ -248,15 +279,31 @@
 }
 
 .hero-content h1 {
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-4);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
 }
 
 .hero-content p {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   margin-bottom: var(--space-8);
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+}
+
+@media (min-width: 768px) {
+  .hero--fullscreen {
+    min-height: calc(100vh - 64px);
+  }
+  
+  .hero--page {
+    min-height: 45vh;
+  }
+  
+  .hero-content p {
+    font-size: 1.375rem;
+  }
 }
 
 /* Section Styles */
@@ -457,9 +504,11 @@
   border-radius: 50%;
 }
 
-.matrix-drawer-close svg {
+.matrix-drawer-close svg,
+.matrix-drawer-close img {
   width: 24px;
   height: 24px;
+  filter: brightness(0) invert(1);
 }
 
 .matrix-drawer-content {

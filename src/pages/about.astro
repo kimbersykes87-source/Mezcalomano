@@ -5,25 +5,26 @@ import aboutImage from '../../assets/photos/about_01_1600w.webp';
 ---
 
 <BaseLayout title="About | Mezcalómano" description="Learn about Mezcalómano and our mission to explore agave species">
-  <div class="section">
-    <div class="section-header-image">
-      <Image
-        src={aboutImage}
-        alt="About Mezcalómano"
-        loading="eager"
-        formats={['webp', 'avif']}
-        width={1600}
-        height={900}
-      />
+  <section class="hero hero--page">
+    <Image
+      src={aboutImage}
+      alt=""
+      class="hero-bg"
+      loading="eager"
+      formats={['webp', 'avif']}
+      width={1600}
+      height={1600}
+    />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>About Mezcalómano</h1>
     </div>
-    
+  </section>
+  
+  <div class="section">
     <div class="container">
-      <div class="section-header">
-        <h1>About Mezcalómano</h1>
-      </div>
-      
       <div class="section-content">
-        <p>Mezcalómano is a project dedicated to exploring and documenting the diverse agave species used in mezcal production.</p>
+        <p class="lead">Mezcalómano is a project dedicated to exploring and documenting the diverse agave species used in mezcal production.</p>
         
         <hr class="divider" />
         

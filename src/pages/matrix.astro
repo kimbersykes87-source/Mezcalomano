@@ -11,18 +11,24 @@ const habitats = Array.from(new Set(matrixData.map(species => species.habitat)))
 ---
 
 <BaseLayout title="Matrix | Mezcalómano" description="Explore 40 agave species used in mezcal production">
-  <div class="matrix-page">
-    <div class="matrix-header-image">
-      <Image
-        src={matrixImage}
-        alt="Agave Matrix"
-        loading="eager"
-        formats={['webp', 'avif']}
-        width={1600}
-        height={900}
-      />
+  <section class="hero hero--page">
+    <Image
+      src={matrixImage}
+      alt=""
+      class="hero-bg"
+      loading="eager"
+      formats={['webp', 'avif']}
+      width={1600}
+      height={1600}
+    />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Agave Matrix</h1>
+      <p>Explore 40 species used in mezcal production</p>
     </div>
+  </section>
 
+  <div class="matrix-page">
     <div class="matrix-filters">
       <input
         type="text"
