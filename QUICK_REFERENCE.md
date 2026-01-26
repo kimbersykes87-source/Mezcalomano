@@ -24,6 +24,9 @@
 - **Repository**: https://github.com/kimbersykes87-source/Mezcalomano
 - **Live Site**: https://mezcalomano.com
 - **Shopify Store**: https://shop.mezcalomano.com
+- **Instagram**: https://www.instagram.com/mezcalomano/
+- **TikTok**: https://www.tiktok.com/@mezcalomano
+- **Map**: https://map.mezcalomano.com (external)
 - **Cloudflare Dashboard**: https://dash.cloudflare.com/
 
 ## Quick Commands

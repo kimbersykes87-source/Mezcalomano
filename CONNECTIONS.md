@@ -377,6 +377,9 @@ Use this checklist to verify all connections are working:
 - **Cloudflare Dashboard**: https://dash.cloudflare.com/
 - **Live Site**: https://mezcalomano.com
 - **Shopify Store**: https://shop.mezcalomano.com
+- **Instagram**: https://www.instagram.com/mezcalomano/
+- **TikTok**: https://www.tiktok.com/@mezcalomano
+- **Map**: https://map.mezcalomano.com (external)
 
 ### Key Commands
 
@@ -417,4 +420,36 @@ When starting work on this project:
 
 ---
 
-Last updated: 2026-01-15
+## Social Media Links
+
+### Instagram
+- **URL**: https://www.instagram.com/mezcalomano/
+- **Location**: Footer social icons
+- **Implementation**: `src/Footer.astro`
+
+### TikTok
+- **URL**: https://www.tiktok.com/@mezcalomano
+- **Location**: Footer social icons
+- **Implementation**: `src/Footer.astro`
+
+## Shop Integration
+
+### Shop Button
+- **URL**: https://shop.mezcalomano.com
+- **Locations**: 
+  - Header navigation (desktop) - styled with border
+  - Mobile navigation menu - styled with border
+  - "Get the Discovery Deck" button on home page
+- **Implementation**: 
+  - `src/Header.astro` - `.nav-shop-btn` class
+  - `src/MobileNav.astro` - `.mobile-nav-shop` class
+  - `src/pages/index.astro` - hero CTA button
+  - `src/styles/components.css` - border styling
+
+### Redirects
+- `/buy` → https://shop.mezcalomano.com/products/discovery-deck (via `_redirects`)
+- `/shop` → https://shop.mezcalomano.com (via `_redirects`)
+
+---
+
+Last updated: 2026-01-26

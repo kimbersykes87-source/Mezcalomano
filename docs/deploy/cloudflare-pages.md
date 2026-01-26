@@ -1,4 +1,4 @@
-# Cloudflare Pages Deployment
+# Cloudflare Pages Deployment Guide
 
 This document describes how to deploy the Mezcalómano website to Cloudflare Pages.
 
@@ -9,7 +9,7 @@ This document describes how to deploy the Mezcalómano website to Cloudflare Pag
 | Framework preset | Astro |
 | Build command | `npm run build` |
 | Build output directory | `dist` |
-| Node.js version | 22 (or 20 LTS) |
+| Node.js version | 22.16.0 (pinned) |
 
 ## Environment Variables
 
