@@ -1,80 +1,44 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Section from '../components/Section.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import aboutImage from '../../assets/photos/about_01_1600w.webp';
 ---
 
-<Layout title="About - Mezcalómano" description="Mezcalómano exists to take people beyond espadín. We create design-driven goods that bring mezcal's hidden diversity to the table, featuring 40 agave plants.">
-  <Section class="about-section" id="about">
-    <h1 data-scroll class="fade-in">About Mezcalómano</h1>
-    <div class="about-content" data-scroll class="slide-up">
-      <p class="lead">Mezcalómano exists to take people beyond espadín.</p>
-      
-      <p>For mezcal lovers and the mezcal-curious, Mezcalómano creates design-driven goods that bring the spirit's hidden diversity to the table, featuring 40 agave plants that make mezcal so rich, complex, and endlessly fascinating.</p>
-      
-      <p>We're here to spark curiosity, celebrate every spiky species, and bring more joy (and mezcal knowledge) to your next pour.</p>
-      
-      <p class="tagline">Life's too short for just one agave. Go beyond espadín.</p>
+<BaseLayout title="About | Mezcalómano" description="Learn about Mezcalómano and our mission to explore agave species">
+  <div class="section">
+    <div class="section-header-image">
+      <Image
+        src={aboutImage}
+        alt="About Mezcalómano"
+        loading="eager"
+        formats={['webp', 'avif']}
+        width={1600}
+        height={900}
+      />
     </div>
-  </Section>
-</Layout>
-
-<script>
-  import '../scripts/scroll-observer';
-</script>
-
-<style>
-  .about-section {
-    max-width: 900px;
-    margin: 4rem auto;
-    text-align: center;
-  }
-
-  .about-section h1 {
-    margin-bottom: 3rem;
-    color: var(--yellow-agave);
-  }
-
-  .about-content {
-    text-align: left;
-  }
-
-  .lead {
-    font-size: 1.5rem;
-    font-weight: 600;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-    color: var(--primary-text);
-  }
-
-  .about-content p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    margin-bottom: 1.5rem;
-    color: var(--text-muted);
-  }
-
-  .tagline {
-    font-size: 1.25rem;
-    font-style: italic;
-    margin-top: 2rem;
-    color: var(--muted-olive);
-  }
-
-  @media (max-width: 768px) {
-    .about-section {
-      margin: 3rem auto;
-    }
-
-    .lead {
-      font-size: 1.25rem;
-    }
-
-    .about-content p {
-      font-size: 1rem;
-    }
-
-    .tagline {
-      font-size: 1.1rem;
-    }
-  }
-</style>
+    
+    <div class="container">
+      <div class="section-header">
+        <h1>About Mezcalómano</h1>
+      </div>
+      
+      <div class="section-content">
+        <p>Mezcalómano is a project dedicated to exploring and documenting the diverse agave species used in mezcal production.</p>
+        
+        <hr class="divider" />
+        
+        <h2>Our Mission</h2>
+        <p>We believe understanding the agave species behind mezcal deepens appreciation for this traditional spirit. Our matrix showcases 40 species, each with unique characteristics, habitats, and flavor profiles.</p>
+        
+        <hr class="divider" />
+        
+        <h2>Explore the Matrix</h2>
+        <p>Browse our interactive matrix to discover species from valleys and villages to mountains and canyons. Each card reveals the story behind the agave.</p>
+        
+        <div style="margin-top: var(--space-8);">
+          <a href="/matrix" class="btn">View the Matrix</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

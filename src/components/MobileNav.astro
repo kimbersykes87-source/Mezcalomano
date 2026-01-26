@@ -1,0 +1,76 @@
+---
+import closeIcon from '../../assets/ui/icons/icon_close.svg';
+---
+
+<div class="mobile-nav-overlay" id="mobile-nav-overlay">
+  <div class="mobile-nav-header">
+    <span></span>
+    <button class="mobile-nav-close" id="mobile-nav-close" aria-label="Close menu">
+      <img src={closeIcon} alt="" />
+    </button>
+  </div>
+  
+  <nav aria-label="Mobile navigation">
+    <ul class="mobile-nav-list">
+      <li class="mobile-nav-item">
+        <a href="/" class="mobile-nav-link">Home</a>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="/about" class="mobile-nav-link">About</a>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="/matrix" class="mobile-nav-link">Matrix</a>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="/map" class="mobile-nav-link">Map</a>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="/contact" class="mobile-nav-link">Contact</a>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="/shop" class="mobile-nav-link">Shop</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<script>
+  const overlay = document.getElementById('mobile-nav-overlay');
+  const closeBtn = document.getElementById('mobile-nav-close');
+  const toggle = document.getElementById('mobile-nav-toggle');
+  const links = overlay?.querySelectorAll('.mobile-nav-link');
+
+  function closeNav() {
+    if (overlay) {
+      overlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+      if (toggle) {
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    }
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeNav);
+  }
+
+  if (overlay) {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        closeNav();
+      }
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay?.classList.contains('is-open')) {
+      closeNav();
+    }
+  });
+
+  if (links) {
+    links.forEach(link => {
+      link.addEventListener('click', closeNav);
+    });
+  }
+</script>

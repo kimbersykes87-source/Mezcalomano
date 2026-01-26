@@ -1,186 +1,30 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Section from '../components/Section.astro';
-
-// Get reCAPTCHA site key from environment variable
-const recaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || import.meta.env.RECAPTCHA_SITE_KEY || 'RECAPTCHA_SITE_KEY_PLACEHOLDER';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import contactImage from '../../assets/photos/contact_01_1600w.webp';
+import ContactForm from '../components/ContactForm.astro';
 ---
 
-<Layout title="Contact - Mezcalómano" description="Get in touch with Mezcalómano. Email hola@mezcalomano.com or use our contact form.">
-  <Section class="contact-section" id="contact">
-    <h1 data-scroll class="fade-in">Contact Us</h1>
-    <div class="contact-content" data-scroll class="slide-up">
-      <div class="contact-email">
-        <p><strong>Email:</strong> <a href="mailto:hola@mezcalomano.com">hola@mezcalomano.com</a></p>
+<BaseLayout title="Contact | Mezcalómano" description="Get in touch with Mezcalómano">
+  <div class="section">
+    <div class="section-header-image">
+      <Image
+        src={contactImage}
+        alt="Contact Mezcalómano"
+        loading="eager"
+        formats={['webp', 'avif']}
+        width={1600}
+        height={900}
+      />
+    </div>
+    
+    <div class="container">
+      <div class="section-header">
+        <h1>Contact</h1>
+        <p>Have a question? We'd love to hear from you.</p>
       </div>
       
-      <form class="contact-form" id="contact-form" method="POST" action="/api/contact">
-        <div class="form-group">
-          <label for="name">Name *</label>
-          <input type="text" id="name" name="name" required aria-required="true" />
-          <span class="error-message" id="name-error" aria-live="polite"></span>
-        </div>
-        
-        <div class="form-group">
-          <label for="email">Email *</label>
-          <input type="email" id="email" name="email" required aria-required="true" />
-          <span class="error-message" id="email-error" aria-live="polite"></span>
-        </div>
-        
-        <div class="form-group">
-          <label for="subject">Subject *</label>
-          <input type="text" id="subject" name="subject" required aria-required="true" />
-          <span class="error-message" id="subject-error" aria-live="polite"></span>
-        </div>
-        
-        <div class="form-group">
-          <label for="message">Message *</label>
-          <textarea id="message" name="message" rows="6" required aria-required="true"></textarea>
-          <span class="error-message" id="message-error" aria-live="polite"></span>
-        </div>
-        
-        <!-- Honeypot field -->
-        <input type="text" name="website" id="website" style="display: none;" tabindex="-1" autocomplete="off" />
-        
-        <!-- reCAPTCHA -->
-        <div class="g-recaptcha" data-sitekey={recaptchaSiteKey}></div>
-        
-        <button type="submit" class="button button-cta" id="submit-btn">
-          Send Message
-        </button>
-        
-        <div class="form-status" id="form-status" aria-live="polite"></div>
-      </form>
+      <ContactForm client:load />
     </div>
-  </Section>
-</Layout>
-
-<script>
-  import '../scripts/scroll-observer';
-  import '../scripts/contact-form';
-</script>
-
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-<style>
-  .contact-section {
-    max-width: 700px;
-    margin: 4rem auto;
-  }
-
-  .contact-section h1 {
-    margin-bottom: 2rem;
-    text-align: center;
-    color: var(--yellow-agave);
-  }
-
-  .contact-email {
-    text-align: center;
-    margin-bottom: 3rem;
-    font-size: 1.1rem;
-  }
-
-  .contact-email a {
-    color: var(--yellow-agave);
-  }
-
-  .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  label {
-    color: var(--primary-text);
-    font-weight: 600;
-    font-size: 0.95rem;
-  }
-
-  input[type="text"],
-  input[type="email"],
-  textarea {
-    padding: 0.75rem;
-    border: 2px solid var(--muted-olive);
-    background-color: rgba(39, 41, 38, 0.8);
-    color: var(--primary-text);
-    border-radius: 4px;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-  }
-
-  input:focus,
-  textarea:focus {
-    outline: none;
-    border-color: var(--yellow-agave);
-  }
-
-  textarea {
-    resize: vertical;
-    min-height: 120px;
-  }
-
-  .error-message {
-    color: var(--terracotta);
-    font-size: 0.875rem;
-    display: none;
-  }
-
-  .error-message.show {
-    display: block;
-  }
-
-  .form-group.error input,
-  .form-group.error textarea {
-    border-color: var(--terracotta);
-  }
-
-
-  .button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-  .form-status {
-    padding: 1rem;
-    border-radius: 4px;
-    margin-top: 1rem;
-    display: none;
-  }
-
-  .form-status.show {
-    display: block;
-  }
-
-  .form-status.success {
-    background-color: rgba(120, 129, 92, 0.2);
-    border: 1px solid var(--muted-olive);
-    color: var(--primary-text);
-  }
-
-  .form-status.error {
-    background-color: rgba(184, 103, 68, 0.2);
-    border: 1px solid var(--terracotta);
-    color: var(--primary-text);
-  }
-
-  .g-recaptcha {
-    margin: 1rem 0;
-  }
-
-  @media (max-width: 768px) {
-    .contact-section {
-      margin: 3rem auto;
-    }
-
-    .button-cta {
-      width: 100%;
-    }
-  }
-</style>
+  </div>
+</BaseLayout>

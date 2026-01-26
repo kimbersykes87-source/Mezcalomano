@@ -1,3 +1,10 @@
-# Cloudflare Pages configuration for Mezcalomano marketing site
+# Cloudflare Pages/Workers configuration for Mezcalomano marketing site
+# 
+# This file ensures compatibility with Cloudflare Workers runtime.
+# - name: Project name in Cloudflare
+# - compatibility_date: Workers runtime version
+# 
+# See CONNECTIONS.md for full documentation.
+
 name = "mezcalomano"
 compatibility_date = "2026-01-14"

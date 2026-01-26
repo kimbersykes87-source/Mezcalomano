@@ -1,0 +1,61 @@
+---
+import closeIcon from '../../assets/ui/icons/icon_close.svg';
+---
+
+<div class="matrix-drawer-backdrop" id="matrix-drawer-backdrop">
+  <div class="matrix-drawer">
+    <button class="matrix-drawer-close" id="matrix-drawer-close" aria-label="Close">
+      <img src={closeIcon} alt="" />
+    </button>
+    <div class="matrix-drawer-content">
+      <div class="matrix-drawer-image">
+        <img id="drawer-image" src="" alt="" />
+      </div>
+      <div class="matrix-drawer-info">
+        <h2 id="drawer-common-name"></h2>
+        <h3 id="drawer-scientific-name"></h3>
+        <p id="drawer-one-liner"></p>
+        <div class="matrix-drawer-meta">
+          <div class="matrix-drawer-meta-item">
+            <span class="matrix-drawer-meta-label">Habitat:</span>
+            <span id="drawer-habitat"></span>
+          </div>
+          <div class="matrix-drawer-meta-item">
+            <span class="matrix-drawer-meta-label">Height:</span>
+            <span id="drawer-height"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const backdrop = document.getElementById('matrix-drawer-backdrop');
+  const closeBtn = document.getElementById('matrix-drawer-close');
+
+  function closeDrawer() {
+    if (backdrop) {
+      backdrop.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeDrawer);
+  }
+
+  if (backdrop) {
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) {
+        closeDrawer();
+      }
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && backdrop?.classList.contains('is-open')) {
+      closeDrawer();
+    }
+  });
+</script>

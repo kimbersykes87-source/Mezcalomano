@@ -1,0 +1,150 @@
+---
+---
+
+<form class="contact-form" id="contact-form">
+  <div class="form-success" id="form-success">
+    <p>Thank you for your message. We'll get back to you soon.</p>
+  </div>
+
+  <div class="form-group">
+    <label for="name" class="form-label">Name</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      class="form-input"
+      required
+      aria-required="true"
+    />
+    <div class="form-error" id="name-error"></div>
+  </div>
+
+  <div class="form-group">
+    <label for="email" class="form-label">Email</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      class="form-input"
+      required
+      aria-required="true"
+    />
+    <div class="form-error" id="email-error"></div>
+  </div>
+
+  <div class="form-group">
+    <label for="message" class="form-label">Message</label>
+    <textarea
+      id="message"
+      name="message"
+      class="form-textarea"
+      required
+      aria-required="true"
+    ></textarea>
+    <div class="form-error" id="message-error"></div>
+  </div>
+
+  <div class="turnstile-container">
+    <div id="turnstile-widget"></div>
+    <p class="turnstile-placeholder">
+      Cloudflare Turnstile widget placeholder. Replace with actual Turnstile site key.
+    </p>
+  </div>
+
+  <button type="submit" class="btn">Send Message</button>
+</form>
+
+<script>
+  const form = document.getElementById('contact-form');
+  const successMessage = document.getElementById('form-success');
+  const nameInput = document.getElementById('name');
+  const emailInput = document.getElementById('email');
+  const messageInput = document.getElementById('message');
+  const nameError = document.getElementById('name-error');
+  const emailError = document.getElementById('email-error');
+  const messageError = document.getElementById('message-error');
+
+  function showError(field, message) {
+    const errorEl = field === 'name' ? nameError : field === 'email' ? emailError : messageError;
+    if (errorEl) {
+      errorEl.textContent = message;
+      errorEl.classList.add('is-visible');
+    }
+  }
+
+  function clearErrors() {
+    [nameError, emailError, messageError].forEach(el => {
+      if (el) {
+        el.textContent = '';
+        el.classList.remove('is-visible');
+      }
+    });
+  }
+
+  function validateForm() {
+    clearErrors();
+    let isValid = true;
+
+    if (!nameInput?.value.trim()) {
+      showError('name', 'Name is required');
+      isValid = false;
+    }
+
+    if (!emailInput?.value.trim()) {
+      showError('email', 'Email is required');
+      isValid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+      showError('email', 'Please enter a valid email address');
+      isValid = false;
+    }
+
+    if (!messageInput?.value.trim()) {
+      showError('message', 'Message is required');
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearErrors();
+
+      if (!validateForm()) {
+        return;
+      }
+
+      const formData = new FormData(form);
+      const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        message: formData.get('message'),
+      };
+
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          if (successMessage) {
+            successMessage.classList.add('is-visible');
+            form.reset();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        } else {
+          showError('message', result.error || 'Something went wrong. Please try again.');
+        }
+      } catch (error) {
+        showError('message', 'Network error. Please try again.');
+      }
+    });
+  }
+</script>

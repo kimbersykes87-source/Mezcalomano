@@ -1,4 +1,14 @@
 # Cloudflare Pages redirects for Shopify integration
+# 
+# This file is automatically processed by Cloudflare Pages.
+# Format: <source-path> <status-code> <destination-url>
+# 
+# CRITICAL: These redirects connect the marketing site to Shopify.
+# - /buy redirects to Discovery Deck product page
+# - /shop redirects to main Shopify store
+# 
+# See CONNECTIONS.md for full documentation.
+#
 # Marketing site paths that redirect to Shopify store
 
 /buy 302 https://shop.mezcalomano.com/products/discovery-deck

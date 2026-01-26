@@ -1,7 +1,18 @@
 import { defineConfig } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
 
-// https://astro.build/config
+/**
+ * Astro Configuration for Cloudflare Pages
+ * 
+ * CRITICAL: This file connects the site to Cloudflare Pages.
+ * - adapter: cloudflare() - Required for Cloudflare deployment
+ * - site: 'https://mezcalomano.com' - Canonical domain (used for SEO, sitemap, etc.)
+ * - output: 'hybrid' - Enables both static and server-side rendering
+ * 
+ * See CONNECTIONS.md for full documentation of all external connections.
+ * 
+ * https://astro.build/config
+ */
 export default defineConfig({
   output: 'hybrid',
   adapter: cloudflare(),
