@@ -4,7 +4,7 @@ import { Image } from 'astro:assets';
 import matrixImage from '../../assets/photos/matrix_01_1600w.webp';
 import MatrixCard from '../components/MatrixCard.astro';
 import MatrixDrawer from '../components/MatrixDrawer.astro';
-import matrixData from '../../../public/assets/matrix/cards/index.json';
+import matrixData from '../data/matrix.json';
 
 // Extract unique habitats
 const habitats = Array.from(new Set(matrixData.map(species => species.habitat))).sort();
