@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@astrojs/cloudflare": "^11.0.0",
-    "astro": "^4.15.0",
+    "astro": "^4.16.19",
     "papaparse": "^5.4.1"
   },
   "devDependencies": {
