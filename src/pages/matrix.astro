@@ -41,12 +41,12 @@ const habitats = Array.from(new Set(matrixData.map(species => species.habitat)))
 
     <div class="matrix-grid" id="matrix-grid">
       {matrixData.map(species => (
-        <MatrixCard species={species} client:load />
+        <MatrixCard species={species} />
       ))}
     </div>
   </div>
 
-  <MatrixDrawer client:load />
+  <MatrixDrawer />
 
   <script define:vars={{ matrixData, habitats }}>
     const searchInput = document.getElementById('matrix-search');
