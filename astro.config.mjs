@@ -22,12 +22,5 @@ export default defineConfig({
     build: {
       assetsInlineLimit: 0,
     },
-    esbuild: {
-      include: /\.ts$/,
-      exclude: /\.astro$/,
-    },
-  },
-  typescript: {
-    tsconfig: undefined,
   },
 });
