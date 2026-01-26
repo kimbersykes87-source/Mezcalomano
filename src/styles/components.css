@@ -56,6 +56,18 @@
   font-weight: var(--font-weight-semibold);
 }
 
+.header-nav-desktop .nav-shop-btn {
+  border: 1px solid var(--color-white);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.header-nav-desktop .nav-shop-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  opacity: 1;
+}
+
 .header-burger {
   display: flex;
   align-items: center;
@@ -154,6 +166,16 @@
   min-height: 44px;
   display: flex;
   align-items: center;
+}
+
+.mobile-nav-shop {
+  display: inline-block;
+  border: 1px solid var(--color-white);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-6);
+  margin-top: var(--space-4);
+  text-align: center;
+  justify-content: center;
 }
 
 /* Footer Styles */
