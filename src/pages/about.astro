@@ -1,11 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
+// Placeholder: replace with "agave and card backs" image when available
 import aboutImage from '../../assets/photos/about_01_1600w.webp';
 ---
 
 <BaseLayout title="About | Mezcalómano" description="Learn about Mezcalómano and our mission to explore agave species">
-  <section class="hero hero--page">
+  <section class="hero hero--page hero--image-only">
     <Image
       src={aboutImage}
       alt=""
@@ -16,29 +17,14 @@ import aboutImage from '../../assets/photos/about_01_1600w.webp';
       height={1600}
     />
     <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1>About Mezcalómano</h1>
-    </div>
   </section>
   
   <div class="section">
     <div class="container">
-      <div class="section-content">
-        <p class="lead">Mezcalómano is a project dedicated to exploring and documenting the diverse agave species used in mezcal production.</p>
-        
-        <hr class="divider" />
-        
-        <h2>Our Mission</h2>
-        <p>We believe understanding the agave species behind mezcal deepens appreciation for this traditional spirit. Our matrix showcases 40 species, each with unique characteristics, habitats, and flavor profiles.</p>
-        
-        <hr class="divider" />
-        
-        <h2>Explore the Matrix</h2>
-        <p>Browse our interactive matrix to discover species from valleys and villages to mountains and canyons. Each card reveals the story behind the agave.</p>
-        
-        <div style="margin-top: var(--space-8);">
-          <a href="/matrix" class="btn">View the Matrix</a>
-        </div>
+      <div class="section-content about-content">
+        <h1 class="about-title">ABOUT</h1>
+        <p>For mezcal lovers and the mezcal-curious, Mezcalómano is a project dedicated to exploring the diverse agave species that make mezcal so rich, complex, and endlessly fascinating.</p>
+        <p>We're here to spark conversation, celebrate every spiky variety, and bring more joy (and mezcal knowledge) to your next pour.</p>
       </div>
     </div>
   </div>

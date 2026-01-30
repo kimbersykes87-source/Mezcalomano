@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
-import matrixImage from '../../assets/photos/matrix_01_1600w.webp';
+import matrixImage from '../../assets/photos/matrix_01_1600w.avif';
 import MatrixCard from '../MatrixCard.astro';
 import MatrixDrawer from '../MatrixDrawer.astro';
 import matrixData from '../data/matrix.json';
@@ -23,25 +23,33 @@ const habitats = Array.from(new Set(matrixData.map(species => species.habitat)))
     />
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <h1>Agave Matrix</h1>
+      <h1>MATRIX</h1>
       <p>Explore 40 species used in mezcal production</p>
     </div>
   </section>
 
   <div class="matrix-page">
+    <div class="matrix-intro">
+      <p>Agave taxonomy's always shifting with new landraces popping up, but dive into this matrix to kick off your beyond-espadín adventure into the spirit's epic diversity.</p>
+      <p>You'll find Latin names alongside its local name, its character, habitat and how it's produced.</p>
+    </div>
     <div class="matrix-filters">
+      <label for="matrix-search" class="matrix-search-label">SEARCH BY NAME</label>
       <input
         type="text"
         class="matrix-search"
         id="matrix-search"
-        placeholder="Search by name or description..."
-        aria-label="Search species"
+        placeholder="Search by name..."
+        aria-label="Search species by name"
       />
-      <div class="matrix-habitat-filter" id="habitat-filter">
-        <button class="habitat-chip active" data-habitat="all">All</button>
-        {habitats.map(habitat => (
-          <button class="habitat-chip" data-habitat={habitat}>{habitat}</button>
-        ))}
+      <div class="matrix-filter-group">
+        <span class="matrix-filter-label">HABITAT</span>
+        <div class="matrix-habitat-filter" id="habitat-filter">
+          <button class="habitat-chip active" data-habitat="all">All</button>
+          {habitats.map(habitat => (
+            <button class="habitat-chip" data-habitat={habitat}>{habitat}</button>
+          ))}
+        </div>
       </div>
     </div>
 

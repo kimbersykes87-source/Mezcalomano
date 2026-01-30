@@ -57,6 +57,8 @@
   font-display: swap;
 }
 
+/* TODO: Use Gotham Condensed Medium when available; hero line 2 uses condensed fallback */
+
 /* Reset & Base Styles */
 * {
   box-sizing: border-box;

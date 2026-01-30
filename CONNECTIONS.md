@@ -110,15 +110,25 @@ Contains the critical dependency:
 
 ## Environment Variables
 
-### Required Variables (if using contact form)
+### Contact form: Cloudflare Turnstile
 
-These are set in **Cloudflare Pages Dashboard** → **Settings** → **Environment Variables**:
+The contact form uses **Cloudflare Turnstile** (not reCAPTCHA). Set these in **Cloudflare Pages** → **Settings** → **Variables and Secrets** and in local **`.env`** for development:
 
 | Variable Name | Purpose | Where Used | Required |
 |--------------|---------|------------|----------|
-| `PUBLIC_RECAPTCHA_SITE_KEY` | Google reCAPTCHA public key (exposed to browser) | Contact form frontend | If using contact form |
-| `RECAPTCHA_SECRET` | Google reCAPTCHA secret key (server-side) | API endpoint verification | If using contact form |
-| `MAILCHANNELS_API_KEY` | MailChannels API key (optional) | Email sending | Optional |
+| `PUBLIC_TURNSTILE_SITE_KEY` | Turnstile site key (exposed to browser) | Contact form widget | Yes, for contact form |
+| `TURNSTILE_SECRET_KEY` | Turnstile secret key (server-side) | `/api/contact` token verification | Yes, for contact form |
+
+- **Production**: Cloudflare Dashboard → Workers & Pages → mezcalomano → **Settings** → **Variables and Secrets** → add both (mark secret key as **Secret**).
+- **Local development**: Copy into project root `.env` (see `.env.example` if present; never commit `.env`).
+
+### Legacy / optional
+
+| Variable Name | Purpose | Where Used |
+|--------------|---------|------------|
+| `PUBLIC_RECAPTCHA_SITE_KEY` | Google reCAPTCHA (legacy) | Not used by current contact form |
+| `RECAPTCHA_SECRET` | reCAPTCHA secret (legacy) | Not used by current contact form |
+| `MAILCHANNELS_API_KEY` | MailChannels API key (optional) | Email sending |
 
 ### Type Definitions
 
@@ -126,8 +136,9 @@ Environment variable types are defined in `src/env.d.ts`:
 
 ```typescript
 interface ImportMetaEnv {
-  readonly RECAPTCHA_SECRET: string;
-  readonly RECAPTCHA_SITE_KEY: string;
+  readonly PUBLIC_TURNSTILE_SITE_KEY?: string;
+  readonly TURNSTILE_SECRET_KEY?: string;
+  readonly RECAPTCHA_SECRET?: string;
   readonly PUBLIC_RECAPTCHA_SITE_KEY?: string;
   readonly MAILCHANNELS_API_KEY?: string;
 }
@@ -135,17 +146,15 @@ interface ImportMetaEnv {
 
 ### How to Set Environment Variables
 
-1. Go to Cloudflare Dashboard → Pages → Your Project
-2. Navigate to **Settings** → **Environment Variables**
-3. Add variables for **Production** (and optionally **Preview**)
-4. **Important**: After adding/changing variables, you must redeploy:
-   - Push a new commit, OR
-   - Manually retry the latest deployment
+1. **Cloudflare**: Go to Cloudflare Dashboard → Pages → mezcalomano → **Settings** → **Variables and Secrets**
+2. Add `PUBLIC_TURNSTILE_SITE_KEY` (Plaintext) and `TURNSTILE_SECRET_KEY` (Secret)
+3. **Important**: After adding/changing variables, redeploy (new commit or retry latest deployment)
+4. **Local**: Add the same keys to `.env` in the project root for `npm run dev`
 
 ### Accessing Variables in Code
 
-- **Client-side**: Use `import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY` (only `PUBLIC_*` vars are exposed)
-- **Server-side**: Use `import.meta.env.RECAPTCHA_SECRET` (all vars available)
+- **Client-side**: `import.meta.env.PUBLIC_TURNSTILE_SITE_KEY` (only `PUBLIC_*` vars are exposed)
+- **Server-side**: `import.meta.env.TURNSTILE_SECRET_KEY` in `src/pages/api/contact.ts`
 
 ---
 
@@ -307,10 +316,11 @@ Use this checklist to verify all connections are working:
 - [ ] `config/wrangler.toml` exists with project name
 - [ ] `_redirects` file exists with Shopify redirects
 
-### Environment Variables (if needed)
-- [ ] `PUBLIC_RECAPTCHA_SITE_KEY` set in Cloudflare Pages (if using contact form)
-- [ ] `RECAPTCHA_SECRET` set in Cloudflare Pages (if using contact form)
-- [ ] Variables are set for Production environment
+### Environment Variables (contact form)
+- [ ] `PUBLIC_TURNSTILE_SITE_KEY` set in Cloudflare Pages (Variables and Secrets)
+- [ ] `TURNSTILE_SECRET_KEY` set in Cloudflare Pages as **Secret**
+- [ ] Same keys in local `.env` for `npm run dev`
+- [ ] Redeployed after adding/changing variables
 
 ### Redirects
 - [ ] `https://mezcalomano.com/buy` redirects to Shopify product
@@ -452,4 +462,4 @@ When starting work on this project:
 
 ---
 
-Last updated: 2026-01-26
+Last updated: 2026-01-30

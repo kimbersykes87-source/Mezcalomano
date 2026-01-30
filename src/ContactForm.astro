@@ -1,4 +1,7 @@
 ---
+const turnstileSiteKey = typeof import.meta.env.PUBLIC_TURNSTILE_SITE_KEY === 'string'
+  ? import.meta.env.PUBLIC_TURNSTILE_SITE_KEY
+  : '';
 ---
 
 <form class="contact-form" id="contact-form">
@@ -6,8 +9,10 @@
     <p>Thank you for your message. We'll get back to you soon.</p>
   </div>
 
+  <div class="form-error-inline" id="form-error-inline" role="alert"></div>
+
   <div class="form-group">
-    <label for="name" class="form-label">Name</label>
+    <label for="name" class="form-label">NAME</label>
     <input
       type="text"
       id="name"
@@ -20,7 +25,7 @@
   </div>
 
   <div class="form-group">
-    <label for="email" class="form-label">Email</label>
+    <label for="email" class="form-label">EMAIL</label>
     <input
       type="email"
       id="email"
@@ -33,7 +38,7 @@
   </div>
 
   <div class="form-group">
-    <label for="message" class="form-label">Message</label>
+    <label for="message" class="form-label">MESSAGE</label>
     <textarea
       id="message"
       name="message"
@@ -46,29 +51,37 @@
 
   <div class="turnstile-container">
     <div id="turnstile-widget"></div>
-    <p class="turnstile-placeholder">
-      Cloudflare Turnstile widget placeholder. Replace with actual Turnstile site key.
-    </p>
   </div>
 
-  <button type="submit" class="btn">Send Message</button>
+  <button type="submit" class="btn btn-submit">SEND MESSAGE</button>
 </form>
 
-<script>
+<script define:vars={{ turnstileSiteKey }}>
   const form = document.getElementById('contact-form');
   const successMessage = document.getElementById('form-success');
+  const formErrorInline = document.getElementById('form-error-inline');
   const nameInput = document.getElementById('name');
   const emailInput = document.getElementById('email');
   const messageInput = document.getElementById('message');
   const nameError = document.getElementById('name-error');
   const emailError = document.getElementById('email-error');
   const messageError = document.getElementById('message-error');
+  const turnstileContainer = document.getElementById('turnstile-widget');
+
+  let turnstileWidgetId = null;
 
   function showError(field, message) {
     const errorEl = field === 'name' ? nameError : field === 'email' ? emailError : messageError;
     if (errorEl) {
       errorEl.textContent = message;
       errorEl.classList.add('is-visible');
+    }
+  }
+
+  function showFormError(message) {
+    if (formErrorInline) {
+      formErrorInline.textContent = message;
+      formErrorInline.classList.add('is-visible');
     }
   }
 
@@ -79,6 +92,10 @@
         el.classList.remove('is-visible');
       }
     });
+    if (formErrorInline) {
+      formErrorInline.textContent = '';
+      formErrorInline.classList.remove('is-visible');
+    }
   }
 
   function validateForm() {
@@ -106,6 +123,30 @@
     return isValid;
   }
 
+  function getTurnstileToken() {
+    if (!turnstileSiteKey || typeof window.turnstile === 'undefined' || turnstileWidgetId == null) return null;
+    return window.turnstile.getResponse(turnstileWidgetId);
+  }
+
+  function loadTurnstile() {
+    if (!turnstileSiteKey || !turnstileContainer) return;
+    const script = document.createElement('script');
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    script.async = true;
+    script.defer = true;
+    script.onload = () => {
+      if (window.turnstile) {
+        turnstileWidgetId = window.turnstile.render(turnstileContainer, {
+          sitekey: turnstileSiteKey,
+          theme: 'dark',
+        });
+      }
+    };
+    document.head.appendChild(script);
+  }
+
+  loadTurnstile();
+
   if (form) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -115,11 +156,13 @@
         return;
       }
 
+      const token = getTurnstileToken();
       const formData = new FormData(form);
       const data = {
         name: formData.get('name'),
         email: formData.get('email'),
         message: formData.get('message'),
+        'cf-turnstile-response': token || undefined,
       };
 
       try {
@@ -137,13 +180,23 @@
           if (successMessage) {
             successMessage.classList.add('is-visible');
             form.reset();
+            if (window.turnstile && turnstileWidgetId != null) {
+              window.turnstile.reset(turnstileWidgetId);
+            }
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }
         } else {
-          showError('message', result.error || 'Something went wrong. Please try again.');
+          const msg = result.error || 'Something went wrong. Please try again.';
+          showFormError(msg);
+          if (window.turnstile && turnstileWidgetId != null) {
+            window.turnstile.reset(turnstileWidgetId);
+          }
         }
       } catch (error) {
-        showError('message', 'Network error. Please try again.');
+        showFormError('Network error. Please try again.');
+        if (window.turnstile && turnstileWidgetId != null) {
+          window.turnstile.reset(turnstileWidgetId);
+        }
       }
     });
   }

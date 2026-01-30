@@ -6,11 +6,11 @@ import ContactForm from '../ContactForm.astro';
 ---
 
 <BaseLayout title="Contact | Mezcalómano" description="Get in touch with Mezcalómano">
-  <section class="hero hero--page">
+  <section class="hero hero--page hero--contact">
     <Image
       src={contactImage}
       alt=""
-      class="hero-bg"
+      class="hero-bg hero-bg--contact"
       loading="eager"
       formats={['webp', 'avif']}
       width={1600}
@@ -18,12 +18,12 @@ import ContactForm from '../ContactForm.astro';
     />
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <h1>Contact</h1>
-      <p>Have a question? We'd love to hear from you.</p>
+      <h1 class="contact-heading">GET IN TOUCH</h1>
+      <p>Have a question?<br />We'd love to hear from you. Email us at <a href="mailto:hola@mezcalomano.com">hola@mezcalomano.com</a>.</p>
     </div>
   </section>
   
-  <div class="section">
+  <div class="section section--contact">
     <div class="container">
       <ContactForm />
     </div>

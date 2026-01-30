@@ -1,9 +1,33 @@
 import type { APIRoute } from 'astro';
 
+async function verifyTurnstile(token: string | undefined): Promise<boolean> {
+  const secret = import.meta.env.TURNSTILE_SECRET_KEY;
+  if (!secret || !token) return false;
+
+  const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ secret, response: token }),
+  });
+  const data = (await res.json()) as { success?: boolean };
+  return data.success === true;
+}
+
 export const POST: APIRoute = async ({ request }) => {
   try {
     const data = await request.json();
-    const { name, email, message } = data;
+    const { name, email, message, 'cf-turnstile-response': turnstileResponse } = data;
+
+    const secret = import.meta.env.TURNSTILE_SECRET_KEY;
+    if (secret) {
+      const valid = await verifyTurnstile(turnstileResponse);
+      if (!valid) {
+        return new Response(
+          JSON.stringify({ error: 'Verification failed. Please try again.' }),
+          { status: 400, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+    }
 
     // Basic validation
     if (!name || !email || !message) {
@@ -29,18 +53,16 @@ export const POST: APIRoute = async ({ request }) => {
     // - MailChannels API (if MAILCHANNELS_API_KEY is set)
     // - Or another email service
 
-    // Simulate processing delay
     await new Promise(resolve => setTimeout(resolve, 500));
 
-    // Return success response
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         success: true,
-        message: 'Message received successfully'
+        message: 'Message received successfully',
       }),
-      { 
+      {
         status: 200,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       }
     );
   } catch (error) {
