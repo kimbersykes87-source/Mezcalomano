@@ -54,9 +54,14 @@ const ogImageUrl = new URL(ogImage, siteUrl).toString();
     <!-- Canonical -->
     <link rel="canonical" href={canonicalUrl} />
     
+    <!-- Open Sans Condensed -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300;700&display=swap" rel="stylesheet" />
+    
     <title>{title}</title>
   </head>
-  <body>
+  <body class="layout-pin-footer">
     <Header />
     <main class="page-content">
       <slot />

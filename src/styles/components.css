@@ -87,36 +87,28 @@
   font-weight: var(--font-weight-semibold);
 }
 
-.header-nav-desktop .nav-shop-btn {
-  background-color: var(--color-terracotta);
-  border: none;
-  border-radius: var(--radius-md);
-  padding: var(--space-2) var(--space-4);
+.header-shop {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 44px;
+  height: 88px;
+  min-height: 88px;
+  padding: 0;
+  justify-self: end;
   transition: opacity 0.2s ease, filter 0.2s ease;
 }
 
-.header-nav-desktop .nav-shop-btn:hover {
-  opacity: 0.9;
+.header-shop:hover {
+  opacity: 0.85;
   filter: brightness(1.1);
 }
 
-.header-spacer {
-  width: 44px;
-  height: 44px;
-}
-
-@media (min-width: 768px) {
-  .header-nav {
-    display: block;
-  }
-
-  .header-burger {
-    display: none;
-  }
-
-  .header-spacer {
-    display: none;
-  }
+.header-shop img,
+.header-shop svg {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
 }
 
 /* Mobile Navigation Overlay */
@@ -202,33 +194,22 @@
   justify-content: center;
 }
 
-/* Footer Styles */
+/* Footer Styles - pinned to bottom, condensed */
 .footer {
-  padding: var(--space-12) var(--space-4);
+  margin-top: auto;
+  padding: var(--space-4) var(--space-4);
   border-top: var(--divider);
-  margin-top: var(--space-16);
 }
 
 .footer-content {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-6);
-}
-
-.footer-logo {
-  margin-bottom: var(--space-4);
-}
-
-.footer-logo-img {
-  height: 80px;
-  width: auto;
-}
-
-.footer-email {
-  font-size: 0.9375rem;
+  justify-content: center;
+  gap: var(--space-4);
 }
 
 .footer-social {
@@ -261,7 +242,7 @@
 .footer-copyright {
   font-size: 0.8125rem;
   color: rgba(255, 255, 255, 0.5);
-  margin-top: var(--space-4);
+  margin: 0;
 }
 
 /* Page Content Spacing */
@@ -298,6 +279,12 @@
   object-fit: cover;
   object-position: center top;
   z-index: 0;
+}
+
+/* Home hero: fit image like about page (contain so full image visible) */
+.hero-bg--home-fit {
+  object-fit: contain;
+  object-position: center center;
 }
 
 .hero-overlay {
@@ -350,7 +337,7 @@
 }
 
 .hero-copy-line2 {
-  font-family: 'Arial Narrow', 'Open Sans', sans-serif;
+  font-family: var(--font-family);
   font-weight: 600;
   letter-spacing: 0.077em;
   text-transform: uppercase;
@@ -785,6 +772,12 @@
 .form-textarea {
   min-height: 120px;
   resize: vertical;
+}
+
+.form-label,
+.form-input,
+.form-textarea {
+  text-align: left;
 }
 
 .form-error {
