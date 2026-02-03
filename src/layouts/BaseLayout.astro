@@ -13,7 +13,7 @@ interface Props {
 const { 
   title = 'Mezcalómano', 
   description = 'Discover the agave species behind mezcal',
-  ogImage = '/assets/og/og_default_1200x630.jpg'
+  ogImage = '/assets/og/mezcalomano_icon_white.png'
 } = Astro.props;
 
 const siteUrl = 'https://mezcalomano.com';
@@ -42,7 +42,7 @@ const ogImageUrl = new URL(ogImage, siteUrl).toString();
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image:height" content="960" />
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />

@@ -9,6 +9,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "build:matrix-cards": "node src/scripts/build-matrix-cards.js",
+    "build:og-icon-png": "node scripts/build-og-icon-png.js",
     "check": "astro check"
   },
   "dependencies": {

@@ -438,14 +438,12 @@
 }
 
 .hero--contact.hero--page {
-  min-height: 0;
-  aspect-ratio: 1 / 1;
-  width: 100%;
+  min-height: 28vh;
 }
 
 .hero-bg--contact {
-  object-fit: contain;
-  object-position: center center;
+  object-fit: cover;
+  object-position: center bottom;
 }
 
 .contact-intro {
@@ -493,6 +491,10 @@
   }
   
   .hero--page {
+    min-height: 40vh;
+  }
+  
+  .hero--contact.hero--page {
     min-height: 40vh;
   }
   
