@@ -264,6 +264,15 @@
   padding-bottom: 0;
 }
 
+/* Contact: no hero image, content spaced between header and footer */
+.page-content:has(.contact-page) {
+  overflow: hidden;
+  height: calc(100vh - 88px);
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
 /* Hero Section - Full Background Image */
 .hero {
   position: relative;
@@ -438,16 +447,6 @@
   filter: brightness(1.1);
 }
 
-/* Contact hero: same size as About/Directory (40vh) */
-.hero--contact.hero--page {
-  min-height: 40vh;
-}
-
-.hero-bg--contact {
-  object-fit: cover;
-  object-position: center bottom;
-}
-
 .contact-intro {
   text-align: center;
   font-family: var(--font-family);
@@ -456,26 +455,44 @@
   color: var(--color-white);
 }
 
-.section--contact {
-  padding-top: var(--space-2);
-  padding-bottom: var(--space-2);
+/* Contact page: no hero image, fills space between header and footer, components spaced vertically */
+.contact-page {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: var(--space-4) var(--space-4) 72px;
+  gap: var(--space-4);
 }
 
-.section--contact .form-group {
-  margin-bottom: var(--space-2);
+.contact-page .contact-intro {
+  flex-shrink: 0;
+  margin-bottom: 0;
 }
 
-.section--contact .turnstile-container {
-  margin: var(--space-2) 0;
+.contact-page-form {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.contact-page .form-group {
+  margin-bottom: var(--space-3);
+}
+
+.contact-page .turnstile-container {
+  margin: var(--space-3) 0;
   min-height: 65px;
 }
 
-.section--contact .form-success {
-  margin-bottom: var(--space-2);
+.contact-page .form-success {
+  margin-bottom: var(--space-3);
 }
 
-/* Message field same height as name/email inputs so contact fits on one screen */
-.section--contact .form-textarea {
+/* Message field same height as name/email inputs */
+.contact-page .form-textarea {
   min-height: 2.75rem;
   resize: vertical;
 }

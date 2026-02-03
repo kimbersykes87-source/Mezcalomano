@@ -1,27 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { Image } from 'astro:assets';
-import contactImage from '../../assets/photos/contact_1600.jpg';
 import ContactForm from '../ContactForm.astro';
 ---
 
 <BaseLayout title="Contact | Mezcalómano" description="Get in touch with Mezcalómano">
-  <section class="hero hero--page hero--contact hero--image-only">
-    <Image
-      src={contactImage}
-      alt=""
-      class="hero-bg hero-bg--contact"
-      loading="eager"
-      formats={['webp', 'avif']}
-      width={1600}
-      height={1600}
-    />
-    <div class="hero-overlay"></div>
-  </section>
-  
-  <div class="section section--contact">
-    <div class="container">
-      <p class="contact-intro">Have a question? Get in touch.</p>
+  <div class="contact-page">
+    <p class="contact-intro">Have a question? Get in touch.</p>
+    <div class="contact-page-form">
       <ContactForm />
     </div>
   </div>
