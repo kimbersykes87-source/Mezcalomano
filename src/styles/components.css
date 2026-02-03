@@ -194,11 +194,16 @@
   justify-content: center;
 }
 
-/* Footer Styles - pinned to bottom, condensed */
+/* Footer Styles - fixed to bottom of viewport so always on screen */
 .footer {
-  margin-top: auto;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding: var(--space-4) var(--space-4);
   border-top: var(--divider);
+  background-color: var(--color-dark);
+  z-index: 100;
 }
 
 .footer-content {
@@ -245,9 +250,10 @@
   margin: 0;
 }
 
-/* Page Content Spacing */
+/* Page Content Spacing - top for header, bottom so content isn't hidden by fixed footer */
 .page-content {
   margin-top: 88px;
+  padding-bottom: 72px;
   min-height: calc(100vh - 88px);
 }
 

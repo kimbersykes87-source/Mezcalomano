@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
-import matrixImage from '../../assets/photos/matrix_01_1600w.avif';
+import directoryImage from '../../assets/photos/directory_1600.jpg';
 import MatrixCard from '../MatrixCard.astro';
 import MatrixDrawer from '../MatrixDrawer.astro';
 import matrixData from '../data/matrix.json';
@@ -10,10 +10,10 @@ import matrixData from '../data/matrix.json';
 const habitats = Array.from(new Set(matrixData.map(species => species.habitat))).sort();
 ---
 
-<BaseLayout title="Matrix | Mezcalómano" description="Explore 40 agave species used in mezcal production">
+<BaseLayout title="Directory | Mezcalómano" description="Discover our guide to sourcing exceptional mezcals beyond espadín">
   <section class="hero hero--page">
     <Image
-      src={matrixImage}
+      src={directoryImage}
       alt=""
       class="hero-bg"
       loading="eager"
@@ -23,14 +23,14 @@ const habitats = Array.from(new Set(matrixData.map(species => species.habitat)))
     />
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <h1>MATRIX</h1>
-      <p>Explore 40 species used in mezcal production</p>
+      <h1>DIRECTORY</h1>
+      <p>Discover our guide to sourcing exceptional mezcals beyond espadín</p>
     </div>
   </section>
 
   <div class="matrix-page">
     <div class="matrix-intro">
-      <p>Agave taxonomy's always shifting with new landraces popping up, but dive into this matrix to kick off your beyond-espadín adventure into the spirit's epic diversity.</p>
+      <p>Agave taxonomy's always shifting with new landraces popping up, but dive into this directory to kick off your beyond-espadín adventure into the spirit's epic diversity.</p>
       <p>You'll find Latin names alongside its local name, its character, habitat and how it's produced.</p>
     </div>
     <div class="matrix-filters">
