@@ -374,6 +374,7 @@
 .hero--home {
   display: flex;
   flex-direction: column;
+  align-items: stretch; /* override .hero align-items: flex-start so copy block isn't left-aligned */
   height: calc(100vh - 88px - 72px);
   min-height: 0;
   overflow: hidden;
@@ -437,12 +438,14 @@
 }
 
 .hero--contact.hero--page {
-  min-height: 28vh;
+  min-height: 0;
+  aspect-ratio: 1 / 1;
+  width: 100%;
 }
 
 .hero-bg--contact {
-  object-fit: cover;
-  object-position: center 30%;
+  object-fit: contain;
+  object-position: center center;
 }
 
 .contact-intro {
@@ -472,15 +475,6 @@
 }
 
 @media (max-width: 767px) {
-  .hero--contact.hero--page {
-    min-height: 22vh;
-  }
-  
-  .hero--contact .hero-bg--contact {
-    object-position: center 20%;
-    max-height: 22vh;
-  }
-  
   .contact-form .form-textarea {
     min-height: 72px;
   }
@@ -506,9 +500,6 @@
     font-size: 1.375rem;
   }
   
-  .hero--contact.hero--page {
-    min-height: 40vh;
-  }
 }
 
 /* Section Styles */
