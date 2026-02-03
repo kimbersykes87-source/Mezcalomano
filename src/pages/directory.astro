@@ -5,13 +5,10 @@ import directoryImage from '../../assets/photos/directory_1600.jpg';
 import MatrixCard from '../MatrixCard.astro';
 import MatrixDrawer from '../MatrixDrawer.astro';
 import matrixData from '../data/matrix.json';
-
-// Extract unique habitats
-const habitats = Array.from(new Set(matrixData.map(species => species.habitat))).sort();
 ---
 
 <BaseLayout title="Directory | Mezcalómano" description="Discover our guide to sourcing exceptional mezcals beyond espadín">
-  <section class="hero hero--page">
+  <section class="hero hero--page hero--image-only">
     <Image
       src={directoryImage}
       alt=""
@@ -22,35 +19,24 @@ const habitats = Array.from(new Set(matrixData.map(species => species.habitat)))
       height={1600}
     />
     <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1>DIRECTORY</h1>
-      <p>Discover our guide to sourcing exceptional mezcals beyond espadín</p>
-    </div>
   </section>
 
   <div class="matrix-page">
-    <div class="matrix-intro">
-      <p>Agave taxonomy's always shifting with new landraces popping up, but dive into this directory to kick off your beyond-espadín adventure into the spirit's epic diversity.</p>
-      <p>You'll find Latin names alongside its local name, its character, habitat and how it's produced.</p>
+    <div class="directory-intro">
+      <h1 class="directory-title">DIRECTORY</h1>
+      <p>Discover our guide to sourcing exceptional mezcals beyond espadín, like tobalá, tepeztate, and cuixe, featured in our Discovery Deck.</p>
+      <p>This directory connects mezcal lovers and the mezcal curious to online retailers and brick-and-mortar venues that specialize in these rare, flavorful varieties.</p>
+      <p>Use this directory to expand your mezcal journey, submit your favorite spots for inclusion to keep it growing with the community.</p>
     </div>
     <div class="matrix-filters">
-      <label for="matrix-search" class="matrix-search-label">SEARCH BY NAME</label>
+      <label for="directory-search" class="matrix-search-label">SEARCH BY NAME</label>
       <input
         type="text"
         class="matrix-search"
-        id="matrix-search"
+        id="directory-search"
         placeholder="Search by name..."
         aria-label="Search species by name"
       />
-      <div class="matrix-filter-group">
-        <span class="matrix-filter-label">HABITAT</span>
-        <div class="matrix-habitat-filter" id="habitat-filter">
-          <button class="habitat-chip active" data-habitat="all">All</button>
-          {habitats.map(habitat => (
-            <button class="habitat-chip" data-habitat={habitat}>{habitat}</button>
-          ))}
-        </div>
-      </div>
     </div>
 
     <div class="matrix-grid" id="matrix-grid">
@@ -62,16 +48,13 @@ const habitats = Array.from(new Set(matrixData.map(species => species.habitat)))
 
   <MatrixDrawer />
 
-  <script define:vars={{ matrixData, habitats }}>
-    const searchInput = document.getElementById('matrix-search');
+  <script define:vars={{ matrixData }}>
+    const searchInput = document.getElementById('directory-search');
     const grid = document.getElementById('matrix-grid');
-    const habitatFilter = document.getElementById('habitat-filter');
     const backdrop = document.getElementById('matrix-drawer-backdrop');
     const drawer = backdrop?.querySelector('.matrix-drawer');
-    let currentFilter = 'all';
     let currentSearch = '';
 
-    // Filter and search function
     function filterSpecies() {
       const cards = grid?.querySelectorAll('.matrix-card');
       if (!cards) return;
@@ -81,14 +64,12 @@ const habitats = Array.from(new Set(matrixData.map(species => species.habitat)))
         const species = matrixData.find(s => s.species_id === speciesId);
         if (!species) return;
 
-        const matchesSearch = !currentSearch || 
+        const matchesSearch = !currentSearch ||
           species.common_name.toLowerCase().includes(currentSearch.toLowerCase()) ||
           species.scientific_name.toLowerCase().includes(currentSearch.toLowerCase()) ||
           species.one_liner.toLowerCase().includes(currentSearch.toLowerCase());
 
-        const matchesHabitat = currentFilter === 'all' || species.habitat === currentFilter;
-
-        if (matchesSearch && matchesHabitat) {
+        if (matchesSearch) {
           card.style.display = 'block';
         } else {
           card.style.display = 'none';
@@ -96,7 +77,6 @@ const habitats = Array.from(new Set(matrixData.map(species => species.habitat)))
       });
     }
 
-    // Search handler
     if (searchInput) {
       searchInput.addEventListener('input', (e) => {
         currentSearch = e.target.value;
@@ -104,20 +84,6 @@ const habitats = Array.from(new Set(matrixData.map(species => species.habitat)))
       });
     }
 
-    // Habitat filter handler
-    if (habitatFilter) {
-      habitatFilter.addEventListener('click', (e) => {
-        if (e.target.classList.contains('habitat-chip')) {
-          const chips = habitatFilter.querySelectorAll('.habitat-chip');
-          chips.forEach(chip => chip.classList.remove('active'));
-          e.target.classList.add('active');
-          currentFilter = e.target.getAttribute('data-habitat') || 'all';
-          filterSpecies();
-        }
-      });
-    }
-
-    // Card click handler - open drawer
     if (grid) {
       grid.addEventListener('click', (e) => {
         const card = e.target.closest('.matrix-card');
@@ -127,7 +93,6 @@ const habitats = Array.from(new Set(matrixData.map(species => species.habitat)))
         const species = matrixData.find(s => s.species_id === speciesId);
         if (!species || !drawer) return;
 
-        // Update drawer content
         const image = document.getElementById('drawer-image');
         const commonName = document.getElementById('drawer-common-name');
         const scientificName = document.getElementById('drawer-scientific-name');
@@ -145,7 +110,6 @@ const habitats = Array.from(new Set(matrixData.map(species => species.habitat)))
         if (habitat) habitat.textContent = species.habitat;
         if (height) height.textContent = species.height;
 
-        // Open drawer
         if (backdrop) {
           backdrop.classList.add('is-open');
           document.body.style.overflow = 'hidden';
