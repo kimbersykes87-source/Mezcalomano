@@ -370,35 +370,36 @@
   filter: brightness(1.1);
 }
 
-/* Home: image on top, copy + button below, no scroll, fits between header and footer */
+/* Home: image on top (same sizing as about page), copy + button below with equal spacing to footer */
 .hero--home {
   display: flex;
   flex-direction: column;
-  align-items: stretch; /* override .hero align-items: flex-start so copy block isn't left-aligned */
+  align-items: stretch;
   height: calc(100vh - 88px - 72px);
   min-height: 0;
   overflow: hidden;
   background-color: var(--color-dark);
 }
 
+/* Hero image area: full width, fixed height like about/contact (28vh mobile, 40vh desktop) */
 .hero-home-image {
-  flex: 1 1 0;
+  flex: 0 0 auto;
+  width: 100%;
+  height: 28vh;
   min-height: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-4) var(--space-4) 0;
+  overflow: hidden;
+  position: relative;
 }
 
 .hero-home-img {
-  width: auto;
+  width: 100%;
   height: 100%;
-  max-width: 100%;
-  object-fit: contain;
-  object-position: center top;
+  object-fit: cover;
+  object-position: center center;
   display: block;
 }
 
+/* Copy block fills remaining space; content centered for equal spacing above/below */
 .hero-home-copy {
   flex: 1 1 0;
   min-height: 0;
@@ -496,6 +497,10 @@
   
   .hero--contact.hero--page {
     min-height: 40vh;
+  }
+  
+  .hero-home-image {
+    height: 40vh;
   }
   
   .hero-content p {
