@@ -34,8 +34,9 @@
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  /* Responsive Breakpoint */
+  /* Responsive Breakpoints */
   --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
 }
 
 /* Open Sans Condensed loaded via Google Fonts in BaseLayout */

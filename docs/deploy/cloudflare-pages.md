@@ -1,6 +1,8 @@
-# Cloudflare Pages Deployment Guide
+# Cloudflare Pages Deployment Guide (Legacy)
 
-This document describes how to deploy the Mezcalómano website to Cloudflare Pages.
+**Note:** This project has been migrated to Next.js and is deployed on Vercel. See [vercel.md](vercel.md) for current deployment.
+
+This document described the previous Astro-based deployment to Cloudflare Pages.
 
 ## Build Configuration
 

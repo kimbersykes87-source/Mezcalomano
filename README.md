@@ -1,67 +1,61 @@
 # Mezcalómano Marketing Site
 
-Production-ready, mobile-first Astro website deployed on Cloudflare Pages. Features an interactive agave species matrix, full-bleed hero images, and elegant dark theme design.
+Production-ready, mobile-first Next.js website for deployment on Vercel. Features an interactive agave species directory, full-bleed hero images, and elegant dark theme design.
 
 ## Quick Start
 
 ```bash
 npm install          # Install dependencies
-npm run dev          # Start development server (http://localhost:4321)
+npm run dev          # Start development server (http://localhost:3000)
 npm run build        # Build for production
-npm run preview      # Preview production build locally
+npm run start        # Run production server locally
 npm run build:matrix-cards  # Build matrix card images from TIFFs
-npm run check        # Type check with Astro
+npm run lint         # Run ESLint
 ```
 
 ## Important Documentation
 
-**📖 [CONNECTIONS.md](CONNECTIONS.md)** - Complete guide to all external connections (GitHub, Cloudflare, domains, redirects, environment variables). **Read this first** to understand the project setup.
+**📖 [CONNECTIONS.md](CONNECTIONS.md)** - Complete guide to all external connections (GitHub, domains, redirects, environment variables). **Read this first** to understand the project setup.
 
 ## Overview
 
-- **Framework**: Astro 4.15.0 with Cloudflare Pages adapter
+- **Framework**: Next.js 16 (App Router) with TypeScript
 - **Site URL**: `https://mezcalomano.com`
 - **Shop URL**: `https://shop.mezcalomano.com`
 - **Repository**: https://github.com/kimbersykes87-source/Mezcalomano
-- **Deployment**: Automatic via Cloudflare Pages on push to `main` branch
-- **Node Version**: 22.16.0 (pinned in `.nvmrc`, `.node-version`, and `package.json`)
+- **Deployment**: Vercel (connect repo; set env vars)
+- **Node Version**: 20+ (see `package.json` engines)
 
 ## Key Configuration Files
 
-- `astro.config.mjs` - Cloudflare adapter and site URL
-- `_redirects` - Shopify redirects (`/buy`, `/shop`)
-- `config/wrangler.toml` - Cloudflare Workers compatibility
-- `package.json` - Dependencies (includes `@astrojs/cloudflare`)
-- `.nvmrc` / `.node-version` - Node.js version pinning
-- `tsconfig.json` - TypeScript configuration
+- `next.config.ts` - Redirects (`/buy`, `/shop`, `/matrix` → `/directory`)
+- `src/app/` - App Router pages and layout
+- `src/components/` - React components
+- `package.json` - Dependencies and scripts
+- `tsconfig.json` - TypeScript and path alias `@/*` → `src/*`
 
-## Critical Connections
+## Environment Variables
 
-All external connections are documented in **[CONNECTIONS.md](CONNECTIONS.md)**:
+For the contact form (Cloudflare Turnstile):
 
-- GitHub repository integration
-- Cloudflare Pages deployment configuration
-- Environment variables setup
-- Redirects to Shopify store (`shop.mezcalomano.com`)
-- Social media links (Instagram, TikTok)
-- Domain configuration
-- Build and deployment process
+- `NEXT_PUBLIC_TURNSTILE_SITE_KEY` - Public site key (client)
+- `TURNSTILE_SECRET_KEY` - Secret key (API route only)
 
-**⚠️ Important**: Before making changes, read [CONNECTIONS.md](CONNECTIONS.md) to understand what files must be preserved.
+Copy `.env.example` to `.env.local` and fill in values. On Vercel, set these in Project Settings → Environment Variables.
 
 ## Site Features
 
-- **5 Pages**: Home, About, Matrix, Map (coming soon), Contact
-- **Interactive Matrix**: Browse 40 agave species with search and habitat filtering
-- **Full-Bleed Hero Images**: Immersive background images with text overlay
-- **Mobile-First Design**: Responsive layout optimized for Instagram/TikTok traffic
+- **5 Pages**: Home, About, Directory, Contact, Map (coming soon)
+- **Interactive Directory**: Browse agave species with search; click cards for details
+- **Full-Bleed Hero Images**: Responsive heroes (mobile/tablet/desktop)
+- **Mobile-First Design**: Responsive layout
 - **Dark Theme**: Elegant `#272926` background with `#FFFFFF` text
-- **Open Sans Typography**: Variable font with sensible weight hierarchy
-- **Social Links**: Instagram and TikTok integration in footer
+- **Open Sans Condensed**: Google Fonts typography
+- **Social Links**: Instagram and TikTok in footer
 
 ## Matrix Card Asset Pipeline
 
-The `build:matrix-cards` script processes 40 print-ready TIFF files into web-optimized WebP card images.
+The `build:matrix-cards` script processes print-ready TIFF files into web-optimized WebP card images.
 
 ### Usage
 
@@ -69,32 +63,10 @@ The `build:matrix-cards` script processes 40 print-ready TIFF files into web-opt
 npm run build:matrix-cards
 ```
 
-### Input Requirements
-
-- **Source folder (primary)**: `C:\Users\kimbe\Desktop\FINAL#\CMYK_JapanColor2001\_PRINT_READY_V4\`
-- **Source folder (fallback)**: `source/print_ready_v4/` (if primary is not accessible)
-- **Required files**: 40 TIFF files named `{rank}_{suit}_final.tif` where:
-  - Ranks: `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `a`
-  - Suits: `clubs`, `diamonds`, `hearts`, `spades`
-  - Example: `2_clubs_final.tif`, `10_spades_final.tif`, `a_hearts_final.tif`
-
 ### Output
 
 - **Location**: `public/assets/matrix/cards/`
-- **Files generated**:
-  - 80 WebP files (40 species × 2 sizes: 800×1120 and 400×560)
-  - `index.json` manifest with species data and image paths
-
-### Species Data
-
-The script uses `data/species_matrix_v1.csv` which must contain:
-- `scientific_name`
-- `common_name`
-- `one_liner`
-- `habitat`
-- `height`
-
-The first 40 rows are used, mapped in order to the TIFF files.
+- **Data**: `src/data/matrix.json` (species and image paths)
 
 ## Design System
 
@@ -106,16 +78,9 @@ The first 40 rows are used, mapped in order to the TIFF files.
 - **White**: `#FFFFFF` (text)
 
 ### Typography
-- **Font**: Open Sans (variable font, 300-800 weight range)
+- **Font**: Open Sans Condensed (Google Fonts)
 - **Base Size**: 16px
 - **Scale**: Responsive clamp() for headings
-
-### Components
-- **Header**: Fixed top bar with logo and navigation
-- **Hero Sections**: Full-bleed background images with gradient overlay
-- **Cards**: Portrait cards with rounded corners and shadows
-- **Buttons**: Primary filled style with olive background
-- **Dividers**: 1px white at 20-30% opacity
 
 ## External Links
 
