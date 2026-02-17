@@ -7,7 +7,6 @@ import {
   BookOpen,
   Globe,
   Leaf,
-  Link2,
   MapPin,
   Mountain,
   Ruler,
@@ -17,7 +16,9 @@ import {
 import { toSlug } from "@/lib/slug";
 import type { Species } from "@/types/species";
 
-const ICON_CLASS = "size-4 shrink-0 text-[var(--agave-yellow)]";
+/* Match localhost: explicit size + fallback color so icons render the same in production */
+const ICON_CLASS =
+  "species-card-icon size-4 h-4 w-4 shrink-0 text-[var(--agave-yellow)] text-[#a29037]";
 
 function parseHabitat(habitat: Species["habitat"]) {
   if (!habitat || typeof habitat !== "object") return null;
@@ -68,17 +69,15 @@ export function SpeciesCard({
       .sort((a, b) => a.localeCompare(b, "en"))
       .join("; ");
 
+  const slugHref = "/directory/" + toSlug(species.common_name);
+  const CardWrapper = showPermalink ? Link : "div";
+  const cardWrapperProps = showPermalink
+    ? { href: slugHref, className: "block w-full max-w-xl sm:max-w-2xl" }
+    : { className: "w-full" };
+
   return (
-    <article className="relative flex w-full max-w-xl flex-col overflow-hidden rounded-3xl bg-[#32342f] shadow-lg sm:max-w-2xl">
-      {showPermalink && (
-        <Link
-          href={"/directory/" + toSlug(species.common_name)}
-          className="absolute right-3 top-3 z-10 rounded-full bg-black/50 p-2 text-[var(--agave-yellow)] transition-colors hover:bg-black/70 hover:text-white"
-          aria-label={"Open direct link to " + species.common_name}
-        >
-          <Link2 className="size-5" />
-        </Link>
-      )}
+    <CardWrapper {...cardWrapperProps}>
+      <article className="relative flex w-full max-w-xl flex-col overflow-hidden rounded-3xl bg-[#32342f] shadow-lg sm:max-w-2xl">
       <div className="relative aspect-square w-full shrink-0 bg-[#272926]">
         {displayUrl ? (
           <Image
@@ -96,9 +95,9 @@ export function SpeciesCard({
           </div>
         )}
       </div>
-      <div className="flex min-h-[280px] flex-col gap-3 p-4 text-white">
+      <div className="species-card-content flex min-h-[280px] flex-col gap-3 p-4 text-white">
         <div>
-          <p className="notranslate flex items-center gap-2 font-bold" translate="no">
+          <p className="notranslate flex items-center gap-2 font-bold text-white" translate="no">
             <Leaf className={ICON_CLASS} aria-hidden />
             {species.common_name}
           </p>
@@ -107,43 +106,44 @@ export function SpeciesCard({
             {species.scientific_name}
           </p>
           {species.description && (
-            <p className="mt-1.5 text-sm text-white/80">{species.description}</p>
+            <p className="mt-1.5 text-sm leading-relaxed text-white/80">{species.description}</p>
           )}
         </div>
         {sizeStr && (
-          <div className="flex items-start gap-2 text-sm">
+          <div className="flex items-start gap-2 text-sm text-white/90">
             <Ruler className={ICON_CLASS} aria-hidden />
-            <span>{sizeStr}</span>
+            <span><span className="text-white/70">Size:</span> {sizeStr}</span>
           </div>
         )}
         {statesFormatted && (
-          <div className="flex items-start gap-2 text-sm">
+          <div className="flex items-start gap-2 text-sm text-white/90">
             <MapPin className={ICON_CLASS} aria-hidden />
-            <span>{statesFormatted}</span>
+            <span><span className="text-white/70">Origin:</span> {statesFormatted}</span>
           </div>
         )}
         {species.geo_region && (
-          <div className="flex items-start gap-2 text-sm">
+          <div className="flex items-start gap-2 text-sm text-white/90">
             <Globe className={ICON_CLASS} aria-hidden />
-            <span>{species.geo_region}</span>
+            <span><span className="text-white/70">Location details:</span> {species.geo_region}</span>
           </div>
         )}
         {habitat?.terrain && (
-          <div className="flex gap-2 text-sm">
+          <div className="flex items-start gap-2 text-sm text-white/90">
             <Mountain className={ICON_CLASS} aria-hidden />
-            <span>{habitat.terrain}</span>
+            <span><span className="text-white/70">Habitat:</span> {habitat.terrain}</span>
           </div>
         )}
         {species.mezcal_use && (
-          <div className="flex items-start gap-2 text-sm">
+          <div className="flex items-start gap-2 text-sm text-white/90">
             <Wine className={ICON_CLASS} aria-hidden />
-            <span>{species.mezcal_use}</span>
+            <span><span className="text-white/70">Mezcal type:</span> {species.mezcal_use}</span>
           </div>
         )}
         {hasProducers && (
-          <div className="flex items-start gap-2 text-sm">
+          <div className="flex items-start gap-2 text-sm text-white/90">
             <Users className={ICON_CLASS} aria-hidden />
             <span className="flex flex-wrap gap-x-1.5 gap-y-0.5">
+            <span className="shrink-0 text-white/70">Associated brands: </span>
               {producerList.map((name, i) => {
                 const url = linkList[i]?.startsWith("http") ? linkList[i] : null;
                 return (
@@ -169,5 +169,6 @@ export function SpeciesCard({
         )}
       </div>
     </article>
+    </CardWrapper>
   );
 }

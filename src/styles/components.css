@@ -271,6 +271,15 @@
   width: 100%;
 }
 
+/* Directory species card: match localhost text/icon display (font + accent fallback) */
+.species-card-content {
+  font-family: var(--font-family);
+}
+
+.species-card-content .species-card-icon {
+  color: var(--agave-yellow, #a29037);
+}
+
 /* Home: no scroll, content fits between header and footer */
 .page-content:has(.hero--home) {
   overflow: hidden;

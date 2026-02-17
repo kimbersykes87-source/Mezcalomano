@@ -17,6 +17,11 @@ const AGAVE_YELLOW_DARK = "#7a6c2a";
 const MAP_CENTER: [number, number] = [-102, 23];
 const MAP_ZOOM = 4.5;
 
+const DEBUG = true;
+function debug(...args: unknown[]) {
+  if (DEBUG) console.log("[Map Debug]", ...args);
+}
+
 function escapeHtml(s: string): string {
   const div = document.createElement("div");
   div.textContent = s;
@@ -48,6 +53,7 @@ export default function MapPage() {
 
   useEffect(() => {
     setMounted(true);
+    debug("mounted=true");
   }, []);
 
   useEffect(() => {
@@ -62,6 +68,7 @@ export default function MapPage() {
       const width = window.innerWidth;
       el.style.height = `${Math.max(0, height)}px`;
       el.style.width = `${width}px`;
+      debug("mapAreaSize set", { width, height, top });
     }
 
     const raf = requestAnimationFrame(setMapAreaSize);
@@ -74,15 +81,19 @@ export default function MapPage() {
 
   useEffect(() => {
     async function fetchSpecies() {
+      debug("fetching species...");
       const { data, error } = await supabase
         .from("species")
         .select("*")
         .order("species_id");
       if (error) {
         console.error("[Map] Supabase error:", error);
+        debug("species fetch failed", error.message, error.details);
         setSpecies([]);
       } else {
-        setSpecies((data as Species[]) ?? []);
+        const list = (data as Species[]) ?? [];
+        debug("species loaded", list.length, "rows");
+        setSpecies(list);
       }
       setLoading(false);
     }
@@ -91,13 +102,25 @@ export default function MapPage() {
 
   useEffect(() => {
     let cancelled = false;
+    debug("fetching GeoJSON...");
     fetch("/geo/mexico-states.geojson")
-      .then((r) => r.json())
+      .then((r) => {
+        debug("GeoJSON response status", r.status, r.statusText);
+        if (!r.ok) throw new Error(`HTTP ${r.status}: ${r.statusText}`);
+        return r.json();
+      })
       .then((data) => {
-        if (!cancelled) setGeoJson(data as GeoJSON.FeatureCollection);
+        if (!cancelled) {
+          const fc = data as GeoJSON.FeatureCollection;
+          debug("GeoJSON loaded", fc?.features?.length ?? 0, "features");
+          setGeoJson(fc);
+        }
       })
       .catch((e) => {
-        if (!cancelled) console.error("[Map] GeoJSON load error:", e);
+        if (!cancelled) {
+          console.error("[Map] GeoJSON load error:", e);
+          debug("GeoJSON fetch failed", String(e));
+        }
       });
     return () => {
       cancelled = true;
@@ -150,15 +173,25 @@ export default function MapPage() {
   const mapLibRef = useRef<typeof maplibregl | null>(null);
 
   const initMap = useCallback((MapLibre: typeof maplibregl) => {
-    if (!mapContainerRef.current || !geoJson || mapRef.current || mapInitializedRef.current) return;
+    const hasContainer = !!mapContainerRef.current;
+    const hasGeoJson = !!geoJson;
+    const hasMap = !!mapRef.current;
+    const alreadyInit = mapInitializedRef.current;
+    if (!hasContainer || !hasGeoJson || hasMap || alreadyInit) {
+      debug("initMap early return", { hasContainer, hasGeoJson, hasMap, alreadyInit });
+      return;
+    }
     mapInitializedRef.current = true;
+    debug("initMap starting");
     mapLibRef.current = MapLibre;
     const container = mapContainerRef.current;
     const rect = container.getBoundingClientRect();
     if (rect.width <= 0 || rect.height <= 0) {
+      debug("initMap abort: container has no size", rect);
       mapInitializedRef.current = false;
       return;
     }
+    debug("creating MapLibre instance", rect.width, "x", rect.height);
 
     const map = new MapLibre.Map({
       container,
@@ -187,6 +220,7 @@ export default function MapPage() {
       console.error("[Map] Map error:", e);
     });
     map.on("load", () => {
+      debug("map load event fired, adding layers");
       map.addSource("mexico-states-all", { type: "geojson", data: geoJson });
 
       const labelFeatures: GeoJSON.Feature<GeoJSON.Point>[] = geoJson.features.map((f) => {
@@ -361,6 +395,7 @@ export default function MapPage() {
       });
       resizeObserverRef.current.observe(container);
       mapRef.current = map;
+      debug("map fully initialized");
     });
 
     mapRef.current = map;
@@ -370,7 +405,11 @@ export default function MapPage() {
   initMapRef.current = initMap;
 
   useEffect(() => {
-    if (!mounted || !geoJson || species.length === 0) return;
+    debug("map init effect run", { mounted, hasGeoJson: !!geoJson, mapContainerRef: !!mapContainerRef.current });
+    if (!mounted || !geoJson) {
+      debug("map init effect early return: missing mounted or geoJson");
+      return;
+    }
     if (mapRef.current) {
       if (!mapRef.current.getLayer("states-fill")) return;
       const list = [...selectedStatesList];
@@ -395,12 +434,17 @@ export default function MapPage() {
     }
     let cancelled = false;
     (async () => {
+      debug("loading maplibre-gl...");
       const mod = await import("maplibre-gl");
       const lib = mod.default ?? mod;
-      if (cancelled || !mapContainerRef.current) return;
+      if (cancelled || !mapContainerRef.current) {
+        debug("async init cancelled or no container");
+        return;
+      }
       const container = mapContainerRef.current;
       function tryInit() {
         const rect = container.getBoundingClientRect();
+        debug("tryInit container rect", rect.width, "x", rect.height);
         if (rect.width > 0 && rect.height > 0) {
           initMapRef.current(lib);
           return true;
@@ -409,10 +453,15 @@ export default function MapPage() {
       }
       requestAnimationFrame(() => {
         if (cancelled) return;
-        if (tryInit()) return;
+        if (tryInit()) {
+          debug("tryInit succeeded on first RAF");
+          return;
+        }
+        debug("container had 0 size, waiting for ResizeObserver");
         containerReadyObserverRef.current = new ResizeObserver(() => {
           if (cancelled) return;
           if (tryInit() && containerReadyObserverRef.current) {
+            debug("tryInit succeeded via ResizeObserver");
             containerReadyObserverRef.current.disconnect();
             containerReadyObserverRef.current = null;
           }
@@ -425,7 +474,7 @@ export default function MapPage() {
       containerReadyObserverRef.current?.disconnect();
       containerReadyObserverRef.current = null;
     };
-  }, [mounted, geoJson, species.length, statesInData, selectedStatesList, selectedState, initMap]);
+  }, [mounted, geoJson, statesInData, selectedStatesList, selectedState, initMap]);
 
   useEffect(() => {
     return () => {
