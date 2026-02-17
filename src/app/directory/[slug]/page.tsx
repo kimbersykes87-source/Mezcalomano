@@ -99,13 +99,15 @@ export default function SpeciesPage() {
           <ArrowLeft className="size-4" />
           Back to directory
         </Link>
-        <div className="flex justify-center">
+        <div className="flex justify-center px-4 sm:px-6">
           {speciesWithResolvedImage && (
-            <SpeciesCard
-              species={speciesWithResolvedImage}
-              showPermalink={false}
-              fallbackImageUrl={speciesWithResolvedImage.fallbackImageUrl}
-            />
+            <div className="w-full max-w-xl sm:max-w-2xl">
+              <SpeciesCard
+                species={speciesWithResolvedImage}
+                showPermalink={false}
+                fallbackImageUrl={speciesWithResolvedImage.fallbackImageUrl}
+              />
+            </div>
           )}
         </div>
       </main>

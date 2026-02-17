@@ -10,6 +10,7 @@ npm run dev          # Start development server (http://localhost:3000)
 npm run build        # Build for production
 npm run start        # Run production server locally
 npm run build:matrix-cards  # Build matrix card images from TIFFs
+npm run sync:matrix-cards   # Sync matrix cards from SPECIES artwork folder
 npm run lint         # Run ESLint
 ```
 
@@ -72,9 +73,15 @@ Copy `.env.example` to `.env.local` and fill in values. On Vercel, set these in 
 
 ## Matrix Card Asset Pipeline
 
-The `build:matrix-cards` script processes print-ready TIFF files into web-optimized WebP card images.
+**Sync from artwork** (recommended): Copy PNGs from the SPECIES artwork folder and regenerate `index.json`:
 
-### Usage
+```bash
+npm run sync:matrix-cards
+```
+
+Uses `data/Species_Final - Cards.csv` and sources images from the Dropbox SPECIES folder. See `scripts/sync-matrix-cards-from-species.mjs`.
+
+**Build from TIFFs**: The `build:matrix-cards` script processes print-ready TIFF files into web-optimized WebP card images:
 
 ```bash
 npm run build:matrix-cards
@@ -83,7 +90,7 @@ npm run build:matrix-cards
 ### Output
 
 - **Location**: `public/assets/matrix/cards/`
-- **Data**: The build script outputs to this folder; the live directory uses **Supabase** (see Environment Variables). `src/data/matrix.json` is used by the pipeline if you sync it with the generated manifest.
+- **Data**: Card images and `index.json`; the live directory uses **Supabase** (see Environment Variables). `src/data/matrix.json` is used by the TIFF pipeline if you sync it with the generated manifest.
 
 ## Design System
 

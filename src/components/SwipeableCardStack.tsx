@@ -1,8 +1,10 @@
 "use client";
 
 import { useRef, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { KeyCard } from "./KeyCard";
 import { SpeciesCard } from "./SpeciesCard";
+import { toSlug } from "@/lib/slug";
 import type { Species } from "@/types/species";
 
 const SWIPE_THRESHOLD = 50;
@@ -18,6 +20,7 @@ export function SwipeableCardStack({
   onIndexChange: (index: number) => void;
   showKeyCard?: boolean;
 }) {
+  const router = useRouter();
   const touchStartX = useRef<number | null>(null);
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -27,9 +30,14 @@ export function SwipeableCardStack({
   const goTo = useCallback(
     (index: number) => {
       const next = Math.max(0, Math.min(index, totalCards - 1));
-      if (next !== currentIndex) onIndexChange(next);
+      if (next === currentIndex) return;
+      if (showKeyCard && currentIndex === 0 && next === 1 && species[0]) {
+        router.push("/directory/" + toSlug(species[0].common_name));
+        return;
+      }
+      onIndexChange(next);
     },
-    [totalCards, currentIndex, onIndexChange]
+    [totalCards, currentIndex, onIndexChange, showKeyCard, species, router]
   );
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -75,8 +83,10 @@ export function SwipeableCardStack({
     return (
       <div className="mx-auto w-full max-w-4xl px-4 sm:px-6">
         <div ref={cardRef} className="touch-pan-y">
-          <div key="key" className="flex justify-center transition-opacity duration-200 ease-out">
-            <KeyCard />
+          <div key="key" className="flex justify-center px-4 py-4 transition-opacity duration-200 ease-out sm:px-6">
+            <div className="w-full max-w-xl sm:max-w-2xl">
+              <KeyCard />
+            </div>
           </div>
         </div>
       </div>
@@ -95,13 +105,19 @@ export function SwipeableCardStack({
       >
         <div
           key={isKeyCard ? "key" : current!.id}
-          className="flex justify-center transition-opacity duration-200 ease-out"
+          className="flex justify-center px-4 py-4 transition-opacity duration-200 ease-out sm:px-6"
         >
-          {isKeyCard ? <KeyCard /> : (
-            <SpeciesCard
-              species={current!}
-              fallbackImageUrl={"fallbackImageUrl" in current! ? (current as Species & { fallbackImageUrl?: string | null }).fallbackImageUrl : undefined}
-            />
+          {isKeyCard ? (
+            <div className="w-full max-w-xl sm:max-w-2xl">
+              <KeyCard />
+            </div>
+          ) : (
+            <div className="w-full max-w-xl sm:max-w-2xl">
+              <SpeciesCard
+                species={current!}
+                fallbackImageUrl={"fallbackImageUrl" in current! ? (current as Species & { fallbackImageUrl?: string | null }).fallbackImageUrl : undefined}
+              />
+            </div>
           )}
         </div>
       </div>

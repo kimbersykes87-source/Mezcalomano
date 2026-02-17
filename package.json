@@ -11,7 +11,8 @@
     "build:matrix-cards": "node src/scripts/build-matrix-cards.js",
     "build:og-icon-png": "node scripts/build-og-icon-png.js",
     "rename:matrix-cards": "node scripts/rename-matrix-cards-from-csv.mjs",
-    "seed:species": "node scripts/seed-species-from-csv.mjs"
+    "seed:species": "node scripts/seed-species-from-csv.mjs",
+    "sync:matrix-cards": "node scripts/sync-matrix-cards-from-species.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.95.3",

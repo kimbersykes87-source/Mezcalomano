@@ -32,21 +32,20 @@ export function KeyCard() {
           How to read the species cards
         </p>
       </div>
-      <div className="flex min-h-[280px] flex-col gap-3 p-4 text-white">
+      <div className="flex min-h-[280px] flex-col p-5 text-white">
         <p className="text-sm text-white/70">
           Each card uses these icons to label the information below. The paragraph under the names is the species description.
         </p>
-        <ul className="flex flex-col gap-2.5">
+        <div className="mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 items-center">
           {LEGEND.map(({ Icon, label }) => (
-            <li
-              key={label}
-              className="flex items-center gap-2 text-sm"
-            >
-              <Icon className={ICON_CLASS} aria-hidden />
-              <span>{label}</span>
-            </li>
+            <span key={label} className="contents">
+              <span className="flex items-center justify-end pr-2">
+                <Icon className={ICON_CLASS} aria-hidden />
+              </span>
+              <span className="text-sm">{label}</span>
+            </span>
           ))}
-        </ul>
+        </div>
       </div>
     </article>
   );

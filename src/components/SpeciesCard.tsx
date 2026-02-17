@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -89,55 +89,67 @@ export function SpeciesCard({
           </div>
         )}
       </div>
-      <div className="species-card-content flex min-h-[280px] flex-col gap-3 p-4 text-white">
-        <div>
-          <p className="notranslate flex items-center gap-2 font-bold text-white" translate="no">
+      <div className="species-card-content flex min-h-[280px] flex-col p-5 text-white">
+        <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 items-center">
+          <span className="flex items-center justify-end pr-2">
             <Leaf className={ICON_CLASS} aria-hidden />
-            {species.common_name}
-          </p>
-          <p className="notranslate mt-0.5 flex items-center gap-2 italic text-white/90" translate="no">
+          </span>
+          <p className="notranslate font-bold" translate="no">{species.common_name}</p>
+          <span className="flex items-center justify-end pr-2">
             <BookOpen className={ICON_CLASS} aria-hidden />
-            {species.scientific_name}
-          </p>
-          {species.description && (
-            <p className="mt-1.5 text-sm leading-relaxed text-white/80">{species.description}</p>
-          )}
+          </span>
+          <p className="notranslate italic text-white/90" translate="no">{species.scientific_name}</p>
         </div>
-        {sizeStr && (
-          <div className="flex items-start gap-2 text-sm text-white/90">
-            <Ruler className={ICON_CLASS} aria-hidden />
-            <span><span className="text-white/70">Size:</span> {sizeStr}</span>
-          </div>
+        {species.description && (
+          <p className="mt-3 text-sm leading-relaxed text-white/80">{species.description}</p>
         )}
-        {statesFormatted && (
-          <div className="flex items-start gap-2 text-sm text-white/90">
-            <MapPin className={ICON_CLASS} aria-hidden />
-            <span><span className="text-white/70">Origin:</span> {statesFormatted}</span>
-          </div>
-        )}
-        {species.geo_region && (
-          <div className="flex items-start gap-2 text-sm text-white/90">
-            <Globe className={ICON_CLASS} aria-hidden />
-            <span><span className="text-white/70">Location details:</span> {species.geo_region}</span>
-          </div>
-        )}
-        {habitat?.terrain && (
-          <div className="flex items-start gap-2 text-sm text-white/90">
-            <Mountain className={ICON_CLASS} aria-hidden />
-            <span><span className="text-white/70">Habitat:</span> {habitat.terrain}</span>
-          </div>
-        )}
-        {species.mezcal_use && (
-          <div className="flex items-start gap-2 text-sm text-white/90">
-            <Wine className={ICON_CLASS} aria-hidden />
-            <span><span className="text-white/70">Mezcal type:</span> {species.mezcal_use}</span>
-          </div>
-        )}
-        {hasProducers && (
-          <div className="flex items-start gap-2 text-sm text-white/90">
-            <Users className={ICON_CLASS} aria-hidden />
-            <span className="flex flex-wrap gap-x-1.5 gap-y-0.5">
-            <span className="shrink-0 text-white/70">Associated brands: </span>
+        <div className="mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 items-start">
+          {sizeStr && (
+            <Fragment key="size">
+              <span className="flex items-start justify-end pt-0.5 pr-2">
+                <Ruler className={ICON_CLASS} aria-hidden />
+              </span>
+              <span className="text-sm">{sizeStr}</span>
+            </Fragment>
+          )}
+          {statesFormatted && (
+            <Fragment key="states">
+              <span className="flex items-start justify-end pt-0.5 pr-2">
+                <MapPin className={ICON_CLASS} aria-hidden />
+              </span>
+              <span className="text-sm">{statesFormatted}</span>
+            </Fragment>
+          )}
+          {species.geo_region && (
+            <Fragment key="geo">
+              <span className="flex items-start justify-end pt-0.5 pr-2">
+                <Globe className={ICON_CLASS} aria-hidden />
+              </span>
+              <span className="text-sm">{species.geo_region}</span>
+            </Fragment>
+          )}
+          {habitat?.terrain && (
+            <Fragment key="habitat">
+              <span className="flex items-start justify-end pt-0.5 pr-2">
+                <Mountain className={ICON_CLASS} aria-hidden />
+              </span>
+              <span className="text-sm">{habitat.terrain}</span>
+            </Fragment>
+          )}
+          {species.mezcal_use && (
+            <Fragment key="mezcal">
+              <span className="flex items-start justify-end pt-0.5 pr-2">
+                <Wine className={ICON_CLASS} aria-hidden />
+              </span>
+              <span className="text-sm">{species.mezcal_use}</span>
+            </Fragment>
+          )}
+          {hasProducers && (
+            <Fragment key="producers">
+              <span className="flex items-start justify-end pt-0.5 pr-2">
+                <Users className={ICON_CLASS} aria-hidden />
+              </span>
+              <span className="flex flex-wrap gap-x-1.5 gap-y-0.5 text-sm">
               {producerList.map((name, i) => {
                 const url = linkList[i]?.startsWith("http") ? linkList[i] : null;
                 return (
@@ -158,9 +170,10 @@ export function SpeciesCard({
                   </span>
                 );
               })}
-            </span>
-          </div>
-        )}
+              </span>
+            </Fragment>
+          )}
+        </div>
       </div>
     </article>
   );

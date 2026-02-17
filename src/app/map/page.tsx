@@ -17,7 +17,7 @@ const AGAVE_YELLOW_DARK = "#7a6c2a";
 const MAP_CENTER: [number, number] = [-102, 23];
 const MAP_ZOOM = 4.5;
 
-const DEBUG = true;
+const DEBUG = process.env.NODE_ENV === "development";
 function debug(...args: unknown[]) {
   if (DEBUG) console.log("[Map Debug]", ...args);
 }
