@@ -71,6 +71,7 @@ export default function MapPage() {
       debug("mapAreaSize set", { width, height, top });
     }
 
+    setMapAreaSize();
     const raf = requestAnimationFrame(setMapAreaSize);
     window.addEventListener("resize", setMapAreaSize);
     return () => {
@@ -429,19 +430,22 @@ export default function MapPage() {
       return;
     }
     let cancelled = false;
+    const mapArea = mapAreaRef.current;
+    const container = mapContainerRef.current;
+    if (!mapArea || !container) {
+      debug("async init: no mapArea or container");
+      return;
+    }
     (async () => {
       debug("loading maplibre-gl...");
       const mod = await import("maplibre-gl");
       const lib = mod.default ?? mod;
-      if (cancelled || !mapContainerRef.current) {
-        debug("async init cancelled or no container");
-        return;
-      }
-      const container = mapContainerRef.current;
+      if (cancelled) return;
       function tryInit() {
-        const rect = container.getBoundingClientRect();
-        debug("tryInit container rect", rect.width, "x", rect.height);
-        if (rect.width > 0 && rect.height > 0) {
+        if (!mapArea) return false;
+        const areaRect = mapArea.getBoundingClientRect();
+        debug("tryInit mapArea rect", areaRect.width, "x", areaRect.height);
+        if (areaRect.width > 0 && areaRect.height > 0 && mapContainerRef.current) {
           initMapRef.current(lib);
           return true;
         }
@@ -449,20 +453,23 @@ export default function MapPage() {
       }
       requestAnimationFrame(() => {
         if (cancelled) return;
-        if (tryInit()) {
-          debug("tryInit succeeded on first RAF");
-          return;
-        }
-        debug("container had 0 size, waiting for ResizeObserver");
-        containerReadyObserverRef.current = new ResizeObserver(() => {
+        requestAnimationFrame(() => {
           if (cancelled) return;
-          if (tryInit() && containerReadyObserverRef.current) {
-            debug("tryInit succeeded via ResizeObserver");
-            containerReadyObserverRef.current.disconnect();
-            containerReadyObserverRef.current = null;
+          if (tryInit()) {
+            debug("tryInit succeeded");
+            return;
           }
+          debug("mapArea had 0 height, waiting for ResizeObserver");
+          containerReadyObserverRef.current = new ResizeObserver(() => {
+            if (cancelled) return;
+            if (tryInit() && containerReadyObserverRef.current) {
+              debug("tryInit succeeded via ResizeObserver");
+              containerReadyObserverRef.current.disconnect();
+              containerReadyObserverRef.current = null;
+            }
+          });
+          containerReadyObserverRef.current?.observe(mapArea);
         });
-        containerReadyObserverRef.current?.observe(container);
       });
     })();
     return () => {
