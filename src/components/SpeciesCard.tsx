@@ -70,14 +70,8 @@ export function SpeciesCard({
       .join("; ");
 
   const slugHref = "/directory/" + toSlug(species.common_name);
-  const CardWrapper = showPermalink ? Link : "div";
-  const cardWrapperProps = showPermalink
-    ? { href: slugHref, className: "block w-full max-w-xl sm:max-w-2xl" }
-    : { className: "w-full" };
-
-  return (
-    <CardWrapper {...cardWrapperProps}>
-      <article className="relative flex w-full max-w-xl flex-col overflow-hidden rounded-3xl bg-[#32342f] shadow-lg sm:max-w-2xl">
+  const articleEl = (
+    <article className="relative flex w-full max-w-xl flex-col overflow-hidden rounded-3xl bg-[#32342f] shadow-lg sm:max-w-2xl">
       <div className="relative aspect-square w-full shrink-0 bg-[#272926]">
         {displayUrl ? (
           <Image
@@ -169,6 +163,13 @@ export function SpeciesCard({
         )}
       </div>
     </article>
-    </CardWrapper>
+  );
+
+  return showPermalink ? (
+    <Link href={slugHref} className="block w-full max-w-xl sm:max-w-2xl">
+      {articleEl}
+    </Link>
+  ) : (
+    <div className="w-full">{articleEl}</div>
   );
 }

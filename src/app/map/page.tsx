@@ -173,18 +173,14 @@ export default function MapPage() {
   const mapLibRef = useRef<typeof maplibregl | null>(null);
 
   const initMap = useCallback((MapLibre: typeof maplibregl) => {
-    const hasContainer = !!mapContainerRef.current;
-    const hasGeoJson = !!geoJson;
-    const hasMap = !!mapRef.current;
-    const alreadyInit = mapInitializedRef.current;
-    if (!hasContainer || !hasGeoJson || hasMap || alreadyInit) {
-      debug("initMap early return", { hasContainer, hasGeoJson, hasMap, alreadyInit });
+    const container = mapContainerRef.current;
+    if (!container || !geoJson || mapRef.current || mapInitializedRef.current) {
+      debug("initMap early return", { hasContainer: !!container, hasGeoJson: !!geoJson, hasMap: !!mapRef.current, alreadyInit: mapInitializedRef.current });
       return;
     }
     mapInitializedRef.current = true;
     debug("initMap starting");
     mapLibRef.current = MapLibre;
-    const container = mapContainerRef.current;
     const rect = container.getBoundingClientRect();
     if (rect.width <= 0 || rect.height <= 0) {
       debug("initMap abort: container has no size", rect);
