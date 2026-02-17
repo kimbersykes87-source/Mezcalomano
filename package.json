@@ -12,18 +12,24 @@
     "build:og-icon-png": "node scripts/build-og-icon-png.js"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.95.3",
+    "@turf/centroid": "^7.3.4",
+    "lucide-react": "^0.564.0",
+    "maplibre-gl": "^4.7.1",
     "next": "16.1.6",
     "papaparse": "^5.4.1",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/papaparse": "^5.3.14",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "tailwindcss": "^4",
     "typescript": "^5"
   },
   "engines": {

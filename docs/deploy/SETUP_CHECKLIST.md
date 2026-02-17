@@ -98,4 +98,5 @@ If these are missing, the site still works; you may get 404s for favicons and a 
 | 5 | Add domain (e.g. mezcalomano.com) and DNS if you use it |
 | 6 | Add favicon + OG image in `public/` if you want them |
 
-For more detail, see [vercel.md](vercel.md).
+**More detail:** [vercel.md](vercel.md)  
+**Custom domain (Cloudflare DNS):** [DOMAIN_CLOUDFLARE_VERCEL.md](DOMAIN_CLOUDFLARE_VERCEL.md)

@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 /* Mezcalómano Global Styles */
 
 /* CSS Custom Properties - Brand Colors */
@@ -7,6 +9,8 @@
   --color-yellow: #A29037;
   --color-terracotta: #B86744;
   --color-white: #FFFFFF;
+  /* Directory/Map (MM_Directory compatibility) */
+  --agave-yellow: #a29037;
 
   /* Spacing Scale (4px base) */
   --space-1: 4px;
@@ -184,4 +188,29 @@ a:hover {
   .container {
     padding: 0 var(--space-6);
   }
+}
+
+/* Map page: MapLibre popup theme */
+.mezcal-map-popup .maplibregl-popup-content {
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.mezcal-map-popup .maplibregl-popup-close-button {
+  color: var(--color-white);
+  font-size: 20px;
+  padding: 4px 6px;
+}
+.mezcal-map-popup .maplibregl-popup-close-button:hover {
+  color: var(--agave-yellow);
+}
+
+/* Map page: dropdown dark theme */
+.map-page-select {
+  color: var(--color-white);
+  background-color: #32342f;
+}
+.map-page-select option {
+  background-color: #32342f;
+  color: var(--color-white);
 }

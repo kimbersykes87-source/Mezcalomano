@@ -4,462 +4,275 @@ This document explains all external connections and configurations for the Mezca
 
 ## Table of Contents
 
-1. [GitHub Repository Connection](#github-repository-connection)
-2. [Cloudflare Pages Deployment](#cloudflare-pages-deployment)
+1. [GitHub Repository](#github-repository)
+2. [Vercel Deployment](#vercel-deployment)
 3. [Configuration Files](#configuration-files)
 4. [Environment Variables](#environment-variables)
-5. [Redirects Configuration](#redirects-configuration)
-6. [Domain Configuration](#domain-configuration)
+5. [Redirects](#redirects)
+6. [Domain and DNS (Cloudflare)](#domain-and-dns-cloudflare)
 7. [Verification Checklist](#verification-checklist)
+8. [External Links](#external-links)
 
 ---
 
-## GitHub Repository Connection
+## GitHub Repository
 
 ### Repository Details
 
-- **Repository URL**: `https://github.com/kimbersykes87-source/Mezcalomano`
-- **Default Branch**: `main`
-- **Connection Type**: Git integration via Cloudflare Pages
+- **URL**: `https://github.com/kimbersykes87-source/Mezcalomano`
+- **Default branch**: `main`
+- **Connection**: Git integration via Vercel
 
 ### How It Works
 
-1. **Cloudflare Pages Integration**: The repository is connected to Cloudflare Pages through the Cloudflare dashboard
-2. **Automatic Deployments**: When code is pushed to the `main` branch, Cloudflare Pages automatically:
-   - Detects the push
-   - Runs `npm run build`
-   - Deploys the output from the `dist` directory
-3. **Manual Deployment**: Can also be triggered manually from Cloudflare Pages dashboard
+1. The repository is connected to Vercel in the Vercel dashboard.
+2. Pushing to `main` triggers an automatic build and deployment.
+3. Preview deployments are created for pull requests.
 
-### To Verify Connection
+### To Connect or Reconnect
 
-1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com/)
-2. Navigate to **Pages** → **Mezcalomano** project
-3. Check **Settings** → **Builds & deployments**
-4. Verify the repository is listed and connected
-
-### To Reconnect (if needed)
-
-1. Cloudflare Dashboard → Pages → Your Project
-2. Settings → Builds & deployments
-3. Click "Connect to Git" or "Update repository"
-4. Authorize Cloudflare to access GitHub
-5. Select repository: `kimbersykes87-source/Mezcalomano`
-6. Select branch: `main`
+1. Vercel Dashboard → Add New → Project (or Settings → Git).
+2. Import from GitHub and select `kimbersykes87-source/Mezcalomano`.
+3. Choose production branch: `main`.
 
 ---
 
-## Cloudflare Pages Deployment
+## Vercel Deployment
 
 ### Deployment Configuration
 
-The site is deployed on Cloudflare Pages with the following settings:
+The site is deployed on **Vercel** with the following settings:
 
-- **Project Name**: `mezcalomano` (configured in `config/wrangler.toml`)
-- **Site URL**: `https://mezcalomano.com` (configured in `astro.config.mjs`)
-- **Build Command**: `npm run build` (set in Cloudflare Pages dashboard)
-- **Build Output Directory**: `dist` (set in Cloudflare Pages dashboard)
-- **Framework Preset**: Astro (auto-detected)
+- **Framework**: Next.js (auto-detected)
+- **Build command**: `npm run build`
+- **Output**: `.next` (default; no custom output directory)
+- **Install command**: `npm install`
+- **Node version**: 20+ (see `package.json` engines)
 
 ### Key Configuration Files
 
-#### `astro.config.mjs`
+#### `next.config.ts`
 
-This file configures Astro to work with Cloudflare Pages:
+Redirects and Next.js configuration:
 
-```javascript
-export default defineConfig({
-  output: 'hybrid',              // Enables both static and server-side rendering
-  adapter: cloudflare(),         // Uses Cloudflare adapter for deployment
-  site: 'https://mezcalomano.com', // Canonical site URL
-  // ...
-});
+```typescript
+const nextConfig: NextConfig = {
+  redirects: async () => [
+    { source: "/buy", destination: "https://shop.mezcalomano.com/products/discovery-deck", permanent: false },
+    { source: "/shop", destination: "https://shop.mezcalomano.com", permanent: false },
+    { source: "/matrix", destination: "/directory", permanent: true },
+    { source: "/matrix/", destination: "/directory", permanent: true },
+  ],
+};
 ```
-
-**Critical Settings:**
-- `adapter: cloudflare()` - This connects Astro to Cloudflare Pages
-- `site: 'https://mezcalomano.com'` - Sets the canonical domain
-- `output: 'hybrid'` - Allows both static and dynamic routes
-
-#### `config/wrangler.toml`
-
-Cloudflare Workers/Pages compatibility configuration:
-
-```toml
-name = "mezcalomano"
-compatibility_date = "2026-01-14"
-```
-
-**Purpose**: Ensures compatibility with Cloudflare Workers runtime
 
 #### `package.json`
 
-Contains the critical dependency:
+- **Scripts**: `dev`, `build`, `start`, `lint`, `build:matrix-cards`, `build:og-icon-png`
+- **Dependencies**: `next`, `react`, `react-dom`, `papaparse` (for matrix pipeline)
 
-```json
-{
-  "dependencies": {
-    "@astrojs/cloudflare": "^11.0.0"  // Cloudflare adapter
-  }
-}
-```
+### Build and Deploy Flow
 
-**Critical**: This package must remain in dependencies for Cloudflare deployment to work.
+1. Push code to `main` (or open a PR for a preview).
+2. Vercel runs `npm install` and `npm run build`.
+3. Next.js builds the app; static pages are prerendered where possible.
+4. Site is served at the Vercel URL and any custom domains (e.g. mezcalomano.com).
 
 ---
 
 ## Environment Variables
 
-### Contact form: Cloudflare Turnstile
+### Contact Form: Cloudflare Turnstile
 
-The contact form uses **Cloudflare Turnstile** (not reCAPTCHA). Set these in **Cloudflare Pages** → **Settings** → **Variables and Secrets** and in local **`.env`** for development:
+The contact form uses **Cloudflare Turnstile**. Set these in **Vercel** (Project → Settings → Environment Variables) and in local **`.env.local`** for development:
 
-| Variable Name | Purpose | Where Used | Required |
-|--------------|---------|------------|----------|
-| `PUBLIC_TURNSTILE_SITE_KEY` | Turnstile site key (exposed to browser) | Contact form widget | Yes, for contact form |
-| `TURNSTILE_SECRET_KEY` | Turnstile secret key (server-side) | `/api/contact` token verification | Yes, for contact form |
+| Variable | Purpose | Where used | Required |
+|----------|---------|------------|----------|
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Turnstile site key (public) | Contact form widget (client) | Yes, for contact form |
+| `TURNSTILE_SECRET_KEY` | Turnstile secret key (server) | `src/app/api/contact/route.ts` | Yes, for contact form |
 
-- **Production**: Cloudflare Dashboard → Workers & Pages → mezcalomano → **Settings** → **Variables and Secrets** → add both (mark secret key as **Secret**).
-- **Local development**: Copy into project root `.env` (see `.env.example` if present; never commit `.env`).
+- **Production / Preview**: Vercel → Project → Settings → Environment Variables. Add both; enable for Production and Preview.
+- **Local**: Copy `.env.example` to `.env.local` and fill in values. Never commit `.env` or `.env.local`.
 
-### Legacy / optional
+### Access in Code
 
-| Variable Name | Purpose | Where Used |
-|--------------|---------|------------|
-| `PUBLIC_RECAPTCHA_SITE_KEY` | Google reCAPTCHA (legacy) | Not used by current contact form |
-| `RECAPTCHA_SECRET` | reCAPTCHA secret (legacy) | Not used by current contact form |
-| `MAILCHANNELS_API_KEY` | MailChannels API key (optional) | Email sending |
+- **Client**: `process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY` (only `NEXT_PUBLIC_*` are exposed to the browser).
+- **Server (API route)**: `process.env.TURNSTILE_SECRET_KEY` in `src/app/api/contact/route.ts`.
 
-### Type Definitions
+### Optional / Legacy
 
-Environment variable types are defined in `src/env.d.ts`:
-
-```typescript
-interface ImportMetaEnv {
-  readonly PUBLIC_TURNSTILE_SITE_KEY?: string;
-  readonly TURNSTILE_SECRET_KEY?: string;
-  readonly RECAPTCHA_SECRET?: string;
-  readonly PUBLIC_RECAPTCHA_SITE_KEY?: string;
-  readonly MAILCHANNELS_API_KEY?: string;
-}
-```
-
-### How to Set Environment Variables
-
-1. **Cloudflare**: Go to Cloudflare Dashboard → Pages → mezcalomano → **Settings** → **Variables and Secrets**
-2. Add `PUBLIC_TURNSTILE_SITE_KEY` (Plaintext) and `TURNSTILE_SECRET_KEY` (Secret)
-3. **Important**: After adding/changing variables, redeploy (new commit or retry latest deployment)
-4. **Local**: Add the same keys to `.env` in the project root for `npm run dev`
-
-### Accessing Variables in Code
-
-- **Client-side**: `import.meta.env.PUBLIC_TURNSTILE_SITE_KEY` (only `PUBLIC_*` vars are exposed)
-- **Server-side**: `import.meta.env.TURNSTILE_SECRET_KEY` in `src/pages/api/contact.ts`
+| Variable | Purpose |
+|----------|---------|
+| `MAILCHANNELS_API_KEY` | Optional; for future email sending from contact form |
 
 ---
 
-## Redirects Configuration
+## Redirects
 
-### File: `_redirects`
-
-This file is automatically processed by Cloudflare Pages to set up URL redirects.
+Redirects are configured in **`next.config.ts`** (not in a file like `_redirects`). No extra Vercel redirect config is needed unless you add more rules.
 
 ### Current Redirects
 
-#### Shopify Store Redirects
+| Source | Destination | Type |
+|--------|-------------|------|
+| `/buy` | https://shop.mezcalomano.com/products/discovery-deck | 302 (temporary) |
+| `/shop` | https://shop.mezcalomano.com | 302 (temporary) |
+| `/matrix` | `/directory` | 301 (permanent) |
+| `/matrix/` | `/directory` | 301 (permanent) |
 
-```
-/buy 302 https://shop.mezcalomano.com/products/discovery-deck
-/shop 302 https://shop.mezcalomano.com
-```
+### Testing
 
-**Purpose**: 
-- `/buy` redirects to the Discovery Deck product page on Shopify
-- `/shop` redirects to the main Shopify store
+After deployment, verify:
 
-**Status Code**: `302` (temporary redirect) - allows changing destination later
-
-#### Legacy Route Redirects
-
-```
-/api/* 301 /
-/checkout 301 /
-/orders 301 /
-/webhook/* 301 /
-/admin/* 301 /
-```
-
-**Purpose**: Redirects old/legacy routes to homepage
-
-**Status Code**: `301` (permanent redirect) - tells search engines these routes are gone
-
-### Redirect Syntax
-
-```
-<source-path> <status-code> <destination-url>
-```
-
-- **Source path**: Can include wildcards (`*`)
-- **Status code**: `301` (permanent) or `302` (temporary)
-- **Destination**: Full URL or relative path
-
-### Testing Redirects
-
-After deployment, test:
-- `https://mezcalomano.com/buy` → Should redirect to Shopify product
-- `https://mezcalomano.com/shop` → Should redirect to Shopify store
+- `https://mezcalomano.com/buy` → Shopify Discovery Deck product
+- `https://mezcalomano.com/shop` → Shopify store
+- `https://mezcalomano.com/matrix` → redirects to `/directory`
 
 ---
 
-## Domain Configuration
+## Domain and DNS (Cloudflare)
 
 ### Primary Domain
 
-- **Domain**: `mezcalomano.com`
-- **Configured in**: `astro.config.mjs` (`site: 'https://mezcalomano.com'`)
-- **SSL/TLS**: Automatically managed by Cloudflare
+- **Domain**: `mezcalomano.com` (and optionally `www.mezcalomano.com`)
+- **DNS**: Hosted with **Cloudflare**. DNS records point to Vercel; the site is built and served by Vercel.
+- **SSL**: Issued and managed by Vercel when the domain is added in Vercel and DNS is correct.
 
-### Subdomain Redirects
+### How It Works
 
-- **Shop**: `shop.mezcalomano.com` → Points to Shopify (configured in Cloudflare DNS, not this repo)
+1. **Vercel**: You add `mezcalomano.com` and `www.mezcalomano.com` in Project → Settings → Domains. Vercel shows which DNS records to create.
+2. **Cloudflare**: In the Cloudflare zone for `mezcalomano.com`, you add the records Vercel specifies (typically A and/or CNAME to Vercel’s targets). Use **DNS only** (grey cloud) for those records so Vercel can verify and issue SSL.
+3. **Shop**: `shop.mezcalomano.com` points to Shopify via Cloudflare DNS (separate from this project).
 
-### Domain Setup in Cloudflare
+### Step-by-Step
 
-1. **DNS Configuration**: Managed in Cloudflare DNS dashboard
-2. **SSL/TLS**: Automatically provisioned by Cloudflare
-3. **Custom Domain in Pages**: 
-   - Cloudflare Dashboard → Pages → Project → **Custom domains**
-   - Should show `mezcalomano.com` as connected
+See **[docs/deploy/DOMAIN_CLOUDFLARE_VERCEL.md](docs/deploy/DOMAIN_CLOUDFLARE_VERCEL.md)** for the full walkthrough (adding domain in Vercel, then updating DNS in Cloudflare).
 
 ---
 
-## File Structure Overview
+## Configuration Files
 
-### Critical Files (DO NOT DELETE)
+### Critical Files (Do Not Delete)
 
 ```
-├── astro.config.mjs          # Cloudflare adapter & site URL
-├── config/
-│   └── wrangler.toml        # Cloudflare Workers compatibility
-├── _redirects               # Cloudflare Pages redirects
-├── package.json             # Dependencies (includes @astrojs/cloudflare)
-├── tsconfig.json            # TypeScript config (required for builds)
+├── next.config.ts       # Redirects and Next.js config
+├── package.json         # Dependencies and scripts
+├── tsconfig.json        # TypeScript and path alias @/* → src/*
 ├── src/
-│   └── env.d.ts            # Environment variable type definitions
-└── .gitignore              # Git ignore rules
+│   └── env.d.ts         # Optional; env types
+└── .gitignore           # Includes .next, .env.local
 ```
 
-### Public Files
-
-```
-├── public/
-│   ├── robots.txt          # SEO robots file (references domain)
-│   └── sitemap.xml         # SEO sitemap (references domain)
-```
-
-### Source Files (Can be modified)
+### Important Directories
 
 ```
 ├── src/
-│   └── pages/
-│       └── index.astro     # Main page (can be redesigned)
+│   ├── app/             # App Router: layout, pages, api
+│   ├── components/      # React components
+│   ├── data/            # matrix.json etc.
+│   ├── scripts/         # build-matrix-cards etc.
+│   └── styles/          # global.css, components.css
+├── public/              # Static assets (favicons, assets/*)
+└── docs/                # Documentation
 ```
-
----
-
-## Build Process
-
-### Local Build
-
-```bash
-npm install          # Install dependencies
-npm run build        # Build for production
-```
-
-**Output**: Creates `dist/` directory with:
-- Static HTML files
-- Cloudflare Workers functions (if any)
-- `_redirects` file (copied to dist)
-- `_routes.json` (auto-generated by Astro)
-
-### Cloudflare Build
-
-1. Push code to `main` branch
-2. Cloudflare Pages detects push
-3. Runs `npm run build` in cloud
-4. Deploys `dist/` directory
-5. Applies `_redirects` rules
-6. Site goes live at `mezcalomano.com`
 
 ---
 
 ## Verification Checklist
 
-Use this checklist to verify all connections are working:
+Use this to verify connections:
 
-### GitHub Connection
+### GitHub
+
 - [ ] Repository exists at `https://github.com/kimbersykes87-source/Mezcalomano`
-- [ ] Cloudflare Pages shows repository connected
-- [ ] Pushing to `main` triggers automatic deployment
+- [ ] Vercel project is connected to this repo
+- [ ] Pushing to `main` triggers a deployment
 
-### Cloudflare Pages Configuration
-- [ ] Project exists in Cloudflare Pages dashboard
-- [ ] Build command: `npm run build`
-- [ ] Output directory: `dist`
-- [ ] Framework preset: Astro
-- [ ] Custom domain: `mezcalomano.com` connected
+### Vercel
 
-### Configuration Files
-- [ ] `astro.config.mjs` has `adapter: cloudflare()`
-- [ ] `astro.config.mjs` has `site: 'https://mezcalomano.com'`
-- [ ] `package.json` includes `@astrojs/cloudflare` dependency
-- [ ] `config/wrangler.toml` exists with project name
-- [ ] `_redirects` file exists with Shopify redirects
+- [ ] Build command: `npm run build` (or default)
+- [ ] Framework: Next.js
+- [ ] Custom domains: `mezcalomano.com` (and `www` if used) added and valid
+- [ ] Environment variables: `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and `TURNSTILE_SECRET_KEY` set for Production (and Preview if needed)
 
-### Environment Variables (contact form)
-- [ ] `PUBLIC_TURNSTILE_SITE_KEY` set in Cloudflare Pages (Variables and Secrets)
-- [ ] `TURNSTILE_SECRET_KEY` set in Cloudflare Pages as **Secret**
-- [ ] Same keys in local `.env` for `npm run dev`
-- [ ] Redeployed after adding/changing variables
+### Configuration
+
+- [ ] `next.config.ts` contains redirects for `/buy`, `/shop`, `/matrix`
+- [ ] `package.json` has scripts `dev`, `build`, `start`
+- [ ] Local `.env.local` has Turnstile keys for `npm run dev`
 
 ### Redirects
-- [ ] `https://mezcalomano.com/buy` redirects to Shopify product
-- [ ] `https://mezcalomano.com/shop` redirects to Shopify store
-- [ ] Legacy routes redirect to homepage
 
-### Build & Deployment
+- [ ] `/buy` redirects to Shopify product
+- [ ] `/shop` redirects to Shopify store
+- [ ] `/matrix` and `/matrix/` redirect to `/directory`
+
+### Build and Site
+
 - [ ] `npm run build` succeeds locally
-- [ ] Build creates `dist/` directory
-- [ ] `dist/_redirects` file exists
-- [ ] Cloudflare Pages deployments succeed
-- [ ] Site is accessible at `https://mezcalomano.com`
+- [ ] Site is accessible at `https://mezcalomano.com` (after DNS and domain setup)
+- [ ] Contact form loads and Turnstile widget appears (if keys are set)
 
 ---
 
-## Troubleshooting
-
-### Build Fails
-
-**Issue**: `npm run build` fails
-- **Check**: All dependencies installed (`npm install`)
-- **Check**: `@astrojs/cloudflare` is in `package.json`
-- **Check**: `astro.config.mjs` has correct adapter configuration
-
-### Deployment Fails
-
-**Issue**: Cloudflare Pages build fails
-- **Check**: Build command is `npm run build`
-- **Check**: Output directory is `dist`
-- **Check**: `package.json` exists and is valid
-- **Check**: Cloudflare Pages build logs for specific errors
-
-### Redirects Not Working
-
-**Issue**: Redirects don't work after deployment
-- **Check**: `_redirects` file exists in root directory
-- **Check**: `_redirects` file is copied to `dist/` after build
-- **Check**: Redirect syntax is correct (path, status code, destination)
-- **Check**: Cloudflare Pages has processed the file (may need redeploy)
-
-### Environment Variables Not Available
-
-**Issue**: `import.meta.env.VARIABLE_NAME` is undefined
-- **Check**: Variable is set in Cloudflare Pages dashboard
-- **Check**: Variable name matches exactly (case-sensitive)
-- **Check**: Redeployed after adding/changing variable
-- **Check**: For client-side: variable must start with `PUBLIC_`
-
-### Domain Not Working
-
-**Issue**: `mezcalomano.com` doesn't load
-- **Check**: Custom domain is connected in Cloudflare Pages
-- **Check**: DNS records are correct in Cloudflare DNS
-- **Check**: SSL/TLS certificate is active (may take a few minutes)
-- **Check**: Site URL in `astro.config.mjs` matches domain
-
----
-
-## Quick Reference
+## External Links
 
 ### Important URLs
 
-- **GitHub Repository**: https://github.com/kimbersykes87-source/Mezcalomano
-- **Cloudflare Dashboard**: https://dash.cloudflare.com/
-- **Live Site**: https://mezcalomano.com
-- **Shopify Store**: https://shop.mezcalomano.com
+- **GitHub**: https://github.com/kimbersykes87-source/Mezcalomano
+- **Vercel Dashboard**: https://vercel.com/dashboard
+- **Cloudflare Dashboard** (DNS): https://dash.cloudflare.com/
+- **Live site**: https://mezcalomano.com
+- **Shop**: https://shop.mezcalomano.com
 - **Instagram**: https://www.instagram.com/mezcalomano/
 - **TikTok**: https://www.tiktok.com/@mezcalomano
-- **Map**: https://map.mezcalomano.com (external)
+- **Map** (external): https://map.mezcalomano.com
 
 ### Key Commands
 
 ```bash
 npm install          # Install dependencies
-npm run dev          # Local development server
+npm run dev          # Local dev (http://localhost:3000)
 npm run build        # Production build
-npm run preview      # Preview production build locally
+npm run start        # Run production build locally
+npm run lint         # Run ESLint
 ```
-
-### Key Files to Never Delete
-
-- `astro.config.mjs` - Cloudflare adapter configuration
-- `config/wrangler.toml` - Cloudflare Workers compatibility
-- `_redirects` - Redirect rules
-- `package.json` - Dependencies
-- `src/env.d.ts` - Environment variable types
 
 ---
 
-## For New Developers/Agents
+## For New Developers / Agents
 
 When starting work on this project:
 
-1. **Clone the repository**: `git clone https://github.com/kimbersykes87-source/Mezcalomano.git`
-2. **Install dependencies**: `npm install`
-3. **Read this file**: Understand all connections before making changes
-4. **Test locally**: `npm run dev` to see changes
-5. **Build test**: `npm run build` to ensure it works
-6. **Verify critical files**: Check that `astro.config.mjs`, `_redirects`, and `package.json` are intact
-7. **Commit and push**: Changes auto-deploy to Cloudflare Pages
+1. **Clone**: `git clone https://github.com/kimbersykes87-source/Mezcalomano.git`
+2. **Install**: `npm install`
+3. **Read this file** and [README.md](README.md) to understand connections and setup.
+4. **Env**: Copy `.env.example` to `.env.local` and add Turnstile keys for the contact form.
+5. **Run**: `npm run dev` and open http://localhost:3000.
+6. **Build**: `npm run build` to ensure the project builds.
+7. **Deploy**: Push to `main`; Vercel deploys automatically. Set env vars in Vercel if not already set.
 
-**Remember**: 
-- Never delete `astro.config.mjs`, `_redirects`, or `package.json` dependencies
-- The site URL (`mezcalomano.com`) is configured in `astro.config.mjs`
-- Redirects to Shopify are in `_redirects` file
-- Environment variables are set in Cloudflare Pages dashboard, not in code
+**Remember:**
 
----
-
-## Social Media Links
-
-### Instagram
-- **URL**: https://www.instagram.com/mezcalomano/
-- **Location**: Footer social icons
-- **Implementation**: `src/Footer.astro`
-
-### TikTok
-- **URL**: https://www.tiktok.com/@mezcalomano
-- **Location**: Footer social icons
-- **Implementation**: `src/Footer.astro`
-
-## Shop Integration
-
-### Shop Button
-- **URL**: https://shop.mezcalomano.com
-- **Locations**: 
-  - Header navigation (desktop) - styled with border
-  - Mobile navigation menu - styled with border
-  - "Get the Discovery Deck" button on home page
-- **Implementation**: 
-  - `src/Header.astro` - `.nav-shop-btn` class
-  - `src/MobileNav.astro` - `.mobile-nav-shop` class
-  - `src/pages/index.astro` - hero CTA button
-  - `src/styles/components.css` - border styling
-
-### Redirects
-- `/buy` → https://shop.mezcalomano.com/products/discovery-deck (via `_redirects`)
-- `/shop` → https://shop.mezcalomano.com (via `_redirects`)
+- Redirects live in `next.config.ts`, not in a `_redirects` file.
+- Domain DNS is in Cloudflare; the app is hosted on Vercel.
+- Environment variables are set in Vercel (and in `.env.local` for local dev).
 
 ---
 
-Last updated: 2026-01-30
+## Social and Shop Integration
+
+### Social (Footer)
+
+- **Instagram**: https://www.instagram.com/mezcalomano/ — `src/components/Footer.tsx`
+- **TikTok**: https://www.tiktok.com/@mezcalomano — `src/components/Footer.tsx`
+
+### Shop
+
+- **Store**: https://shop.mezcalomano.com
+- **Locations**: Header (basket icon), MobileNav (“SHOP” link), Home hero CTA (“BUY THE DISCOVERY DECK” → `/buy`).
+- **Redirects**: `/buy` and `/shop` configured in `next.config.ts`.
+
+---
+
+Last updated: 2026-02-17

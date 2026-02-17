@@ -13,9 +13,20 @@ npm run build:matrix-cards  # Build matrix card images from TIFFs
 npm run lint         # Run ESLint
 ```
 
-## Important Documentation
+## Documentation
 
-**📖 [CONNECTIONS.md](CONNECTIONS.md)** - Complete guide to all external connections (GitHub, domains, redirects, environment variables). **Read this first** to understand the project setup.
+| Doc | Description |
+|-----|-------------|
+| **[CONNECTIONS.md](CONNECTIONS.md)** | External connections (GitHub, Vercel, domain, env vars, redirects). **Read this first.** |
+| **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** | Commands, critical files, URLs. |
+| **[docs/PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md)** | Stack, structure, design system, assets. |
+| **[docs/CHANGELOG.md](docs/CHANGELOG.md)** | Version history. |
+| **[docs/deploy/SETUP_CHECKLIST.md](docs/deploy/SETUP_CHECKLIST.md)** | First-time Vercel deployment steps. |
+| **[docs/deploy/vercel.md](docs/deploy/vercel.md)** | Vercel build config and env vars. |
+| **[docs/deploy/DOMAIN_CLOUDFLARE_VERCEL.md](docs/deploy/DOMAIN_CLOUDFLARE_VERCEL.md)** | Connect mezcalomano.com (Cloudflare DNS) to Vercel. |
+| **[docs/deploy/cloudflare-pages.md](docs/deploy/cloudflare-pages.md)** | Legacy: previous Astro/Cloudflare Pages setup. |
+| **[docs/MATRIX_CARDS_PIPELINE.md](docs/MATRIX_CARDS_PIPELINE.md)** | Matrix card image build script. |
+| **[docs/troubleshooting/nextjs.md](docs/troubleshooting/nextjs.md)** | Next.js troubleshooting. |
 
 ## Overview
 
@@ -36,18 +47,24 @@ npm run lint         # Run ESLint
 
 ## Environment Variables
 
-For the contact form (Cloudflare Turnstile):
+**Contact form (Cloudflare Turnstile):**
 
 - `NEXT_PUBLIC_TURNSTILE_SITE_KEY` - Public site key (client)
 - `TURNSTILE_SECRET_KEY` - Secret key (API route only)
 
-Copy `.env.example` to `.env.local` and fill in values. On Vercel, set these in Project Settings → Environment Variables.
+**Directory and Map (Supabase):**
+
+- `NEXT_PUBLIC_SUPABASE_URL` - Your Supabase project URL
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Supabase anonymous (public) key
+
+Copy `.env.example` to `.env.local` and fill in values. On Vercel, set these in Project Settings → Environment Variables. The directory and map pages require a Supabase `species` table compatible with the app’s Species type (see `src/types/species.ts`).
 
 ## Site Features
 
-- **5 Pages**: Home, About, Directory, Contact, Map (coming soon)
-- **Interactive Directory**: Browse agave species with search; click cards for details
-- **Full-Bleed Hero Images**: Responsive heroes (mobile/tablet/desktop)
+- **6 Pages**: Home, About, Directory, Directory species detail (`/directory/[slug]`), Contact, Map
+- **Interactive Directory**: Swipeable species cards, search, and detail pages; data from Supabase
+- **Interactive Map**: MapLibre Mexico state map with species by state and links to directory
+- **Full-Bleed Hero Images**: Responsive heroes (mobile/tablet/desktop) on Home, About, etc.
 - **Mobile-First Design**: Responsive layout
 - **Dark Theme**: Elegant `#272926` background with `#FFFFFF` text
 - **Open Sans Condensed**: Google Fonts typography
@@ -66,7 +83,7 @@ npm run build:matrix-cards
 ### Output
 
 - **Location**: `public/assets/matrix/cards/`
-- **Data**: `src/data/matrix.json` (species and image paths)
+- **Data**: The build script outputs to this folder; the live directory uses **Supabase** (see Environment Variables). `src/data/matrix.json` is used by the pipeline if you sync it with the generated manifest.
 
 ## Design System
 
@@ -87,4 +104,4 @@ npm run build:matrix-cards
 - **Shop**: https://shop.mezcalomano.com
 - **Instagram**: https://www.instagram.com/mezcalomano/
 - **TikTok**: https://www.tiktok.com/@mezcalomano
-- **Map**: https://map.mezcalomano.com (external)
+- **Map**: In-app at `/map` (Mexico state map with species links)

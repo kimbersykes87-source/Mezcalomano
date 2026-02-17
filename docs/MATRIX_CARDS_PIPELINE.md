@@ -1,6 +1,6 @@
 # Matrix Cards Asset Pipeline
 
-Automated pipeline to convert 40 print-ready TIFF files into web-optimized Matrix card images.
+Automated pipeline to convert 40 print-ready TIFF files into web-optimized Matrix card images. The **live Directory** now uses **Supabase** for species data; this pipeline is for generating card assets. Output: **`public/assets/matrix/cards/`** (WebP + `index.json`). The script uses **`data/species_matrix_v1.csv`** and writes a manifest; **`src/data/matrix.json`** is used only if you sync it with that output (e.g. for other tooling). If you regenerate cards, ensure any consumers of `matrix.json` or the cards folder stay in sync.
 
 ## Quick Start
 

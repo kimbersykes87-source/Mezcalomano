@@ -2,39 +2,45 @@
 
 ## Project Description
 
-Production-ready, mobile-first marketing website for Mezcalómano, featuring an interactive agave species matrix, elegant dark theme design, and seamless integration with Shopify store and social media.
+Production-ready, mobile-first marketing website for Mezcalómano, built with Next.js. Features an interactive agave species directory, full-bleed hero images, dark theme design, and integration with Shopify and social media.
 
 ## Technology Stack
 
-- **Framework**: Astro 4.15.0
-- **Adapter**: @astrojs/cloudflare 11.0.0
-- **Deployment**: Cloudflare Pages
-- **Node.js**: 22.16.0 (pinned)
-- **TypeScript**: 5.4.5
-- **Build Tool**: Vite (via Astro)
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript
+- **Deployment**: Vercel
+- **Node.js**: 20+ (see `package.json` engines)
+- **Styling**: Global CSS + component CSS; Tailwind (v4) used for directory and map pages only
 
 ## Site Structure
 
 ### Pages
 
-1. **Home** (`/`) - Full-screen hero with CTA to shop
-2. **About** (`/about`) - Project mission and information
-3. **Matrix** (`/matrix`) - Interactive species browser with 40 agave species
-4. **Map** (`/map`) - Coming soon page with external link
-5. **Contact** (`/contact`) - Contact form with Turnstile placeholder
+1. **Home** (`/`) — Full-screen hero with CTA to buy the Discovery Deck
+2. **About** (`/about`) — Project mission and information
+3. **Directory** (`/directory`) — Swipeable species cards, search; data from Supabase; `/directory/[slug]` for species detail
+4. **Map** (`/map`) — MapLibre Mexico state map with species by state; links to directory
+5. **Contact** (`/contact`) — Contact form with Cloudflare Turnstile
+
+### App Router Structure
+
+- `src/app/layout.tsx` — Root layout (metadata, Header, Footer, fonts)
+- `src/app/page.tsx` — Home
+- `src/app/about/page.tsx` — About
+- `src/app/directory/page.tsx` — Directory (client: Supabase, swipeable cards, search)
+- `src/app/directory/[slug]/page.tsx` — Species detail
+- `src/app/contact/page.tsx` — Contact
+- `src/app/map/page.tsx` — Map (MapLibre, Supabase)
+- `src/app/api/contact/route.ts` — POST handler for contact form
 
 ### Components
 
-- `Header.astro` - Fixed navigation with logo and menu
-- `Footer.astro` - Logo, email, and social links
-- `MobileNav.astro` - Full-screen mobile menu overlay
-- `MatrixCard.astro` - Individual species card
-- `MatrixDrawer.astro` - Species detail drawer
-- `ContactForm.astro` - Contact form with validation
-
-### Layouts
-
-- `BaseLayout.astro` - Global layout with meta tags, favicons, and Open Graph
+- `Header.tsx` — Fixed nav with logo, desktop links, mobile burger, shop link
+- `Footer.tsx` — Social links (Instagram, TikTok), copyright
+- `MobileNav.tsx` — Full-screen mobile menu overlay
+- `Hero.tsx` — Reusable hero (title, subtitle, responsive images, optional CTA)
+- `ContactForm.tsx` — Contact form with Turnstile and validation
+- Directory/Map: `SwipeableCardStack.tsx`, `SpeciesCard.tsx`, `KeyCard.tsx`, `SearchOverlay.tsx`
 
 ## Design System
 
@@ -42,196 +48,147 @@ Production-ready, mobile-first marketing website for Mezcalómano, featuring an 
 
 ```css
 --color-dark: #272926      /* Background */
---color-olive: #7B815C    /* Primary accent, buttons */
---color-yellow: #A29037   /* Secondary accent */
+--color-olive: #7B815C     /* Primary accent, buttons */
+--color-yellow: #A29037    /* Secondary accent */
 --color-terracotta: #B86744 /* Hover states */
 --color-white: #FFFFFF     /* Text */
 ```
 
 ### Typography
 
-- **Font Family**: Open Sans (variable font)
-- **Weights**: 300-800 (light to extra bold)
-- **Base Size**: 16px
+- **Font**: Open Sans Condensed (Google Fonts)
+- **Base size**: 16px
 - **Headings**: Responsive clamp() scaling
 
-### Spacing Scale
+### Spacing Scale (4px base)
 
-4px base unit:
-- `--space-1`: 4px
-- `--space-2`: 8px
-- `--space-3`: 12px
-- `--space-4`: 16px
-- `--space-6`: 24px
-- `--space-8`: 32px
-- `--space-12`: 48px
-- `--space-16`: 64px
+- `--space-1` through `--space-16` (see `src/styles/global.css`)
 
 ### Border Radius
 
-- `--radius-sm`: 4px
-- `--radius-md`: 8px
-- `--radius-lg`: 12px
+- `--radius-sm`, `--radius-md`, `--radius-lg`
 
 ## Assets
 
-### Logos
+### Logos and Icons
 
-- **Header/Footer**: `assets/brand/logos/mezcalomano_lockup_stacked_dark.svg`
-- **Icon**: `assets/brand/logos/mezcalomano_icon_white.svg`
+- **Public**: `public/assets/brand/logos/`, `public/assets/ui/icons/`
+- **Header logo**: `mezcalomano_lockup_stacked_dark.svg`
+- **Icons**: burger, close, shopping basket, etc.
 
-### Icons
+### Hero Images
 
-Located in `assets/ui/icons/`:
-- `icon_burger.svg` - Mobile menu toggle
-- `icon_close.svg` - Close buttons
-- `icon_search.svg` - Search input
-- `icon_filter.svg` - Filter UI
-- `icon_chevron_right.svg` - Navigation
-- `icon_external_link.svg` - External links
+- **Location**: `public/assets/photos/`
+- **Naming**: `home_hero_*`, `about_hero_*`, `directory_hero_*` (mobile, tablet, desktop variants)
+- **Format**: PNG; used via `<picture>` in `Hero.tsx`
 
-### Photos
-
-Hero images in `assets/photos/`:
-- `home_hero_01_1600w.webp` - Home page
-- `about_01_1600w.webp` - About page
-- `matrix_01_1600w.webp` - Matrix page
-- `contact_01_1600w.webp` - Contact page
-
-### Matrix Cards
+### Matrix Cards (build pipeline)
 
 - **Location**: `public/assets/matrix/cards/`
 - **Format**: WebP (400×560 and 800×1120)
-- **Data**: `src/data/matrix.json`
-- **Count**: 40 species
+- **Data**: `src/data/matrix.json` (used by build script only; live directory uses Supabase)
+- **Pipeline**: `npm run build:matrix-cards` (see [MATRIX_CARDS_PIPELINE.md](MATRIX_CARDS_PIPELINE.md))
 
 ## External Integrations
 
 ### Shopify
 
-- **Store URL**: https://shop.mezcalomano.com
-- **Integration**: Direct links in navigation and CTAs
-- **Redirects**: `/buy` and `/shop` routes (via `_redirects`)
+- **Store**: https://shop.mezcalomano.com
+- **Redirects**: `/buy` → Discovery Deck product; `/shop` → store (in `next.config.ts`)
+- **Links**: Header basket, mobile nav “SHOP”, home CTA
 
 ### Social Media
 
 - **Instagram**: https://www.instagram.com/mezcalomano/
 - **TikTok**: https://www.tiktok.com/@mezcalomano
-- **Location**: Footer social icons
+- **Location**: Footer
 
 ### Map
 
-- **External URL**: https://map.mezcalomano.com
-- **Internal Route**: `/map` (coming soon page)
+- **External**: https://map.mezcalomano.com
+- **Internal**: `/map` — coming soon page with link
 
-## Build Process
+### Contact Form
 
-### Local Development
+- **Cloudflare Turnstile**: Bot protection; keys in Vercel env and `.env.local`
+- **API**: `src/app/api/contact/route.ts` (validation, Turnstile verify, placeholder response)
+
+## Build and Deployment
+
+### Local
 
 ```bash
-npm run dev          # Start dev server (http://localhost:4321)
-npm run build        # Production build
-npm run preview      # Preview production build
-npm run check        # Type checking
+npm run dev          # http://localhost:3000
+npm run build        # Production build (.next)
+npm run start        # Run production build locally
+npm run lint         # ESLint
 ```
 
-### Production Build
+### Production (Vercel)
 
-1. Runs `astro build`
-2. Generates static HTML in `dist/`
-3. Creates Cloudflare Workers functions (if needed)
-4. Copies `_redirects` to `dist/`
-5. Optimizes images (WebP/AVIF)
-
-### Deployment
-
-- **Trigger**: Push to `main` branch
-- **Platform**: Cloudflare Pages
-- **Build Command**: `npm run build`
-- **Output**: `dist/` directory
-
-## Key Features
-
-### Matrix Page
-
-- **Search**: Filters by common name, scientific name, one-liner
-- **Habitat Filter**: Chip-based filter with "All" reset
-- **Card Grid**: Responsive 2/3/4 column layout
-- **Detail Drawer**: Slide-up (mobile) / slide-in (desktop)
-- **Lazy Loading**: Images load on demand
-
-### Mobile Navigation
-
-- **Burger Menu**: Right-aligned toggle button
-- **Full-Screen Overlay**: Dark overlay with large tap targets
-- **Close Button**: Top-right X icon
-- **Keyboard Support**: ESC key closes menu
-
-### Hero Sections
-
-- **Full-Bleed Images**: Background images with gradient overlay
-- **Text Overlay**: White text with shadow for readability
-- **Responsive Heights**: Full-screen (home) / 50vh (pages)
+- **Trigger**: Push to `main` (or PR for preview)
+- **Build**: `npm run build`
+- **Domain**: mezcalomano.com (DNS in Cloudflare, points to Vercel)
 
 ## File Organization
 
 ```
 src/
-├── components/        # Reusable components
-├── layouts/          # Page layouts
-├── pages/            # Route pages
-│   ├── api/          # API routes
-│   └── *.astro       # Page files
-├── data/             # JSON data files
-├── scripts/          # Build scripts
-└── styles/           # CSS files
-    ├── global.css    # Global styles, variables
-    └── components.css # Component styles
+├── app/                 # App Router
+│   ├── layout.tsx       # Root layout
+│   ├── page.tsx         # Home
+│   ├── about/
+│   ├── directory/       # page, layout, [slug], DirectoryClient
+│   ├── contact/
+│   ├── map/
+│   └── api/contact/     # Contact form API
+├── components/          # React components (incl. directory/map)
+├── data/                # matrix.json (build pipeline)
+├── lib/                 # supabase, slug, map-utils
+├── types/               # species.ts
+├── scripts/             # build-matrix-cards, etc.
+└── styles/              # global.css, components.css
 
-assets/               # Source assets (not in public)
-├── brand/            # Logos
-├── photos/           # Hero images
-└── ui/               # Icons
-
-public/               # Static assets (copied to dist)
-├── assets/           # Public assets
-│   ├── favicon/     # Favicons
-│   ├── icons/        # Social icons
-│   └── matrix/       # Matrix card images
-└── data/             # Public data files
+public/                  # Static assets
+├── assets/
+│   ├── brand/
+│   ├── ui/
+│   ├── photos/
+│   ├── icons/
+│   ├── matrix/
+│   └── og/
+└── (favicon, robots, sitemap, etc.)
 ```
 
-## Browser Support
+## Key Features
 
-- Modern browsers (Chrome, Firefox, Safari, Edge)
-- Mobile-first responsive design
-- Progressive enhancement
-- No JavaScript required for basic navigation
+### Directory Page
 
-## Performance
+- **Data**: Supabase `species` table (see `src/types/species.ts`)
+- **Swipeable cards**: KeyCard + SpeciesCard; swipe or arrow keys to navigate
+- **Search**: SearchOverlay filters by common name
+- **Detail**: `/directory/[slug]` shows a single SpeciesCard with “Back to directory”
 
-- **Image Optimization**: WebP/AVIF formats
-- **Lazy Loading**: Matrix card images
-- **Code Splitting**: Automatic via Astro
-- **Font Loading**: `font-display: swap`
-- **Minification**: Automatic in production
+### Mobile Navigation
 
-## Accessibility
+- Burger opens overlay; close via X, overlay tap, or Escape
+- Links close overlay on click
 
-- Semantic HTML
-- ARIA labels on interactive elements
-- Keyboard navigation support
-- Focus states on all interactive elements
-- Alt text on images
+### Hero Sections
 
-## SEO
+- Responsive `<picture>` (mobile / tablet / desktop)
+- Optional standalone mode (home); optional CTA children
 
-- Open Graph meta tags
-- Canonical URLs
-- Sitemap (`public/sitemap.xml`)
-- Robots.txt (`public/robots.txt`)
-- Meta descriptions on all pages
+## Documentation Index
+
+- **[README.md](../README.md)** — Quick start, overview, env vars
+- **[CONNECTIONS.md](../CONNECTIONS.md)** — All external connections and config
+- **[QUICK_REFERENCE.md](../QUICK_REFERENCE.md)** — Commands and critical files
+- **[docs/deploy/SETUP_CHECKLIST.md](deploy/SETUP_CHECKLIST.md)** — First-time Vercel setup
+- **[docs/deploy/vercel.md](deploy/vercel.md)** — Vercel deployment details
+- **[docs/deploy/DOMAIN_CLOUDFLARE_VERCEL.md](deploy/DOMAIN_CLOUDFLARE_VERCEL.md)** — Domain + Cloudflare DNS
+- **[docs/MATRIX_CARDS_PIPELINE.md](MATRIX_CARDS_PIPELINE.md)** — Matrix card build script
 
 ---
 
-Last updated: 2026-01-26
+Last updated: 2026-02-17

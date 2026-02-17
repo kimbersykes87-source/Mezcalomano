@@ -33,6 +33,8 @@ export default function Header() {
               <li><Link href="/" className={pathname === "/" ? "active" : ""}>HOME</Link></li>
               <li><Link href="/about" className={pathname === "/about" ? "active" : ""}>ABOUT</Link></li>
               <li><Link href="/contact" className={pathname === "/contact" ? "active" : ""}>CONTACT</Link></li>
+              <li><Link href="/directory" className={pathname === "/directory" || pathname?.startsWith("/directory/") ? "active" : ""}>DIRECTORY</Link></li>
+              <li><Link href="/map" className={pathname === "/map" ? "active" : ""}>MAP</Link></li>
             </ul>
           </nav>
 

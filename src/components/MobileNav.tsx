@@ -48,6 +48,9 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
             <Link href="/directory" className="mobile-nav-link" onClick={onClose}>DIRECTORY</Link>
           </li>
           <li className="mobile-nav-item">
+            <Link href="/map" className="mobile-nav-link" onClick={onClose}>MAP</Link>
+          </li>
+          <li className="mobile-nav-item">
             <Link href="/contact" className="mobile-nav-link" onClick={onClose}>CONTACT</Link>
           </li>
           <li className="mobile-nav-item">

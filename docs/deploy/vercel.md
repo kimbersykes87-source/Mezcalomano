@@ -37,3 +37,11 @@ Redirects are configured in `next.config.ts`:
 - `/matrix`, `/matrix/` → 301 → `/directory`
 
 No additional Vercel redirect config is required unless you need more rules.
+
+## Custom domain (mezcalomano.com)
+
+The domain is hosted on **Cloudflare**. To connect it to Vercel:
+
+1. Add the domain in Vercel (Settings → Domains).
+2. Update DNS records in Cloudflare as Vercel instructs (use **DNS only** for those records).
+3. See **[DOMAIN_CLOUDFLARE_VERCEL.md](DOMAIN_CLOUDFLARE_VERCEL.md)** for the full step-by-step.
