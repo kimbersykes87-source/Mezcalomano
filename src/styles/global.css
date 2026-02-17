@@ -45,8 +45,8 @@
 
 /* Open Sans Condensed loaded via Google Fonts in BaseLayout */
 
-/* Reset & Base Styles */
-* {
+/* Reset & Base Styles - use :where() so specificity is 0 and page-specific rules (e.g. .directory-card-container, .map-root) always win on /directory and /map */
+:where(*) {
   box-sizing: border-box;
   margin: 0;
   padding: 0;

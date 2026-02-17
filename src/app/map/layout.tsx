@@ -10,5 +10,5 @@ export default function MapLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return <div className="map-root">{children}</div>;
 }
