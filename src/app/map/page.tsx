@@ -56,29 +56,6 @@ export default function MapPage() {
     debug("mounted=true");
   }, []);
 
-  useEffect(() => {
-    const el = mapAreaRef.current;
-    if (!mounted || !el) return;
-
-    function setMapAreaSize() {
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const top = rect.top;
-      const height = window.innerHeight - top;
-      const width = window.innerWidth;
-      el.style.height = `${Math.max(0, height)}px`;
-      el.style.width = `${width}px`;
-      debug("mapAreaSize set", { width, height, top });
-    }
-
-    setMapAreaSize();
-    const raf = requestAnimationFrame(setMapAreaSize);
-    window.addEventListener("resize", setMapAreaSize);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", setMapAreaSize);
-    };
-  }, [mounted]);
 
   useEffect(() => {
     async function fetchSpecies() {
@@ -549,13 +526,13 @@ export default function MapPage() {
 
       <main
         ref={mapAreaRef}
-        className="relative w-full flex-1 overflow-hidden"
-        style={{ background: "#272926" }}
+        className="relative w-full overflow-hidden shrink-0"
+        style={{ background: "#272926", height: "calc(100dvh - 140px)", minHeight: 300 }}
       >
         {mounted && (
           <div
             ref={mapContainerRef}
-            className="absolute inset-0 h-full w-full"
+            className="absolute inset-0 w-full h-full"
             style={{ background: "#272926" }}
           />
         )}
