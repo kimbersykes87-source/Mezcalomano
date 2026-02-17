@@ -73,9 +73,9 @@ export function SwipeableCardStack({
 
   if (species.length === 0 && showKeyCard) {
     return (
-      <div className="directory-card-container">
+      <div className="mx-auto w-full max-w-4xl px-4 sm:px-6">
         <div ref={cardRef} className="touch-pan-y">
-          <div key="key" className="directory-card-inner flex justify-center">
+          <div key="key" className="flex justify-center transition-opacity duration-200 ease-out">
             <KeyCard />
           </div>
         </div>
@@ -86,7 +86,7 @@ export function SwipeableCardStack({
   const current = isKeyCard ? null : species[currentIndex - (showKeyCard ? 1 : 0)];
 
   return (
-    <div className="directory-card-container">
+    <div className="mx-auto w-full max-w-4xl px-4 sm:px-6">
       <div
         ref={cardRef}
         className="touch-pan-y"
@@ -95,7 +95,7 @@ export function SwipeableCardStack({
       >
         <div
           key={isKeyCard ? "key" : current!.id}
-          className="directory-card-inner flex justify-center"
+          className="flex justify-center transition-opacity duration-200 ease-out"
         >
           {isKeyCard ? <KeyCard /> : (
             <SpeciesCard

@@ -435,8 +435,8 @@
     "one_liner": "Selected specifically for aguamiel (pulque sap) production through heart-tapping; also distilled as regional mezcal; widely cultivated in traditional systems",
     "habitat": "Arid Plateaus & Desert",
     "height": "6-10 ft",
-    "image_800": "/assets/matrix/cards/species_40_agave_americana_var_pulque_chino_card_800.webp",
-    "image_400": "/assets/matrix/cards/species_40_agave_americana_var_pulque_chino_card_400.webp",
+    "image_800": "/assets/matrix/cards/pulque_chino.png",
+    "image_400": "/assets/matrix/cards/pulque_chino.png",
     "source_tif": "a_spades_final.tif"
   }
 ]

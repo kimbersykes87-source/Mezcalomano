@@ -272,51 +272,7 @@
   width: 100%;
 }
 
-/* Directory card area: ensure padding around cards on all viewports (not full width).
-   Scoped under .directory-root so these rules win over any global reset on /directory. */
-.directory-root .directory-card-container,
-.directory-card-container {
-  padding-left: var(--space-4);
-  padding-right: var(--space-4);
-  padding-top: var(--space-4);
-  padding-bottom: var(--space-4);
-  width: 100%;
-  max-width: 56rem;
-  margin-left: auto;
-  margin-right: auto;
-  box-sizing: border-box;
-}
-
-@media (min-width: 640px) {
-  .directory-root .directory-card-container,
-  .directory-card-container {
-    padding-left: var(--space-6);
-    padding-right: var(--space-6);
-    padding-top: var(--space-6);
-    padding-bottom: var(--space-6);
-  }
-}
-
-.directory-root .directory-card-inner,
-.directory-card-inner {
-  padding-left: var(--space-2);
-  padding-right: var(--space-2);
-  padding-top: var(--space-2);
-  padding-bottom: var(--space-2);
-  box-sizing: border-box;
-}
-
-@media (min-width: 640px) {
-  .directory-root .directory-card-inner,
-  .directory-card-inner {
-    padding-left: var(--space-4);
-    padding-right: var(--space-4);
-    padding-top: var(--space-4);
-    padding-bottom: var(--space-4);
-  }
-}
-
-/* Map page: protect layout so global resets don't strip padding/width. */
+/* Map page: same flex layout as directory so content fills between header and footer. */
 .map-root {
   display: flex;
   flex: 1 1 0;

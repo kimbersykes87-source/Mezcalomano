@@ -72,8 +72,8 @@ export default function DirectoryClient() {
         placeholder="Search by common name…"
       />
 
-      <div className="flex min-h-0 flex-1 flex-col w-full gap-4 py-6">
-        <div className="container flex flex-wrap items-center justify-center gap-3">
+      <main className="flex min-h-0 flex-1 flex-col w-full gap-4 px-4 py-6 sm:px-6">
+        <div className="flex flex-wrap items-center justify-center gap-3">
           <button
             type="button"
             onClick={() => setSearchOpen(true)}
@@ -96,7 +96,7 @@ export default function DirectoryClient() {
             showKeyCard={!searchQuery.trim()}
           />
         )}
-      </div>
+      </main>
     </div>
   );
 }
