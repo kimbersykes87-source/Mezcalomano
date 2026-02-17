@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Search } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { getMatrixCardUrlMap, resolveSpeciesImageUrl } from "@/lib/matrix-card-urls";
 import { SearchOverlay } from "@/components/SearchOverlay";
 import { SwipeableCardStack } from "@/components/SwipeableCardStack";
 import type { Species } from "@/types/species";
@@ -15,6 +16,7 @@ function filterByCommonName(species: Species[], query: string): Species[] {
 
 export default function DirectoryClient() {
   const [species, setSpecies] = useState<Species[]>([]);
+  const [matrixCardMap, setMatrixCardMap] = useState<Record<string, string> | null>(null);
   const [loading, setLoading] = useState(true);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -23,6 +25,10 @@ export default function DirectoryClient() {
   useEffect(() => {
     setCurrentIndex(0);
   }, [searchQuery]);
+
+  useEffect(() => {
+    getMatrixCardUrlMap().then(setMatrixCardMap);
+  }, []);
 
   useEffect(() => {
     async function fetchSpecies() {
@@ -43,8 +49,21 @@ export default function DirectoryClient() {
 
   const filtered = filterByCommonName(species, searchQuery);
 
+  /** Species with image_url resolved and matrix path as fallback when primary image fails */
+  const speciesWithResolvedImages = useMemo(() => {
+    return filtered.map((s) => {
+      const resolved = resolveSpeciesImageUrl(s.image_url, s.common_name, matrixCardMap);
+      const fallbackImageUrl = resolveSpeciesImageUrl(null, s.common_name, matrixCardMap);
+      return {
+        ...s,
+        image_url: resolved,
+        fallbackImageUrl,
+      };
+    });
+  }, [filtered, matrixCardMap]);
+
   return (
-    <>
+    <div className="flex min-h-0 flex-1 flex-col w-full">
       <SearchOverlay
         open={searchOpen}
         onClose={() => setSearchOpen(false)}
@@ -53,7 +72,7 @@ export default function DirectoryClient() {
         placeholder="Search by common name…"
       />
 
-      <div className="flex flex-col gap-4 py-6">
+      <div className="flex min-h-0 flex-1 flex-col w-full gap-4 py-6">
         <div className="container flex flex-wrap items-center justify-center gap-3">
           <button
             type="button"
@@ -71,13 +90,13 @@ export default function DirectoryClient() {
           </div>
         ) : (
           <SwipeableCardStack
-            species={filtered}
+            species={speciesWithResolvedImages}
             currentIndex={currentIndex}
             onIndexChange={setCurrentIndex}
             showKeyCard={true}
           />
         )}
       </div>
-    </>
+    </div>
   );
 }

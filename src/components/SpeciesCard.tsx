@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -28,10 +29,20 @@ function parseHabitat(habitat: Species["habitat"]) {
 export function SpeciesCard({
   species,
   showPermalink = true,
+  fallbackImageUrl,
 }: {
   species: Species;
   showPermalink?: boolean;
+  /** When the main image fails to load (e.g. broken Supabase URL), show this instead */
+  fallbackImageUrl?: string | null;
 }) {
+  const [imageError, setImageError] = useState(false);
+  const displayUrl =
+    imageError && fallbackImageUrl ? fallbackImageUrl : species.image_url;
+  /** Skip Next.js image optimizer for same-origin paths to avoid 400s in production */
+  const isLocalAsset =
+    typeof displayUrl === "string" &&
+    (displayUrl.startsWith("/") || displayUrl.startsWith("."));
   const habitat = parseHabitat(species.habitat);
   const sizeStr =
     species.size_height_feet || species.size_height_meters
@@ -69,14 +80,15 @@ export function SpeciesCard({
         </Link>
       )}
       <div className="relative aspect-square w-full shrink-0 bg-[#272926]">
-        {species.image_url ? (
+        {displayUrl ? (
           <Image
-            src={species.image_url}
+            src={displayUrl}
             alt={species.common_name}
             fill
             className="object-cover"
             sizes="(max-width: 640px) 100vw, 32rem"
-            unoptimized={!species.image_url.includes("supabase")}
+            unoptimized={isLocalAsset || !displayUrl.includes("supabase")}
+            onError={() => setImageError(true)}
           />
         ) : (
           <div className="flex h-full items-center justify-center text-[var(--agave-yellow)]/50">

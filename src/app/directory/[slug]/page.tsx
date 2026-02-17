@@ -1,11 +1,12 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { toSlug } from "@/lib/slug";
+import { getMatrixCardUrlMap, resolveSpeciesImageUrl } from "@/lib/matrix-card-urls";
 import { SpeciesCard } from "@/components/SpeciesCard";
 import type { Species } from "@/types/species";
 
@@ -13,8 +14,13 @@ export default function SpeciesPage() {
   const params = useParams();
   const slug = params?.slug as string | undefined;
   const [species, setSpecies] = useState<Species | null>(null);
+  const [matrixCardMap, setMatrixCardMap] = useState<Record<string, string> | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+
+  useEffect(() => {
+    getMatrixCardUrlMap().then(setMatrixCardMap);
+  }, []);
 
   useEffect(() => {
     if (!slug) return;
@@ -36,6 +42,17 @@ export default function SpeciesPage() {
     }
     fetchSpecies();
   }, [slug]);
+
+  const speciesWithResolvedImage = useMemo(() => {
+    if (!species) return null;
+    const image_url = resolveSpeciesImageUrl(species.image_url, species.common_name, matrixCardMap);
+    const fallbackImageUrl = resolveSpeciesImageUrl(null, species.common_name, matrixCardMap);
+    return {
+      ...species,
+      image_url,
+      fallbackImageUrl,
+    };
+  }, [species, matrixCardMap]);
 
   if (loading) {
     return (
@@ -61,7 +78,7 @@ export default function SpeciesPage() {
   }
 
   return (
-    <div className="flex flex-1 flex-col px-4 py-6 sm:px-6">
+    <div className="flex min-h-0 flex-1 flex-col w-full px-4 py-6 sm:px-6">
       <Link
         href="/directory"
         className="mb-4 inline-flex items-center gap-2 text-sm text-[var(--agave-yellow)] hover:underline"
@@ -69,8 +86,14 @@ export default function SpeciesPage() {
         <ArrowLeft className="size-4" />
         Back to directory
       </Link>
-      <div className="flex justify-center">
-        <SpeciesCard species={species} showPermalink={false} />
+      <div className="flex w-full flex-1 justify-center overflow-auto min-h-0">
+        {speciesWithResolvedImage && (
+          <SpeciesCard
+              species={speciesWithResolvedImage}
+              showPermalink={false}
+              fallbackImageUrl={speciesWithResolvedImage.fallbackImageUrl}
+          />
+        )}
       </div>
     </div>
   );

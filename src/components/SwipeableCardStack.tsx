@@ -100,7 +100,12 @@ export function SwipeableCardStack({
           key={isKeyCard ? "key" : current!.id}
           className="flex justify-center transition-opacity duration-200 ease-out"
         >
-          {isKeyCard ? <KeyCard /> : <SpeciesCard species={current!} />}
+          {isKeyCard ? <KeyCard /> : (
+            <SpeciesCard
+              species={current!}
+              fallbackImageUrl={"fallbackImageUrl" in current! ? (current as Species & { fallbackImageUrl?: string | null }).fallbackImageUrl : undefined}
+            />
+          )}
         </div>
       </div>
     </div>

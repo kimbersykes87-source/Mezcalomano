@@ -11,5 +11,5 @@ export default function DirectoryLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return <div className="directory-root">{children}</div>;
 }

@@ -257,6 +257,20 @@
   min-height: calc(100vh - 88px);
 }
 
+/* Directory: fill viewport and allow scroll so layout fits on all devices */
+.page-content:has(.directory-root) {
+  display: flex;
+  flex-direction: column;
+}
+
+.directory-root {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-height: 0;
+  width: 100%;
+}
+
 /* Home: no scroll, content fits between header and footer */
 .page-content:has(.hero--home) {
   overflow: hidden;

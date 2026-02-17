@@ -26,7 +26,7 @@ const LEGEND = [
 
 export function KeyCard() {
   return (
-    <article className="flex w-full max-w-xl flex-col overflow-hidden rounded-3xl bg-[#32342f] shadow-lg sm:max-w-2xl">
+    <article className="relative flex w-full max-w-xl flex-col overflow-hidden rounded-3xl bg-[#32342f] shadow-lg sm:max-w-2xl">
       <div className="relative flex aspect-square w-full shrink-0 items-center justify-center bg-[#272926] px-6">
         <p className="text-center text-lg font-semibold text-white/90">
           How to read the species cards
