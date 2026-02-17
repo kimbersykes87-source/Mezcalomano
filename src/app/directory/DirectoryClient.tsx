@@ -93,7 +93,7 @@ export default function DirectoryClient() {
             species={speciesWithResolvedImages}
             currentIndex={currentIndex}
             onIndexChange={setCurrentIndex}
-            showKeyCard={true}
+            showKeyCard={!searchQuery.trim()}
           />
         )}
       </div>

@@ -23,24 +23,36 @@ export default function SpeciesPage() {
   }, []);
 
   useEffect(() => {
-    if (!slug) return;
-    async function fetchSpecies() {
-      const { data, error } = await supabase.from("species").select("*");
-      if (error) {
-        console.error("Supabase error:", error);
-        setNotFound(true);
-      } else {
-        const list = (data as Species[]) ?? [];
-        const match = list.find((s) => toSlug(s.common_name) === slug);
-        if (match) {
-          setSpecies(match);
-        } else {
-          setNotFound(true);
-        }
-      }
+    if (!slug) {
       setLoading(false);
+      setNotFound(true);
+      return;
+    }
+    let cancelled = false;
+    async function fetchSpecies() {
+      try {
+        const { data, error } = await supabase.from("species").select("*");
+        if (cancelled) return;
+        if (error) {
+          console.error("Supabase error:", error);
+          setNotFound(true);
+        } else {
+          const list = (data as Species[]) ?? [];
+          const match = list.find((s) => toSlug(s.common_name) === slug);
+          if (match) {
+            setSpecies(match);
+          } else {
+            setNotFound(true);
+          }
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
     }
     fetchSpecies();
+    return () => {
+      cancelled = true;
+    };
   }, [slug]);
 
   const speciesWithResolvedImage = useMemo(() => {

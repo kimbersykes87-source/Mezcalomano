@@ -56,18 +56,17 @@ export async function getMatrixCardUrlMap(): Promise<Record<string, string>> {
 }
 
 /**
- * Resolve image URL for a species: use image_url if present, else matrix card fallback.
+ * Resolve image URL for a species: prefer matrix card when available, else Supabase image_url.
  */
 export function resolveSpeciesImageUrl(
   imageUrl: string | null,
   commonName: string,
   matrixCardMap: Record<string, string> | null
 ): string | null {
-  if (imageUrl?.trim()) return imageUrl.trim();
-  if (!matrixCardMap) return null;
-  return (
-    matrixCardMap[commonName] ??
-    matrixCardMap[COMMON_NAME_ALIASES[commonName]] ??
-    null
-  );
+  if (matrixCardMap) {
+    const matrixPath =
+      matrixCardMap[commonName] ?? matrixCardMap[COMMON_NAME_ALIASES[commonName]];
+    if (matrixPath) return matrixPath;
+  }
+  return imageUrl?.trim() ?? null;
 }
