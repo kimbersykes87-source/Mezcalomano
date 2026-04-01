@@ -16,6 +16,9 @@ import {
 import { toSlug } from "@/lib/slug";
 import type { Species } from "@/types/species";
 
+/** Shown only after species/matrix image URLs fail to load (not when URL is missing). */
+export const BRAND_FALLBACK_SRC = "/assets/favicon/app_icon_512.png";
+
 /* Match localhost: explicit size + fallback color so icons render the same in production */
 const ICON_CLASS =
   "species-card-icon size-4 h-4 w-4 shrink-0 text-[var(--agave-yellow)] text-[#a29037]";
@@ -27,23 +30,38 @@ function parseHabitat(habitat: Species["habitat"]) {
   return t;
 }
 
-export function SpeciesCard({
+function SpeciesCardContent({
   species,
-  showPermalink = true,
-  fallbackImageUrl,
+  showPermalink,
+  primaryUrl,
+  fallbackUrl,
 }: {
   species: Species;
-  showPermalink?: boolean;
-  /** When the main image fails to load (e.g. broken Supabase URL), show this instead */
-  fallbackImageUrl?: string | null;
+  showPermalink: boolean;
+  primaryUrl: string | null;
+  fallbackUrl: string | null;
 }) {
-  const [imageError, setImageError] = useState(false);
-  const displayUrl =
-    imageError && fallbackImageUrl ? fallbackImageUrl : species.image_url;
-  /** Skip Next.js image optimizer for same-origin paths to avoid 400s in production */
+  const [imageSrc, setImageSrc] = useState<string | null>(primaryUrl);
+
+  const handleImageError = () => {
+    if (imageSrc === primaryUrl && fallbackUrl) {
+      setImageSrc(fallbackUrl);
+      return;
+    }
+    if (imageSrc === primaryUrl || imageSrc === fallbackUrl) {
+      setImageSrc(BRAND_FALLBACK_SRC);
+      return;
+    }
+    if (imageSrc === BRAND_FALLBACK_SRC) {
+      setImageSrc(null);
+    }
+  };
+
   const isLocalAsset =
-    typeof displayUrl === "string" &&
-    (displayUrl.startsWith("/") || displayUrl.startsWith("."));
+    typeof imageSrc === "string" &&
+    (imageSrc.startsWith("/") || imageSrc.startsWith("."));
+  const isBrandFallback = imageSrc === BRAND_FALLBACK_SRC;
+
   const habitat = parseHabitat(species.habitat);
   const sizeStr =
     species.size_height_feet || species.size_height_meters
@@ -73,15 +91,16 @@ export function SpeciesCard({
   const articleEl = (
     <article className="relative flex w-full max-w-xl flex-col overflow-hidden rounded-3xl bg-[#32342f] shadow-lg sm:max-w-2xl">
       <div className="relative aspect-square w-full shrink-0 bg-[#272926]">
-        {displayUrl ? (
+        {imageSrc ? (
           <Image
-            src={displayUrl}
+            key={imageSrc}
+            src={imageSrc}
             alt={species.common_name}
             fill
-            className="object-cover"
+            className={isBrandFallback ? "object-contain p-8" : "object-cover"}
             sizes="(max-width: 640px) 100vw, 32rem"
-            unoptimized={isLocalAsset || !displayUrl.includes("supabase")}
-            onError={() => setImageError(true)}
+            unoptimized={isLocalAsset || !imageSrc.includes("supabase")}
+            onError={handleImageError}
           />
         ) : (
           <div className="flex h-full items-center justify-center text-[var(--agave-yellow)]/50">
@@ -184,5 +203,31 @@ export function SpeciesCard({
     </Link>
   ) : (
     <div className="w-full">{articleEl}</div>
+  );
+}
+
+export function SpeciesCard({
+  species,
+  showPermalink = true,
+  fallbackImageUrl,
+}: {
+  species: Species;
+  showPermalink?: boolean;
+  fallbackImageUrl?: string | null;
+}) {
+  const primaryUrl = species.image_url?.trim() ?? null;
+  const fallbackUrl =
+    fallbackImageUrl?.trim() && fallbackImageUrl.trim() !== primaryUrl
+      ? fallbackImageUrl.trim()
+      : null;
+
+  return (
+    <SpeciesCardContent
+      key={`${species.id}-${primaryUrl ?? "none"}`}
+      species={species}
+      showPermalink={showPermalink}
+      primaryUrl={primaryUrl}
+      fallbackUrl={fallbackUrl}
+    />
   );
 }

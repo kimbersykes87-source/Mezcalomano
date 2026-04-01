@@ -12,7 +12,10 @@
     "build:og-icon-png": "node scripts/build-og-icon-png.js",
     "rename:matrix-cards": "node scripts/rename-matrix-cards-from-csv.mjs",
     "seed:species": "node scripts/seed-species-from-csv.mjs",
-    "sync:matrix-cards": "node scripts/sync-matrix-cards-from-species.mjs"
+    "sync:matrix-cards": "node scripts/sync-matrix-cards-from-species.mjs",
+    "normalize:agave-images": "node scripts/normalize-agave-images.mjs",
+    "sync:agave-matrix": "node scripts/sync-agave-images-to-matrix.mjs",
+    "supabase:push": "node scripts/supabase-cli-push.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.95.3",

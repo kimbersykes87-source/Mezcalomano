@@ -17,7 +17,8 @@
 | **Vercel** | vercel.com | Hosting and builds (Next.js) |
 | **Domain** | Cloudflare DNS | mezcalomano.com points to Vercel |
 | **Redirects** | `next.config.ts` | `/buy`, `/shop` → Shopify; `/matrix` → `/directory` |
-| **Environment variables** | Vercel Dashboard + `.env.local` | Turnstile keys for contact form |
+| **Environment variables** | Vercel Dashboard + `.env.local` | Turnstile + Supabase `NEXT_PUBLIC_*` keys |
+| **Supabase** | Dashboard + CLI | Schema in `supabase/migrations/`; `npm run supabase:push` applies to hosted DB |
 
 ## Important URLs
 
@@ -39,6 +40,10 @@ npm run build        # Production build
 npm run start        # Run production build locally
 npm run lint         # Run ESLint
 npm run build:matrix-cards   # Build matrix card images from TIFFs
+npm run normalize:agave-images  # Slug-rename PNGs in source/agave_images (uses deck log)
+npm run supabase:push         # Link + db push migrations (needs `SUPABASE_ACCESS_TOKEN`, CLI)
+npm run sync:agave-matrix     # Copy slug PNGs to public/assets/matrix/cards + index.json
+npm run seed:species          # Upsert Supabase from data/Species_Final - Website.csv
 ```
 
 ## Before Making Changes

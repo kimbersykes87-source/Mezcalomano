@@ -1,0 +1,45 @@
+Agave background removal batch
+Source: C:/Users/kimbe/Dropbox/Kimber/Business/Edward Kimber Sykes/Clients/Mezcalomano/ARTWORK/Discovery Deck/SPECIES
+Output: C:/dev/Mezcalomano/source/agave_images
+Files found: 40
+
+OK    | Clubs_10_Cincoa%C3%B1ero_v004.png -> cincoa-c3-b1ero.png
+OK    | Clubs_2_Henequ%C3%A9n_v005.png -> henequ-c3-a9n.png
+OK    | Clubs_3_Pac%C3%ADfica_v004.png -> pac-c3-adfica.png
+OK    | Clubs_4_Wocomahi_v005.png -> wocomahi.png
+OK    | Clubs_5_Jabal%C3%AD_v004.png -> jabal-c3-ad.png
+OK    | Clubs_6_Lamparillo_v004.png -> lamparillo.png
+OK    | Clubs_7_Tepemete_v004.png -> tepemete.png
+OK    | Clubs_8_Chahuiqui_v004.png -> chahuiqui.png
+OK    | Clubs_9_Espadilla_v004.png -> espadilla.png
+OK    | Clubs_A_Pulque-Chino_v004.png -> clubs-a-pulque-chino-v004.png
+OK    | Diamonds_10_Rayo_v004.png -> rayo.png
+OK    | Diamonds_2_Cimarr%C3%B3n_v004.png -> cimarr-c3-b3n.png
+OK    | Diamonds_3_Cenizo_v004.png -> cenizo.png
+OK    | Diamonds_4_Manso-Sahuayo_v004.png -> manso-sahuayo.png
+OK    | Diamonds_5_Lyobaa-Coyote_v004.png -> lyobaa-coyote.png
+OK    | Diamonds_6_Churique_v004.png -> churique.png
+OK    | Diamonds_7_Weber-Azul_v004.png -> weber-azul.png
+OK    | Diamonds_8_Verde_v004.png -> verde.png
+OK    | Diamonds_9_Warash_v004.png -> warash.png
+OK    | Diamonds_A_Chuparrosa_v005.png -> diamonds-a-chuparrosa-v005.png
+OK    | Hearts_10_Lumbre_v004.png -> lumbre.png
+OK    | Hearts_2_Espad%C3%ADn_v004.png -> espad-c3-adn.png
+OK    | Hearts_3_Tobal%C3%A1_v004.png -> tobal-c3-a1.png
+OK    | Hearts_4_Tepextate_v004.png -> tepextate.png
+OK    | Hearts_5_Cuishe_v004.png -> cuishe.png
+OK    | Hearts_6_Barril_v005.png -> barril.png
+OK    | Hearts_7_Madrecuixe_v004.png -> madrecuixe.png
+OK    | Hearts_8_Bicuixe_v004.png -> bicuixe.png
+OK    | Hearts_9_Tobaziche.png -> hearts-9-tobaziche.png
+OK    | Hearts_A_Castilla_v004.png -> hearts-a-castilla-v004.png
+OK    | Spades_10_Salmiana_v004.png -> salmiana.png
+OK    | Spades_2_Montana_v005.png -> montana.png
+OK    | Spades_3_Arroque%C3%B1o_v005.png -> arroque-c3-b1o.png
+OK    | Spades_4_Sierra-Negra_v004.png -> sierra-negra.png
+OK    | Spades_5_Coyote_v005.png -> coyote.png
+OK    | Spades_6_Mexicano_v004.png -> mexicano.png
+OK    | Spades_7_Masparillo_v005.png -> masparillo.png
+OK    | Spades_8_Papalote_v004.png -> papalote.png
+OK    | Spades_9_Alto_v005.png -> alto.png
+OK    | Spades_A_Pulquero_v004.png -> spades-a-pulquero-v004.png

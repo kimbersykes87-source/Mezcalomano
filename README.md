@@ -11,6 +11,10 @@ npm run build        # Build for production
 npm run start        # Run production server locally
 npm run build:matrix-cards  # Build matrix card images from TIFFs
 npm run sync:matrix-cards   # Sync matrix cards from SPECIES artwork folder
+npm run seed:species        # Upsert Supabase `species` from Website CSV (requires env vars)
+npm run normalize:agave-images  # Rename source/agave_images PNGs to slug names (see log)
+npm run supabase:push           # Link + apply supabase/migrations to hosted DB (needs SUPABASE_ACCESS_TOKEN)
+npm run sync:agave-matrix       # Copy slug PNGs → public/assets/matrix/cards + index.json from Website CSV
 npm run lint         # Run ESLint
 ```
 
@@ -58,12 +62,12 @@ npm run lint         # Run ESLint
 - `NEXT_PUBLIC_SUPABASE_URL` - Your Supabase project URL
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Supabase anonymous (public) key
 
-Copy `.env.example` to `.env.local` and fill in values. On Vercel, set these in Project Settings → Environment Variables. The directory and map pages require a Supabase `species` table compatible with the app’s Species type (see `src/types/species.ts`).
+Copy **`.env.local.example`** to **`.env.local`** and fill in values (see [CONNECTIONS.md](CONNECTIONS.md) for the full list). On Vercel, set the `NEXT_PUBLIC_*` Supabase and Turnstile variables in Project Settings → Environment Variables. The directory and map pages require a Supabase `species` table compatible with the app’s Species type (see `src/types/species.ts`). Apply migrations under `supabase/migrations/` (`001`–`008`, including `slug` for detail URLs) via **`npm run supabase:push`** (local, with Supabase CLI + token), then run **`npm run seed:species`** so rows get a `slug` matching URL segments.
 
 ## Site Features
 
 - **6 Pages**: Home, About, Directory, Directory species detail (`/directory/[slug]`), Contact, Map
-- **Interactive Directory**: Swipeable species cards, search, and detail pages; data from Supabase
+- **Interactive Directory**: Swipeable species cards, search and jump-to-species controls, prev/next navigation, and detail pages; data from Supabase
 - **Interactive Map**: MapLibre Mexico state map with species by state and links to directory
 - **Full-Bleed Hero Images**: Responsive heroes (mobile/tablet/desktop) on Home, About, etc.
 - **Mobile-First Design**: Responsive layout
@@ -73,7 +77,18 @@ Copy `.env.example` to `.env.local` and fill in values. On Vercel, set these in 
 
 ## Matrix Card Asset Pipeline
 
-**Sync from artwork** (recommended): Copy PNGs from the SPECIES artwork folder and regenerate `index.json`:
+**Directory card images (slug PNGs in repo)** — After exporting PNGs into `source/agave_images` (and updating `agave_background_removal_log.txt` if names are still deck-encoded), normalize filenames to ASCII slugs and publish to the site:
+
+```bash
+npm run normalize:agave-images
+npm run sync:agave-matrix
+```
+
+Canonical species copy lives in **`data/Species_Final - Website.csv`** (keep `Species_Final - Directory_updated_*.csv` in sync by copying over when you refresh data). `sync:agave-matrix` reads that CSV and matches files like `espadin.png` (same rules as `toSlug(common_name)` in the app).
+
+**Supabase migrations** — Apply SQL in `supabase/migrations/` (e.g. `producer_links`, then `slug`) via the **SQL Editor** if `supabase db push` reports a migration history mismatch with the hosted project. The seed script loads **`.env` then `.env.local`** (local overrides), so `npm run seed:species` works when vars are only in `.env`.
+
+**Sync from deck artwork (Dropbox)** — Copy PNGs from the SPECIES artwork folder and regenerate `index.json`:
 
 ```bash
 npm run sync:matrix-cards

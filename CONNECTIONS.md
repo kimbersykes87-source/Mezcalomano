@@ -8,10 +8,12 @@ This document explains all external connections and configurations for the Mezca
 2. [Vercel Deployment](#vercel-deployment)
 3. [Configuration Files](#configuration-files)
 4. [Environment Variables](#environment-variables)
-5. [Redirects](#redirects)
-6. [Domain and DNS (Cloudflare)](#domain-and-dns-cloudflare)
-7. [Verification Checklist](#verification-checklist)
-8. [External Links](#external-links)
+5. [Supabase (directory and map)](#supabase-directory-and-map)
+6. [Git push and cloud services](#git-push-and-cloud-services)
+7. [Redirects](#redirects)
+8. [Domain and DNS (Cloudflare)](#domain-and-dns-cloudflare)
+9. [Verification Checklist](#verification-checklist)
+10. [External Links](#external-links)
 
 ---
 
@@ -92,7 +94,7 @@ The contact form uses **Cloudflare Turnstile**. Set these in **Vercel** (Project
 | `TURNSTILE_SECRET_KEY` | Turnstile secret key (server) | `src/app/api/contact/route.ts` | Yes, for contact form |
 
 - **Production / Preview**: Vercel → Project → Settings → Environment Variables. Add both; enable for Production and Preview.
-- **Local**: Copy `.env.example` to `.env.local` and fill in values. Never commit `.env` or `.env.local`.
+- **Local**: Copy **`.env.local.example`** to **`.env.local`** (or use `.env`; both are gitignored). Never commit real secrets.
 
 ### Access in Code
 
@@ -104,6 +106,60 @@ The contact form uses **Cloudflare Turnstile**. Set these in **Vercel** (Project
 | Variable | Purpose |
 |----------|---------|
 | `MAILCHANNELS_API_KEY` | Optional; for future email sending from contact form |
+
+---
+
+## Supabase (directory and map)
+
+The **directory** (`/directory`, `/directory/[slug]`) and **map** (`/map`) read the **`species`** table via the Supabase JS client.
+
+### Environment variables
+
+| Variable | Purpose | Required for |
+|----------|---------|----------------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Project URL | App + seed + CLI script |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Anonymous key (public) | App (browser client) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Service role (server-side only) | `npm run seed:species` (recommended) |
+| `SUPABASE_ACCESS_TOKEN` | Personal token (`sbp_…`) | `npm run supabase:push` |
+| `SUPABASE_DB_PASSWORD` | Database password | Optional; helps `supabase link` |
+| `SUPABASE_PROJECT_REF` | Project ref substring | Optional if URL is nonstandard |
+
+Set the **same** `NEXT_PUBLIC_*` values in **Vercel** (Project → Settings → Environment Variables) for Production and Preview. Do **not** put `SUPABASE_SERVICE_ROLE_KEY` or `SUPABASE_ACCESS_TOKEN` in client-exposed env; Vercel is fine for build/server if you only use them in scripts run locally — for CI seeding, use Vercel **encrypted** env or run seed from a trusted machine.
+
+### Schema migrations
+
+- **Location**: [`supabase/migrations/`](supabase/migrations/) — numbered **`001`–`008`** (aligned with the MM_Directory history, plus **`008_add_species_slug.sql`** for URL slugs).
+- **Apply to hosted DB**: Install [Supabase CLI](https://supabase.com/docs/guides/cli), copy **`.env.local.example`** → **`.env.local`**, fill `SUPABASE_ACCESS_TOKEN` and Supabase URL, then from the repo root:
+
+  ```bash
+  npm run supabase:push
+  ```
+
+  This runs `supabase link` and `supabase db push`. If history ever drifts, use the SQL Editor to run specific files, then repair migration history per [Supabase docs](https://supabase.com/docs/guides/cli/managing-environments#migration-history).
+
+### Seed species from CSV
+
+```bash
+npm run seed:species
+```
+
+Reads **`data/Species_Final - Website.csv`**. Loads **`.env`** then **`.env.local`**.
+
+### Card images (static)
+
+Directory card art is served from **`public/assets/matrix/cards/`** and **`index.json`** (see README: `sync:agave-matrix`, `normalize:agave-images`). That is independent of Supabase Storage unless you later add storage uploads.
+
+---
+
+## Git push and cloud services
+
+| Action | What it updates |
+|--------|------------------|
+| **`git push`** to **`main`** on GitHub | **Vercel** builds and deploys the marketing site (when the project is connected to the repo). |
+| **`npm run supabase:push`** (local, with CLI + token) | **Supabase** hosted Postgres — applies new migration files only. |
+| **Shop / DNS** | **Shopify** and **Cloudflare** are unchanged by this repo’s git push; manage in their dashboards. |
+
+There is **no** separate “git push to Supabase”: database changes go through **migrations** (CLI or SQL Editor). Keeping **`supabase/migrations/`** in this repo lets the team reproduce the same schema from Git + CLI.
 
 ---
 
@@ -173,6 +229,7 @@ See **[docs/deploy/DOMAIN_CLOUDFLARE_VERCEL.md](docs/deploy/DOMAIN_CLOUDFLARE_VE
 │   ├── scripts/         # build-matrix-cards etc.
 │   └── styles/          # global.css, components.css
 ├── public/              # Static assets (favicons, assets/*)
+├── supabase/migrations/ # Numbered SQL migrations for hosted Postgres
 └── docs/                # Documentation
 ```
 
@@ -194,12 +251,18 @@ Use this to verify connections:
 - [ ] Framework: Next.js
 - [ ] Custom domains: `mezcalomano.com` (and `www` if used) added and valid
 - [ ] Environment variables: `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and `TURNSTILE_SECRET_KEY` set for Production (and Preview if needed)
+- [ ] `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` set for Production (and Preview) so `/directory` and `/map` work
+
+### Supabase
+
+- [ ] Migrations in `supabase/migrations/` are applied to the hosted project (`npm run supabase:push` from a machine with CLI + `SUPABASE_ACCESS_TOKEN`, or SQL Editor if history differs)
+- [ ] `npm run seed:species` has been run after CSV updates (uses `SUPABASE_SERVICE_ROLE_KEY` locally)
 
 ### Configuration
 
 - [ ] `next.config.ts` contains redirects for `/buy`, `/shop`, `/matrix`
 - [ ] `package.json` has scripts `dev`, `build`, `start`
-- [ ] Local `.env.local` has Turnstile keys for `npm run dev`
+- [ ] Local `.env.local` (from `.env.local.example`) has Turnstile and Supabase keys for `npm run dev`
 
 ### Redirects
 
@@ -221,6 +284,7 @@ Use this to verify connections:
 
 - **GitHub**: https://github.com/kimbersykes87-source/Mezcalomano
 - **Vercel Dashboard**: https://vercel.com/dashboard
+- **Supabase Dashboard**: https://supabase.com/dashboard (project → SQL Editor, Table Editor)
 - **Cloudflare Dashboard** (DNS): https://dash.cloudflare.com/
 - **Live site**: https://mezcalomano.com
 - **Shop**: https://shop.mezcalomano.com
@@ -236,6 +300,8 @@ npm run dev          # Local dev (http://localhost:3000)
 npm run build        # Production build
 npm run start        # Run production build locally
 npm run lint         # Run ESLint
+npm run supabase:push   # Apply DB migrations (Supabase CLI + token; see Supabase section)
+npm run seed:species    # Sync species rows from CSV (service role key locally)
 ```
 
 ---
@@ -247,7 +313,7 @@ When starting work on this project:
 1. **Clone**: `git clone https://github.com/kimbersykes87-source/Mezcalomano.git`
 2. **Install**: `npm install`
 3. **Read this file** and [README.md](README.md) to understand connections and setup.
-4. **Env**: Copy `.env.example` to `.env.local` and add Turnstile keys for the contact form.
+4. **Env**: Copy **`.env.local.example`** to **`.env.local`** and add Turnstile and Supabase keys (see [Environment variables](#environment-variables) and [Supabase](#supabase-directory-and-map)).
 5. **Run**: `npm run dev` and open http://localhost:3000.
 6. **Build**: `npm run build` to ensure the project builds.
 7. **Deploy**: Push to `main`; Vercel deploys automatically. Set env vars in Vercel if not already set.
@@ -257,6 +323,7 @@ When starting work on this project:
 - Redirects live in `next.config.ts`, not in a `_redirects` file.
 - Domain DNS is in Cloudflare; the app is hosted on Vercel.
 - Environment variables are set in Vercel (and in `.env.local` for local dev).
+- Database schema is versioned in `supabase/migrations/`; apply with `npm run supabase:push` or the Supabase SQL Editor.
 
 ---
 

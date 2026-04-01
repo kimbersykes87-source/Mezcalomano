@@ -3,6 +3,8 @@
  * Seed species table from data/Species_Final - Website.csv
  * Requires: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY (or SUPABASE_SERVICE_ROLE_KEY)
  * Run: node scripts/seed-species-from-csv.mjs
+ *
+ * Apply supabase/migrations/*_add_species_slug.sql before relying on slug column; seed populates slug.
  */
 
 import { createClient } from "@supabase/supabase-js";
@@ -16,15 +18,19 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = join(__dirname, "..");
 const csvPath = join(projectRoot, "data", "Species_Final - Website.csv");
 
-// Load .env.local if present
-const envPath = join(projectRoot, ".env.local");
-if (existsSync(envPath)) {
-  const env = readFileSync(envPath, "utf-8");
+function loadEnvFile(relPath) {
+  const p = join(projectRoot, relPath);
+  if (!existsSync(p)) return;
+  const env = readFileSync(p, "utf-8");
   for (const line of env.split("\n")) {
     const m = line.match(/^([^#=]+)=(.*)$/);
     if (m) process.env[m[1].trim()] = m[2].trim().replace(/^["']|["']$/g, "");
   }
 }
+
+// .env first, then .env.local overrides (matches typical Next.js tooling)
+loadEnvFile(".env");
+loadEnvFile(".env.local");
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey =
@@ -35,6 +41,16 @@ if (!supabaseUrl || !supabaseKey) {
     "Missing env vars. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY (or SUPABASE_SERVICE_ROLE_KEY)."
   );
   process.exit(1);
+}
+
+function toSlug(name) {
+  return String(name)
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "_")
+    .replace(/[^a-z0-9_]/g, "");
 }
 
 function parseProducers(val) {
@@ -73,15 +89,26 @@ async function main() {
     const producerLinksRaw = row.producer_links ?? "";
     const producerLinks = parseProducerLinks(producerLinksRaw);
 
+    const pCount = producers ? producers.split(",").length : 0;
+    const lCount = producerLinks ? producerLinks.split(",").length : 0;
+    if (pCount !== lCount && (pCount || lCount)) {
+      console.warn(
+        `Producer/link count mismatch for ${String(row.common_name ?? "").trim()}: ${pCount} names, ${lCount} URLs`
+      );
+    }
+
     const habitat =
       row.Terrain && String(row.Terrain).trim()
         ? { terrain: String(row.Terrain).trim() }
         : null;
 
+    const common_name = String(row.common_name ?? "").trim();
+
     return {
       id: randomUUID(),
       species_id: i + 1,
-      common_name: String(row.common_name ?? "").trim(),
+      common_name,
+      slug: toSlug(common_name),
       scientific_name: String(row.scientific_name ?? "").trim(),
       states: row.states ? String(row.states).trim() : null,
       geo_region: row.geo_region ? String(row.geo_region).trim() : null,
@@ -96,8 +123,23 @@ async function main() {
     };
   });
 
-  const { data: existing } = await supabase.from("species").select("id, common_name");
+  const { data: existing } = await supabase.from("species").select("id, common_name, species_id");
   const byCommonName = new Map((existing ?? []).map((s) => [s.common_name, s.id]));
+  const usedSpeciesIds = new Set(
+    (existing ?? []).map((s) => s.species_id).filter((n) => typeof n === "number" && !Number.isNaN(n))
+  );
+
+  function allocateSpeciesId(preferred) {
+    const p = Number(preferred);
+    if (Number.isFinite(p) && !usedSpeciesIds.has(p)) {
+      usedSpeciesIds.add(p);
+      return p;
+    }
+    let n = Math.max(0, ...usedSpeciesIds) + 1;
+    while (usedSpeciesIds.has(n)) n += 1;
+    usedSpeciesIds.add(n);
+    return n;
+  }
 
   let inserted = 0;
   let updated = 0;
@@ -108,6 +150,7 @@ async function main() {
       const { error } = await supabase
         .from("species")
         .update({
+          slug: row.slug,
           scientific_name: row.scientific_name,
           states: row.states,
           geo_region: row.geo_region,
@@ -126,12 +169,14 @@ async function main() {
         updated++;
       }
     } else {
-      const { error } = await supabase.from("species").insert(row);
+      const species_id = allocateSpeciesId(row.species_id);
+      const insertRow = { ...row, id: randomUUID(), species_id };
+      const { error } = await supabase.from("species").insert(insertRow);
       if (error) {
         console.error(`Insert failed for ${row.common_name}:`, error.message);
       } else {
         inserted++;
-        byCommonName.set(row.common_name, row.id);
+        byCommonName.set(row.common_name, insertRow.id);
       }
     }
   }

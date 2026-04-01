@@ -5,6 +5,8 @@ export interface Habitat {
 export interface Species {
   id: string;
   species_id: number;
+  /** URL segment when present; matches `toSlug(common_name)` after seed. Optional until DB migration. */
+  slug?: string | null;
   common_name: string;
   scientific_name: string;
   size_height_feet: string | null;

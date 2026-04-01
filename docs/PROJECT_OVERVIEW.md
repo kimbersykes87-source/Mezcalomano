@@ -82,12 +82,12 @@ Production-ready, mobile-first marketing website for Mezcalómano, built with Ne
 - **Naming**: `home_hero_*`, `about_hero_*`, `directory_hero_*` (mobile, tablet, desktop variants)
 - **Format**: PNG; used via `<picture>` in `Hero.tsx`
 
-### Matrix Cards (build pipeline)
+### Matrix Cards (directory images)
 
-- **Location**: `public/assets/matrix/cards/`
-- **Format**: WebP (400×560 and 800×1120)
-- **Data**: `src/data/matrix.json` (used by build script only; live directory uses Supabase)
-- **Pipeline**: `npm run build:matrix-cards` (see [MATRIX_CARDS_PIPELINE.md](MATRIX_CARDS_PIPELINE.md))
+- **Location**: `public/assets/matrix/cards/` — PNG card art + `index.json` (manifest keyed by `common_name`)
+- **Source workflow**: Raw exports in `source/agave_images/` → `npm run normalize:agave-images` (slug filenames from deck log) → `npm run sync:agave-matrix` (copy + regenerate `index.json` from `data/Species_Final - Website.csv`)
+- **Legacy / print pipeline**: `npm run build:matrix-cards` produces WebP from TIFFs; `npm run sync:matrix-cards` pulls from Dropbox SPECIES folder (see [MATRIX_CARDS_PIPELINE.md](MATRIX_CARDS_PIPELINE.md))
+- **Data**: `src/data/matrix.json` is optional for older tooling; the live directory resolves images via `index.json` and Supabase text fields
 
 ## External Integrations
 
@@ -164,10 +164,15 @@ public/                  # Static assets
 
 ### Directory Page
 
-- **Data**: Supabase `species` table (see `src/types/species.ts`)
-- **Swipeable cards**: KeyCard + SpeciesCard; swipe or arrow keys to navigate
-- **Search**: SearchOverlay filters by common name
-- **Detail**: `/directory/[slug]` shows a single SpeciesCard with “Back to directory”
+- **Data**: Supabase `species` table (see `src/types/species.ts`); optional `slug` column for direct lookups (see `supabase/migrations/`)
+- **Swipeable cards**: KeyCard + SpeciesCard; swipe, prev/next controls, or arrow keys
+- **Search / jump**: In-page search and species `<select>` on `DirectoryClient`
+- **Detail**: `/directory/[slug]` shows a single SpeciesCard with “Back to directory” (`slug` matches `toSlug(common_name)`)
+
+### Directory roadmap (optional / stage 2+)
+
+- **Per-species SEO**: Server `generateMetadata` (and optional Open Graph) on `/directory/[slug]` using a server-side Supabase fetch by `slug`
+- **Alias cleanup**: Trim `COMMON_NAME_ALIASES` in `src/lib/matrix-card-urls.ts` once CSV / `index.json` / DB `common_name` values all align
 
 ### Mobile Navigation
 
@@ -191,4 +196,4 @@ public/                  # Static assets
 
 ---
 
-Last updated: 2026-02-17
+Last updated: 2026-04-01

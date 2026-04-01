@@ -31,20 +31,38 @@ export default function SpeciesPage() {
     let cancelled = false;
     async function fetchSpecies() {
       try {
-        const { data, error } = await supabase.from("species").select("*");
+        const res = await supabase.from("species").select("*").eq("slug", slug).maybeSingle();
         if (cancelled) return;
-        if (error) {
-          console.error("Supabase error:", error);
-          setNotFound(true);
-        } else {
-          const list = (data as Species[]) ?? [];
-          const match = list.find((s) => toSlug(s.common_name) === slug);
-          if (match) {
-            setSpecies(match);
-          } else {
+        let match: Species | null = null;
+        if (res.error) {
+          const all = await supabase.from("species").select("*");
+          if (cancelled) return;
+          if (all.error) {
+            console.error("Supabase error:", all.error);
             setNotFound(true);
+            return;
           }
+          match =
+            (all.data as Species[] | null)?.find(
+              (s) => s.slug === slug || toSlug(s.common_name) === slug
+            ) ?? null;
+        } else if (res.data) {
+          match = res.data as Species;
+        } else {
+          const all = await supabase.from("species").select("*");
+          if (cancelled) return;
+          if (all.error) {
+            console.error("Supabase error:", all.error);
+            setNotFound(true);
+            return;
+          }
+          match =
+            (all.data as Species[] | null)?.find(
+              (s) => s.slug === slug || toSlug(s.common_name) === slug
+            ) ?? null;
         }
+        if (match) setSpecies(match);
+        else setNotFound(true);
       } finally {
         if (!cancelled) setLoading(false);
       }
