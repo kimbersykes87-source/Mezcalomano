@@ -9,7 +9,7 @@ import { Search } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { SearchOverlay } from "@/components/SearchOverlay";
 import { getStatesInData, parseStatesForGeo } from "@/lib/map-utils";
-import { toSlug } from "@/lib/slug";
+import { speciesDirectorySlug, toSlug } from "@/lib/slug";
 import type { Species } from "@/types/species";
 
 const AGAVE_YELLOW = "#a29037";
@@ -316,6 +316,12 @@ export default function MapPage() {
           return states.includes(stateName);
         });
         const commonNamesInState = [...new Set(speciesInState.map((s) => s.common_name))].sort((a, b) => a.localeCompare(b, "en"));
+        const directorySlugByCommonName = new Map<string, string>();
+        for (const s of speciesInState) {
+          if (!directorySlugByCommonName.has(s.common_name)) {
+            directorySlugByCommonName.set(s.common_name, speciesDirectorySlug(s));
+          }
+        }
 
         if (popupRef.current) popupRef.current.remove();
         const MapLibre = mapLibRef.current;
@@ -339,7 +345,7 @@ export default function MapPage() {
           const sp = selSpecies[0];
           if (sp) {
             const terrain = parseHabitatTerrain(sp.habitat);
-            const slug = toSlug(sp.common_name);
+            const slug = speciesDirectorySlug(sp);
             body =
               "<p class=\"mt-2 font-semibold text-white/95\"><a href=\"/directory/" + escapeHtml(slug) + "\" class=\"text-[var(--agave-yellow)] underline hover:no-underline\" target=\"_self\">" + escapeHtml(sp.common_name) + "</a></p>" +
               (sp.geo_region ? "<p class=\"mt-1 text-sm text-white/90\"><span class=\"text-white/60\">Region:</span> " + escapeHtml(sp.geo_region) + "</p>" : "") +
@@ -347,7 +353,7 @@ export default function MapPage() {
           }
         } else {
           const listHtml = commonNamesInState.length
-            ? commonNamesInState.map((n) => "<li><a href=\"/directory/" + escapeHtml(toSlug(n)) + "\" class=\"text-[var(--agave-yellow)] underline hover:no-underline\" target=\"_self\">" + escapeHtml(n) + "</a></li>").join("")
+            ? commonNamesInState.map((n) => "<li><a href=\"/directory/" + escapeHtml(directorySlugByCommonName.get(n) ?? toSlug(n)) + "\" class=\"text-[var(--agave-yellow)] underline hover:no-underline\" target=\"_self\">" + escapeHtml(n) + "</a></li>").join("")
             : "<li class=\"text-white/60\">None in directory</li>";
           body = "<p class=\"mt-2 text-sm text-white/80\">Mezcals in this state:</p><ul class=\"mt-1 list-inside list-disc text-sm text-white/90\">" + listHtml + "</ul>";
         }

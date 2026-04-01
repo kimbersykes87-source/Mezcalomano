@@ -13,7 +13,7 @@ import {
   Users,
   Wine,
 } from "lucide-react";
-import { toSlug } from "@/lib/slug";
+import { speciesDirectorySlug } from "@/lib/slug";
 import type { Species } from "@/types/species";
 
 /** Shown only after species/matrix image URLs fail to load (not when URL is missing). */
@@ -87,7 +87,7 @@ function SpeciesCardContent({
       .sort((a, b) => a.localeCompare(b, "en"))
       .join("; ");
 
-  const slugHref = "/directory/" + toSlug(species.common_name);
+  const slugHref = "/directory/" + speciesDirectorySlug(species);
   const articleEl = (
     <article className="relative flex w-full max-w-xl flex-col overflow-hidden rounded-3xl bg-[#32342f] shadow-lg sm:max-w-2xl">
       <div className="relative aspect-square w-full shrink-0 bg-[#272926]">

@@ -167,12 +167,8 @@ public/                  # Static assets
 - **Data**: Supabase `species` table (see `src/types/species.ts`); optional `slug` column for direct lookups (see `supabase/migrations/`)
 - **Swipeable cards**: KeyCard + SpeciesCard; swipe, prev/next controls, or arrow keys
 - **Search / jump**: In-page search and species `<select>` on `DirectoryClient`
-- **Detail**: `/directory/[slug]` shows a single SpeciesCard with “Back to directory” (`slug` matches `toSlug(common_name)`)
-
-### Directory roadmap (optional / stage 2+)
-
-- **Per-species SEO**: Server `generateMetadata` (and optional Open Graph) on `/directory/[slug]` using a server-side Supabase fetch by `slug`
-- **Alias cleanup**: Trim `COMMON_NAME_ALIASES` in `src/lib/matrix-card-urls.ts` once CSV / `index.json` / DB `common_name` values all align
+- **Detail**: `/directory/[slug]` — server `generateMetadata` + Open Graph/Twitter (matrix card image or default OG); client `SpeciesDetailClient` for the card. Links use DB `slug` when present (`speciesDirectorySlug` in `src/lib/slug.ts`).
+- **Matrix aliases**: `COMMON_NAME_ALIASES` in `src/lib/matrix-card-urls.ts` is minimal (legacy spellings only, e.g. `Tepeztate` → `Tepextate`); lookups `.trim()` `common_name`.
 
 ### Mobile Navigation
 

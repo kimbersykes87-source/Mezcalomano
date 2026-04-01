@@ -5,24 +5,16 @@
 
 const MATRIX_INDEX_URL = "/assets/matrix/cards/index.json";
 
-/** Aliases: CSV / Supabase common_name → index.json common_name */
-const COMMON_NAME_ALIASES: Record<string, string> = {
-  Tepextate: "Tepeztate",
-  Montana: "Mountain Agave",
-  "Cenizo ": "Cenizo Durangensis",
-  Cenizo: "Cenizo Durangensis",
-  "Manso Sahuayo ": "Chato de Sahuayo",
-  "Churique": "Lechuguilla Ceniza",
-  "Weber Azul": "Blue Weber",
-  "Masparillo ": "Masparillo",
-  "Lyobaa Coyote": "Coyote",
-  "Arroqueño": "Arroqueño",
-  "Cincoañero": "Cincoanero",
-  "Pacífica": "Pacífica",
+/**
+ * Legacy `common_name` spellings → `common_name` key in `index.json`.
+ * Index and CSV are aligned for most species; keep only true renames/typos.
+ */
+export const COMMON_NAME_ALIASES: Record<string, string> = {
+  Tepeztate: "Tepextate",
 };
 
 export type MatrixCardEntry = {
-  species_id: string;
+  species_id?: string;
   common_name: string;
   image_800: string;
   image_400: string;
@@ -46,7 +38,8 @@ export async function getMatrixCardUrlMap(): Promise<Record<string, string>> {
       map[entry.common_name] = entry.image_800;
     }
     for (const [alias, canonical] of Object.entries(COMMON_NAME_ALIASES)) {
-      if (map[canonical] && !map[alias]) map[alias.trim()] = map[canonical];
+      const a = alias.trim();
+      if (map[canonical] && !map[a]) map[a] = map[canonical];
     }
     cachedMap = map;
     return map;
@@ -63,9 +56,10 @@ export function resolveSpeciesImageUrl(
   commonName: string,
   matrixCardMap: Record<string, string> | null
 ): string | null {
+  const key = commonName.trim();
   if (matrixCardMap) {
     const matrixPath =
-      matrixCardMap[commonName] ?? matrixCardMap[COMMON_NAME_ALIASES[commonName]];
+      matrixCardMap[key] ?? matrixCardMap[COMMON_NAME_ALIASES[key]];
     if (matrixPath) return matrixPath;
   }
   return imageUrl?.trim() ?? null;

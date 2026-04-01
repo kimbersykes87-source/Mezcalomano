@@ -1,134 +1,50 @@
-"use client";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { fetchSpeciesBySlug } from "@/lib/species-detail-server";
+import { resolveMatrixImagePathForCommonName } from "@/lib/matrix-card-urls-server";
+import SpeciesDetailClient from "./SpeciesDetailClient";
 
-import { useParams } from "next/navigation";
-import { useEffect, useState, useMemo } from "react";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
-import { supabase } from "@/lib/supabase";
-import { toSlug } from "@/lib/slug";
-import { getMatrixCardUrlMap, resolveSpeciesImageUrl } from "@/lib/matrix-card-urls";
-import { SpeciesCard } from "@/components/SpeciesCard";
-import type { Species } from "@/types/species";
+const DEFAULT_OG = "/assets/og/mezcalomano_og_1200x630.png";
 
-export default function SpeciesPage() {
-  const params = useParams();
-  const slug = params?.slug as string | undefined;
-  const [species, setSpecies] = useState<Species | null>(null);
-  const [matrixCardMap, setMatrixCardMap] = useState<Record<string, string> | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
+type PageProps = { params: Promise<{ slug: string }> };
 
-  useEffect(() => {
-    getMatrixCardUrlMap().then(setMatrixCardMap);
-  }, []);
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const species = await fetchSpeciesBySlug(slug);
 
-  useEffect(() => {
-    if (!slug) {
-      setLoading(false);
-      setNotFound(true);
-      return;
-    }
-    let cancelled = false;
-    async function fetchSpecies() {
-      try {
-        const res = await supabase.from("species").select("*").eq("slug", slug).maybeSingle();
-        if (cancelled) return;
-        let match: Species | null = null;
-        if (res.error) {
-          const all = await supabase.from("species").select("*");
-          if (cancelled) return;
-          if (all.error) {
-            console.error("Supabase error:", all.error);
-            setNotFound(true);
-            return;
-          }
-          match =
-            (all.data as Species[] | null)?.find(
-              (s) => s.slug === slug || toSlug(s.common_name) === slug
-            ) ?? null;
-        } else if (res.data) {
-          match = res.data as Species;
-        } else {
-          const all = await supabase.from("species").select("*");
-          if (cancelled) return;
-          if (all.error) {
-            console.error("Supabase error:", all.error);
-            setNotFound(true);
-            return;
-          }
-          match =
-            (all.data as Species[] | null)?.find(
-              (s) => s.slug === slug || toSlug(s.common_name) === slug
-            ) ?? null;
-        }
-        if (match) setSpecies(match);
-        else setNotFound(true);
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-    fetchSpecies();
-    return () => {
-      cancelled = true;
-    };
-  }, [slug]);
-
-  const speciesWithResolvedImage = useMemo(() => {
-    if (!species) return null;
-    const image_url = resolveSpeciesImageUrl(species.image_url, species.common_name, matrixCardMap);
-    const fallbackImageUrl = resolveSpeciesImageUrl(null, species.common_name, matrixCardMap);
-    return {
-      ...species,
-      image_url,
-      fallbackImageUrl,
-    };
-  }, [species, matrixCardMap]);
-
-  if (loading) {
-    return (
-      <div className="flex flex-1 flex-col items-center justify-center px-4 py-6 text-white/70">
-        Loading…
-      </div>
-    );
+  if (!species) {
+    return { title: "Species not found" };
   }
 
-  if (notFound || !species) {
-    return (
-      <div className="flex flex-1 flex-col items-center justify-center gap-4 px-4 py-6">
-        <p className="text-white/80">Species not found.</p>
-        <Link
-          href="/directory"
-          className="inline-flex items-center gap-2 rounded-lg bg-[var(--agave-yellow)] px-4 py-2 font-medium text-[#272926] hover:opacity-90"
-        >
-          <ArrowLeft className="size-4" />
-          Back to directory
-        </Link>
-      </div>
-    );
-  }
+  const title = species.common_name;
+  const description =
+    species.description?.trim().slice(0, 160) ||
+    `${species.scientific_name} — agave species in the Mezcalómano directory.`;
+  const cardImage = resolveMatrixImagePathForCommonName(species.common_name);
+  const ogImage = cardImage ?? DEFAULT_OG;
 
-  return (
-    <div className="flex min-h-0 flex-1 flex-col w-full">
-      <main className="flex flex-1 flex-col px-4 py-6 sm:px-6">
-        <Link
-          href="/directory"
-          className="mb-4 inline-flex items-center gap-2 text-sm text-[var(--agave-yellow)] hover:underline"
-        >
-          <ArrowLeft className="size-4" />
-          Back to directory
-        </Link>
-        <div className="flex justify-center px-4 sm:px-6">
-          {speciesWithResolvedImage && (
-            <div className="w-full max-w-xl sm:max-w-2xl">
-              <SpeciesCard
-                species={speciesWithResolvedImage}
-                showPermalink={false}
-                fallbackImageUrl={speciesWithResolvedImage.fallbackImageUrl}
-              />
-            </div>
-          )}
-        </div>
-      </main>
-    </div>
-  );
+  return {
+    title,
+    description,
+    openGraph: {
+      title: `${title} | Mezcalómano`,
+      description,
+      type: "article",
+      images: [{ url: ogImage, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | Mezcalómano`,
+      description,
+      images: [ogImage],
+    },
+  };
+}
+
+export default async function SpeciesDetailPage({ params }: PageProps) {
+  const { slug } = await params;
+  const species = await fetchSpeciesBySlug(slug);
+  if (!species) notFound();
+
+  return <SpeciesDetailClient initialSpecies={species} />;
 }
