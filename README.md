@@ -23,6 +23,7 @@ npm run lint         # Run ESLint
 | Doc | Description |
 |-----|-------------|
 | **[CONNECTIONS.md](CONNECTIONS.md)** | External connections (GitHub, Vercel, domain, env vars, redirects). **Read this first.** |
+| **[docs/AGENT_HANDOFF.md](docs/AGENT_HANDOFF.md)** | **Agents / maintainers:** where keys live (never in Git), CSV vs migrations vs images, file map, verification. |
 | **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** | Commands, critical files, URLs. |
 | **[docs/PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md)** | Stack, structure, design system, assets. |
 | **[docs/CHANGELOG.md](docs/CHANGELOG.md)** | Version history. |
@@ -62,12 +63,12 @@ npm run lint         # Run ESLint
 - `NEXT_PUBLIC_SUPABASE_URL` - Your Supabase project URL
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Supabase anonymous (public) key
 
-Copy **`.env.local.example`** to **`.env.local`** and fill in values (see [CONNECTIONS.md](CONNECTIONS.md) for the full list). On Vercel, set the `NEXT_PUBLIC_*` Supabase and Turnstile variables in Project Settings → Environment Variables. The directory and map pages require a Supabase `species` table compatible with the app’s Species type (see `src/types/species.ts`). Apply migrations under `supabase/migrations/` (`001`–`008`, including `slug` for detail URLs) via **`npm run supabase:push`** (local, with Supabase CLI + token), then run **`npm run seed:species`** so rows get a `slug` matching URL segments.
+Copy **`.env.local.example`** to **`.env.local`** and fill in values (see [CONNECTIONS.md](CONNECTIONS.md) and [docs/AGENT_HANDOFF.md](docs/AGENT_HANDOFF.md) for where each key is used). On Vercel, set the `NEXT_PUBLIC_*` Supabase and Turnstile variables in Project Settings → Environment Variables — the same Supabase URL and anon key are used **on the server** for species **`generateMetadata`** (Open Graph / Twitter) on `/directory/[slug]`. The directory and map require a Supabase `species` table matching `src/types/species.ts`. Apply migrations (`001`–`008`) via **`npm run supabase:push`** (local, Supabase CLI + `SUPABASE_ACCESS_TOKEN`), then **`npm run seed:species`** so rows (including **`slug`**) stay aligned with **`data/Species_Final - Website.csv`**.
 
 ## Site Features
 
 - **6 Pages**: Home, About, Directory, Directory species detail (`/directory/[slug]`), Contact, Map
-- **Interactive Directory**: Swipeable species cards, search and jump-to-species controls, prev/next navigation, and detail pages; data from Supabase
+- **Interactive Directory**: Swipeable species cards (legend + species), search, jump control, prev/next and keyboard; detail pages at `/directory/[slug]` with server-side SEO metadata and OG/Twitter images (matrix card or default); permalinks and map links use DB **`slug`** when set (`speciesDirectorySlug` in `src/lib/slug.ts`); data from Supabase
 - **Interactive Map**: MapLibre Mexico state map with species by state and links to directory
 - **Full-Bleed Hero Images**: Responsive heroes (mobile/tablet/desktop) on Home, About, etc.
 - **Mobile-First Design**: Responsive layout

@@ -2,6 +2,27 @@
 
 All notable changes to the Mezcalómano marketing site project.
 
+## [2026-04-01] - Directory SEO, slug links, docs, data hygiene
+
+### Added
+
+- **`docs/AGENT_HANDOFF.md`** — Handbook for agents/maintainers: where secrets live (never in Git), CSV vs migrations vs images, verification, file map.
+- Server **`generateMetadata`** and Open Graph / Twitter on **`/directory/[slug]`** (`page.tsx` + `species-detail-server` + `matrix-card-urls-server`).
+- **`SpeciesDetailClient.tsx`** — client-only detail UI; map popups use **`speciesDirectorySlug`** for directory URLs.
+
+### Changed
+
+- **`COMMON_NAME_ALIASES`** trimmed in **`matrix-card-urls.ts`** (legacy spellings only); **`common_name`** lookups use **`.trim()`**.
+- **`SpeciesCard`** permalinks prefer DB **`slug`** via **`speciesDirectorySlug`** (`src/lib/slug.ts`).
+- **CSV**: producer/link alignment fixes; **La Medida** restored on **Mexicano** in Website + Directory CSVs.
+- **Documentation:** README, CONNECTIONS, QUICK_REFERENCE, PROJECT_OVERVIEW, **vercel.md**, **SETUP_CHECKLIST** updated for Supabase env on Vercel and agent workflow.
+
+### Notes
+
+- Hosted DB content updates require **`npm run seed:species`** (or manual SQL); git push only updates the Next.js app on Vercel.
+
+---
+
 ## [2026-02-17] - Directory and map integration, cleanup
 
 ### Added

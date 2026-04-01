@@ -19,6 +19,10 @@ Set in Vercel: Project Settings → Environment Variables.
 |----------|----------|-------------|
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | For contact form | Cloudflare Turnstile site key (public) |
 | `TURNSTILE_SECRET_KEY` | For contact form | Cloudflare Turnstile secret key (server-only) |
+| `NEXT_PUBLIC_SUPABASE_URL` | For directory, map, species SEO | Supabase project URL (browser + **server** `generateMetadata` on `/directory/[slug]`) |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Same | Supabase anonymous key |
+
+**Not required on Vercel** for the marketing app: `SUPABASE_SERVICE_ROLE_KEY` (local seed only), `SUPABASE_ACCESS_TOKEN` (local CLI `supabase:push` only). See **[../AGENT_HANDOFF.md](../AGENT_HANDOFF.md)** and **[CONNECTIONS.md](../../CONNECTIONS.md)**.
 
 ## Deployment Workflow
 

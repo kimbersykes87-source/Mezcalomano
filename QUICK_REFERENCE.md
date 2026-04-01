@@ -1,6 +1,7 @@
 # Quick Reference Guide
 
-**For detailed documentation, see [CONNECTIONS.md](CONNECTIONS.md)**
+**For detailed documentation, see [CONNECTIONS.md](CONNECTIONS.md).**  
+**Agents / maintainers:** [docs/AGENT_HANDOFF.md](docs/AGENT_HANDOFF.md) (secrets, CSV vs DB, file map).
 
 ## Critical Files (Never Delete)
 
@@ -65,8 +66,8 @@ Edit `next.config.ts` — add or change entries in the `redirects` array.
 
 ### Set environment variables
 
-- **Vercel**: Project → Settings → Environment Variables
-- **Local**: `.env.local` (copy from `.env.example`)
+- **Vercel**: Project → Settings → Environment Variables (Turnstile + `NEXT_PUBLIC_SUPABASE_*` for app and server metadata)
+- **Local**: `.env.local` (copy from **`.env.local.example`** — lists all variables; `.env` also supported and is gitignored)
 
 ### Deploy changes
 

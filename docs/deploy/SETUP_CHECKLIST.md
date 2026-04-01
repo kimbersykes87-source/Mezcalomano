@@ -55,6 +55,25 @@ If you skip this, the site will still deploy; the contact form will either fail 
 
 ---
 
+## 3b. Environment variables (directory and map)
+
+The **directory** (`/directory`), **species detail** (`/directory/[slug]`, including server-rendered metadata and social previews), and **map** (`/map`) need Supabase.
+
+**Get the keys:** [Supabase Dashboard](https://supabase.com/dashboard) → your project → **Settings** → **API** — copy **Project URL** and the **anon public** key.
+
+**Add them in Vercel** (same place as Turnstile):
+
+| Name | Environment |
+|------|-------------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Production, Preview |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Production, Preview |
+
+Without these, directory and map pages cannot load species data; species detail pages will not resolve titles or OG images correctly.
+
+**Seeding and migrations** (updating `species` rows or schema) are run **from a developer machine** with the Supabase CLI and local `.env` — see **[../AGENT_HANDOFF.md](../AGENT_HANDOFF.md)**. Vercel does not run `seed:species` or `supabase:push` automatically.
+
+---
+
 ## 4. Deploy
 
 1. In Vercel, click **Deploy** (or trigger a new deployment from the **Deployments** tab).
@@ -93,10 +112,11 @@ If these are missing, the site still works; you may get 404s for favicons and a 
 |------|--------|
 | 1 | Push code to GitHub |
 | 2 | Import repo in Vercel (Next.js detected) |
-| 3 | Add `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and `TURNSTILE_SECRET_KEY` in Vercel |
+| 3 | Add Turnstile keys in Vercel |
+| 3b | Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in Vercel |
 | 4 | Deploy and test the `.vercel.app` URL |
 | 5 | Add domain (e.g. mezcalomano.com) and DNS if you use it |
 | 6 | Add favicon + OG image in `public/` if you want them |
 
-**More detail:** [vercel.md](vercel.md)  
+**More detail:** [vercel.md](vercel.md) · **[AGENT_HANDOFF.md](../AGENT_HANDOFF.md)** (secrets, seed, migrations)  
 **Custom domain (Cloudflare DNS):** [DOMAIN_CLOUDFLARE_VERCEL.md](DOMAIN_CLOUDFLARE_VERCEL.md)

@@ -2,6 +2,8 @@
 
 Automated pipeline to convert 40 print-ready TIFF files into web-optimized Matrix card images. The **live Directory** now uses **Supabase** for species data; this pipeline is for generating card assets. Output: **`public/assets/matrix/cards/`** (WebP + `index.json`). The script uses **`data/species_matrix_v1.csv`** and writes a manifest; **`src/data/matrix.json`** is used only if you sync it with that output (e.g. for other tooling). If you regenerate cards, ensure any consumers of `matrix.json` or the cards folder stay in sync.
 
+**Slug PNG workflow (current site cards):** Raw PNGs in **`source/agave_images/`** → **`npm run normalize:agave-images`** → **`npm run sync:agave-matrix`** (reads **`data/Species_Final - Website.csv`**). See [README.md](../README.md) and [AGENT_HANDOFF.md](AGENT_HANDOFF.md).
+
 ## Quick Start
 
 ```bash

@@ -14,6 +14,7 @@ This document explains all external connections and configurations for the Mezca
 8. [Domain and DNS (Cloudflare)](#domain-and-dns-cloudflare)
 9. [Verification Checklist](#verification-checklist)
 10. [External Links](#external-links)
+11. [Agent handbook](#agent-handbook)
 
 ---
 
@@ -71,7 +72,7 @@ const nextConfig: NextConfig = {
 #### `package.json`
 
 - **Scripts**: `dev`, `build`, `start`, `lint`, `build:matrix-cards`, `build:og-icon-png`
-- **Dependencies**: `next`, `react`, `react-dom`, `papaparse` (for matrix pipeline)
+- **Dependencies**: `next`, `react`, `react-dom`, `@supabase/supabase-js`, `maplibre-gl`, `papaparse`, etc. (see `package.json`)
 
 ### Build and Deploy Flow
 
@@ -95,6 +96,17 @@ The contact form uses **Cloudflare Turnstile**. Set these in **Vercel** (Project
 
 - **Production / Preview**: Vercel → Project → Settings → Environment Variables. Add both; enable for Production and Preview.
 - **Local**: Copy **`.env.local.example`** to **`.env.local`** (or use `.env`; both are gitignored). Never commit real secrets.
+
+### Where keys live (summary)
+
+| Keys | Production / Preview | Local development |
+|------|---------------------|-------------------|
+| Turnstile site + secret | Vercel → Project → Settings → Environment Variables | `.env.local` (from `.env.local.example`) |
+| Supabase URL + anon | Same in Vercel (required for `/directory`, `/map`, and server `generateMetadata` on `/directory/[slug]`) | `.env` / `.env.local` |
+| Supabase service role | **Not** needed on Vercel for the marketing app | `.env` / `.env.local` for `npm run seed:species` |
+| Supabase CLI token (`sbp_…`) | **Not** on Vercel | `.env` / `.env.local` for `npm run supabase:push` only |
+
+Authoritative variable list and comments: **`.env.local.example`**. Detailed workflows for agents: **[docs/AGENT_HANDOFF.md](docs/AGENT_HANDOFF.md)**.
 
 ### Access in Code
 
@@ -124,7 +136,7 @@ The **directory** (`/directory`, `/directory/[slug]`) and **map** (`/map`) read 
 | `SUPABASE_DB_PASSWORD` | Database password | Optional; helps `supabase link` |
 | `SUPABASE_PROJECT_REF` | Project ref substring | Optional if URL is nonstandard |
 
-Set the **same** `NEXT_PUBLIC_*` values in **Vercel** (Project → Settings → Environment Variables) for Production and Preview. Do **not** put `SUPABASE_SERVICE_ROLE_KEY` or `SUPABASE_ACCESS_TOKEN` in client-exposed env; Vercel is fine for build/server if you only use them in scripts run locally — for CI seeding, use Vercel **encrypted** env or run seed from a trusted machine.
+Set the **same** `NEXT_PUBLIC_*` values in **Vercel** (Project → Settings → Environment Variables) for Production and Preview. The species detail route uses these on the **server** for `generateMetadata` (title, description, Open Graph / Twitter image). Do **not** expose `SUPABASE_SERVICE_ROLE_KEY` or `SUPABASE_ACCESS_TOKEN` to the browser — keep them local (or in CI secrets) for **`seed:species`** and **`supabase:push`** only.
 
 ### Schema migrations
 
@@ -148,6 +160,11 @@ Reads **`data/Species_Final - Website.csv`**. Loads **`.env`** then **`.env.loca
 ### Card images (static)
 
 Directory card art is served from **`public/assets/matrix/cards/`** and **`index.json`** (see README: `sync:agave-matrix`, `normalize:agave-images`). That is independent of Supabase Storage unless you later add storage uploads.
+
+### Directory detail: SEO and slugs
+
+- **`/directory/[slug]`** — Server component **`src/app/directory/[slug]/page.tsx`**: `fetchSpeciesBySlug`, `generateMetadata`, Open Graph / Twitter cards (matrix PNG or default OG asset); **`SpeciesDetailClient.tsx`** renders the card.
+- **Links** — **`speciesDirectorySlug()`** in **`src/lib/slug.ts`**: uses DB **`slug`** when set, else `toSlug(common_name)`. Used in **`SpeciesCard`** and map popups.
 
 ---
 
@@ -306,13 +323,19 @@ npm run seed:species    # Sync species rows from CSV (service role key locally)
 
 ---
 
+## Agent handbook
+
+**[docs/AGENT_HANDOFF.md](docs/AGENT_HANDOFF.md)** — For AI agents and maintainers: where secrets are stored (never in Git), what to edit for CSV vs migrations vs images, file map, and verification commands.
+
+---
+
 ## For New Developers / Agents
 
 When starting work on this project:
 
 1. **Clone**: `git clone https://github.com/kimbersykes87-source/Mezcalomano.git`
 2. **Install**: `npm install`
-3. **Read this file** and [README.md](README.md) to understand connections and setup.
+3. **Read** [README.md](README.md), this file, and **[docs/AGENT_HANDOFF.md](docs/AGENT_HANDOFF.md)** for workflows and secret handling.
 4. **Env**: Copy **`.env.local.example`** to **`.env.local`** and add Turnstile and Supabase keys (see [Environment variables](#environment-variables) and [Supabase](#supabase-directory-and-map)).
 5. **Run**: `npm run dev` and open http://localhost:3000.
 6. **Build**: `npm run build` to ensure the project builds.
@@ -324,6 +347,7 @@ When starting work on this project:
 - Domain DNS is in Cloudflare; the app is hosted on Vercel.
 - Environment variables are set in Vercel (and in `.env.local` for local dev).
 - Database schema is versioned in `supabase/migrations/`; apply with `npm run supabase:push` or the Supabase SQL Editor.
+- **Do not commit** `.env` / `.env.local` or paste live tokens into chat.
 
 ---
 
@@ -342,4 +366,4 @@ When starting work on this project:
 
 ---
 
-Last updated: 2026-02-17
+Last updated: 2026-04-01

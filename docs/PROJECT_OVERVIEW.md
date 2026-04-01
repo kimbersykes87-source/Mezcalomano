@@ -27,8 +27,9 @@ Production-ready, mobile-first marketing website for Mezcalómano, built with Ne
 - `src/app/layout.tsx` — Root layout (metadata, Header, Footer, fonts)
 - `src/app/page.tsx` — Home
 - `src/app/about/page.tsx` — About
-- `src/app/directory/page.tsx` — Directory (client: Supabase, swipeable cards, search)
-- `src/app/directory/[slug]/page.tsx` — Species detail
+- `src/app/directory/page.tsx` — Directory list (renders `DirectoryClient`)
+- `src/app/directory/[slug]/page.tsx` — Species detail (server: `generateMetadata`, fetch; renders `SpeciesDetailClient`)
+- `src/app/directory/[slug]/SpeciesDetailClient.tsx` — Client UI for detail card + matrix image resolution
 - `src/app/contact/page.tsx` — Contact
 - `src/app/map/page.tsx` — Map (MapLibre, Supabase)
 - `src/app/api/contact/route.ts` — POST handler for contact form
@@ -105,8 +106,8 @@ Production-ready, mobile-first marketing website for Mezcalómano, built with Ne
 
 ### Map
 
-- **External**: https://map.mezcalomano.com
-- **Internal**: `/map` — coming soon page with link
+- **External**: https://map.mezcalomano.com (legacy / other surface)
+- **Internal**: `/map` — full **MapLibre** Mexico states map; species from Supabase; popups link to **`/directory/{slug}`** via **`speciesDirectorySlug`**
 
 ### Contact Form
 
@@ -144,7 +145,7 @@ src/
 │   └── api/contact/     # Contact form API
 ├── components/          # React components (incl. directory/map)
 ├── data/                # matrix.json (build pipeline)
-├── lib/                 # supabase, slug, map-utils
+├── lib/                 # supabase, slug, map-utils, matrix-card-urls (+ server OG helper), species-detail-server
 ├── types/               # species.ts
 ├── scripts/             # build-matrix-cards, etc.
 └── styles/              # global.css, components.css
@@ -184,6 +185,7 @@ public/                  # Static assets
 
 - **[README.md](../README.md)** — Quick start, overview, env vars
 - **[CONNECTIONS.md](../CONNECTIONS.md)** — All external connections and config
+- **[AGENT_HANDOFF.md](AGENT_HANDOFF.md)** — Agents: secrets storage, update playbooks, file map
 - **[QUICK_REFERENCE.md](../QUICK_REFERENCE.md)** — Commands and critical files
 - **[docs/deploy/SETUP_CHECKLIST.md](deploy/SETUP_CHECKLIST.md)** — First-time Vercel setup
 - **[docs/deploy/vercel.md](deploy/vercel.md)** — Vercel deployment details
