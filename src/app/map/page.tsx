@@ -208,7 +208,6 @@ export default function MapPage() {
   const mapAreaRef = useRef<HTMLElement>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
-  const popupRef = useRef<maplibregl.Popup | null>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
   const containerReadyObserverRef = useRef<ResizeObserver | null>(null);
 
@@ -220,6 +219,8 @@ export default function MapPage() {
   const [mapClickedState, setMapClickedState] = useState<string | null>(null);
   const [geoJson, setGeoJson] = useState<GeoJSON.FeatureCollection | null>(null);
   const [mounted, setMounted] = useState(false);
+  /** State detail in a centered overlay (map dimmed behind) — same on all viewports */
+  const [mapStateDetailHtml, setMapStateDetailHtml] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -323,6 +324,33 @@ export default function MapPage() {
   setMapClickedStateRef.current = setMapClickedState;
   const mapInitializedRef = useRef(false);
   const mapLibRef = useRef<typeof maplibregl | null>(null);
+  const setMapStateDetailHtmlRef = useRef(setMapStateDetailHtml);
+  setMapStateDetailHtmlRef.current = setMapStateDetailHtml;
+
+  const closeMapStateDetail = useCallback(() => {
+    setMapStateDetailHtml(null);
+    setSelectedCommonName("");
+    setSelectedState("");
+    setMapClickedState(null);
+  }, []);
+
+  useEffect(() => {
+    if (!mapStateDetailHtml) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeMapStateDetail();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [mapStateDetailHtml, closeMapStateDetail]);
+
+  useEffect(() => {
+    if (!mapStateDetailHtml) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [mapStateDetailHtml]);
 
   const initMap = useCallback((MapLibre: typeof maplibregl) => {
     const container = mapContainerRef.current;
@@ -454,32 +482,31 @@ export default function MapPage() {
         const stateName = feature.properties?.state_name as string | undefined;
         if (!stateName) return;
 
-        // Dismiss any open popup before updating highlight. Otherwise `remove()` fires the
-        // previous popup's "close" handler, which clears mapClickedState after we'd set the new state.
-        if (popupRef.current) {
-          popupRef.current.remove();
-          popupRef.current = null;
-        }
-
         setMapClickedStateRef.current(stateName);
 
-        try {
-          const g = feature.geometry;
-          if (g && (g.type === "Polygon" || g.type === "MultiPolygon")) {
-            const c = centroid({
-              type: "Feature",
-              properties: {},
-              geometry: g,
-            } as GeoJSON.Feature<GeoJSON.Polygon | GeoJSON.MultiPolygon>);
-            const [lng, lat] = c.geometry.coordinates;
-            map.easeTo({
-              center: [lng, lat],
-              zoom: map.getZoom(),
-              duration: 550,
-            });
+        const panMapToState =
+          typeof window !== "undefined" &&
+          window.matchMedia("(min-width: 640px)").matches;
+
+        if (panMapToState) {
+          try {
+            const g = feature.geometry;
+            if (g && (g.type === "Polygon" || g.type === "MultiPolygon")) {
+              const c = centroid({
+                type: "Feature",
+                properties: {},
+                geometry: g,
+              } as GeoJSON.Feature<GeoJSON.Polygon | GeoJSON.MultiPolygon>);
+              const [lng, lat] = c.geometry.coordinates;
+              map.easeTo({
+                center: [lng, lat],
+                zoom: map.getZoom(),
+                duration: 550,
+              });
+            }
+          } catch (err) {
+            debug("state centroid / easeTo failed", err);
           }
-        } catch (err) {
-          debug("state centroid / easeTo failed", err);
         }
 
         const currentSpecies = speciesRef.current;
@@ -495,22 +522,12 @@ export default function MapPage() {
           }
         }
 
-        const MapLibre = mapLibRef.current;
-        if (!MapLibre) return;
-        const popup = new MapLibre.Popup({
-          closeButton: true,
-          closeOnClick: false,
-          className: "mezcal-map-popup",
-        })
-          .setLngLat(e.lngLat)
-          .addTo(map);
-
-        popupRef.current = popup;
-
         const selName = selectedCommonNameRef.current;
         const selSet = selectedStatesSetRef.current;
         const selSpecies = selectedSpeciesRef.current;
-        const stateTitle = '<div class="mezcal-map-popup-title">' + escapeHtml(stateName) + "</div>";
+        const titleIdAttr = ' id="map-state-detail-dialog-title"';
+        const stateTitle =
+          '<div class="mezcal-map-popup-title"' + titleIdAttr + ">" + escapeHtml(stateName) + "</div>";
         let body = "";
         if (selName && selSet.has(stateName)) {
           const sp = selSpecies[0];
@@ -556,13 +573,8 @@ export default function MapPage() {
             listHtml +
             "</ul></div>";
         }
-        popup.setHTML('<div class="mezcal-map-popup-frame">' + stateTitle + body + "</div>");
-
-        popup.on("close", () => {
-          setSelectedCommonNameRef.current("");
-          setSelectedStateRef.current("");
-          setMapClickedStateRef.current(null);
-        });
+        const frameHtml = '<div class="mezcal-map-popup-frame">' + stateTitle + body + "</div>";
+        setMapStateDetailHtmlRef.current(frameHtml);
       }
       map.on("click", onMapClick);
 
@@ -660,33 +672,35 @@ export default function MapPage() {
       containerReadyObserverRef.current = null;
       resizeObserverRef.current?.disconnect();
       resizeObserverRef.current = null;
-      if (popupRef.current) popupRef.current.remove();
       if (mapRef.current) {
         mapRef.current.remove();
         mapRef.current = null;
       }
       mapLibRef.current = null;
       mapInitializedRef.current = false;
+      setMapStateDetailHtml(null);
     };
   }, []);
 
   return (
-    <div className="flex h-full min-h-0 flex-1 flex-col overflow-hidden">
+    <div className="flex h-full min-h-0 flex-1 flex-col gap-2.5 overflow-hidden">
       {/* Same grid as .header-content: 1fr auto 1fr — center column matches logo alignment */}
       <div className="shrink-0 bg-[#272926] py-3 sm:py-4">
         <div className="map-toolbar-content">
           <div className="map-toolbar-grid-spacer" aria-hidden />
-          <div className="map-toolbar-center flex flex-col items-center gap-3 sm:gap-3">
+          <div className="map-toolbar-center flex w-full min-w-0 flex-row items-stretch gap-2 sm:flex-col sm:items-center sm:gap-3">
             {loading ? (
-              <p className="py-2 text-center text-sm text-white/70">Loading species…</p>
+              <p className="w-full py-2 text-center text-sm text-white/70 sm:w-auto">
+                Loading species…
+              </p>
             ) : (
               <>
                 <nav
-                  className="flex w-4/5 items-center gap-2.5 sm:gap-3"
+                  className="flex min-w-0 flex-1 items-center gap-2.5 sm:w-4/5 sm:gap-3"
                   aria-label="Filter by mezcal"
                 >
                   <span
-                    className="inline-flex size-10 shrink-0"
+                    className="hidden size-10 shrink-0 sm:inline-flex"
                     aria-hidden
                   />
                   <div className="min-w-0 flex-1">
@@ -701,16 +715,16 @@ export default function MapPage() {
                     />
                   </div>
                   <span
-                    className="inline-flex size-10 shrink-0"
+                    className="hidden size-10 shrink-0 sm:inline-flex"
                     aria-hidden
                   />
                 </nav>
                 <nav
-                  className="flex w-4/5 items-center gap-2.5 sm:gap-3"
+                  className="flex min-w-0 flex-1 items-center gap-2.5 sm:w-4/5 sm:gap-3"
                   aria-label="Filter by state"
                 >
                   <span
-                    className="inline-flex size-10 shrink-0"
+                    className="hidden size-10 shrink-0 sm:inline-flex"
                     aria-hidden
                   />
                   <div className="min-w-0 flex-1">
@@ -725,7 +739,7 @@ export default function MapPage() {
                     />
                   </div>
                   <span
-                    className="inline-flex size-10 shrink-0"
+                    className="hidden size-10 shrink-0 sm:inline-flex"
                     aria-hidden
                   />
                 </nav>
@@ -749,6 +763,32 @@ export default function MapPage() {
           />
         )}
       </main>
+
+      {mapStateDetailHtml ? (
+        <div
+          className="map-state-detail-backdrop"
+          onClick={closeMapStateDetail}
+          role="presentation"
+        >
+          <div
+            className="map-state-detail-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="map-state-detail-dialog-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="map-state-detail-close"
+              onClick={closeMapStateDetail}
+              aria-label="Close"
+            >
+              ×
+            </button>
+            <div dangerouslySetInnerHTML={{ __html: mapStateDetailHtml }} />
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

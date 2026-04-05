@@ -190,27 +190,7 @@ a:hover {
   }
 }
 
-/* Map page: MapLibre popup theme */
-.mezcal-map-popup .maplibregl-popup-content {
-  padding: 0;
-  background: transparent;
-  box-shadow: none;
-  text-align: left;
-}
-
-.mezcal-map-popup.maplibregl-popup-anchor-top .maplibregl-popup-tip {
-  border-bottom-color: var(--agave-yellow, #a29037);
-}
-.mezcal-map-popup.maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
-  border-top-color: var(--agave-yellow, #a29037);
-}
-.mezcal-map-popup.maplibregl-popup-anchor-left .maplibregl-popup-tip {
-  border-right-color: var(--agave-yellow, #a29037);
-}
-.mezcal-map-popup.maplibregl-popup-anchor-right .maplibregl-popup-tip {
-  border-left-color: var(--agave-yellow, #a29037);
-}
-
+/* Map page: state detail content (centered dialog + inner frame) */
 .mezcal-map-popup-frame {
   min-width: 200px;
   max-width: min(92vw, 320px);
@@ -287,15 +267,63 @@ a:hover {
   color: rgba(255, 255, 255, 0.55);
 }
 
-.mezcal-map-popup .maplibregl-popup-close-button {
-  color: var(--agave-yellow, #a29037);
-  font-size: 22px;
-  padding: 6px 8px;
-  line-height: 1;
+/* Map: centered state detail dialog — dimmed map behind, content is primary */
+.map-state-detail-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background-color: rgba(0, 0, 0, 0.55);
+  -webkit-tap-highlight-color: transparent;
 }
 
-.mezcal-map-popup .maplibregl-popup-close-button:hover {
+.map-state-detail-panel {
+  position: relative;
+  width: 100%;
+  max-width: min(92vw, 22rem);
+  max-height: min(85dvh, 36rem);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 640px) {
+  .map-state-detail-panel {
+    max-width: min(88vw, 28rem);
+    max-height: min(80dvh, 40rem);
+  }
+}
+
+.map-state-detail-close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0.35rem;
+  background: transparent;
+  color: var(--agave-yellow, #a29037);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.map-state-detail-close:hover {
   color: #fff;
   opacity: 0.95;
+}
+
+.map-state-detail-close:focus-visible {
+  outline: 2px solid var(--agave-yellow, #a29037);
+  outline-offset: 2px;
 }
 
