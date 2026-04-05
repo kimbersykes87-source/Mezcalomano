@@ -4,7 +4,12 @@ import { SITE_URL } from "@/lib/site-seo";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  const segments = await fetchSpeciesDirectorySegments();
+  let segments: string[] = [];
+  try {
+    segments = await fetchSpeciesDirectorySegments();
+  } catch {
+    segments = [];
+  }
 
   const staticEntries: MetadataRoute.Sitemap = [
     { url: SITE_URL + "/", lastModified: now, changeFrequency: "weekly", priority: 1 },

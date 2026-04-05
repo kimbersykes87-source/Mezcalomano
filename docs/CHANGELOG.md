@@ -28,6 +28,7 @@ All notable changes to the Mezcalómano marketing site project.
 
 - **Vercel / production:** `sitemap.xml` is generated at request time; **Supabase env vars** must remain set so species URLs appear in the sitemap on the live site.
 - After deploy: submit **`https://mezcalomano.com/sitemap.xml`** in Google Search Console; validate structured data with [Rich Results Test](https://search.google.com/test/rich-results).
+- **Sitemap resilience:** `species-list-server` and `sitemap.ts` wrap Supabase / aggregation in try/catch and skip empty slug segments so `/sitemap.xml` falls back to static URLs instead of erroring if the query throws.
 
 ---
 
