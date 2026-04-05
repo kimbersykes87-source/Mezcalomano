@@ -28,7 +28,7 @@ npm install
 
    | Variable | Purpose |
    |----------|---------|
-   | `NEXT_PUBLIC_SUPABASE_URL` | Required for **`/directory`**, **`/directory/[slug]`**, and **`/map`** (live data). |
+   | `NEXT_PUBLIC_SUPABASE_URL` | Required for **`/directory`**, **`/directory/[slug]`**, **`/map`**, and **`/sitemap.xml`** species URLs (live data). |
    | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Same as above. |
 
    Use the same values as **Vercel → Project → Settings → Environment Variables** (Production), or copy them from the **Supabase** dashboard (**Project Settings → API**).
@@ -45,6 +45,8 @@ npm run dev
 ```
 
 Open **[http://localhost:3000](http://localhost:3000)**. Edit files under **`src/`**; the browser updates on save.
+
+After a production build (`npm run build` && `npm run start`), you can spot-check **`http://localhost:3000/sitemap.xml`** and **`http://localhost:3000/llms.txt`**.
 
 ## Useful commands
 
