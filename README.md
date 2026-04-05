@@ -12,6 +12,7 @@ npm run dev          # Start development server (http://localhost:3000)
 npm run build        # Build for production
 npm run start        # Run production server locally
 npm run build:matrix-cards  # Build matrix card images from TIFFs
+npm run build:hero-webp     # Encode home/about hero PNGs → WebP (same folder; used by Hero `<picture>`)
 npm run sync:matrix-cards   # Sync matrix cards from SPECIES artwork folder
 npm run seed:species        # Upsert Supabase `species` from Website CSV (requires env vars)
 npm run normalize:agave-images  # Rename source/agave_images PNGs to slug names (see log)

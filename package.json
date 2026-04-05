@@ -10,6 +10,7 @@
     "lint": "eslint src",
     "build:matrix-cards": "node src/scripts/build-matrix-cards.js",
     "build:og-icon-png": "node scripts/build-og-icon-png.js",
+    "build:hero-webp": "node scripts/build-hero-webp.mjs",
     "rename:matrix-cards": "node scripts/rename-matrix-cards-from-csv.mjs",
     "seed:species": "node scripts/seed-species-from-csv.mjs",
     "sync:matrix-cards": "node scripts/sync-matrix-cards-from-species.mjs",
@@ -28,6 +29,7 @@
     "react-dom": "19.2.3"
   },
   "devDependencies": {
+    "sharp": "^0.34.5",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/papaparse": "^5.3.14",

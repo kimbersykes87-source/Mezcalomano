@@ -83,7 +83,7 @@ Production-ready, mobile-first marketing website for Mezcalómano, built with Ne
 
 - **Location**: `public/assets/photos/`
 - **Naming**: `home_hero_*`, `about_hero_*`, `directory_hero_*` (mobile, tablet, desktop variants)
-- **Format**: PNG; used via `<picture>` in `Hero.tsx`
+- **Format**: PNG (source of truth) plus **WebP** siblings (`*.webp`) for delivery; `Hero.tsx` `<picture>` prefers WebP with PNG fallback. Regenerate with **`npm run build:hero-webp`** after changing PNGs.
 
 ### Matrix Cards (directory images)
 
