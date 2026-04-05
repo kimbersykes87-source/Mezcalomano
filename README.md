@@ -4,6 +4,8 @@ Production-ready, mobile-first Next.js website for deployment on Vercel. Feature
 
 ## Quick Start
 
+**Local UX/UI work:** after `npm install`, copy `.env.local.example` → `.env.local`, add Supabase `NEXT_PUBLIC_*` keys, then `npm run dev`. Step-by-step: **[docs/LOCAL_DEV.md](docs/LOCAL_DEV.md)**.
+
 ```bash
 npm install          # Install dependencies
 npm run dev          # Start development server (http://localhost:3000)
@@ -26,6 +28,7 @@ npm run lint         # Run ESLint
 | **[docs/AGENT_HANDOFF.md](docs/AGENT_HANDOFF.md)** | **Agents / maintainers:** where keys live (never in Git), CSV vs migrations vs images, file map, verification. |
 | **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** | Commands, critical files, URLs. |
 | **[docs/PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md)** | Stack, structure, design system, assets. |
+| **[docs/LOCAL_DEV.md](docs/LOCAL_DEV.md)** | **Local dev:** env vars, `npm run dev`, UI file map, troubleshooting. |
 | **[docs/CHANGELOG.md](docs/CHANGELOG.md)** | Version history. |
 | **[docs/deploy/SETUP_CHECKLIST.md](docs/deploy/SETUP_CHECKLIST.md)** | First-time Vercel deployment steps. |
 | **[docs/deploy/vercel.md](docs/deploy/vercel.md)** | Vercel build config and env vars. |
