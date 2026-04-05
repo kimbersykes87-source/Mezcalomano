@@ -194,6 +194,24 @@ async function main() {
     console.log(`Issued delete for ${legacySlugs.length} legacy slug(s) (duplicate/old URLs).`);
   }
 
+  const allowedSlugs = new Set(speciesRows.map((r) => r.slug));
+  const { data: allSpecies, error: listErr } = await supabase.from("species").select("id, slug, common_name");
+  if (listErr) {
+    console.error("Could not list species for prune:", listErr.message);
+  } else {
+    let pruned = 0;
+    for (const s of allSpecies ?? []) {
+      const slugCol = s.slug && String(s.slug).trim();
+      const effectiveSlug = slugCol || toSlug(String(s.common_name ?? ""));
+      if (!allowedSlugs.has(effectiveSlug)) {
+        const { error: delErr } = await supabase.from("species").delete().eq("id", s.id);
+        if (delErr) console.error(`Prune delete failed ${s.id}:`, delErr.message);
+        else pruned++;
+      }
+    }
+    if (pruned) console.log(`Pruned ${pruned} row(s) not present in Website CSV (by slug).`);
+  }
+
   console.log(`Done: ${inserted} inserted, ${updated} updated.`);
 }
 

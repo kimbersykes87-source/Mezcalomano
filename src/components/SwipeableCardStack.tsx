@@ -68,15 +68,17 @@ export function SwipeableCardStack({
   const atStart = currentIndex <= 0;
   const atEnd = currentIndex >= totalCards - 1;
 
+  const speciesPos = currentIndex - (showKeyCard ? 1 : 0);
+  const speciesTotal = species.length;
   const positionLabel =
     totalCards > 0
       ? isKeyCard
-        ? `Legend (${currentIndex + 1} of ${totalCards})`
-        : `${currentIndex + 1} of ${totalCards}${
-            species[currentIndex - (showKeyCard ? 1 : 0)]
-              ? ` — ${species[currentIndex - (showKeyCard ? 1 : 0)]!.common_name}`
-              : ""
-          }`
+        ? speciesTotal > 0
+          ? `How to read these cards · ${speciesTotal} species`
+          : "How to read these cards"
+        : speciesPos >= 0 && species[speciesPos]
+          ? `${speciesPos + 1} of ${speciesTotal} — ${species[speciesPos]!.common_name}`
+          : ""
       : "";
 
   if (species.length === 0 && !showKeyCard) {
@@ -104,7 +106,7 @@ export function SwipeableCardStack({
               <ChevronLeft className="size-6" aria-hidden />
             </button>
             <p className="min-w-0 flex-1 text-center text-sm text-white/80" aria-live="polite">
-              Legend (1 of 1)
+              How to read these cards
             </p>
             <button
               type="button"
