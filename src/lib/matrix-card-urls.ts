@@ -9,8 +9,17 @@ const MATRIX_INDEX_URL = "/assets/matrix/cards/index.json";
  * Legacy `common_name` spellings → `common_name` key in `index.json`.
  * Index and CSV are aligned for most species; keep only true renames/typos.
  */
+/** Legacy directory / matrix labels → `common_name` keys in `index.json` */
 export const COMMON_NAME_ALIASES: Record<string, string> = {
   Tepeztate: "Tepextate",
+  "Cenizo Durangensis": "Cenizo",
+  "Mountain Agave": "Montana",
+  "Chato de Sahuayo": "Manso Sahuayo",
+  "Lechuguilla Ceniza": "Churique",
+  "Blue Weber": "Weber Azul",
+  "Maguey Verde": "Verde",
+  "Lechuguilla de la Sierra": "Masparillo",
+  Espadita: "Espadilla",
 };
 
 export type MatrixCardEntry = {

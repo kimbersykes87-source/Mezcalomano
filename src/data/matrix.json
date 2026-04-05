@@ -24,10 +24,10 @@
   {
     "species_id": "03",
     "scientific_name": "Agave marmorata",
-    "common_name": "Tepeztate",
+    "common_name": "Tepextate",
     "one_liner": "Long maturing wild mezcal agave; intense savoury herbal mezcals",
     "habitat": "Mountains & Canyons",
-    "height": "4.5–7 ft",
+    "height": "3-6.5 ft",
     "image_800": "/assets/matrix/cards/species_03_agave_marmorata_tepeztate_card_800.webp",
     "image_400": "/assets/matrix/cards/species_03_agave_marmorata_tepeztate_card_400.webp",
     "source_tif": "2_hearts_final.tif"
@@ -101,7 +101,7 @@
   {
     "species_id": "10",
     "scientific_name": "Agave montana",
-    "common_name": "Mountain Agave",
+    "common_name": "Montana",
     "one_liner": "Occasional wild-harvest mountain mezcal in NE Mexico; more often grown as ornamental despite good sugar content",
     "habitat": "Mountains & Canyons",
     "height": "3-4 ft",
@@ -155,7 +155,7 @@
   },
   {
     "species_id": "15",
-    "scientific_name": "Agave maximiliana / Agave rhodacantha (regional use)",
+    "scientific_name": "Agave maximiliana",
     "common_name": "Masparillo",
     "one_liner": "Regional mezcal species and raicilla relative; rustic profiles",
     "habitat": "Mountains & Canyons",
@@ -211,8 +211,8 @@
   {
     "species_id": "20",
     "scientific_name": "Agave durangensis",
-    "common_name": "Cenizo Durangensis",
-    "one_liner": "Flagship mezcal agave of Durango DO; fruity creamy cenizo mezcals",
+    "common_name": "Cenizo",
+    "one_liner": "Flagship mezcal agave of Durango DO; cenizo mezcals",
     "habitat": "Arid Plateaus & Desert",
     "height": "4.5–7 ft",
     "image_800": "/assets/matrix/cards/species_20_agave_durangensis_cenizo_durangensis_card_800.webp",
@@ -222,32 +222,32 @@
   {
     "species_id": "21",
     "scientific_name": "Agave americana sahuayensis",
-    "common_name": "Chato de Sahuayo",
+    "common_name": "Manso Sahuayo",
     "one_liner": "Cultivated mezcal crop primary agave for mezcal in Sahuayo region; cultivated with no specific IUCN status but monitored amid demand",
     "habitat": "Arid Plateaus & Desert",
-    "height": "6-10 ft",
+    "height": "5-7 ft",
     "image_800": "/assets/matrix/cards/species_21_agave_americana_sahuayensis_chato_de_sahuayo_card_800.webp",
     "image_400": "/assets/matrix/cards/species_21_agave_americana_sahuayensis_chato_de_sahuayo_card_400.webp",
     "source_tif": "7_clubs_final.tif"
   },
   {
     "species_id": "22",
-    "scientific_name": "Agave maximiliana",
-    "common_name": "Lechuguilla de la Sierra",
-    "one_liner": "Key species for raicilla and some mezcal style spirits",
-    "habitat": "Forest & Semi-tropical Zones",
-    "height": "2.5–4.5 ft",
-    "image_800": "/assets/matrix/cards/species_22_agave_maximiliana_lechuguilla_de_la_sierra_card_800.webp",
-    "image_400": "/assets/matrix/cards/species_22_agave_maximiliana_lechuguilla_de_la_sierra_card_400.webp",
+    "scientific_name": "Agave lyoba",
+    "common_name": "Lyobaa Coyote",
+    "one_liner": "Rare/less common mezcal agave in Oaxaca; sometimes linked to coyote/coyota naming in some contexts",
+    "habitat": "Mountains & Canyons",
+    "height": "1-2.5 ft",
+    "image_800": "/assets/matrix/cards/lyobaa_coyote.png",
+    "image_400": "/assets/matrix/cards/lyobaa_coyote.png",
     "source_tif": "7_diamonds_final.tif"
   },
   {
     "species_id": "23",
     "scientific_name": "Agave shrevei",
-    "common_name": "Lechuguilla Ceniza",
-    "one_liner": "Local mezcal and related distillates in some Sierra Madre communities",
+    "common_name": "Churique",
+    "one_liner": "Churique is a local name for Agave shrevei in Chihuahua and Sonora; spirit sometimes labeled lechuguilla",
     "habitat": "Arid Plateaus & Desert",
-    "height": "2.5–4.5 ft",
+    "height": "1.5-3 ft",
     "image_800": "/assets/matrix/cards/species_23_agave_shrevei_lechuguilla_ceniza_card_800.webp",
     "image_400": "/assets/matrix/cards/species_23_agave_shrevei_lechuguilla_ceniza_card_400.webp",
     "source_tif": "7_hearts_final.tif"
@@ -255,10 +255,10 @@
   {
     "species_id": "24",
     "scientific_name": "Agave tequilana var. weber",
-    "common_name": "Blue Weber",
+    "common_name": "Weber Azul",
     "one_liner": "Main tequila species; occasionally used in mezcal in certain regions",
     "habitat": "Valleys & Villages",
-    "height": "2.5–4.5 ft",
+    "height": "4-6 ft",
     "image_800": "/assets/matrix/cards/species_24_agave_tequilana_var_weber_blue_weber_card_800.webp",
     "image_400": "/assets/matrix/cards/species_24_agave_tequilana_var_weber_blue_weber_card_400.webp",
     "source_tif": "7_spades_final.tif"
@@ -266,10 +266,10 @@
   {
     "species_id": "25",
     "scientific_name": "Agave gentryi",
-    "common_name": "Maguey Verde",
+    "common_name": "Verde",
     "one_liner": "Local mezcal and regional spirits; also ornamental and forage",
     "habitat": "Mountains & Canyons",
-    "height": "4.5–7 ft",
+    "height": "3-5 ft",
     "image_800": "/assets/matrix/cards/species_25_agave_gentryi_maguey_verde_card_800.webp",
     "image_400": "/assets/matrix/cards/species_25_agave_gentryi_maguey_verde_card_400.webp",
     "source_tif": "8_clubs_final.tif"
@@ -375,8 +375,8 @@
   },
   {
     "species_id": "35",
-    "scientific_name": "Agave macroacantha",
-    "common_name": "Espadita",
+    "scientific_name": "Agave angustifolia",
+    "common_name": "Espadilla",
     "one_liner": "Wild and semi managed mezcal agave; produces bright structured mezcals",
     "habitat": "Mountains & Canyons",
     "height": "1–2.5 ft",

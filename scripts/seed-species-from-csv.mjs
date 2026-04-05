@@ -17,6 +17,7 @@ import { randomUUID } from "crypto";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = join(__dirname, "..");
 const csvPath = join(projectRoot, "data", "Species_Final - Website.csv");
+const legacySlugPath = join(projectRoot, "data", "directory-legacy-slug-redirects.json");
 
 function loadEnvFile(relPath) {
   const p = join(projectRoot, relPath);
@@ -179,6 +180,18 @@ async function main() {
         byCommonName.set(row.common_name, insertRow.id);
       }
     }
+  }
+
+  const legacy = existsSync(legacySlugPath)
+    ? JSON.parse(readFileSync(legacySlugPath, "utf-8"))
+    : {};
+  const legacySlugs = Object.keys(legacy);
+  for (const slug of legacySlugs) {
+    const { error } = await supabase.from("species").delete().eq("slug", slug);
+    if (error) console.error(`Delete legacy slug ${slug}:`, error.message);
+  }
+  if (legacySlugs.length) {
+    console.log(`Issued delete for ${legacySlugs.length} legacy slug(s) (duplicate/old URLs).`);
   }
 
   console.log(`Done: ${inserted} inserted, ${updated} updated.`);
