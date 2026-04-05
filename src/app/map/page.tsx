@@ -1,13 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useId } from "react";
 import type maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 
 import centroid from "@turf/centroid";
-import { Search } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import { SearchOverlay } from "@/components/SearchOverlay";
 import { getStatesInData, parseStatesForGeo } from "@/lib/map-utils";
 import { speciesDirectorySlug, toSlug } from "@/lib/slug";
 import type { Species } from "@/types/species";
@@ -16,6 +15,45 @@ const AGAVE_YELLOW = "#a29037";
 const AGAVE_YELLOW_DARK = "#7a6c2a";
 const MAP_CENTER: [number, number] = [-102, 23];
 const MAP_ZOOM = 4.5;
+
+/** MapLibre fill-color expression: map click highlight, then species filter, then data states. */
+function statesFillColorExpr(
+  mapClickedState: string | null,
+  selectedList: string[],
+  statesInDataList: string[]
+): maplibregl.ExpressionSpecification {
+  const parts: unknown[] = ["case"];
+  if (mapClickedState) {
+    parts.push(["==", ["get", "state_name"], mapClickedState], AGAVE_YELLOW);
+  }
+  parts.push(
+    ["in", ["get", "state_name"], ["literal", selectedList]],
+    AGAVE_YELLOW,
+    ["in", ["get", "state_name"], ["literal", statesInDataList]],
+    "rgba(255,255,255,0.25)",
+    "rgba(100,100,100,0.12)"
+  );
+  return parts as maplibregl.ExpressionSpecification;
+}
+
+function statesLineColorExpr(
+  mapClickedState: string | null,
+  selectedList: string[],
+  statesInDataList: string[]
+): maplibregl.ExpressionSpecification {
+  const parts: unknown[] = ["case"];
+  if (mapClickedState) {
+    parts.push(["==", ["get", "state_name"], mapClickedState], AGAVE_YELLOW);
+  }
+  parts.push(
+    ["in", ["get", "state_name"], ["literal", selectedList]],
+    AGAVE_YELLOW_DARK,
+    ["in", ["get", "state_name"], ["literal", statesInDataList]],
+    "#ffffff",
+    "rgba(140,140,140,0.5)"
+  );
+  return parts as maplibregl.ExpressionSpecification;
+}
 
 const DEBUG = process.env.NODE_ENV === "development";
 function debug(...args: unknown[]) {
@@ -34,6 +72,138 @@ function parseHabitatTerrain(habitat: Species["habitat"]): string {
   return t.terrain?.trim() ?? "";
 }
 
+/** Directory-style filter control: matches `/directory` combobox field + list (not native `<select>`). */
+function MapDirectoryStyleSelect({
+  id,
+  label,
+  "aria-label": ariaLabel,
+  value,
+  onChange,
+  placeholder,
+  options,
+}: {
+  id: string;
+  label: string;
+  "aria-label": string;
+  value: string;
+  onChange: (next: string) => void;
+  placeholder: string;
+  options: string[];
+}) {
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const listId = useId();
+
+  useEffect(() => {
+    const onDoc = (e: MouseEvent) => {
+      if (!wrapRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDoc);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDoc);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, []);
+
+  const display = value || placeholder;
+
+  const pick = (next: string) => {
+    onChange(next);
+    setOpen(false);
+  };
+
+  return (
+    <div ref={wrapRef} className="relative min-h-12 w-full min-w-0">
+      <label htmlFor={id} className="sr-only">
+        {label}
+      </label>
+      <button
+        type="button"
+        id={id}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-controls={listId}
+        onClick={() => setOpen((v) => !v)}
+        className="box-border flex h-auto min-h-12 w-full min-w-0 items-center rounded-lg border border-white/20 bg-white/5 px-3 py-2.5 pr-11 text-white focus:border-[var(--agave-yellow)] focus:outline-none sm:px-8 sm:pr-[4.75rem] md:px-[6rem]"
+        style={{
+          fontSize: "1.3125rem",
+          lineHeight: 1.35,
+        }}
+      >
+        <span
+          className={`min-w-0 flex-1 text-balance text-center break-words ${value ? "text-white" : "text-white/40"}`}
+        >
+          {display}
+        </span>
+      </button>
+      <div className="pointer-events-none absolute right-2 top-1/2 flex -translate-y-1/2 items-center">
+        <ChevronDown
+          className={`size-4 text-[var(--agave-yellow)] transition-transform ${open ? "rotate-180" : ""}`}
+          aria-hidden
+        />
+      </div>
+      {open ? (
+        <ul
+          id={listId}
+          role="listbox"
+          aria-label={ariaLabel}
+          className="absolute left-0 right-0 top-full z-[100] mt-1 max-h-56 overflow-y-auto rounded-lg border border-white/20 bg-[#2a2c28] py-1 shadow-xl"
+        >
+          <li role="presentation">
+            <button
+              type="button"
+              role="option"
+              aria-selected={value === ""}
+              className={`w-full py-2.5 text-left hover:bg-white/10 ${
+                value === "" ? "bg-white/10 text-[var(--agave-yellow)]" : "text-white"
+              }`}
+              style={{
+                fontSize: "1.3125rem",
+                lineHeight: 1.35,
+                paddingLeft: "1rem",
+                paddingRight: "1rem",
+              }}
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => pick("")}
+            >
+              {placeholder}
+            </button>
+          </li>
+          {options.map((name) => {
+            const selected = value === name;
+            return (
+              <li key={name} role="presentation">
+                <button
+                  type="button"
+                  role="option"
+                  aria-selected={selected}
+                  className={`w-full py-2.5 text-left hover:bg-white/10 ${
+                    selected ? "bg-white/10 text-[var(--agave-yellow)]" : "text-white"
+                  }`}
+                  style={{
+                    fontSize: "1.3125rem",
+                    lineHeight: 1.35,
+                    paddingLeft: "1rem",
+                    paddingRight: "1rem",
+                  }}
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={() => pick(name)}
+                >
+                  {name}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      ) : null}
+    </div>
+  );
+}
+
 export default function MapPage() {
   const mapAreaRef = useRef<HTMLElement>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -44,10 +214,10 @@ export default function MapPage() {
 
   const [species, setSpecies] = useState<Species[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const [selectedCommonName, setSelectedCommonName] = useState<string>("");
   const [selectedState, setSelectedState] = useState<string>("");
+  /** State last tapped on the map (popup open); cleared when popup closes. Drives fill highlight. */
+  const [mapClickedState, setMapClickedState] = useState<string | null>(null);
   const [geoJson, setGeoJson] = useState<GeoJSON.FeatureCollection | null>(null);
   const [mounted, setMounted] = useState(false);
 
@@ -147,6 +317,10 @@ export default function MapPage() {
   selectedSpeciesRef.current = selectedSpecies;
   const selectedStatesSetRef = useRef(selectedStatesSet);
   selectedStatesSetRef.current = selectedStatesSet;
+  const mapClickedStateRef = useRef(mapClickedState);
+  mapClickedStateRef.current = mapClickedState;
+  const setMapClickedStateRef = useRef(setMapClickedState);
+  setMapClickedStateRef.current = setMapClickedState;
   const mapInitializedRef = useRef(false);
   const mapLibRef = useRef<typeof maplibregl | null>(null);
 
@@ -222,19 +396,13 @@ export default function MapPage() {
       });
 
       const selectedList = [...selectedStatesListRef.current];
+      const clicked = mapClickedStateRef.current;
       map.addLayer({
         id: "states-fill",
         type: "fill",
         source: "mexico-states-all",
         paint: {
-          "fill-color": [
-            "case",
-            ["in", ["get", "state_name"], ["literal", selectedList]],
-            AGAVE_YELLOW,
-            ["in", ["get", "state_name"], ["literal", statesInDataList]],
-            "rgba(255,255,255,0.25)",
-            "rgba(100,100,100,0.12)",
-          ],
+          "fill-color": statesFillColorExpr(clicked, selectedList, statesInDataList),
           "fill-opacity": 1,
           "fill-antialias": true,
         },
@@ -245,14 +413,7 @@ export default function MapPage() {
         type: "line",
         source: "mexico-states-all",
         paint: {
-          "line-color": [
-            "case",
-            ["in", ["get", "state_name"], ["literal", selectedList]],
-            AGAVE_YELLOW_DARK,
-            ["in", ["get", "state_name"], ["literal", statesInDataList]],
-            "#ffffff",
-            "rgba(140,140,140,0.5)",
-          ],
+          "line-color": statesLineColorExpr(clicked, selectedList, statesInDataList),
           "line-width": 1.5,
         },
       });
@@ -276,23 +437,6 @@ export default function MapPage() {
         },
       });
 
-      map.setPaintProperty("states-fill", "fill-color", [
-        "case",
-        ["in", ["get", "state_name"], ["literal", selectedList]],
-        AGAVE_YELLOW,
-        ["in", ["get", "state_name"], ["literal", statesInDataList]],
-        "rgba(255,255,255,0.25)",
-        "rgba(100,100,100,0.12)",
-      ]);
-      map.setPaintProperty("states-line", "line-color", [
-        "case",
-        ["in", ["get", "state_name"], ["literal", selectedList]],
-        AGAVE_YELLOW_DARK,
-        ["in", ["get", "state_name"], ["literal", statesInDataList]],
-        "#ffffff",
-        "rgba(140,140,140,0.5)",
-      ]);
-
       map.getCanvas().style.cursor = "";
       map.on("mouseenter", "states-fill", () => {
         map.getCanvas().style.cursor = "pointer";
@@ -310,6 +454,34 @@ export default function MapPage() {
         const stateName = feature.properties?.state_name as string | undefined;
         if (!stateName) return;
 
+        // Dismiss any open popup before updating highlight. Otherwise `remove()` fires the
+        // previous popup's "close" handler, which clears mapClickedState after we'd set the new state.
+        if (popupRef.current) {
+          popupRef.current.remove();
+          popupRef.current = null;
+        }
+
+        setMapClickedStateRef.current(stateName);
+
+        try {
+          const g = feature.geometry;
+          if (g && (g.type === "Polygon" || g.type === "MultiPolygon")) {
+            const c = centroid({
+              type: "Feature",
+              properties: {},
+              geometry: g,
+            } as GeoJSON.Feature<GeoJSON.Polygon | GeoJSON.MultiPolygon>);
+            const [lng, lat] = c.geometry.coordinates;
+            map.easeTo({
+              center: [lng, lat],
+              zoom: map.getZoom(),
+              duration: 550,
+            });
+          }
+        } catch (err) {
+          debug("state centroid / easeTo failed", err);
+        }
+
         const currentSpecies = speciesRef.current;
         const speciesInState = currentSpecies.filter((s) => {
           const states = parseStatesForGeo(s.states);
@@ -323,7 +495,6 @@ export default function MapPage() {
           }
         }
 
-        if (popupRef.current) popupRef.current.remove();
         const MapLibre = mapLibRef.current;
         if (!MapLibre) return;
         const popup = new MapLibre.Popup({
@@ -339,7 +510,7 @@ export default function MapPage() {
         const selName = selectedCommonNameRef.current;
         const selSet = selectedStatesSetRef.current;
         const selSpecies = selectedSpeciesRef.current;
-        const stateTitle = "<p class=\"text-sm font-bold text-[var(--agave-yellow)]\">" + escapeHtml(stateName) + "</p>";
+        const stateTitle = '<div class="mezcal-map-popup-title">' + escapeHtml(stateName) + "</div>";
         let body = "";
         if (selName && selSet.has(stateName)) {
           const sp = selSpecies[0];
@@ -347,23 +518,50 @@ export default function MapPage() {
             const terrain = parseHabitatTerrain(sp.habitat);
             const slug = speciesDirectorySlug(sp);
             body =
-              "<p class=\"mt-2 font-semibold text-white/95\"><a href=\"/directory/" + escapeHtml(slug) + "\" class=\"text-[var(--agave-yellow)] underline hover:no-underline\" target=\"_self\">" + escapeHtml(sp.common_name) + "</a></p>" +
-              (sp.geo_region ? "<p class=\"mt-1 text-sm text-white/90\"><span class=\"text-white/60\">Region:</span> " + escapeHtml(sp.geo_region) + "</p>" : "") +
-              (terrain ? "<p class=\"mt-1 text-sm text-white/90\"><span class=\"text-white/60\">Terrain:</span> " + escapeHtml(terrain) + "</p>" : "");
+              '<div class="mezcal-map-popup-body">' +
+              '<p class="mezcal-map-popup-detail"><a href="/directory/' +
+              escapeHtml(slug) +
+              '" target="_self">' +
+              escapeHtml(sp.common_name) +
+              "</a></p>" +
+              (sp.geo_region
+                ? '<p class="mezcal-map-popup-detail"><span class="mezcal-map-popup-muted">Region:</span> ' +
+                  escapeHtml(sp.geo_region) +
+                  "</p>"
+                : "") +
+              (terrain
+                ? '<p class="mezcal-map-popup-detail"><span class="mezcal-map-popup-muted">Terrain:</span> ' +
+                  escapeHtml(terrain) +
+                  "</p>"
+                : "") +
+              "</div>";
           }
         } else {
           const listHtml = commonNamesInState.length
-            ? commonNamesInState.map((n) => "<li><a href=\"/directory/" + escapeHtml(directorySlugByCommonName.get(n) ?? toSlug(n)) + "\" class=\"text-[var(--agave-yellow)] underline hover:no-underline\" target=\"_self\">" + escapeHtml(n) + "</a></li>").join("")
-            : "<li class=\"text-white/60\">None in directory</li>";
-          body = "<p class=\"mt-2 text-sm text-white/80\">Mezcals in this state:</p><ul class=\"mt-1 list-inside list-disc text-sm text-white/90\">" + listHtml + "</ul>";
+            ? commonNamesInState
+                .map(
+                  (n) =>
+                    '<li><a href="/directory/' +
+                    escapeHtml(directorySlugByCommonName.get(n) ?? toSlug(n)) +
+                    '" target="_self">' +
+                    escapeHtml(n) +
+                    "</a></li>"
+                )
+                .join("")
+            : '<li><span class="mezcal-map-popup-muted">None in directory</span></li>';
+          body =
+            '<div class="mezcal-map-popup-body">' +
+            '<p class="mezcal-map-popup-lead">Mezcals in this state:</p>' +
+            '<ul class="mezcal-map-popup-list">' +
+            listHtml +
+            "</ul></div>";
         }
-        popup.setHTML(
-          "<div class=\"rounded-lg border border-white/20 bg-[#272926] p-3 text-white shadow-lg\" style=\"min-width: 180px;\">" + stateTitle + body + "</div>"
-        );
+        popup.setHTML('<div class="mezcal-map-popup-frame">' + stateTitle + body + "</div>");
 
         popup.on("close", () => {
           setSelectedCommonNameRef.current("");
           setSelectedStateRef.current("");
+          setMapClickedStateRef.current(null);
         });
       }
       map.on("click", onMapClick);
@@ -394,22 +592,16 @@ export default function MapPage() {
       if (!mapRef.current.getLayer("states-fill")) return;
       const list = [...selectedStatesList];
       const statesInDataList = Array.from(statesInData);
-      mapRef.current.setPaintProperty("states-fill", "fill-color", [
-        "case",
-        ["in", ["get", "state_name"], ["literal", list]],
-        AGAVE_YELLOW,
-        ["in", ["get", "state_name"], ["literal", statesInDataList]],
-        "rgba(255,255,255,0.25)",
-        "rgba(100,100,100,0.12)",
-      ]);
-      mapRef.current.setPaintProperty("states-line", "line-color", [
-        "case",
-        ["in", ["get", "state_name"], ["literal", list]],
-        AGAVE_YELLOW_DARK,
-        ["in", ["get", "state_name"], ["literal", statesInDataList]],
-        "#ffffff",
-        "rgba(140,140,140,0.5)",
-      ]);
+      mapRef.current.setPaintProperty(
+        "states-fill",
+        "fill-color",
+        statesFillColorExpr(mapClickedState, list, statesInDataList)
+      );
+      mapRef.current.setPaintProperty(
+        "states-line",
+        "line-color",
+        statesLineColorExpr(mapClickedState, list, statesInDataList)
+      );
       return;
     }
     let cancelled = false;
@@ -460,7 +652,7 @@ export default function MapPage() {
       containerReadyObserverRef.current?.disconnect();
       containerReadyObserverRef.current = null;
     };
-  }, [mounted, geoJson, statesInData, selectedStatesList, selectedState, initMap]);
+  }, [mounted, geoJson, statesInData, selectedStatesList, selectedState, mapClickedState, initMap]);
 
   useEffect(() => {
     return () => {
@@ -479,66 +671,80 @@ export default function MapPage() {
   }, []);
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col overflow-x-hidden">
-      <SearchOverlay
-        open={searchOpen}
-        onClose={() => setSearchOpen(false)}
-        value={searchQuery}
-        onChange={setSearchQuery}
-        placeholder="Search by common name…"
-      />
-
-      <div className="flex flex-nowrap items-center gap-2 border-b border-white/10 bg-[#272926] px-3 py-2 sm:px-4">
-        {loading && (
-          <p className="text-sm text-white/70">Loading species…</p>
-        )}
-        <button
-          type="button"
-          onClick={() => setSearchOpen(true)}
-          className="rounded p-2 text-white/80 hover:bg-white/10 hover:text-white"
-          aria-label="Open search"
-        >
-          <Search className="size-5" />
-        </button>
-        <select
-          id="map-common-name"
-          aria-label="Select a mezcal"
-          value={selectedCommonName}
-          onChange={(e) => setSelectedCommonName(e.target.value)}
-          className="map-page-select min-w-0 flex-1 rounded-lg border border-white/20 bg-[#32342f] px-2 py-2 text-sm text-white focus:border-[var(--agave-yellow)] focus:outline-none focus:ring-1 focus:ring-[var(--agave-yellow)] sm:px-3"
-        >
-          <option value="">Select a mezcal…</option>
-          {commonNames.map((name) => (
-            <option key={name} value={name}>
-              {name}
-            </option>
-          ))}
-        </select>
-        <select
-          id="map-state"
-          aria-label="Select a state"
-          value={selectedState}
-          onChange={(e) => setSelectedState(e.target.value)}
-          className="map-page-select min-w-0 flex-1 rounded-lg border border-white/20 bg-[#32342f] px-2 py-2 text-sm text-white focus:border-[var(--agave-yellow)] focus:outline-none focus:ring-1 focus:ring-[var(--agave-yellow)] sm:px-3"
-        >
-          <option value="">Select a state…</option>
-          {stateNamesList.map((name) => (
-            <option key={name} value={name}>
-              {name}
-            </option>
-          ))}
-        </select>
+    <div className="flex h-full min-h-0 flex-1 flex-col overflow-hidden">
+      {/* Same grid as .header-content: 1fr auto 1fr — center column matches logo alignment */}
+      <div className="shrink-0 bg-[#272926] py-3 sm:py-4">
+        <div className="map-toolbar-content">
+          <div className="map-toolbar-grid-spacer" aria-hidden />
+          <div className="map-toolbar-center flex flex-col items-center gap-3 sm:gap-3">
+            {loading ? (
+              <p className="py-2 text-center text-sm text-white/70">Loading species…</p>
+            ) : (
+              <>
+                <nav
+                  className="flex w-4/5 items-center gap-2.5 sm:gap-3"
+                  aria-label="Filter by mezcal"
+                >
+                  <span
+                    className="inline-flex size-10 shrink-0"
+                    aria-hidden
+                  />
+                  <div className="min-w-0 flex-1">
+                    <MapDirectoryStyleSelect
+                      id="map-common-name"
+                      label="Select a mezcal"
+                      aria-label="Select a mezcal"
+                      value={selectedCommonName}
+                      onChange={setSelectedCommonName}
+                      placeholder="Select a mezcal…"
+                      options={commonNames}
+                    />
+                  </div>
+                  <span
+                    className="inline-flex size-10 shrink-0"
+                    aria-hidden
+                  />
+                </nav>
+                <nav
+                  className="flex w-4/5 items-center gap-2.5 sm:gap-3"
+                  aria-label="Filter by state"
+                >
+                  <span
+                    className="inline-flex size-10 shrink-0"
+                    aria-hidden
+                  />
+                  <div className="min-w-0 flex-1">
+                    <MapDirectoryStyleSelect
+                      id="map-state"
+                      label="Select a state"
+                      aria-label="Select a state"
+                      value={selectedState}
+                      onChange={setSelectedState}
+                      placeholder="Select a state…"
+                      options={stateNamesList}
+                    />
+                  </div>
+                  <span
+                    className="inline-flex size-10 shrink-0"
+                    aria-hidden
+                  />
+                </nav>
+              </>
+            )}
+          </div>
+          <div className="map-toolbar-grid-spacer" aria-hidden />
+        </div>
       </div>
 
       <main
         ref={mapAreaRef}
-        className="relative w-full overflow-hidden shrink-0"
-        style={{ background: "#272926", height: "calc(100dvh - 140px)", minHeight: 300 }}
+        className="map-page-map-area relative min-h-0 w-full flex-1 overflow-hidden border-0 outline-none ring-0"
+        style={{ background: "#272926", minHeight: 240 }}
       >
         {mounted && (
           <div
             ref={mapContainerRef}
-            className="absolute inset-0 w-full h-full"
+            className="absolute inset-0 h-full w-full border-0 outline-none"
             style={{ background: "#272926" }}
           />
         )}

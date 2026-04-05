@@ -2,6 +2,35 @@
 
 All notable changes to the Mezcalómano marketing site project.
 
+## [2026-04-05] - Site-wide SEO, agents, dynamic sitemap, UI polish
+
+### Added
+
+- **`src/lib/site-seo.ts`** — Shared canonical URL, meta descriptions, Discovery Deck / shop product URL, OG paths for metadata and structured data.
+- **`src/app/sitemap.ts`** — Next.js App Router sitemap: static routes (`/`, `/about`, `/contact`, `/directory`, `/map`) plus every **`/directory/[slug]`** from Supabase (`slug` + `common_name` → **`speciesDirectorySlug`**), aligned with in-app links.
+- **`src/lib/species-list-server.ts`** — Server-only species slug list for the sitemap; degrades to static routes if env or query fails.
+- **`src/components/JsonLd.tsx`** — Injects `application/ld+json` scripts.
+- **Root JSON-LD** (`@graph`): **Organization**, **WebSite**, **Product** (Discovery Deck → Shopify product URL; no `offers` until price is maintained in code).
+- **Species detail** — **BreadcrumbList** JSON-LD (Home → Directory → species).
+- **`public/llms.txt`** — Short factual summary for AI tools: site purpose, shop vs marketing domain, key URLs, data-source caveat.
+
+### Changed
+
+- **Global and page metadata** — Root layout, home, directory layout, about, and contact descriptions/titles emphasize the **Discovery Deck** (gift / self), **mezcal-curious** audience, and **agave directory** as education (see `layout.tsx`, `page.tsx`, `directory/layout.tsx`, `about/page.tsx`, `contact/page.tsx`).
+- **Home and About heroes** — Visible **subtitle** copy and non-empty hero **alt** text for accessibility and crawlers.
+- **Directory / map / cards** — Ongoing UI and interaction tweaks (`DirectoryClient`, `SpeciesDetailClient`, `SpeciesCard`, `KeyCard`, `SwipeableCardStack`, `map/page.tsx`, `components.css`, `global.css`).
+
+### Removed
+
+- **`public/sitemap.xml`** — Replaced by dynamic **`src/app/sitemap.ts`** so species URLs stay in sync with the database.
+
+### Notes
+
+- **Vercel / production:** `sitemap.xml` is generated at request time; **Supabase env vars** must remain set so species URLs appear in the sitemap on the live site.
+- After deploy: submit **`https://mezcalomano.com/sitemap.xml`** in Google Search Console; validate structured data with [Rich Results Test](https://search.google.com/test/rich-results).
+
+---
+
 ## [2026-04-01] - Directory SEO, slug links, docs, data hygiene
 
 ### Added

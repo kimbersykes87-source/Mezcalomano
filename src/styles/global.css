@@ -195,22 +195,107 @@ a:hover {
   padding: 0;
   background: transparent;
   box-shadow: none;
-}
-.mezcal-map-popup .maplibregl-popup-close-button {
-  color: var(--color-white);
-  font-size: 20px;
-  padding: 4px 6px;
-}
-.mezcal-map-popup .maplibregl-popup-close-button:hover {
-  color: var(--agave-yellow);
+  text-align: left;
 }
 
-/* Map page: dropdown dark theme */
-.map-page-select {
-  color: var(--color-white);
-  background-color: #32342f;
+.mezcal-map-popup.maplibregl-popup-anchor-top .maplibregl-popup-tip {
+  border-bottom-color: var(--agave-yellow, #a29037);
 }
-.map-page-select option {
-  background-color: #32342f;
-  color: var(--color-white);
+.mezcal-map-popup.maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
+  border-top-color: var(--agave-yellow, #a29037);
 }
+.mezcal-map-popup.maplibregl-popup-anchor-left .maplibregl-popup-tip {
+  border-right-color: var(--agave-yellow, #a29037);
+}
+.mezcal-map-popup.maplibregl-popup-anchor-right .maplibregl-popup-tip {
+  border-left-color: var(--agave-yellow, #a29037);
+}
+
+.mezcal-map-popup-frame {
+  min-width: 200px;
+  max-width: min(92vw, 320px);
+  border: 2px solid var(--agave-yellow, #a29037);
+  border-radius: 0.5rem;
+  background: #272926;
+  padding: 1rem 1.35rem 1.25rem;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+  text-align: left;
+}
+
+.mezcal-map-popup-title {
+  margin: 0 2rem 0.75rem 0;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--agave-yellow, #a29037);
+  line-height: 1.25;
+}
+
+.mezcal-map-popup-body {
+  color: #fff;
+  text-align: left;
+}
+
+.mezcal-map-popup-lead {
+  margin: 0 0 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.88);
+  text-align: left;
+}
+
+.mezcal-map-popup-list {
+  margin: 0;
+  padding-left: 1.15rem;
+  list-style-type: disc;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.92);
+  text-align: left;
+}
+
+.mezcal-map-popup-list li::marker {
+  color: var(--agave-yellow, #a29037);
+}
+
+.mezcal-map-popup-list a {
+  color: var(--agave-yellow, #a29037);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.mezcal-map-popup-list a:hover {
+  opacity: 0.9;
+}
+
+.mezcal-map-popup-detail {
+  margin: 0.35rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: left;
+}
+
+.mezcal-map-popup-detail a {
+  color: var(--agave-yellow, #a29037);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.mezcal-map-popup-muted {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.mezcal-map-popup .maplibregl-popup-close-button {
+  color: var(--agave-yellow, #a29037);
+  font-size: 22px;
+  padding: 6px 8px;
+  line-height: 1;
+}
+
+.mezcal-map-popup .maplibregl-popup-close-button:hover {
+  color: #fff;
+  opacity: 0.95;
+}
+

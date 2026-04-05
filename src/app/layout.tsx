@@ -1,26 +1,67 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
+import {
+  DISCOVERY_DECK_PRODUCT_DESCRIPTION,
+  DISCOVERY_DECK_PRODUCT_URL,
+  LOGO_IMAGE_PATH,
+  OG_IMAGE_PATH,
+  SITE_META_DESCRIPTION,
+  SITE_URL,
+} from "@/lib/site-seo";
 import "@/styles/global.css";
 import "@/styles/components.css";
 
-const siteUrl = "https://mezcalomano.com";
+const orgId = `${SITE_URL}/#organization`;
+const websiteId = `${SITE_URL}/#website`;
+const productId = `${DISCOVERY_DECK_PRODUCT_URL}#product`;
+
+const siteStructuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": orgId,
+      name: "Mezcalómano",
+      url: SITE_URL,
+      logo: `${SITE_URL}${LOGO_IMAGE_PATH}`,
+    },
+    {
+      "@type": "WebSite",
+      "@id": websiteId,
+      url: SITE_URL,
+      name: "Mezcalómano",
+      description: SITE_META_DESCRIPTION,
+      publisher: { "@id": orgId },
+    },
+    {
+      "@type": "Product",
+      "@id": productId,
+      name: "Discovery Deck",
+      description: DISCOVERY_DECK_PRODUCT_DESCRIPTION,
+      url: DISCOVERY_DECK_PRODUCT_URL,
+      image: `${SITE_URL}${OG_IMAGE_PATH}`,
+      brand: { "@id": orgId },
+    },
+  ],
+};
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Mezcalómano",
     template: "%s | Mezcalómano",
   },
-  description: "Discover the agave species behind mezcal",
+  description: SITE_META_DESCRIPTION,
   openGraph: {
     type: "website",
-    url: siteUrl,
+    url: SITE_URL,
     title: "Mezcalómano",
-    description: "Discover the agave species behind mezcal",
+    description: SITE_META_DESCRIPTION,
     images: [
       {
-        url: "/assets/og/mezcalomano_og_1200x630.png",
+        url: OG_IMAGE_PATH,
         width: 1200,
         height: 630,
       },
@@ -29,8 +70,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Mezcalómano",
-    description: "Discover the agave species behind mezcal",
-    images: ["/assets/og/mezcalomano_og_1200x630.png"],
+    description: SITE_META_DESCRIPTION,
+    images: [OG_IMAGE_PATH],
   },
   icons: {
     icon: [
@@ -59,6 +100,7 @@ export default function RootLayout({
         />
       </head>
       <body className="layout-pin-footer" suppressHydrationWarning>
+        <JsonLd data={siteStructuredData} />
         <Header />
         <main className="page-content">{children}</main>
         <Footer />

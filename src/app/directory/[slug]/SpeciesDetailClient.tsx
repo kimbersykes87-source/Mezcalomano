@@ -29,23 +29,21 @@ export default function SpeciesDetailClient({ initialSpecies }: { initialSpecies
   }, [initialSpecies, matrixCardMap]);
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col w-full">
-      <main className="flex flex-1 flex-col px-4 py-6 sm:px-6">
-        <Link
-          href="/directory"
-          className="mb-4 inline-flex items-center gap-2 text-sm text-[var(--agave-yellow)] hover:underline"
-        >
-          <ArrowLeft className="size-4" />
-          Back to directory
-        </Link>
-        <div className="flex justify-center px-4 sm:px-6">
-          <div className="w-full max-w-xl sm:max-w-2xl">
-            <SpeciesCard
-              species={speciesWithResolvedImage}
-              showPermalink={false}
-              fallbackImageUrl={speciesWithResolvedImage.fallbackImageUrl}
-            />
-          </div>
+    <div className="flex min-h-0 w-full max-w-4xl flex-1 flex-col items-center">
+      <main className="flex w-full min-w-0 flex-1 flex-col items-center px-5 py-6">
+        <div className="w-full max-w-xl sm:max-w-2xl">
+          <Link
+            href="/directory"
+            className="mb-4 inline-flex items-center gap-2 text-sm text-[var(--agave-yellow)] hover:underline"
+          >
+            <ArrowLeft className="size-4" />
+            Back to directory
+          </Link>
+          <SpeciesCard
+            species={speciesWithResolvedImage}
+            showPermalink={false}
+            fallbackImageUrl={speciesWithResolvedImage.fallbackImageUrl}
+          />
         </div>
       </main>
     </div>

@@ -264,11 +264,21 @@
   flex-direction: column;
 }
 
+/* Map: fixed viewport band under fixed header (88px) and above fixed footer (~72px) — no page scroll */
+.page-content:has(.map-root) {
+  flex: 1 1 0;
+  min-height: calc(100dvh - 88px - 72px);
+  height: calc(100dvh - 88px - 72px);
+  max-height: calc(100dvh - 88px - 72px);
+  padding-bottom: 0;
+  overflow: hidden;
+}
+
 .directory-root {
   display: flex;
-  flex: 1 1 0;
+  flex: 1 1 auto;
   flex-direction: column;
-  min-height: 0;
+  align-items: center;
   width: 100%;
 }
 
@@ -279,6 +289,52 @@
   flex-direction: column;
   min-height: 0;
   width: 100%;
+  height: 100%;
+}
+
+/* Map filters: same 1fr | center | 1fr balance as .header-content, but middle track must not be
+   `auto` — percentage widths on children collapse to min-content. Use explicit max = directory max-w-xl / sm:max-w-2xl. */
+.map-toolbar-content {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, min(36rem, 100%)) 1fr;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .map-toolbar-content {
+    grid-template-columns: 1fr minmax(0, min(42rem, 100%)) 1fr;
+  }
+}
+
+.map-toolbar-grid-spacer {
+  min-width: 0;
+}
+
+.map-toolbar-center {
+  grid-column: 2;
+  min-width: 0;
+  width: 100%;
+}
+
+/* Remove MapLibre / canvas focus outline and any default border (reads as 1px black on dark bg) */
+.map-page-map-area .maplibregl-map {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.map-page-map-area .maplibregl-canvas-container,
+.map-page-map-area .maplibregl-canvas {
+  border: none !important;
+  outline: none !important;
+}
+
+.map-page-map-area canvas {
+  outline: none !important;
 }
 
 /* Directory species card: match localhost text/icon display (font + accent fallback) */
@@ -288,6 +344,31 @@
 
 .species-card-content .species-card-icon {
   color: var(--agave-yellow, #a29037);
+}
+
+/* Producer links: global `a { text-decoration: none }` is unlayered and beats Tailwind utilities */
+.species-card-content a.species-card-producer-link {
+  text-decoration: underline;
+  text-decoration-color: var(--agave-yellow, #a29037);
+  text-underline-offset: 0.2em;
+}
+
+/* Directory: text actions (e.g. clear search) — underline like producer links; beats global `a` / button resets */
+button.directory-inline-link {
+  text-decoration: underline;
+  text-decoration-color: var(--agave-yellow, #a29037);
+  text-underline-offset: 0.2em;
+  color: var(--agave-yellow, #a29037);
+  font-size: 1.3125rem;
+  line-height: 1.35;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+button.directory-inline-link:hover {
+  opacity: 0.9;
 }
 
 /* Home: no scroll, content fits between header and footer */

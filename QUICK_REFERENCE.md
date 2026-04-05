@@ -25,6 +25,8 @@
 
 - **Repository**: https://github.com/kimbersykes87-source/Mezcalomano
 - **Live site**: https://mezcalomano.com
+- **Sitemap**: https://mezcalomano.com/sitemap.xml
+- **llms.txt**: https://mezcalomano.com/llms.txt
 - **Shopify store**: https://shop.mezcalomano.com
 - **Instagram**: https://www.instagram.com/mezcalomano/
 - **TikTok**: https://www.tiktok.com/@mezcalomano

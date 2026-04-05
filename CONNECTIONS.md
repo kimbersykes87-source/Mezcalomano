@@ -274,7 +274,7 @@ Use this to verify connections:
 - [ ] Framework: Next.js
 - [ ] Custom domains: `mezcalomano.com` (and `www` if used) added and valid
 - [ ] Environment variables: `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and `TURNSTILE_SECRET_KEY` set for Production (and Preview if needed)
-- [ ] `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` set for Production (and Preview) so `/directory` and `/map` work
+- [ ] `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` set for Production (and Preview) so `/directory`, `/map`, **`/sitemap.xml`** (species URLs), and species JSON-LD work
 
 ### Supabase
 
@@ -298,6 +298,9 @@ Use this to verify connections:
 - [ ] `npm run build` succeeds locally
 - [ ] Site is accessible at `https://mezcalomano.com` (after DNS and domain setup)
 - [ ] Contact form loads and Turnstile widget appears (if keys are set)
+- [ ] `https://mezcalomano.com/sitemap.xml` returns XML and lists `/directory` and multiple `/directory/{slug}` entries when Supabase env is set on Vercel
+- [ ] `https://mezcalomano.com/llms.txt` returns the agent summary file
+- [ ] Optional: [Google Rich Results Test](https://search.google.com/test/rich-results) on the homepage reports valid structured data (Organization / Product / etc.)
 
 ---
 
@@ -310,6 +313,8 @@ Use this to verify connections:
 - **Supabase Dashboard**: https://supabase.com/dashboard (project → SQL Editor, Table Editor)
 - **Cloudflare Dashboard** (DNS): https://dash.cloudflare.com/
 - **Live site**: https://mezcalomano.com
+- **Sitemap**: https://mezcalomano.com/sitemap.xml
+- **llms.txt** (agent summary): https://mezcalomano.com/llms.txt
 - **Shop**: https://shop.mezcalomano.com
 - **Instagram**: https://www.instagram.com/mezcalomano/
 - **TikTok**: https://www.tiktok.com/@mezcalomano
@@ -372,4 +377,4 @@ When starting work on this project:
 
 ---
 
-Last updated: 2026-04-01
+Last updated: 2026-04-05

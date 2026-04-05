@@ -64,11 +64,12 @@ This document is for **future AI agents and developers** working on the Mezcaló
 - App links use **`speciesDirectorySlug()`** in **`src/lib/slug.ts`**: prefers DB **`slug`**, falls back to **`toSlug(common_name)`**.
 - Detail route: **`src/app/directory/[slug]/page.tsx`** (server metadata + `notFound`) and **`SpeciesDetailClient.tsx`** (client UI).
 
-### E. SEO / social preview for a species page
+### E. SEO / social preview / sitemap / structured data
 
-- Implemented in **`generateMetadata`** in **`src/app/directory/[slug]/page.tsx`**.
-- OG image: resolved via **`src/lib/matrix-card-urls-server.ts`** from **`public/assets/matrix/cards/index.json`**, else default **`/assets/og/mezcalomano_og_1200x630.png`**.
-- To change titles/descriptions logic, edit that `page.tsx` (and optionally shared copy in a small lib module).
+- **Global and page metadata** — Shared copy in **`src/lib/site-seo.ts`**; root **`src/app/layout.tsx`** sets default title template, description, Open Graph, Twitter, and site-wide JSON-LD (**Organization**, **WebSite**, **Product** pointing at the Shopify Discovery Deck URL). Per-page overrides: **`src/app/page.tsx`** (home), **`src/app/directory/layout.tsx`**, **`about/page.tsx`**, **`contact/page.tsx`**.
+- **Species pages** — **`generateMetadata`** in **`src/app/directory/[slug]/page.tsx`**; OG image via **`src/lib/matrix-card-urls-server.ts`** and **`index.json`**, else default **`/assets/og/mezcalomano_og_1200x630.png`**. Same file injects **BreadcrumbList** JSON-LD via **`JsonLd.tsx`**.
+- **Sitemap** — **`src/app/sitemap.ts`** uses **`src/lib/species-list-server.ts`** (Supabase `slug` + `common_name` → **`speciesDirectorySlug`**). Without Supabase env, only static URLs are emitted.
+- **Agents** — **`public/llms.txt`**; keep it aligned with what the site actually does.
 
 ### F. Matrix `common_name` vs CSV mismatch
 

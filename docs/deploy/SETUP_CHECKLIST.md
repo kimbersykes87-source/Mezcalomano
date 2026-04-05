@@ -57,7 +57,7 @@ If you skip this, the site will still deploy; the contact form will either fail 
 
 ## 3b. Environment variables (directory and map)
 
-The **directory** (`/directory`), **species detail** (`/directory/[slug]`, including server-rendered metadata and social previews), and **map** (`/map`) need Supabase.
+The **directory** (`/directory`), **species detail** (`/directory/[slug]`, including server-rendered metadata and social previews), **map** (`/map`), and **dynamic `/sitemap.xml`** (species URLs) need Supabase.
 
 **Get the keys:** [Supabase Dashboard](https://supabase.com/dashboard) → your project → **Settings** → **API** — copy **Project URL** and the **anon public** key.
 
@@ -68,7 +68,7 @@ The **directory** (`/directory`), **species detail** (`/directory/[slug]`, inclu
 | `NEXT_PUBLIC_SUPABASE_URL` | Production, Preview |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Production, Preview |
 
-Without these, directory and map pages cannot load species data; species detail pages will not resolve titles or OG images correctly.
+Without these, directory and map pages cannot load species data; species detail pages will not resolve titles or OG images correctly; **`/sitemap.xml`** will only list static pages until the vars are set.
 
 **Seeding and migrations** (updating `species` rows or schema) are run **from a developer machine** with the Supabase CLI and local `.env` — see **[../AGENT_HANDOFF.md](../AGENT_HANDOFF.md)**. Vercel does not run `seed:species` or `supabase:push` automatically.
 
@@ -106,6 +106,13 @@ If these are missing, the site still works; you may get 404s for favicons and a 
 
 ---
 
+## 7. After go-live (SEO)
+
+1. In [Google Search Console](https://search.google.com/search-console), add the property for `mezcalomano.com` if needed and submit **`https://mezcalomano.com/sitemap.xml`**.
+2. Optionally run [Rich Results Test](https://search.google.com/test/rich-results) on `https://mezcalomano.com` to confirm structured data (JSON-LD) parses correctly.
+
+---
+
 ## Summary
 
 | Step | Action |
@@ -117,6 +124,7 @@ If these are missing, the site still works; you may get 404s for favicons and a 
 | 4 | Deploy and test the `.vercel.app` URL |
 | 5 | Add domain (e.g. mezcalomano.com) and DNS if you use it |
 | 6 | Add favicon + OG image in `public/` if you want them |
+| 7 | Submit sitemap in Search Console; optional Rich Results Test |
 
 **More detail:** [vercel.md](vercel.md) · **[AGENT_HANDOFF.md](../AGENT_HANDOFF.md)** (secrets, seed, migrations)  
 **Custom domain (Cloudflare DNS):** [DOMAIN_CLOUDFLARE_VERCEL.md](DOMAIN_CLOUDFLARE_VERCEL.md)

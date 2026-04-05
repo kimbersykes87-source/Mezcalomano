@@ -6,7 +6,8 @@ const aboutHeroDesktop = "/assets/photos/about_hero_desktop_2800x1333.png";
 
 export const metadata = {
   title: "About",
-  description: "Learn about Mezcalómano and our mission to explore agave species",
+  description:
+    "Mezcalómano celebrates agave through the Discovery Deck playing cards and a free species directory for mezcal lovers and the curious.",
 };
 
 export default function AboutPage() {
@@ -14,10 +15,11 @@ export default function AboutPage() {
     <>
       <Hero
         title="ABOUT US"
+        subtitle="We make premium playing cards for mezcal people—and a directory to help you learn the agave behind the pour."
         mobile={aboutHeroMobile}
         tablet={aboutHeroTablet}
         desktop={aboutHeroDesktop}
-        alt=""
+        alt="About Mezcalómano — brand imagery celebrating agave and mezcal culture"
       />
       <div className="section">
         <div className="container">

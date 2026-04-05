@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import JsonLd from "@/components/JsonLd";
 import { fetchSpeciesBySlug } from "@/lib/species-detail-server";
 import { resolveMatrixImagePathForCommonName } from "@/lib/matrix-card-urls-server";
+import { SITE_URL } from "@/lib/site-seo";
+import { speciesDirectorySlug } from "@/lib/slug";
 import SpeciesDetailClient from "./SpeciesDetailClient";
 
 const DEFAULT_OG = "/assets/og/mezcalomano_og_1200x630.png";
@@ -46,5 +49,22 @@ export default async function SpeciesDetailPage({ params }: PageProps) {
   const species = await fetchSpeciesBySlug(slug);
   if (!species) notFound();
 
-  return <SpeciesDetailClient initialSpecies={species} />;
+  const pathSlug = speciesDirectorySlug(species);
+  const pageUrl = `${SITE_URL}/directory/${pathSlug}`;
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+      { "@type": "ListItem", position: 2, name: "Directory", item: `${SITE_URL}/directory` },
+      { "@type": "ListItem", position: 3, name: species.common_name, item: pageUrl },
+    ],
+  };
+
+  return (
+    <>
+      <JsonLd data={breadcrumbLd} />
+      <SpeciesDetailClient initialSpecies={species} />
+    </>
+  );
 }

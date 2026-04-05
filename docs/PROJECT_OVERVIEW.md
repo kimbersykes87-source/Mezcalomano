@@ -24,7 +24,8 @@ Production-ready, mobile-first marketing website for Mezcalómano, built with Ne
 
 ### App Router Structure
 
-- `src/app/layout.tsx` — Root layout (metadata, Header, Footer, fonts)
+- `src/app/layout.tsx` — Root layout (metadata, JSON-LD graph, Header, Footer, fonts)
+- `src/app/sitemap.ts` — Dynamic `/sitemap.xml` (static routes + Supabase species URLs via `species-list-server`)
 - `src/app/page.tsx` — Home
 - `src/app/about/page.tsx` — About
 - `src/app/directory/page.tsx` — Directory list (renders `DirectoryClient`)
@@ -40,6 +41,7 @@ Production-ready, mobile-first marketing website for Mezcalómano, built with Ne
 - `Footer.tsx` — Social links (Instagram, TikTok), copyright
 - `MobileNav.tsx` — Full-screen mobile menu overlay
 - `Hero.tsx` — Reusable hero (title, subtitle, responsive images, optional CTA)
+- `JsonLd.tsx` — `application/ld+json` script helper
 - `ContactForm.tsx` — Contact form with Turnstile and validation
 - Directory/Map: `SwipeableCardStack.tsx`, `SpeciesCard.tsx`, `KeyCard.tsx`, `SearchOverlay.tsx`
 
@@ -145,7 +147,7 @@ src/
 │   └── api/contact/     # Contact form API
 ├── components/          # React components (incl. directory/map)
 ├── data/                # matrix.json (build pipeline)
-├── lib/                 # supabase, slug, map-utils, matrix-card-urls (+ server OG helper), species-detail-server
+├── lib/                 # supabase, slug, site-seo, map-utils, matrix-card-urls (+ server OG), species-detail-server, species-list-server
 ├── types/               # species.ts
 ├── scripts/             # build-matrix-cards, etc.
 └── styles/              # global.css, components.css
@@ -158,7 +160,8 @@ public/                  # Static assets
 │   ├── icons/
 │   ├── matrix/
 │   └── og/
-└── (favicon, robots, sitemap, etc.)
+├── llms.txt             # Agent-oriented site summary (optional for crawlers/tools)
+└── (favicon, robots, etc.; sitemap is App Router `src/app/sitemap.ts`)
 ```
 
 ## Key Features
@@ -168,7 +171,7 @@ public/                  # Static assets
 - **Data**: Supabase `species` table (see `src/types/species.ts`); optional `slug` column for direct lookups (see `supabase/migrations/`)
 - **Swipeable cards**: KeyCard + SpeciesCard; swipe, prev/next controls, or arrow keys
 - **Search / jump**: In-page search and species `<select>` on `DirectoryClient`
-- **Detail**: `/directory/[slug]` — server `generateMetadata` + Open Graph/Twitter (matrix card image or default OG); client `SpeciesDetailClient` for the card. Links use DB `slug` when present (`speciesDirectorySlug` in `src/lib/slug.ts`).
+- **Detail**: `/directory/[slug]` — server `generateMetadata` + Open Graph/Twitter (matrix card image or default OG); **BreadcrumbList** JSON-LD; client `SpeciesDetailClient` for the card. Links use DB `slug` when present (`speciesDirectorySlug` in `src/lib/slug.ts`).
 - **Matrix aliases**: `COMMON_NAME_ALIASES` in `src/lib/matrix-card-urls.ts` is minimal (legacy spellings only, e.g. `Tepeztate` → `Tepextate`); lookups `.trim()` `common_name`.
 
 ### Mobile Navigation
@@ -194,4 +197,4 @@ public/                  # Static assets
 
 ---
 
-Last updated: 2026-04-01
+Last updated: 2026-04-05

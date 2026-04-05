@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Directory",
+  title: "Agave species directory",
   description:
-    "Discover our guide to sourcing exceptional mezcals beyond espadín, like tobalá, tepeztate, and cuixe.",
+    "Explore agave species behind mezcal—tobalá, tepeztate, cuixe, and beyond. A free educational guide from Mezcalómano; pairs with the Discovery Deck playing cards.",
 };
 
 export default function DirectoryLayout({

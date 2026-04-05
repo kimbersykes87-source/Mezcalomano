@@ -2,7 +2,8 @@ import ContactForm from "@/components/ContactForm";
 
 export const metadata = {
   title: "Contact",
-  description: "Get in touch with Mezcalómano",
+  description:
+    "Contact Mezcalómano about the Discovery Deck, our agave directory, or anything else on your mind.",
 };
 
 export default function ContactPage() {

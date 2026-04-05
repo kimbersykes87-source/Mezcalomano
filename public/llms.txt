@@ -1,0 +1,31 @@
+# Mezcalómano
+
+> https://mezcalomano.com
+
+Mezcalómano is a brand for mezcal lovers and the mezcal-curious. We sell the **Discovery Deck**—premium playing cards themed around agave—and publish a free **agave species directory** on this site to help people learn which plants go into mezcal.
+
+## Primary URLs
+
+- Home: https://mezcalomano.com/
+- Agave directory (browse species): https://mezcalomano.com/directory
+- Species pages: https://mezcalomano.com/directory/{slug} (slug matches in-site links; may come from database `slug` or a normalized form of the common name)
+- Map of species: https://mezcalomano.com/map
+- About: https://mezcalomano.com/about
+- Contact: https://mezcalomano.com/contact
+
+## Shop
+
+Purchases (Discovery Deck and other products) are on our Shopify store, not on the marketing domain:
+
+- Shop: https://shop.mezcalomano.com
+- Discovery Deck product: https://shop.mezcalomano.com/products/discovery-deck
+
+The marketing site path `/buy` redirects to that product URL.
+
+## Content source
+
+Directory and map content for species is loaded from our database (Supabase) when the site runs. Do not invent scientific claims, tasting notes, or regional facts that are not shown on the live page. If data is missing or incomplete, say so.
+
+## Contact
+
+Use https://mezcalomano.com/contact for questions to the team.

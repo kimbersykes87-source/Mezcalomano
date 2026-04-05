@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useMemo, useCallback, useRef } from "react";
+import { X } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { getMatrixCardUrlMap, resolveSpeciesImageUrl } from "@/lib/matrix-card-urls";
 import { SwipeableCardStack } from "@/components/SwipeableCardStack";
@@ -8,10 +9,9 @@ import type { Species } from "@/types/species";
 
 function DirectoryCardSkeleton() {
   return (
-    <div className="mx-auto w-full max-w-4xl animate-pulse px-4 sm:px-6">
-      <div className="mx-auto mb-4 h-10 max-w-xl rounded-lg bg-white/10 sm:max-w-2xl" />
-      <div className="flex justify-center px-4 py-4 sm:px-6">
-        <div className="w-full max-w-xl overflow-hidden rounded-3xl bg-[#32342f] shadow-lg sm:max-w-2xl">
+    <div className="flex w-full min-w-0 max-w-4xl flex-col items-center animate-pulse px-5">
+      <div className="mx-auto mb-10 h-12 w-4/5 max-w-xl rounded-lg bg-white/10 sm:max-w-2xl" />
+      <div className="mx-auto w-full max-w-xl sm:max-w-2xl">
           <div className="aspect-square w-full bg-white/10" />
           <div className="flex min-h-[280px] flex-col gap-3 p-5">
             <div className="h-4 w-[75%] rounded bg-white/10" />
@@ -20,7 +20,6 @@ function DirectoryCardSkeleton() {
             <div className="h-3 w-full rounded bg-white/10" />
             <div className="h-3 w-[80%] rounded bg-white/10" />
           </div>
-        </div>
       </div>
     </div>
   );
@@ -51,6 +50,10 @@ export default function DirectoryClient() {
   const [rawCardIndex, setRawCardIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const fetchIdRef = useRef(0);
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     getMatrixCardUrlMap().then(setMatrixCardMap);
@@ -97,12 +100,12 @@ export default function DirectoryClient() {
     return speciesWithResolvedImages.filter((s) => matchesSearch(s, searchQuery));
   }, [speciesWithResolvedImages, searchQuery]);
 
-  const maxCardIndex = filteredSpecies.length;
+  const maxCardIndex = Math.max(0, filteredSpecies.length - 1);
   const currentIndex = Math.min(rawCardIndex, maxCardIndex);
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col w-full">
-      <main className="flex min-h-0 flex-1 flex-col w-full gap-4 px-4 py-6 sm:px-6">
+    <div className="flex min-h-0 w-full max-w-4xl flex-1 flex-col items-center">
+        <main className="flex w-full min-w-0 flex-1 flex-col items-center gap-4 pb-6 pt-10">
         {loading ? (
           <DirectoryCardSkeleton />
         ) : fetchError ? (
@@ -118,76 +121,92 @@ export default function DirectoryClient() {
           </div>
         ) : (
           <>
-            <div className="mx-auto flex w-full max-w-4xl flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-              <label className="sr-only" htmlFor="directory-search">
-                Search species
-              </label>
-              <input
-                id="directory-search"
-                type="search"
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setRawCardIndex(0);
-                }}
-                placeholder="Search by name, state, description…"
-                className="w-full rounded-lg border border-white/20 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/40 focus:border-[var(--agave-yellow)] focus:outline-none sm:max-w-md"
-                autoComplete="off"
-              />
-              {searchQuery.trim() !== "" && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSearchQuery("");
-                    setRawCardIndex(0);
-                  }}
-                  className="shrink-0 text-sm text-[var(--agave-yellow)] underline-offset-2 hover:underline"
-                >
-                  Clear search
-                </button>
-              )}
-              <label className="sr-only" htmlFor="directory-jump">
-                Jump to species
-              </label>
-              <select
-                id="directory-jump"
-                value={currentIndex === 0 ? "" : String(currentIndex)}
-                onChange={(e) => {
-                  const v = e.target.value;
-                  if (v === "") setRawCardIndex(0);
-                  else setRawCardIndex(Number(v));
-                }}
-                disabled={filteredSpecies.length === 0}
-                className="w-full rounded-lg border border-white/20 bg-[#32342f] px-3 py-2 text-sm text-white focus:border-[var(--agave-yellow)] focus:outline-none sm:ml-auto sm:max-w-xs"
-              >
-                <option value="">Jump to species…</option>
-                {filteredSpecies.map((s, i) => (
-                  <option key={s.id} value={String(i + 1)}>
-                    {s.common_name}
-                  </option>
-                ))}
-              </select>
-            </div>
             {filteredSpecies.length === 0 && searchQuery.trim() !== "" ? (
-              <div className="flex min-h-[30vh] flex-col items-center justify-center gap-3 text-center text-white/80">
-                <p>No species match your search.</p>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSearchQuery("");
-                    setRawCardIndex(0);
-                  }}
-                  className="text-sm text-[var(--agave-yellow)] underline-offset-2 hover:underline"
-                >
-                  Clear search
-                </button>
+              <div className="flex w-full min-w-0 max-w-4xl flex-col items-center px-5">
+                <div className="mx-auto flex w-full max-w-xl flex-col items-center gap-10 sm:max-w-2xl">
+                  <nav
+                    className="flex w-4/5 items-center gap-2.5 sm:gap-3"
+                    aria-label="Search"
+                  >
+                    <span
+                      className="inline-flex size-10 shrink-0"
+                      aria-hidden
+                    />
+                    <div className="relative min-h-12 min-w-0 flex-1">
+                      <label className="sr-only" htmlFor="directory-empty-search">
+                        Search species
+                      </label>
+                      <input
+                        id="directory-empty-search"
+                        type="text"
+                        inputMode="search"
+                        enterKeyHint="search"
+                        autoComplete="off"
+                        value={searchQuery}
+                        placeholder="Search or choose…"
+                        onChange={(e) => {
+                          setSearchQuery(e.target.value);
+                          setRawCardIndex(0);
+                        }}
+                        className="box-border min-h-12 w-full min-w-0 rounded-lg border border-white/20 bg-white/5 text-center text-white placeholder:text-white/40 focus:border-[var(--agave-yellow)] focus:outline-none"
+                        style={{
+                          fontSize: "1.3125rem",
+                          lineHeight: 1.35,
+                          paddingLeft: "6rem",
+                          paddingRight: "6rem",
+                          paddingTop: "0.625rem",
+                          paddingBottom: "0.625rem",
+                        }}
+                      />
+                      <div className="pointer-events-none absolute right-2 top-0 flex h-12 items-center">
+                        <button
+                          type="button"
+                          aria-label="Clear search"
+                          onMouseDown={(e) => e.preventDefault()}
+                          onClick={() => {
+                            setSearchQuery("");
+                            setRawCardIndex(0);
+                          }}
+                          className="pointer-events-auto inline-flex size-8 shrink-0 items-center justify-center rounded-md text-white/60 hover:bg-white/10 hover:text-white"
+                        >
+                          <X className="size-4" aria-hidden />
+                        </button>
+                      </div>
+                    </div>
+                    <span
+                      className="inline-flex size-10 shrink-0"
+                      aria-hidden
+                    />
+                  </nav>
+                  <div className="flex w-full flex-col items-center justify-center gap-3 pb-5 text-center sm:min-h-[280px]">
+                    <p className="text-sm text-white/85">
+                      No species match your search.
+                    </p>
+                    <button
+                      type="button"
+                      className="directory-inline-link"
+                      onClick={() => {
+                        setSearchQuery("");
+                        setRawCardIndex(0);
+                      }}
+                    >
+                      Clear search
+                    </button>
+                  </div>
+                </div>
               </div>
             ) : (
               <SwipeableCardStack
                 species={filteredSpecies}
                 currentIndex={currentIndex}
                 onIndexChange={setRawCardIndex}
-                showKeyCard={true}
+                directoryToolbar={{
+                  searchQuery,
+                  onSearchChange: (q) => {
+                    setSearchQuery(q);
+                    setRawCardIndex(0);
+                  },
+                }}
               />
             )}
           </>
