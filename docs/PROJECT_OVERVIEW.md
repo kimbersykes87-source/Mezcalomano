@@ -19,7 +19,7 @@ Production-ready, mobile-first marketing website for Mezcalómano, built with Ne
 1. **Home** (`/`) — Full-screen hero with CTA to buy the Discovery Deck
 2. **About** (`/about`) — Project mission and information
 3. **Directory** (`/directory`) — Swipeable species cards, search; data from Supabase; `/directory/[slug]` for species detail
-4. **Map** (`/map`) — MapLibre Mexico state map with species by state; links to directory
+4. **Map** (`/map`) — MapLibre Mexico states; Supabase species; combobox filters (layout aligned with header logo; **mobile**: filters in one row); **state tap** opens a **viewport-centered dialog** (dimmed map); links to **`/directory/{slug}`**
 5. **Contact** (`/contact`) — Contact form with Cloudflare Turnstile
 
 ### App Router Structure
@@ -108,8 +108,8 @@ Production-ready, mobile-first marketing website for Mezcalómano, built with Ne
 
 ### Map
 
-- **External**: https://map.mezcalomano.com (legacy / other surface)
-- **Internal**: `/map` — full **MapLibre** Mexico states map; species from Supabase; popups link to **`/directory/{slug}`** via **`speciesDirectorySlug`**
+- **In-app**: **`/map`** on the marketing site (e.g. `https://mezcalomano.com/map`) — **MapLibre**; GeoJSON from **`public/geo/mexico-states.geojson`**; species from Supabase; filter UI styled like the directory; state details in a **modal overlay** (see **`map-state-detail-*`** in `global.css`, **`.map-toolbar-*`** in `components.css`).
+- **Other hosts**: A separate subdomain (e.g. `map.*`) may still exist for legacy or tooling; the canonical interactive map in this repo is **`/map`**.
 
 ### Contact Form
 
@@ -179,6 +179,12 @@ public/                  # Static assets
 - Burger opens overlay; close via X, overlay tap, or Escape
 - Links close overlay on click
 
+### Map page
+
+- **Code**: `src/app/map/page.tsx` (client: MapLibre init, click handler, React state for dialog HTML)
+- **Layout**: Toolbar + `main.map-page-map-area`; **flex `gap-2.5`** between toolbar and map so the map (absolute inset) does not cover padding
+- **Dialog**: `dangerouslySetInnerHTML` for trusted escaped markup; close clears highlight + optional filter state (same behavior as former popup close handler)
+
 ### Hero Sections
 
 - Responsive `<picture>` (mobile / tablet / desktop)
@@ -197,4 +203,4 @@ public/                  # Static assets
 
 ---
 
-Last updated: 2026-04-05
+Last updated: 2026-04-05 (map section: in-app URL, dialog, layout notes)

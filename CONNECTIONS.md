@@ -164,7 +164,7 @@ Directory card art is served from **`public/assets/matrix/cards/`** and **`index
 ### Directory detail: SEO and slugs
 
 - **`/directory/[slug]`** — Server component **`src/app/directory/[slug]/page.tsx`**: `fetchSpeciesBySlug`, `generateMetadata`, Open Graph / Twitter cards (matrix PNG or default OG asset); **`SpeciesDetailClient.tsx`** renders the card.
-- **Links** — **`speciesDirectorySlug()`** in **`src/lib/slug.ts`**: uses DB **`slug`** when set, else `toSlug(common_name)`. Used in **`SpeciesCard`** and map popups.
+- **Links** — **`speciesDirectorySlug()`** in **`src/lib/slug.ts`**: uses DB **`slug`** when set, else `toSlug(common_name)`. Used in **`SpeciesCard`**, directory UI, and **map state detail** links.
 
 ---
 
@@ -318,7 +318,7 @@ Use this to verify connections:
 - **Shop**: https://shop.mezcalomano.com
 - **Instagram**: https://www.instagram.com/mezcalomano/
 - **TikTok**: https://www.tiktok.com/@mezcalomano
-- **Map** (external): https://map.mezcalomano.com
+- **Map** (in-app): https://mezcalomano.com/map — MapLibre Mexico map; may coexist with other map subdomains if configured separately in DNS
 
 ### Key Commands
 
@@ -377,4 +377,4 @@ When starting work on this project:
 
 ---
 
-Last updated: 2026-04-05
+Last updated: 2026-04-05 (map URL correction, state-detail dialog on `/map`)

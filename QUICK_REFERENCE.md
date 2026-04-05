@@ -30,7 +30,7 @@
 - **Shopify store**: https://shop.mezcalomano.com
 - **Instagram**: https://www.instagram.com/mezcalomano/
 - **TikTok**: https://www.tiktok.com/@mezcalomano
-- **Map**: https://map.mezcalomano.com (external)
+- **Map (in-app)**: https://mezcalomano.com/map (MapLibre + Supabase; same app as marketing site)
 - **Vercel Dashboard**: https://vercel.com/dashboard
 - **Cloudflare Dashboard** (DNS): https://dash.cloudflare.com/
 

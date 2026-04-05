@@ -67,6 +67,7 @@ After a production build (`npm run build` && `npm run start`), you can spot-chec
 ## Troubleshooting
 
 - **Directory or map is empty / errors**: Confirm **`NEXT_PUBLIC_SUPABASE_*`** in `.env.local` and restart `npm run dev` (Next only reads env at startup).
+- **Map shows no states**: Ensure **`public/geo/mexico-states.geojson`** is present (fetched at runtime from `/geo/mexico-states.geojson`).
 - **Port 3000 in use**: `npx next dev -p 3001` or stop the other process using 3000.
 - **Windows path issues**: Run commands from the repo root; use PowerShell or Git Bash.
 

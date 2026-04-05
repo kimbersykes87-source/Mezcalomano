@@ -10,7 +10,7 @@ Ensure your Next.js changes are committed and pushed to GitHub (or GitLab/Bitbuc
 
 ```bash
 git add .
-git commit -m "Migrate to Next.js"
+git commit -m "Describe your change"
 git push origin main
 ```
 

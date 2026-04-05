@@ -34,6 +34,8 @@ If Supabase vars are missing in production, the site still builds; **`/sitemap.x
 4. Push to `main` (or your production branch) to trigger deployments.
 5. Preview deployments are created for pull requests.
 
+**Credentials:** Production deploys use Vercel’s **Git integration** and dashboard **Environment Variables**. This repo’s **`.env` / `.env.local`** (gitignored) hold Supabase, Turnstile, and CLI tokens for **local** work only — **not** a `VERCEL_TOKEN` for CLI unless you add one yourself for optional `vercel` CLI deploys.
+
 ## Redirects
 
 Redirects are configured in `next.config.ts`:

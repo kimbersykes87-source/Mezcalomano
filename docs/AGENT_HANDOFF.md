@@ -80,9 +80,11 @@ The live directory and OG images then load cards from **Supabase CDN**; keep PNG
 - Client mapping: **`src/lib/matrix-card-urls.ts`** — **`COMMON_NAME_ALIASES`** (minimal: e.g. alternate spellings → `index.json` key). Prefer aligning **`index.json`** and CSV **`common_name`** over adding aliases.
 - Server OG resolution: **`src/lib/matrix-card-urls-server.ts`** uses the same alias table.
 
-### G. Map popup links to directory
+### G. Map page (`/map`)
 
-- **`src/app/map/page.tsx`** — uses **`speciesDirectorySlug(species)`** so links match DB slugs when set.
+- **`src/app/map/page.tsx`** — MapLibre layers, species from Supabase, **`speciesDirectorySlug`** for every **`/directory/...`** link in the state detail HTML.
+- **State detail** — Rendered as a **React overlay** (not `maplibregl.Popup`), so it stays **viewport-centered**; closing it runs the same filter/highlight reset as before.
+- **Styles** — Toolbar grid: **`components.css`** (`.map-toolbar-content`, `.map-toolbar-center`); dialog + inner frame: **`global.css`** (`.map-state-detail-*`, `.mezcal-map-popup-*`).
 
 ---
 
@@ -102,6 +104,7 @@ The live directory and OG images then load cards from **Supabase CDN**; keep PNG
 | Seed | `scripts/seed-species-from-csv.mjs` |
 | Migrations push | `scripts/supabase-cli-push.mjs` |
 | Canonical CSV | `data/Species_Final - Website.csv` |
+| Map page | `src/app/map/page.tsx`; geo **`public/geo/mexico-states.geojson`** |
 
 ---
 
@@ -128,4 +131,4 @@ After CSV or migration changes: run seed and/or `supabase:push` as appropriate, 
 
 ---
 
-**Last updated:** 2026-04-01
+**Last updated:** 2026-04-05

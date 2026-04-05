@@ -2,6 +2,20 @@
 
 All notable changes to the Mezcalómano marketing site project.
 
+## [2026-04-05] - Map page: toolbar layout, centered state detail, spacing
+
+### Changed
+
+- **`src/app/map/page.tsx`** — Filter toolbar uses the same **1fr | center | 1fr** grid idea as the header (`.map-toolbar-content` / `.map-toolbar-center` in **`components.css`**) with a fixed middle track so directory-width comboboxes do not collapse; **below `sm`**, mezcal + state filters are **side by side**; **`gap-2.5`** on the page column between toolbar and **`<main>`** so space is not painted over by the **absolute** map container.
+- **State detail UI** — Replaced MapLibre **anchored popup** with a **fixed, centered dialog** (backdrop dims the map); Escape, backdrop click, and close button; body scroll locked while open; **`sm+`** still **easeTo** state centroid for context.
+- **`src/styles/global.css`** — **`.map-state-detail-*`** dialog styles; removed unused MapLibre popup chrome rules; kept **`.mezcal-map-popup-*`** for inner HTML frame (title, list, links).
+
+### Notes
+
+- Docs: **README**, **CONNECTIONS**, **QUICK_REFERENCE** — in-app map URL is **`/map`** on mezcalomano.com (not only an external subdomain).
+
+---
+
 ## [2026-04-05] - Directory matrix cards on Supabase (WebP)
 
 ### Added
