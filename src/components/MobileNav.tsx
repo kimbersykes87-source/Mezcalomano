@@ -1,5 +1,6 @@
 "use client";
 
+/* eslint-disable @next/next/no-img-element -- SVG close icon; sizing from CSS */
 import { useEffect } from "react";
 import Link from "next/link";
 

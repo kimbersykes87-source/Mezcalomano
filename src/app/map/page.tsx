@@ -577,7 +577,7 @@ export default function MapPage() {
     });
 
     mapRef.current = map;
-  }, [geoJson, statesInData, selectedStatesList]);
+  }, [geoJson, statesInData]);
 
   const initMapRef = useRef(initMap);
   initMapRef.current = initMap;

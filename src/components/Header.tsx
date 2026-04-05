@@ -1,5 +1,6 @@
 "use client";
 
+/* eslint-disable @next/next/no-img-element -- SVG / small UI assets; dimensions driven by existing CSS */
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

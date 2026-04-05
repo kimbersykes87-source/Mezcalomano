@@ -26,13 +26,11 @@ function DirectorySpeciesCombobox({
   onIndexChange,
   searchQuery,
   onSearchChange,
-  showKeyCard,
   inputRef,
 }: DirectoryToolbarProps & {
   species: Species[];
   currentIndex: number;
   onIndexChange: (index: number) => void;
-  showKeyCard: boolean;
   inputRef: RefObject<HTMLInputElement | null>;
 }) {
   const [open, setOpen] = useState(false);
@@ -238,7 +236,6 @@ export function SwipeableCardStack({
       onIndexChange={onIndexChange}
       searchQuery={directoryToolbar.searchQuery}
       onSearchChange={directoryToolbar.onSearchChange}
-      showKeyCard={false}
       inputRef={directoryComboboxInputRef}
     />
   ) : (

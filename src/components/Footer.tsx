@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element -- SVG social icons; fixed width/height on img */
 export default function Footer() {
   return (
     <footer className="footer">

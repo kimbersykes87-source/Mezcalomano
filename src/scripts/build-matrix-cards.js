@@ -62,13 +62,13 @@ async function findSourceFolder() {
     await fs.access(SOURCE_FOLDER_PRIMARY);
     console.log(`✓ Using primary source folder: ${SOURCE_FOLDER_PRIMARY}`);
     return SOURCE_FOLDER_PRIMARY;
-  } catch (error) {
+  } catch {
     console.log(`⚠ Primary source folder not accessible, trying fallback: ${SOURCE_FOLDER_FALLBACK}`);
     try {
       await fs.access(SOURCE_FOLDER_FALLBACK);
       console.log(`✓ Using fallback source folder: ${SOURCE_FOLDER_FALLBACK}`);
       return SOURCE_FOLDER_FALLBACK;
-    } catch (error2) {
+    } catch {
       throw new Error(`Neither source folder is accessible. Please ensure TIFFs are in: ${SOURCE_FOLDER_FALLBACK}`);
     }
   }
@@ -103,10 +103,9 @@ async function loadSpeciesData() {
  */
 async function processImage(inputPath, outputPath800, outputPath400) {
   const image = sharp(inputPath);
-  
-  // Get image metadata
-  const metadata = await image.metadata();
-  
+
+  await image.metadata();
+
   // Convert CMYK to sRGB and resize with "contain" behavior
   // sharp automatically handles CMYK to RGB conversion when outputting
   // WebP output strips most metadata by default
