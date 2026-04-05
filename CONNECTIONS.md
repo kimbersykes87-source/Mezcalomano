@@ -170,6 +170,12 @@ Directory card art is served from **`public/assets/matrix/cards/`** and **`index
 
 ## Git push and cloud services
 
+### Production: always ship via Vercel
+
+- **Going live** means **`git push`** (or merge) to **`main`** on GitHub with the **Vercel** project connected to this repo. Vercel runs **`npm run build`** and deploys; that is the only intended path for the marketing Next.js app.
+- **Do not** rely on **Cloudflare Pages** (or any host expecting a **`dist`** folder) for this repository. DNS for `mezcalomano.com` stays in Cloudflare, but **the app is built and served by Vercel**. If a Cloudflare Pages project is wired to the same Git repo, disable it or point it elsewhere so builds do not fail on missing `dist` and you do not maintain two deploy pipelines.
+- Agents and contributors: after merging changes, **push `main`** and confirm the deployment in the **Vercel** dashboard (and production URL), not Cloudflare Pages build logs.
+
 | Action | What it updates |
 |--------|------------------|
 | **`git push`** to **`main`** on GitHub | **Vercel** builds and deploys the marketing site (when the project is connected to the repo). |

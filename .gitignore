@@ -6,3 +6,4 @@ dist
 .astro
 .next
 out
+*.tsbuildinfo
