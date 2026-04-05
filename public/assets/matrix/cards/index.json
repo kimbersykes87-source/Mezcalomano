@@ -1,202 +1,202 @@
 [
   {
     "common_name": "Alto",
-    "image_800": "/assets/matrix/cards/alto.png",
-    "image_400": "/assets/matrix/cards/alto.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/alto.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/alto.webp"
   },
   {
     "common_name": "Arroqueño",
-    "image_800": "/assets/matrix/cards/arroqueno.png",
-    "image_400": "/assets/matrix/cards/arroqueno.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/arroqueno.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/arroqueno.webp"
   },
   {
     "common_name": "Barril",
-    "image_800": "/assets/matrix/cards/barril.png",
-    "image_400": "/assets/matrix/cards/barril.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/barril.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/barril.webp"
   },
   {
     "common_name": "Bicuixe",
-    "image_800": "/assets/matrix/cards/bicuixe.png",
-    "image_400": "/assets/matrix/cards/bicuixe.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/bicuixe.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/bicuixe.webp"
   },
   {
     "common_name": "Castilla",
-    "image_800": "/assets/matrix/cards/castilla.png",
-    "image_400": "/assets/matrix/cards/castilla.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/castilla.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/castilla.webp"
   },
   {
     "common_name": "Cenizo",
-    "image_800": "/assets/matrix/cards/cenizo.png",
-    "image_400": "/assets/matrix/cards/cenizo.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/cenizo.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/cenizo.webp"
   },
   {
     "common_name": "Chahuiqui",
-    "image_800": "/assets/matrix/cards/chahuiqui.png",
-    "image_400": "/assets/matrix/cards/chahuiqui.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/chahuiqui.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/chahuiqui.webp"
   },
   {
     "common_name": "Chuparrosa",
-    "image_800": "/assets/matrix/cards/chuparrosa.png",
-    "image_400": "/assets/matrix/cards/chuparrosa.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/chuparrosa.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/chuparrosa.webp"
   },
   {
     "common_name": "Churique",
-    "image_800": "/assets/matrix/cards/churique.png",
-    "image_400": "/assets/matrix/cards/churique.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/churique.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/churique.webp"
   },
   {
     "common_name": "Cimarrón",
-    "image_800": "/assets/matrix/cards/cimarron.png",
-    "image_400": "/assets/matrix/cards/cimarron.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/cimarron.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/cimarron.webp"
   },
   {
     "common_name": "Cincoañero",
-    "image_800": "/assets/matrix/cards/cincoanero.png",
-    "image_400": "/assets/matrix/cards/cincoanero.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/cincoanero.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/cincoanero.webp"
   },
   {
     "common_name": "Coyote",
-    "image_800": "/assets/matrix/cards/coyote.png",
-    "image_400": "/assets/matrix/cards/coyote.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/coyote.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/coyote.webp"
   },
   {
     "common_name": "Cuishe",
-    "image_800": "/assets/matrix/cards/cuishe.png",
-    "image_400": "/assets/matrix/cards/cuishe.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/cuishe.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/cuishe.webp"
   },
   {
     "common_name": "Espadilla",
-    "image_800": "/assets/matrix/cards/espadilla.png",
-    "image_400": "/assets/matrix/cards/espadilla.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/espadilla.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/espadilla.webp"
   },
   {
     "common_name": "Espadín",
-    "image_800": "/assets/matrix/cards/espadin.png",
-    "image_400": "/assets/matrix/cards/espadin.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/espadin.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/espadin.webp"
   },
   {
     "common_name": "Henequén",
-    "image_800": "/assets/matrix/cards/henequen.png",
-    "image_400": "/assets/matrix/cards/henequen.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/henequen.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/henequen.webp"
   },
   {
     "common_name": "Jabalí",
-    "image_800": "/assets/matrix/cards/jabali.png",
-    "image_400": "/assets/matrix/cards/jabali.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/jabali.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/jabali.webp"
   },
   {
     "common_name": "Lamparillo",
-    "image_800": "/assets/matrix/cards/lamparillo.png",
-    "image_400": "/assets/matrix/cards/lamparillo.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/lamparillo.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/lamparillo.webp"
   },
   {
     "common_name": "Lumbre",
-    "image_800": "/assets/matrix/cards/lumbre.png",
-    "image_400": "/assets/matrix/cards/lumbre.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/lumbre.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/lumbre.webp"
   },
   {
     "common_name": "Lyobaa Coyote",
-    "image_800": "/assets/matrix/cards/lyobaa_coyote.png",
-    "image_400": "/assets/matrix/cards/lyobaa_coyote.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/lyobaa_coyote.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/lyobaa_coyote.webp"
   },
   {
     "common_name": "Madrecuixe",
-    "image_800": "/assets/matrix/cards/madrecuixe.png",
-    "image_400": "/assets/matrix/cards/madrecuixe.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/madrecuixe.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/madrecuixe.webp"
   },
   {
     "common_name": "Manso Sahuayo",
-    "image_800": "/assets/matrix/cards/manso_sahuayo.png",
-    "image_400": "/assets/matrix/cards/manso_sahuayo.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/manso_sahuayo.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/manso_sahuayo.webp"
   },
   {
     "common_name": "Masparillo",
-    "image_800": "/assets/matrix/cards/masparillo.png",
-    "image_400": "/assets/matrix/cards/masparillo.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/masparillo.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/masparillo.webp"
   },
   {
     "common_name": "Mexicano",
-    "image_800": "/assets/matrix/cards/mexicano.png",
-    "image_400": "/assets/matrix/cards/mexicano.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/mexicano.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/mexicano.webp"
   },
   {
     "common_name": "Montana",
-    "image_800": "/assets/matrix/cards/montana.png",
-    "image_400": "/assets/matrix/cards/montana.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/montana.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/montana.webp"
   },
   {
     "common_name": "Pacífica",
-    "image_800": "/assets/matrix/cards/pacifica.png",
-    "image_400": "/assets/matrix/cards/pacifica.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/pacifica.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/pacifica.webp"
   },
   {
     "common_name": "Papalote",
-    "image_800": "/assets/matrix/cards/papalote.png",
-    "image_400": "/assets/matrix/cards/papalote.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/papalote.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/papalote.webp"
   },
   {
     "common_name": "Pulque Chino",
-    "image_800": "/assets/matrix/cards/pulque_chino.png",
-    "image_400": "/assets/matrix/cards/pulque_chino.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/pulque_chino.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/pulque_chino.webp"
   },
   {
     "common_name": "Pulquero",
-    "image_800": "/assets/matrix/cards/pulquero.png",
-    "image_400": "/assets/matrix/cards/pulquero.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/pulquero.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/pulquero.webp"
   },
   {
     "common_name": "Rayo",
-    "image_800": "/assets/matrix/cards/rayo.png",
-    "image_400": "/assets/matrix/cards/rayo.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/rayo.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/rayo.webp"
   },
   {
     "common_name": "Salmiana",
-    "image_800": "/assets/matrix/cards/salmiana.png",
-    "image_400": "/assets/matrix/cards/salmiana.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/salmiana.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/salmiana.webp"
   },
   {
     "common_name": "Sierra Negra",
-    "image_800": "/assets/matrix/cards/sierra_negra.png",
-    "image_400": "/assets/matrix/cards/sierra_negra.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/sierra_negra.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/sierra_negra.webp"
   },
   {
     "common_name": "Tepemete",
-    "image_800": "/assets/matrix/cards/tepemete.png",
-    "image_400": "/assets/matrix/cards/tepemete.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/tepemete.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/tepemete.webp"
   },
   {
     "common_name": "Tepextate",
-    "image_800": "/assets/matrix/cards/tepextate.png",
-    "image_400": "/assets/matrix/cards/tepextate.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/tepextate.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/tepextate.webp"
   },
   {
     "common_name": "Tobalá",
-    "image_800": "/assets/matrix/cards/tobala.png",
-    "image_400": "/assets/matrix/cards/tobala.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/tobala.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/tobala.webp"
   },
   {
     "common_name": "Tobaziche",
-    "image_800": "/assets/matrix/cards/tobaziche.png",
-    "image_400": "/assets/matrix/cards/tobaziche.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/tobaziche.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/tobaziche.webp"
   },
   {
     "common_name": "Verde",
-    "image_800": "/assets/matrix/cards/verde.png",
-    "image_400": "/assets/matrix/cards/verde.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/verde.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/verde.webp"
   },
   {
     "common_name": "Warash",
-    "image_800": "/assets/matrix/cards/warash.png",
-    "image_400": "/assets/matrix/cards/warash.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/warash.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/warash.webp"
   },
   {
     "common_name": "Weber Azul",
-    "image_800": "/assets/matrix/cards/weber_azul.png",
-    "image_400": "/assets/matrix/cards/weber_azul.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/weber_azul.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/weber_azul.webp"
   },
   {
     "common_name": "Wocomahi",
-    "image_800": "/assets/matrix/cards/wocomahi.png",
-    "image_400": "/assets/matrix/cards/wocomahi.png"
+    "image_800": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/wocomahi.webp",
+    "image_400": "https://sminvupunfonxachestk.supabase.co/storage/v1/object/public/species-cards/wocomahi.webp"
   }
 ]

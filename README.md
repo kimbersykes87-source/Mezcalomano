@@ -13,6 +13,7 @@ npm run build        # Build for production
 npm run start        # Run production server locally
 npm run build:matrix-cards  # Build matrix card images from TIFFs
 npm run build:hero-webp     # Encode home/about hero PNGs → WebP (same folder; used by Hero `<picture>`)
+npm run upload:species-cards-webp  # PNG matrix cards → WebP → Supabase `species-cards` bucket; updates DB + index.json (needs SUPABASE_SERVICE_ROLE_KEY)
 npm run sync:matrix-cards   # Sync matrix cards from SPECIES artwork folder
 npm run seed:species        # Upsert Supabase `species` from Website CSV (requires env vars)
 npm run normalize:agave-images  # Rename source/agave_images PNGs to slug names (see log)

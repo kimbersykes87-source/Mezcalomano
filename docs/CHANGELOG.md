@@ -2,6 +2,23 @@
 
 All notable changes to the Mezcalómano marketing site project.
 
+## [2026-04-05] - Directory matrix cards on Supabase (WebP)
+
+### Added
+
+- **`supabase/migrations/009_species_cards_storage_bucket.sql`** — public storage bucket **`species-cards`** for species card images; public read policy on **`storage.objects`**.
+- **`npm run upload:species-cards-webp`** — `scripts/upload-species-cards-webp.mjs`: PNG → WebP (alpha preserved), upload, **`species.image_url`** update, **`index.json`** rewritten with public object URLs.
+
+### Changed
+
+- **`public/assets/matrix/cards/index.json`** — **`image_800` / `image_400`** now point at Supabase Storage **`.webp`** objects (directory + server OG resolution).
+
+### Notes
+
+- Re-run **`sync:agave-matrix`** when PNGs change, then **`upload:species-cards-webp`** to refresh Storage and **`index.json`**.
+
+---
+
 ## [2026-04-05] - Site-wide SEO, agents, dynamic sitemap, UI polish
 
 ### Added

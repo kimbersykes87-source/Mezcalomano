@@ -4,7 +4,8 @@ import type { MatrixCardEntry } from "@/lib/matrix-card-urls";
 import { COMMON_NAME_ALIASES } from "@/lib/matrix-card-urls";
 
 /**
- * Resolve matrix card image path for OG / server metadata (reads index.json from disk).
+ * Resolve matrix card image URL for OG / server metadata (reads index.json from disk).
+ * Entries may be site-relative paths (`/assets/...`) or absolute Supabase Storage URLs.
  */
 export function resolveMatrixImagePathForCommonName(commonName: string): string | null {
   const p = join(process.cwd(), "public", "assets", "matrix", "cards", "index.json");

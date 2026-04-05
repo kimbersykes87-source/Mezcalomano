@@ -49,8 +49,12 @@ This document is for **future AI agents and developers** working on the Mezcaló
 
 1. Add or replace PNGs under **`source/agave_images/`** using **slug** filenames (e.g. `espadin.png` — same rules as `toSlug(common_name)` in `src/lib/slug.ts`).
 2. **`npm run normalize:agave-images`** — renames deck-style names using the log when needed.
-3. **`npm run sync:agave-matrix`** — copies slug PNGs to **`public/assets/matrix/cards/`** and regenerates **`index.json`** from the Website CSV.
-4. Commit **`public/assets/matrix/cards/`** changes and push.
+3. **`npm run sync:agave-matrix`** — copies slug PNGs to **`public/assets/matrix/cards/`** and regenerates **`index.json`** from the Website CSV (local **`/assets/matrix/cards/{slug}.png`** paths).
+4. **`npm run supabase:push`** — ensure migration **`009_species_cards_storage_bucket.sql`** is applied once (public **`species-cards`** storage bucket).
+5. **`npm run upload:species-cards-webp`** — converts each PNG to **WebP** (alpha preserved), uploads to Supabase Storage, sets **`species.image_url`**, and rewrites **`index.json`** with **public HTTPS URLs**. Requires **`SUPABASE_SERVICE_ROLE_KEY`** and **`NEXT_PUBLIC_SUPABASE_URL`** in `.env` / `.env.local`.
+6. Commit **`public/assets/matrix/cards/index.json`** (and PNG sources if changed) and push.
+
+The live directory and OG images then load cards from **Supabase CDN**; keep PNGs under **`public/assets/matrix/cards/`** so you can re-run the upload script after art changes.
 
 ### C. Database schema change
 

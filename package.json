@@ -11,6 +11,7 @@
     "build:matrix-cards": "node src/scripts/build-matrix-cards.js",
     "build:og-icon-png": "node scripts/build-og-icon-png.js",
     "build:hero-webp": "node scripts/build-hero-webp.mjs",
+    "upload:species-cards-webp": "node scripts/upload-species-cards-webp.mjs",
     "rename:matrix-cards": "node scripts/rename-matrix-cards-from-csv.mjs",
     "seed:species": "node scripts/seed-species-from-csv.mjs",
     "sync:matrix-cards": "node scripts/sync-matrix-cards-from-species.mjs",

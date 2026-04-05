@@ -87,7 +87,7 @@ Production-ready, mobile-first marketing website for Mezcalómano, built with Ne
 
 ### Matrix Cards (directory images)
 
-- **Location**: `public/assets/matrix/cards/` — PNG card art + `index.json` (manifest keyed by `common_name`)
+- **Location**: `public/assets/matrix/cards/` — PNG sources (slug filenames) + `index.json` (manifest keyed by `common_name`). **`index.json`** image fields are **public Supabase Storage URLs** (WebP) after **`npm run upload:species-cards-webp`**; PNGs remain in-repo for regeneration.
 - **Source workflow**: Raw exports in `source/agave_images/` → `npm run normalize:agave-images` (slug filenames from deck log) → `npm run sync:agave-matrix` (copy + regenerate `index.json` from `data/Species_Final - Website.csv`)
 - **Legacy / print pipeline**: `npm run build:matrix-cards` produces WebP from TIFFs; `npm run sync:matrix-cards` pulls from Dropbox SPECIES folder (see [MATRIX_CARDS_PIPELINE.md](MATRIX_CARDS_PIPELINE.md))
 - **Data**: `src/data/matrix.json` is optional for older tooling; the live directory resolves images via `index.json` and Supabase text fields
