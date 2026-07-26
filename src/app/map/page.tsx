@@ -372,7 +372,7 @@ export default function MapPage() {
       container,
       style: {
         version: 8,
-        glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+        glyphs: "/map-fonts/{fontstack}/{range}.pbf",
         sources: {},
         layers: [
           {
