@@ -95,11 +95,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Open+Sans:wdth,wght@75,300;75,400;75,600;75,700&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="layout-pin-footer" suppressHydrationWarning>
+      <body className="layout-pin-footer font-sans" suppressHydrationWarning>
         <JsonLd data={siteStructuredData} />
         <Header />
         <main className="page-content">{children}</main>

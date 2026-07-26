@@ -8,7 +8,6 @@ import centroid from "@turf/centroid";
 import { ChevronDown } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { getStatesInData, parseStatesForGeo } from "@/lib/map-utils";
-import { speciesDirectorySlug, toSlug } from "@/lib/slug";
 import type { Species } from "@/types/species";
 
 const AGAVE_YELLOW = "#a29037";
@@ -515,12 +514,6 @@ export default function MapPage() {
           return states.includes(stateName);
         });
         const commonNamesInState = [...new Set(speciesInState.map((s) => s.common_name))].sort((a, b) => a.localeCompare(b, "en"));
-        const directorySlugByCommonName = new Map<string, string>();
-        for (const s of speciesInState) {
-          if (!directorySlugByCommonName.has(s.common_name)) {
-            directorySlugByCommonName.set(s.common_name, speciesDirectorySlug(s));
-          }
-        }
 
         const selName = selectedCommonNameRef.current;
         const selSet = selectedStatesSetRef.current;
@@ -533,14 +526,11 @@ export default function MapPage() {
           const sp = selSpecies[0];
           if (sp) {
             const terrain = parseHabitatTerrain(sp.habitat);
-            const slug = speciesDirectorySlug(sp);
             body =
               '<div class="mezcal-map-popup-body">' +
-              '<p class="mezcal-map-popup-detail"><a href="/directory/' +
-              escapeHtml(slug) +
-              '" target="_self">' +
+              '<p class="mezcal-map-popup-detail">' +
               escapeHtml(sp.common_name) +
-              "</a></p>" +
+              "</p>" +
               (terrain
                 ? '<p class="mezcal-map-popup-detail"><span class="mezcal-map-popup-muted">Terrain:</span> ' +
                   escapeHtml(terrain) +
@@ -550,16 +540,7 @@ export default function MapPage() {
           }
         } else {
           const listHtml = commonNamesInState.length
-            ? commonNamesInState
-                .map(
-                  (n) =>
-                    '<li><a href="/directory/' +
-                    escapeHtml(directorySlugByCommonName.get(n) ?? toSlug(n)) +
-                    '" target="_self">' +
-                    escapeHtml(n) +
-                    "</a></li>"
-                )
-                .join("")
+            ? commonNamesInState.map((n) => "<li>" + escapeHtml(n) + "</li>").join("")
             : '<li><span class="mezcal-map-popup-muted">None in directory</span></li>';
           body =
             '<div class="mezcal-map-popup-body">' +
