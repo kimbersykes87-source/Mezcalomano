@@ -43,24 +43,8 @@ export default function AboutPage() {
           list.
         </p>
 
-        {/* PLACEHOLDER — Klaviyo body-embed signup (inline). Paste Si's body-embed snippet here — NOT popup, NOT head script. */}
-        <div className="about-page__klaviyo" data-klaviyo-embed-slot>
-          <form className="about-page__klaviyo-form" action="#" aria-label="Mailing list signup placeholder">
-            <label className="sr-only" htmlFor="about-klaviyo-email">
-              Email
-            </label>
-            <input
-              id="about-klaviyo-email"
-              type="email"
-              name="email"
-              autoComplete="email"
-              placeholder="Email"
-              className="about-page__klaviyo-input"
-            />
-            <button type="button" className="about-page__klaviyo-button">
-              JOIN
-            </button>
-          </form>
+        <div className="about-page__klaviyo">
+          <div className="klaviyo-form-QWV2jK" />
         </div>
 
         <p>

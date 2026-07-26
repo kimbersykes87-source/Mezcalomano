@@ -98,6 +98,11 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Open+Sans:wdth,wght@75,300;75,400;75,600;75,700&display=swap"
           rel="stylesheet"
         />
+        <script
+          type="text/javascript"
+          async
+          src="https://static.klaviyo.com/onsite/js/YaSiCF/klaviyo.js"
+        />
       </head>
       <body className="layout-pin-footer font-sans" suppressHydrationWarning>
         <JsonLd data={siteStructuredData} />

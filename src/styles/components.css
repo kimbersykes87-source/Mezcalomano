@@ -902,58 +902,14 @@ button.directory-inline-link:hover {
 
 .about-page__klaviyo {
   width: 100%;
-  margin: 0 0 var(--space-6);
+  margin: var(--space-4) 0;
 }
 
-.about-page__klaviyo-form {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: var(--space-3);
-  width: 100%;
-  max-width: 22rem;
-  margin: 0 auto;
-}
-
-.about-page__klaviyo-input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: var(--space-3) var(--space-4);
-  font-family: var(--font-family);
-  font-size: 1rem;
-  font-weight: var(--font-weight-regular);
-  color: var(--color-white);
-  background-color: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  border-radius: 0;
-  outline: none;
-}
-
-.about-page__klaviyo-input::placeholder {
-  color: rgba(255, 255, 255, 0.65);
-}
-
-.about-page__klaviyo-input:focus {
-  border-color: var(--color-white);
-}
-
-.about-page__klaviyo-button {
-  width: 100%;
-  padding: var(--space-3) var(--space-4);
-  font-family: var(--font-family);
-  font-size: 1rem;
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--color-white);
-  background-color: #7b815c;
-  border: none;
-  border-radius: 0;
-  cursor: pointer;
-}
-
-.about-page__klaviyo-button:hover {
-  filter: brightness(1.08);
+/* Beat Klaviyo's injected Open Sans Regular with site condensed face */
+.klaviyo-form-QWV2jK,
+.klaviyo-form-QWV2jK * {
+  font-family: "Open Sans Condensed", "Open Sans", sans-serif !important;
+  font-stretch: condensed !important;
 }
 
 /* Fixed 4-slot collage band — max 4 images at ~380px; keep slot size when finals drop in */
