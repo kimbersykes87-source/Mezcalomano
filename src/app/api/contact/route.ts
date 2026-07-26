@@ -12,6 +12,24 @@ function jsonError(error: string, status: number) {
   return NextResponse.json({ ok: false, error }, { status });
 }
 
+function envValue(name: string): string | null {
+  const value = process.env[name];
+  if (typeof value !== "string" || value.trim() === "") return null;
+  return value.trim();
+}
+
+/** Returns the name of the first missing required server env var, or null if all present. */
+function missingServerEnv(): string | null {
+  if (!envValue("TURNSTILE_SECRET")) return "TURNSTILE_SECRET";
+  if (!envValue("APPS_SCRIPT_URL")) return "APPS_SCRIPT_URL";
+  if (!envValue("APPS_SCRIPT_TOKEN")) return "APPS_SCRIPT_TOKEN";
+  if (!envValue("SUPABASE_SERVICE_ROLE_KEY")) return "SUPABASE_SERVICE_ROLE_KEY";
+  if (!envValue("SUPABASE_URL") && !envValue("NEXT_PUBLIC_SUPABASE_URL")) {
+    return "SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL)";
+  }
+  return null;
+}
+
 function clientIp(request: Request): string | undefined {
   const forwarded = request.headers.get("x-forwarded-for");
   if (forwarded) {
@@ -21,13 +39,11 @@ function clientIp(request: Request): string | undefined {
   return request.headers.get("x-real-ip") ?? undefined;
 }
 
-async function verifyTurnstile(token: string, remoteip?: string): Promise<boolean> {
-  const secret = process.env.TURNSTILE_SECRET;
-  if (!secret) {
-    console.error("[contact] TURNSTILE_SECRET is not set");
-    return false;
-  }
-
+async function verifyTurnstile(
+  secret: string,
+  token: string,
+  remoteip?: string
+): Promise<boolean> {
   const body = new URLSearchParams();
   body.set("secret", secret);
   body.set("response", token);
@@ -42,19 +58,20 @@ async function verifyTurnstile(token: string, remoteip?: string): Promise<boolea
   return data.success === true;
 }
 
-function getServiceSupabase() {
-  const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) {
-    throw new Error("Missing SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL) or SUPABASE_SERVICE_ROLE_KEY");
-  }
-  return createClient(url, key, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
-}
-
 export async function POST(request: Request) {
   try {
+    const missing = missingServerEnv();
+    if (missing) {
+      console.error(`[contact] Missing required env var: ${missing}`);
+      return jsonError(`Server configuration error: missing ${missing}`, 500);
+    }
+
+    const turnstileSecret = envValue("TURNSTILE_SECRET")!;
+    const appsScriptUrl = envValue("APPS_SCRIPT_URL")!;
+    const appsScriptToken = envValue("APPS_SCRIPT_TOKEN")!;
+    const supabaseUrl = (envValue("SUPABASE_URL") || envValue("NEXT_PUBLIC_SUPABASE_URL"))!;
+    const supabaseServiceRoleKey = envValue("SUPABASE_SERVICE_ROLE_KEY")!;
+
     const data = (await request.json()) as ContactBody;
     const token = typeof data.token === "string" ? data.token : "";
 
@@ -62,7 +79,7 @@ export async function POST(request: Request) {
       return jsonError("Verification failed. Please try again.", 400);
     }
 
-    const turnstileOk = await verifyTurnstile(token, clientIp(request));
+    const turnstileOk = await verifyTurnstile(turnstileSecret, token, clientIp(request));
     if (!turnstileOk) {
       return jsonError("Verification failed. Please try again.", 400);
     }
@@ -81,7 +98,10 @@ export async function POST(request: Request) {
       return jsonError("Invalid email address", 400);
     }
 
-    const supabase = getServiceSupabase();
+    const supabase = createClient(supabaseUrl, supabaseServiceRoleKey, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
+
     const { data: row, error: insertError } = await supabase
       .from("contacts")
       .insert({ name, email, message, emailed: false })
@@ -93,43 +113,36 @@ export async function POST(request: Request) {
       return jsonError("Could not save your message. Please try again.", 500);
     }
 
-    const appsScriptUrl = process.env.APPS_SCRIPT_URL;
-    const appsScriptToken = process.env.APPS_SCRIPT_TOKEN;
+    try {
+      const mailRes = await fetch(appsScriptUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          secret: appsScriptToken,
+        }),
+        redirect: "follow",
+      });
+      const mailJson = (await mailRes.json().catch(() => null)) as { ok?: boolean } | null;
 
-    if (appsScriptUrl && appsScriptToken) {
-      try {
-        const mailRes = await fetch(appsScriptUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name,
-            email,
-            message,
-            secret: appsScriptToken,
-          }),
-          redirect: "follow",
-        });
-        const mailJson = (await mailRes.json().catch(() => null)) as { ok?: boolean } | null;
-
-        if (mailRes.ok && mailJson?.ok === true) {
-          const { error: updateError } = await supabase
-            .from("contacts")
-            .update({ emailed: true })
-            .eq("id", row.id);
-          if (updateError) {
-            console.error("[contact] Failed to mark emailed=true:", updateError);
-          }
-        } else {
-          console.error("[contact] Apps Script mailer failed:", {
-            status: mailRes.status,
-            body: mailJson,
-          });
+      if (mailRes.ok && mailJson?.ok === true) {
+        const { error: updateError } = await supabase
+          .from("contacts")
+          .update({ emailed: true })
+          .eq("id", row.id);
+        if (updateError) {
+          console.error("[contact] Failed to mark emailed=true:", updateError);
         }
-      } catch (err) {
-        console.error("[contact] Apps Script mailer error:", err);
+      } else {
+        console.error("[contact] Apps Script mailer failed:", {
+          status: mailRes.status,
+          body: mailJson,
+        });
       }
-    } else {
-      console.error("[contact] APPS_SCRIPT_URL or APPS_SCRIPT_TOKEN missing; saved without email");
+    } catch (err) {
+      console.error("[contact] Apps Script mailer error:", err);
     }
 
     return NextResponse.json({ ok: true });
