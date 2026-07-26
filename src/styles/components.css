@@ -729,9 +729,20 @@ button.directory-inline-link:hover {
 .contact-intro {
   text-align: center;
   font-family: var(--font-family);
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
+  line-height: 1.45;
   margin-bottom: var(--space-2);
   color: var(--color-white);
+  max-width: 22rem;
+  width: 100%;
+}
+
+.contact-intro p {
+  margin: 0 0 var(--space-2);
+}
+
+.contact-intro p:last-child {
+  margin-bottom: 0;
 }
 
 /* Contact page: no hero image, fills space between header and footer, components spaced vertically */
@@ -779,8 +790,40 @@ button.directory-inline-link:hover {
 .contact-heading {
   font-family: var(--font-family);
   font-weight: var(--font-weight-regular);
+  font-size: clamp(1.5rem, 5vw, 1.75rem);
   letter-spacing: 0.03em;
-  text-transform: uppercase;
+  text-transform: none;
+  margin: 0 0 var(--space-3);
+  color: var(--color-white);
+}
+
+/* Desktop: same centered composition — intro + form, no email on page */
+@media (min-width: 768px) {
+  .page-content:has(.contact-page) {
+    height: auto;
+    min-height: calc(100vh - 88px);
+    overflow: visible;
+  }
+
+  .contact-page {
+    justify-content: center;
+    padding: var(--space-10) var(--space-8) 96px;
+    gap: var(--space-8);
+  }
+
+  .contact-intro {
+    max-width: 32rem;
+    font-size: 1.125rem;
+  }
+
+  .contact-heading {
+    font-size: 2rem;
+    margin-bottom: var(--space-4);
+  }
+
+  .contact-page-form {
+    max-width: 480px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -1371,9 +1414,15 @@ button.directory-inline-link:hover {
   letter-spacing: 0.03em;
 }
 
-.contact-form .btn-submit:hover {
+.contact-form .btn-submit:hover:not(:disabled) {
   background-color: var(--color-olive);
   filter: brightness(1.1);
+}
+
+.contact-form .btn-submit:disabled {
+  background-color: var(--color-olive);
+  cursor: wait;
+  opacity: 0.75;
 }
 
 .turnstile-container {

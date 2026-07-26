@@ -1,69 +1,140 @@
+import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
-async function verifyTurnstile(token: string | undefined): Promise<boolean> {
-  const secret = process.env.TURNSTILE_SECRET_KEY;
-  if (!secret || !token) return false;
+type ContactBody = {
+  name?: string;
+  email?: string;
+  message?: string;
+  token?: string;
+};
+
+function jsonError(error: string, status: number) {
+  return NextResponse.json({ ok: false, error }, { status });
+}
+
+function clientIp(request: Request): string | undefined {
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) {
+    const first = forwarded.split(",")[0]?.trim();
+    if (first) return first;
+  }
+  return request.headers.get("x-real-ip") ?? undefined;
+}
+
+async function verifyTurnstile(token: string, remoteip?: string): Promise<boolean> {
+  const secret = process.env.TURNSTILE_SECRET;
+  if (!secret) {
+    console.error("[contact] TURNSTILE_SECRET is not set");
+    return false;
+  }
+
+  const body = new URLSearchParams();
+  body.set("secret", secret);
+  body.set("response", token);
+  if (remoteip) body.set("remoteip", remoteip);
 
   const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ secret, response: token }),
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body,
   });
   const data = (await res.json()) as { success?: boolean };
   return data.success === true;
 }
 
+function getServiceSupabase() {
+  const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) {
+    throw new Error("Missing SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL) or SUPABASE_SERVICE_ROLE_KEY");
+  }
+  return createClient(url, key, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+}
+
 export async function POST(request: Request) {
   try {
-    const data = await request.json();
-    const {
-      name,
-      email,
-      message,
-      "cf-turnstile-response": turnstileResponse,
-    } = data as {
-      name?: string;
-      email?: string;
-      message?: string;
-      "cf-turnstile-response"?: string;
-    };
+    const data = (await request.json()) as ContactBody;
+    const token = typeof data.token === "string" ? data.token : "";
 
-    const secret = process.env.TURNSTILE_SECRET_KEY;
-    if (secret) {
-      const valid = await verifyTurnstile(turnstileResponse);
-      if (!valid) {
-        return NextResponse.json(
-          { error: "Verification failed. Please try again." },
-          { status: 400 }
-        );
-      }
+    if (!token) {
+      return jsonError("Verification failed. Please try again.", 400);
     }
+
+    const turnstileOk = await verifyTurnstile(token, clientIp(request));
+    if (!turnstileOk) {
+      return jsonError("Verification failed. Please try again.", 400);
+    }
+
+    const name = typeof data.name === "string" ? data.name.trim() : "";
+    const email = typeof data.email === "string" ? data.email.trim() : "";
+    const message = typeof data.message === "string" ? data.message.trim() : "";
 
     if (!name || !email || !message) {
-      return NextResponse.json(
-        { error: "All fields are required" },
-        { status: 400 }
-      );
+      return jsonError("All fields are required", 400);
+    }
+    if (name.length > 200 || email.length > 200 || message.length > 5000) {
+      return jsonError("One or more fields are too long", 400);
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return jsonError("Invalid email address", 400);
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: "Invalid email address" },
-        { status: 400 }
-      );
+    const supabase = getServiceSupabase();
+    const { data: row, error: insertError } = await supabase
+      .from("contacts")
+      .insert({ name, email, message, emailed: false })
+      .select("id")
+      .single();
+
+    if (insertError || !row?.id) {
+      console.error("[contact] Supabase insert failed:", insertError);
+      return jsonError("Could not save your message. Please try again.", 500);
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    const appsScriptUrl = process.env.APPS_SCRIPT_URL;
+    const appsScriptToken = process.env.APPS_SCRIPT_TOKEN;
 
-    return NextResponse.json({
-      success: true,
-      message: "Message received successfully",
-    });
-  } catch {
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    if (appsScriptUrl && appsScriptToken) {
+      try {
+        const mailRes = await fetch(appsScriptUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name,
+            email,
+            message,
+            secret: appsScriptToken,
+          }),
+          redirect: "follow",
+        });
+        const mailJson = (await mailRes.json().catch(() => null)) as { ok?: boolean } | null;
+
+        if (mailRes.ok && mailJson?.ok === true) {
+          const { error: updateError } = await supabase
+            .from("contacts")
+            .update({ emailed: true })
+            .eq("id", row.id);
+          if (updateError) {
+            console.error("[contact] Failed to mark emailed=true:", updateError);
+          }
+        } else {
+          console.error("[contact] Apps Script mailer failed:", {
+            status: mailRes.status,
+            body: mailJson,
+          });
+        }
+      } catch (err) {
+        console.error("[contact] Apps Script mailer error:", err);
+      }
+    } else {
+      console.error("[contact] APPS_SCRIPT_URL or APPS_SCRIPT_TOKEN missing; saved without email");
+    }
+
+    return NextResponse.json({ ok: true });
+  } catch (err) {
+    console.error("[contact] Unexpected error:", err);
+    return jsonError("Internal server error", 500);
   }
 }

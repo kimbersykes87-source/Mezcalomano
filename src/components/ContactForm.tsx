@@ -22,10 +22,22 @@ export default function ContactForm() {
 
   useEffect(() => {
     if (!turnstileSiteKey || !turnstileContainerRef.current) return;
+    if (document.querySelector('script[data-turnstile="contact"]')) {
+      if (window.turnstile && turnstileContainerRef.current && !turnstileWidgetId) {
+        const id = window.turnstile.render(turnstileContainerRef.current, {
+          sitekey: turnstileSiteKey,
+          theme: "dark",
+        });
+        setTurnstileWidgetId(id);
+      }
+      return;
+    }
+
     const script = document.createElement("script");
     script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
     script.async = true;
     script.defer = true;
+    script.dataset.turnstile = "contact";
     script.onload = () => {
       if (window.turnstile && turnstileContainerRef.current) {
         const id = window.turnstile.render(turnstileContainerRef.current, {
@@ -36,11 +48,18 @@ export default function ContactForm() {
       }
     };
     document.head.appendChild(script);
-  }, [turnstileSiteKey]);
+  }, [turnstileSiteKey, turnstileWidgetId]);
 
   const [successVisible, setSuccessVisible] = useState(false);
   const [formError, setFormError] = useState("");
+  const [sending, setSending] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<{ name?: string; email?: string; message?: string }>({});
+
+  function resetTurnstile() {
+    if (typeof window !== "undefined" && window.turnstile && turnstileWidgetId) {
+      window.turnstile.reset(turnstileWidgetId);
+    }
+  }
 
   function clearErrors() {
     setFieldErrors({});
@@ -86,53 +105,51 @@ export default function ContactForm() {
     const token =
       turnstileSiteKey && typeof window !== "undefined" && window.turnstile && turnstileWidgetId
         ? window.turnstile.getResponse(turnstileWidgetId)
-        : null;
+        : "";
 
-    const data = {
-      name,
-      email,
-      message,
-      "cf-turnstile-response": token ?? undefined,
-    };
+    if (!token) {
+      setFormError("Please complete the verification challenge.");
+      return;
+    }
 
+    setSending(true);
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ name, email, message, token }),
       });
-      const result = await response.json();
+      const result = (await response.json().catch(() => null)) as {
+        ok?: boolean;
+        error?: string;
+      } | null;
 
-      if (response.ok) {
+      if (response.ok && result?.ok === true) {
         setSuccessVisible(true);
-        form.reset();
-        if (typeof window !== "undefined" && window.turnstile && turnstileWidgetId) {
-          window.turnstile.reset(turnstileWidgetId);
-        }
         window.scrollTo({ top: 0, behavior: "smooth" });
-      } else {
-        setFormError(result.error || "Something went wrong. Please try again.");
-        if (typeof window !== "undefined" && window.turnstile && turnstileWidgetId) {
-          window.turnstile.reset(turnstileWidgetId);
-        }
+        return;
       }
+
+      setFormError(result?.error || "Something went wrong. Please try again.");
+      resetTurnstile();
     } catch {
       setFormError("Network error. Please try again.");
-      if (typeof window !== "undefined" && window.turnstile && turnstileWidgetId) {
-        window.turnstile.reset(turnstileWidgetId);
-      }
+      resetTurnstile();
+    } finally {
+      setSending(false);
     }
+  }
+
+  if (successVisible) {
+    return (
+      <div className="form-success is-visible" id="form-success" role="status">
+        <p>Thanks, we got it. We&apos;ll reply within 1 to 2 business days.</p>
+      </div>
+    );
   }
 
   return (
     <form className="contact-form" id="contact-form" onSubmit={handleSubmit}>
-      <div
-        className={`form-success ${successVisible ? "is-visible" : ""}`}
-        id="form-success"
-      >
-        <p>Thank you for your message. We&apos;ll get back to you soon.</p>
-      </div>
-
       <div
         className={`form-error-inline ${formError ? "is-visible" : ""}`}
         id="form-error-inline"
@@ -151,6 +168,8 @@ export default function ContactForm() {
           required
           aria-required
           aria-label="Name"
+          disabled={sending}
+          maxLength={200}
         />
         <div className={`form-error ${fieldErrors.name ? "is-visible" : ""}`} id="name-error">
           {fieldErrors.name}
@@ -167,6 +186,8 @@ export default function ContactForm() {
           required
           aria-required
           aria-label="Email"
+          disabled={sending}
+          maxLength={200}
         />
         <div className={`form-error ${fieldErrors.email ? "is-visible" : ""}`} id="email-error">
           {fieldErrors.email}
@@ -182,6 +203,8 @@ export default function ContactForm() {
           required
           aria-required
           aria-label="Message"
+          disabled={sending}
+          maxLength={5000}
         />
         <div className={`form-error ${fieldErrors.message ? "is-visible" : ""}`} id="message-error">
           {fieldErrors.message}
@@ -192,8 +215,8 @@ export default function ContactForm() {
         <div ref={turnstileContainerRef} id="turnstile-widget" />
       </div>
 
-      <button type="submit" className="btn btn-submit">
-        SEND MESSAGE
+      <button type="submit" className="btn btn-submit" disabled={sending} aria-busy={sending}>
+        {sending ? "Sending…" : "Send message"}
       </button>
     </form>
   );
