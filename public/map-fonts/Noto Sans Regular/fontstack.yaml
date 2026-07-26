@@ -1,0 +1,13 @@
+# maplibre-font-maker-node manifest - regenerated automatically, do not edit
+tool: maplibre-font-maker-node
+toolVersion: 0.5.0
+fontstack: Noto Sans Regular
+ranges: latin
+axes:
+  wght: 400
+  wdth: 100
+fontSha256: bfb7bb691513f12e734dc346c03a03f784912432d7e3fa8e56efcf906fe86b3d
+files:
+  0-255.pbf: 77155941539782149e8a394c8d9e386dd903bb1d6ea628a980ea8e4e1c344617
+  256-511.pbf: 638dc000699ddea02e788c2f654c7207415c313de9596ac87b20744a8b4e1dd1
+  512-767.pbf: e8a9249aafb151422ff9b82340f2c178b3f1ca35da74fd21d6b5099187faf284

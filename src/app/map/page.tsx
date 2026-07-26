@@ -452,15 +452,18 @@ export default function MapPage() {
         layout: {
           "text-field": ["get", "state_name"],
           "text-transform": "uppercase",
-          "text-size": 11,
-          "text-font": ["Open Sans Condensed Regular"],
+          "text-font": ["Open Sans Semibold", "Noto Sans Regular"],
+          "text-size": 13,
+          "text-letter-spacing": 0.05,
+          "text-max-width": 8,
           "text-allow-overlap": false,
           "text-ignore-placement": false,
         },
         paint: {
-          "text-color": "rgba(255,255,255,0.85)",
-          "text-halo-color": "rgba(0,0,0,0.6)",
-          "text-halo-width": 1.5,
+          "text-color": "#f4f2ec",
+          "text-halo-color": "rgba(20,18,16,0.85)",
+          "text-halo-width": 1.4,
+          "text-halo-blur": 0.3,
         },
       });
 

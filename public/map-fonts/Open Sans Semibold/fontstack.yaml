@@ -1,0 +1,13 @@
+# maplibre-font-maker-node manifest - regenerated automatically, do not edit
+tool: maplibre-font-maker-node
+toolVersion: 0.5.0
+fontstack: Open Sans Semibold
+ranges: latin
+axes:
+  wght: 600
+  wdth: 100
+fontSha256: 36643644f318a812aab2d2ed3bb98f8cf0872527f835fe9398d95fe6b9adb878
+files:
+  0-255.pbf: 4c358643631e80a678c857fe4443526164f6fb6ce81f84c50447564ac3f137fd
+  256-511.pbf: 68988aaa1c50f7e0e357eadcd748c90fb2140821dc512685971f69856e6caa27
+  512-767.pbf: 86f294aa8f7dda1d3c6c31e363c3765e32393591722b886ba22e55b321491c2e
