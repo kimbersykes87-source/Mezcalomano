@@ -453,7 +453,7 @@ export default function MapPage() {
           "text-field": ["get", "state_name"],
           "text-transform": "uppercase",
           "text-size": 11,
-          "text-font": ["Open Sans Regular"],
+          "text-font": ["Open Sans Condensed Regular"],
           "text-allow-overlap": false,
           "text-ignore-placement": false,
         },
