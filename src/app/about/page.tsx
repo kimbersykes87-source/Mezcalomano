@@ -1,9 +1,3 @@
-import Hero from "@/components/Hero";
-
-const aboutHeroMobile = "/assets/photos/about_hero_mobile_1200x900.png";
-const aboutHeroTablet = "/assets/photos/about_hero_tablet_1920x1080.png";
-const aboutHeroDesktop = "/assets/photos/about_hero_desktop_2800x1333.png";
-
 export const metadata = {
   title: "About",
   description:
@@ -12,30 +6,89 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <>
-      <Hero
-        title="ABOUT US"
-        subtitle="We make premium playing cards for mezcal people—and a directory to help you learn the agave behind the pour."
-        mobile={aboutHeroMobile}
-        tablet={aboutHeroTablet}
-        desktop={aboutHeroDesktop}
-        alt="About Mezcalómano — brand imagery celebrating agave and mezcal culture"
-      />
-      <div className="section">
-        <div className="container">
-          <div className="section-content about-content">
-            <p>
-              For mezcal lovers and the mezcal-curious, Mezcalómano is a project dedicated to
-              exploring the diverse agave species that make mezcal so rich, complex, and endlessly
-              fascinating.
-            </p>
-            <p>
-              We&apos;re here to spark conversation, celebrate every spiky variety, and bring more
-              joy (and mezcal knowledge) to your next pour.
-            </p>
-          </div>
+    <article className="about-page">
+      {/* PLACEHOLDER — Hero image (final = cards + copitas shot, product in use). Replace grey block with final landscape asset. */}
+      <div
+        className="about-page__hero-placeholder"
+        role="img"
+        aria-label="Placeholder for About hero image: cards and copitas, product in use"
+      >
+        <span className="about-page__placeholder-label">
+          Hero image
+          <br />
+          Cards + copitas (product in use)
+        </span>
+      </div>
+
+      <div className="about-page__body">
+        <h1 className="about-page__title">ABOUT US</h1>
+
+        <p>
+          Mezcalómano started as a small project between two people who love mezcal, love
+          learning, and spent years visiting Mexico and tasting everything we could find. Along
+          the way we noticed something: too many people order a mezcal at a bar and get
+          whatever&apos;s closest, usually espadín, and rarely venture beyond it. Mezcal deserves
+          the same kind of exploration as wine or whiskey.
+        </p>
+
+        <p>
+          The Discovery Deck is our way to bring mezcal to the table, with playing cards that make
+          it feel approachable, visual, and fun, whether you&apos;re already hooked or just getting
+          curious.
+        </p>
+
+        <p>
+          Our first print run is small and ships from the US. If you want first dibs on new decks,
+          fresh releases, and the other mezcal adventures we&apos;re cooking up, join our mailing
+          list.
+        </p>
+
+        {/* PLACEHOLDER — Klaviyo body-embed signup (inline). Paste Si's body-embed snippet here — NOT popup, NOT head script. */}
+        <div className="about-page__klaviyo" data-klaviyo-embed-slot>
+          <form className="about-page__klaviyo-form" action="#" aria-label="Mailing list signup placeholder">
+            <label className="sr-only" htmlFor="about-klaviyo-email">
+              Email
+            </label>
+            <input
+              id="about-klaviyo-email"
+              type="email"
+              name="email"
+              autoComplete="email"
+              placeholder="Email"
+              className="about-page__klaviyo-input"
+            />
+            <button type="button" className="about-page__klaviyo-button">
+              JOIN
+            </button>
+          </form>
+        </div>
+
+        <p>
+          When your deck lands, scan the QR code to unlock our agave directory and discover even
+          more: where different agaves grow across Mexico, and who&apos;s bottling them. Because
+          life&apos;s too short for just one agave.
+        </p>
+      </div>
+
+      {/* PLACEHOLDER — Collage band (final = agave, production, bottles, landscape; landscape crops). Max 4 images — keep these slot dimensions when swapping finals. */}
+      <div
+        className="about-page__collage"
+        role="group"
+        aria-label="Placeholder collage: up to four landscape images"
+      >
+        <div className="about-page__collage-slot">
+          <span className="about-page__placeholder-label">Agave</span>
+        </div>
+        <div className="about-page__collage-slot">
+          <span className="about-page__placeholder-label">Production</span>
+        </div>
+        <div className="about-page__collage-slot">
+          <span className="about-page__placeholder-label">Bottles</span>
+        </div>
+        <div className="about-page__collage-slot">
+          <span className="about-page__placeholder-label">Landscape</span>
         </div>
       </div>
-    </>
+    </article>
   );
 }
