@@ -1,11 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Hero from "@/components/Hero";
 import { HOME_META_DESCRIPTION, OG_IMAGE_PATH, SITE_URL } from "@/lib/site-seo";
-
-const homeHeroMobile = "/assets/photos/home_hero_mobile_1200x900.png";
-const homeHeroTablet = "/assets/photos/home_hero_tablet_1920x1080.png";
-const homeHeroDesktop = "/assets/photos/home_hero_desktop_2800x1333.png";
 
 export const metadata: Metadata = {
   title: "Mezcalómano | Discovery Deck & Agave Species Directory",
@@ -26,18 +21,27 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <Hero
-      title="Life's too short for just one agave."
-      subtitle="The Discovery Deck is premium playing cards for mezcal lovers—gift it or keep it. Our agave directory helps you learn what goes into the bottle."
-      mobile={homeHeroMobile}
-      tablet={homeHeroTablet}
-      desktop={homeHeroDesktop}
-      alt="Mezcalómano Discovery Deck — premium agave-themed playing cards"
-      standalone
-    >
-      <Link href="/buy" className="btn btn-hero-cta btn-hero-cta--olive">
-        BUY THE DISCOVERY DECK
-      </Link>
-    </Hero>
+    <section className="home-landing" aria-labelledby="home-landing-title">
+      <div className="home-landing__unit">
+        {/* eslint-disable-next-line @next/next/no-img-element -- brand SVG lockup; sized via CSS */}
+        <img
+          src="/assets/brand/logos/mezcalomano_lockup_stacked_dark.svg"
+          alt="Mezcalómano — Beyond Espadín"
+          className="home-landing__logo"
+          width={250}
+          height={80}
+        />
+        <h1 id="home-landing-title" className="home-landing__lines">
+          Life&apos;s too short for just one agave.
+          <br />
+          So here are 40 in a deck of playing cards.
+          <br />
+          Gift it or keep it.
+        </h1>
+        <Link href="/buy" className="btn btn-hero-cta btn-hero-cta--olive">
+          BUY THE DISCOVERY DECK
+        </Link>
+      </div>
+    </section>
   );
 }

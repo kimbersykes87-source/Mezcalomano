@@ -9,6 +9,7 @@ import MobileNav from "./MobileNav";
 export default function Header() {
   const pathname = usePathname();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const isHome = pathname === "/";
 
   return (
     <>
@@ -25,9 +26,13 @@ export default function Header() {
             <img src="/assets/ui/icons/icon_burger.svg" alt="" />
           </button>
 
-          <Link href="/" className="header-logo" aria-label="Mezcalómano Home">
-            <img src="/assets/brand/logos/mezcalomano_lockup_stacked_dark.svg" alt="" />
-          </Link>
+          {isHome ? (
+            <span className="header-logo-spacer" aria-hidden="true" />
+          ) : (
+            <Link href="/" className="header-logo" aria-label="Mezcalómano Home">
+              <img src="/assets/brand/logos/mezcalomano_lockup_stacked_dark.svg" alt="" />
+            </Link>
+          )}
 
           <nav className="header-nav" aria-label="Main navigation">
             <ul className="header-nav-desktop">
