@@ -30,32 +30,26 @@ function missingServerEnv(): string | null {
   return null;
 }
 
-function clientIp(request: Request): string | undefined {
-  const forwarded = request.headers.get("x-forwarded-for");
-  if (forwarded) {
-    const first = forwarded.split(",")[0]?.trim();
-    if (first) return first;
-  }
-  return request.headers.get("x-real-ip") ?? undefined;
-}
+type TurnstileVerifyResult = {
+  ok: boolean;
+  errorCodes: string[];
+};
 
-async function verifyTurnstile(
-  secret: string,
-  token: string,
-  remoteip?: string
-): Promise<boolean> {
+async function verifyTurnstile(secret: string, token: string): Promise<TurnstileVerifyResult> {
+  // Do not send remoteip: a mismatched IP (common behind Vercel proxies) makes
+  // siteverify fail even when the widget showed Success.
   const body = new URLSearchParams();
   body.set("secret", secret);
   body.set("response", token);
-  if (remoteip) body.set("remoteip", remoteip);
 
   const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body,
   });
-  const data = (await res.json()) as { success?: boolean };
-  return data.success === true;
+  const data = (await res.json()) as { success?: boolean; "error-codes"?: string[] };
+  const errorCodes = Array.isArray(data["error-codes"]) ? data["error-codes"] : [];
+  return { ok: data.success === true, errorCodes };
 }
 
 export async function POST(request: Request) {
@@ -79,8 +73,18 @@ export async function POST(request: Request) {
       return jsonError("Verification failed. Please try again.", 400);
     }
 
-    const turnstileOk = await verifyTurnstile(turnstileSecret, token, clientIp(request));
-    if (!turnstileOk) {
+    const turnstile = await verifyTurnstile(turnstileSecret, token);
+    if (!turnstile.ok) {
+      console.error("[contact] Turnstile siteverify failed:", turnstile.errorCodes);
+      if (turnstile.errorCodes.includes("invalid-input-secret")) {
+        return jsonError(
+          "Verification failed: TURNSTILE_SECRET does not match the site key. Check Vercel env vars.",
+          400
+        );
+      }
+      if (turnstile.errorCodes.includes("timeout-or-duplicate")) {
+        return jsonError("Verification expired. Please complete the check again.", 400);
+      }
       return jsonError("Verification failed. Please try again.", 400);
     }
 

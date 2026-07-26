@@ -5,32 +5,70 @@ import { useRef, useEffect, useState } from "react";
 declare global {
   interface Window {
     turnstile?: {
-      render: (container: HTMLElement, options: { sitekey: string; theme: string }) => string;
-      getResponse: (widgetId: string) => string;
-      reset: (widgetId: string) => void;
+      render: (
+        container: HTMLElement,
+        options: {
+          sitekey: string;
+          theme?: string;
+          callback?: (token: string) => void;
+          "expired-callback"?: () => void;
+          "error-callback"?: () => void;
+        }
+      ) => string;
+      getResponse: (widgetId?: string) => string;
+      reset: (widgetId?: string) => void;
+      remove?: (widgetId: string) => void;
     };
   }
 }
 
 export default function ContactForm() {
   const turnstileContainerRef = useRef<HTMLDivElement>(null);
-  const [turnstileWidgetId, setTurnstileWidgetId] = useState<string | null>(null);
+  const turnstileWidgetIdRef = useRef<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState("");
   const turnstileSiteKey =
     typeof process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY === "string"
-      ? process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+      ? process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY.trim()
       : "";
 
   useEffect(() => {
     if (!turnstileSiteKey || !turnstileContainerRef.current) return;
-    if (document.querySelector('script[data-turnstile="contact"]')) {
-      if (window.turnstile && turnstileContainerRef.current && !turnstileWidgetId) {
-        const id = window.turnstile.render(turnstileContainerRef.current, {
-          sitekey: turnstileSiteKey,
-          theme: "dark",
-        });
-        setTurnstileWidgetId(id);
+
+    let cancelled = false;
+
+    function renderWidget() {
+      if (cancelled || !window.turnstile || !turnstileContainerRef.current) return;
+      if (turnstileWidgetIdRef.current) return;
+
+      turnstileContainerRef.current.innerHTML = "";
+      const id = window.turnstile.render(turnstileContainerRef.current, {
+        sitekey: turnstileSiteKey,
+        theme: "dark",
+        callback: (token) => setTurnstileToken(token),
+        "expired-callback": () => setTurnstileToken(""),
+        "error-callback": () => setTurnstileToken(""),
+      });
+      turnstileWidgetIdRef.current = id;
+    }
+
+    const existing = document.querySelector(
+      'script[data-turnstile="contact"]'
+    ) as HTMLScriptElement | null;
+
+    if (existing) {
+      if (window.turnstile) {
+        renderWidget();
+      } else {
+        existing.addEventListener("load", renderWidget);
       }
-      return;
+      return () => {
+        cancelled = true;
+        existing.removeEventListener("load", renderWidget);
+        if (turnstileWidgetIdRef.current && window.turnstile?.remove) {
+          window.turnstile.remove(turnstileWidgetIdRef.current);
+          turnstileWidgetIdRef.current = null;
+        }
+      };
     }
 
     const script = document.createElement("script");
@@ -38,17 +76,18 @@ export default function ContactForm() {
     script.async = true;
     script.defer = true;
     script.dataset.turnstile = "contact";
-    script.onload = () => {
-      if (window.turnstile && turnstileContainerRef.current) {
-        const id = window.turnstile.render(turnstileContainerRef.current, {
-          sitekey: turnstileSiteKey,
-          theme: "dark",
-        });
-        setTurnstileWidgetId(id);
+    script.addEventListener("load", renderWidget);
+    document.head.appendChild(script);
+
+    return () => {
+      cancelled = true;
+      script.removeEventListener("load", renderWidget);
+      if (turnstileWidgetIdRef.current && window.turnstile?.remove) {
+        window.turnstile.remove(turnstileWidgetIdRef.current);
+        turnstileWidgetIdRef.current = null;
       }
     };
-    document.head.appendChild(script);
-  }, [turnstileSiteKey, turnstileWidgetId]);
+  }, [turnstileSiteKey]);
 
   const [successVisible, setSuccessVisible] = useState(false);
   const [formError, setFormError] = useState("");
@@ -56,9 +95,24 @@ export default function ContactForm() {
   const [fieldErrors, setFieldErrors] = useState<{ name?: string; email?: string; message?: string }>({});
 
   function resetTurnstile() {
-    if (typeof window !== "undefined" && window.turnstile && turnstileWidgetId) {
-      window.turnstile.reset(turnstileWidgetId);
+    setTurnstileToken("");
+    if (typeof window !== "undefined" && window.turnstile && turnstileWidgetIdRef.current) {
+      window.turnstile.reset(turnstileWidgetIdRef.current);
     }
+  }
+
+  function readTurnstileToken(form: HTMLFormElement): string {
+    if (turnstileToken.trim()) return turnstileToken.trim();
+
+    const fromInput = form.querySelector<HTMLInputElement>(
+      'input[name="cf-turnstile-response"]'
+    )?.value;
+    if (fromInput?.trim()) return fromInput.trim();
+
+    if (typeof window !== "undefined" && window.turnstile && turnstileWidgetIdRef.current) {
+      return window.turnstile.getResponse(turnstileWidgetIdRef.current)?.trim() ?? "";
+    }
+    return "";
   }
 
   function clearErrors() {
@@ -102,11 +156,7 @@ export default function ContactForm() {
 
     if (!validateForm({ name, email, message })) return;
 
-    const token =
-      turnstileSiteKey && typeof window !== "undefined" && window.turnstile && turnstileWidgetId
-        ? window.turnstile.getResponse(turnstileWidgetId)
-        : "";
-
+    const token = readTurnstileToken(form);
     if (!token) {
       setFormError("Please complete the verification challenge.");
       return;
