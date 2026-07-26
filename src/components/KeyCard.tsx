@@ -2,7 +2,6 @@
 
 import {
   BookOpen,
-  Globe,
   Leaf,
   MapPin,
   Mountain,
@@ -15,13 +14,13 @@ const ICON_CLASS = "size-4 shrink-0 text-[var(--agave-yellow)]";
 
 const LEGEND = [
   { Icon: Leaf, label: "Common name" },
-  { Icon: BookOpen, label: "Scientific name" },
-  { Icon: Ruler, label: "Size (height)" },
-  { Icon: MapPin, label: "States" },
-  { Icon: Globe, label: "Geo region" },
-  { Icon: Mountain, label: "Terrain" },
   { Icon: Wine, label: "Mezcal use" },
   { Icon: Users, label: "Producers" },
+  { Icon: BookOpen, label: "Description" },
+  { Icon: Ruler, label: "Size" },
+  { Icon: MapPin, label: "State" },
+  { Icon: Mountain, label: "Terrain" },
+  { Icon: BookOpen, label: "Species name" },
 ] as const;
 
 export function KeyCard() {
@@ -34,7 +33,7 @@ export function KeyCard() {
       </div>
       <div className="flex w-4/5 min-h-[280px] flex-col items-center rounded-2xl border border-[var(--agave-yellow)] px-4 py-5 text-center text-white sm:px-5">
         <p className="text-sm text-white/70">
-          Each card uses these icons to label the information below. The paragraph under the names is the species description.
+          Each card uses these icons to label the information below.
         </p>
         <div className="mt-4 flex w-full flex-col items-center gap-4">
           {LEGEND.map(({ Icon, label }) => (

@@ -541,11 +541,6 @@ export default function MapPage() {
               '" target="_self">' +
               escapeHtml(sp.common_name) +
               "</a></p>" +
-              (sp.geo_region
-                ? '<p class="mezcal-map-popup-detail"><span class="mezcal-map-popup-muted">Region:</span> ' +
-                  escapeHtml(sp.geo_region) +
-                  "</p>"
-                : "") +
               (terrain
                 ? '<p class="mezcal-map-popup-detail"><span class="mezcal-map-popup-muted">Terrain:</span> ' +
                   escapeHtml(terrain) +

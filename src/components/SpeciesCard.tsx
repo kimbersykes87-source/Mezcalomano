@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   BookOpen,
-  Globe,
   Leaf,
   MapPin,
   Mountain,
@@ -132,58 +131,6 @@ function SpeciesCardContent({
                 </div>
                 <span className="notranslate text-sm" translate="no">{species.common_name}</span>
               </div>
-              <div className="flex flex-col items-center" style={{ gap: 4 }}>
-                <div className="flex items-center" style={{ gap: 6 }}>
-                  <BookOpen className={ICON_CLASS} aria-hidden />
-                  <span className="text-sm text-[var(--agave-yellow)]">Scientific name</span>
-                </div>
-                <span className="notranslate text-sm" translate="no">{species.scientific_name}</span>
-              </div>
-              {species.description && (
-                <div className="flex flex-col items-center" style={{ gap: 4 }}>
-                  <div className="flex items-center" style={{ gap: 6 }}>
-                    <BookOpen className={ICON_CLASS} aria-hidden />
-                    <span className="text-sm text-[var(--agave-yellow)]">Description</span>
-                  </div>
-                  <span className="text-center text-sm">{species.description}</span>
-                </div>
-              )}
-              {sizeStr && (
-                <div className="flex flex-col items-center" style={{ gap: 4 }}>
-                  <div className="flex items-center" style={{ gap: 6 }}>
-                    <Ruler className={ICON_CLASS} aria-hidden />
-                    <span className="text-sm text-[var(--agave-yellow)]">Size</span>
-                  </div>
-                  <span className="text-sm">{sizeStr}</span>
-                </div>
-              )}
-              {statesFormatted && (
-                <div className="flex flex-col items-center" style={{ gap: 4 }}>
-                  <div className="flex items-center" style={{ gap: 6 }}>
-                    <MapPin className={ICON_CLASS} aria-hidden />
-                    <span className="text-sm text-[var(--agave-yellow)]">States</span>
-                  </div>
-                  <span className="text-sm">{statesFormatted}</span>
-                </div>
-              )}
-              {species.geo_region && (
-                <div className="flex flex-col items-center" style={{ gap: 4 }}>
-                  <div className="flex items-center" style={{ gap: 6 }}>
-                    <Globe className={ICON_CLASS} aria-hidden />
-                    <span className="text-sm text-[var(--agave-yellow)]">Geo region</span>
-                  </div>
-                  <span className="text-sm">{species.geo_region}</span>
-                </div>
-              )}
-              {habitat?.terrain && (
-                <div className="flex flex-col items-center" style={{ gap: 4 }}>
-                  <div className="flex items-center" style={{ gap: 6 }}>
-                    <Mountain className={ICON_CLASS} aria-hidden />
-                    <span className="text-sm text-[var(--agave-yellow)]">Terrain</span>
-                  </div>
-                  <span className="text-sm">{habitat.terrain}</span>
-                </div>
-              )}
               {species.mezcal_use && (
                 <div className="flex flex-col items-center" style={{ gap: 4 }}>
                   <div className="flex items-center" style={{ gap: 6 }}>
@@ -223,6 +170,49 @@ function SpeciesCardContent({
                   </span>
                 </div>
               )}
+              {species.description && (
+                <div className="flex flex-col items-center" style={{ gap: 4 }}>
+                  <div className="flex items-center" style={{ gap: 6 }}>
+                    <BookOpen className={ICON_CLASS} aria-hidden />
+                    <span className="text-sm text-[var(--agave-yellow)]">Description</span>
+                  </div>
+                  <span className="text-center text-sm">{species.description}</span>
+                </div>
+              )}
+              {sizeStr && (
+                <div className="flex flex-col items-center" style={{ gap: 4 }}>
+                  <div className="flex items-center" style={{ gap: 6 }}>
+                    <Ruler className={ICON_CLASS} aria-hidden />
+                    <span className="text-sm text-[var(--agave-yellow)]">Size</span>
+                  </div>
+                  <span className="text-sm">{sizeStr}</span>
+                </div>
+              )}
+              {statesFormatted && (
+                <div className="flex flex-col items-center" style={{ gap: 4 }}>
+                  <div className="flex items-center" style={{ gap: 6 }}>
+                    <MapPin className={ICON_CLASS} aria-hidden />
+                    <span className="text-sm text-[var(--agave-yellow)]">State</span>
+                  </div>
+                  <span className="text-sm">{statesFormatted}</span>
+                </div>
+              )}
+              {habitat?.terrain && (
+                <div className="flex flex-col items-center" style={{ gap: 4 }}>
+                  <div className="flex items-center" style={{ gap: 6 }}>
+                    <Mountain className={ICON_CLASS} aria-hidden />
+                    <span className="text-sm text-[var(--agave-yellow)]">Terrain</span>
+                  </div>
+                  <span className="text-sm">{habitat.terrain}</span>
+                </div>
+              )}
+              <div className="flex flex-col items-center" style={{ gap: 4 }}>
+                <div className="flex items-center" style={{ gap: 6 }}>
+                  <BookOpen className={ICON_CLASS} aria-hidden />
+                  <span className="text-sm text-[var(--agave-yellow)]">Species name</span>
+                </div>
+                <span className="notranslate text-sm" translate="no">{species.scientific_name}</span>
+              </div>
             </div>
           </div>
     </article>
