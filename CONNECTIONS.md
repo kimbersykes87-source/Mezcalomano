@@ -85,39 +85,43 @@ const nextConfig: NextConfig = {
 
 ## Environment Variables
 
-### Contact Form: Cloudflare Turnstile
+### Contact form: Turnstile + Supabase + Apps Script
 
-The contact form uses **Cloudflare Turnstile**. Set these in **Vercel** (Project → Settings → Environment Variables) and in local **`.env.local`** for development:
+The contact page posts JSON `{ name, email, message, token }` to **`POST /api/contact`**. Flow: fail-fast env check → Turnstile `siteverify` → validate fields → insert **`contacts`** (`emailed=false`) with the service role → POST to Apps Script → set `emailed=true` on `ok:true`. Email failure still returns success (row is saved).
+
+Set these in **Vercel** (Project → Settings → Environment Variables) and local **`.env.local`**:
 
 | Variable | Purpose | Where used | Required |
 |----------|---------|------------|----------|
-| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Turnstile site key (public) | Contact form widget (client) | Yes, for contact form |
-| `TURNSTILE_SECRET_KEY` | Turnstile secret key (server) | `src/app/api/contact/route.ts` | Yes, for contact form |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Turnstile site key (public) | `ContactForm.tsx` (client) | Yes |
+| `TURNSTILE_SECRET` | Matching secret from the **same** widget | `src/app/api/contact/route.ts` | Yes |
+| `APPS_SCRIPT_URL` | Deployed Apps Script web app `/exec` URL | Contact API | Yes |
+| `APPS_SCRIPT_TOKEN` | Shared secret (= Apps Script `SHARED_SECRET`) | Contact API | Yes |
+| `SUPABASE_SERVICE_ROLE_KEY` | Insert/update `contacts` (bypasses RLS) | Contact API (+ local seed/upload) | Yes on Vercel for contact |
+| `SUPABASE_URL` | Optional project URL for contact API | Contact API (falls back to `NEXT_PUBLIC_SUPABASE_URL`) | Optional |
 
-- **Production / Preview**: Vercel → Project → Settings → Environment Variables. Add both; enable for Production and Preview.
-- **Local**: Copy **`.env.local.example`** to **`.env.local`** (or use `.env`; both are gitignored). Never commit real secrets.
+**Do not use** legacy names: `TURNSTILE_SECRET_KEY`, `PUBLIC_TURNSTILE_SITE_KEY`, Recaptcha keys — the app ignores them.
+
+- **Production / Preview**: Vercel env vars above. After changing `NEXT_PUBLIC_*` or secrets, **Redeploy**.
+- **Local**: Copy **`.env.local.example`** → **`.env.local`**. Never commit real secrets.
+- **Schema**: `public.contacts` (migration `20260726143813_create_contacts.sql`); RLS on, no client policies.
 
 ### Where keys live (summary)
 
 | Keys | Production / Preview | Local development |
 |------|---------------------|-------------------|
-| Turnstile site + secret | Vercel → Project → Settings → Environment Variables | `.env.local` (from `.env.local.example`) |
-| Supabase URL + anon | Same in Vercel (required for `/directory`, `/map`, and server `generateMetadata` on `/directory/[slug]`) | `.env` / `.env.local` |
-| Supabase service role | **Not** needed on Vercel for the marketing app | `.env` / `.env.local` for `npm run seed:species` |
-| Supabase CLI token (`sbp_…`) | **Not** on Vercel | `.env` / `.env.local` for `npm run supabase:push` only |
+| Turnstile site + `TURNSTILE_SECRET` | Vercel Environment Variables | `.env.local` (from `.env.local.example`) |
+| Apps Script URL + token | Same in Vercel | `.env.local` |
+| Supabase URL + anon | Vercel (directory, map, SEO, sitemap) | `.env` / `.env.local` |
+| Supabase service role | **Required on Vercel** for contact inserts | `.env.local` for contact + `seed:species` / uploads |
+| Supabase CLI token (`sbp_…`) | **Not** on Vercel | `.env.local` for `npm run supabase:push` only |
 
-Authoritative variable list and comments: **`.env.local.example`**. Detailed workflows for agents: **[docs/AGENT_HANDOFF.md](docs/AGENT_HANDOFF.md)**.
+Authoritative variable list: **`.env.local.example`**. Agent workflows: **[docs/AGENT_HANDOFF.md](docs/AGENT_HANDOFF.md)**.
 
 ### Access in Code
 
-- **Client**: `process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY` (only `NEXT_PUBLIC_*` are exposed to the browser).
-- **Server (API route)**: `process.env.TURNSTILE_SECRET_KEY` in `src/app/api/contact/route.ts`.
-
-### Optional / Legacy
-
-| Variable | Purpose |
-|----------|---------|
-| `MAILCHANNELS_API_KEY` | Optional; for future email sending from contact form |
+- **Client**: `process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY` only (never expose the service role or Turnstile secret).
+- **Server**: `TURNSTILE_SECRET`, `APPS_SCRIPT_*`, `SUPABASE_SERVICE_ROLE_KEY`, and `SUPABASE_URL` \|\| `NEXT_PUBLIC_SUPABASE_URL` in `src/app/api/contact/route.ts`.
 
 ---
 
@@ -131,7 +135,7 @@ The **directory** (`/directory`, `/directory/[slug]`) and **map** (`/map`) read 
 |----------|---------|----------------|
 | `NEXT_PUBLIC_SUPABASE_URL` | Project URL | App + seed + CLI script |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Anonymous key (public) | App (browser client) |
-| `SUPABASE_SERVICE_ROLE_KEY` | Service role (server-side only) | `npm run seed:species` (recommended) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Service role (server-side only) | Contact API on Vercel; local `npm run seed:species` / card upload |
 | `SUPABASE_ACCESS_TOKEN` | Personal token (`sbp_…`) | `npm run supabase:push` |
 | `SUPABASE_DB_PASSWORD` | Database password | Optional; helps `supabase link` |
 | `SUPABASE_PROJECT_REF` | Project ref substring | Optional if URL is nonstandard |
@@ -273,19 +277,19 @@ Use this to verify connections:
 - [ ] Build command: `npm run build` (or default)
 - [ ] Framework: Next.js
 - [ ] Custom domains: `mezcalomano.com` (and `www` if used) added and valid
-- [ ] Environment variables: `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and `TURNSTILE_SECRET_KEY` set for Production (and Preview if needed)
+- [ ] Contact env: `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET`, `APPS_SCRIPT_URL`, `APPS_SCRIPT_TOKEN`, `SUPABASE_SERVICE_ROLE_KEY` (and Supabase URL) set for Production (and Preview if needed); Redeploy after changes
 - [ ] `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` set for Production (and Preview) so `/directory`, `/map`, **`/sitemap.xml`** (species URLs), and species JSON-LD work
 
 ### Supabase
 
-- [ ] Migrations in `supabase/migrations/` are applied to the hosted project (`npm run supabase:push` from a machine with CLI + `SUPABASE_ACCESS_TOKEN`, or SQL Editor if history differs)
+- [ ] Migrations in `supabase/migrations/` are applied (including **`contacts`** for the contact form)
 - [ ] `npm run seed:species` has been run after CSV updates (uses `SUPABASE_SERVICE_ROLE_KEY` locally)
 
 ### Configuration
 
 - [ ] `next.config.ts` contains redirects for `/buy`, `/shop`, `/matrix`
 - [ ] `package.json` has scripts `dev`, `build`, `start`
-- [ ] Local `.env.local` (from `.env.local.example`) has Turnstile and Supabase keys for `npm run dev`
+- [ ] Local `.env.local` (from `.env.local.example`) has Turnstile, Apps Script, and Supabase keys for `npm run dev`
 
 ### Redirects
 

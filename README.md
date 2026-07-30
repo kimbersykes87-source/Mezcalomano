@@ -58,17 +58,21 @@ npm run lint         # Run ESLint
 
 ## Environment Variables
 
-**Contact form (Cloudflare Turnstile):**
+**Contact form** (`POST /api/contact` — Turnstile → Supabase `contacts` → Apps Script email):
 
-- `NEXT_PUBLIC_TURNSTILE_SITE_KEY` - Public site key (client)
-- `TURNSTILE_SECRET_KEY` - Secret key (API route only)
+- `NEXT_PUBLIC_TURNSTILE_SITE_KEY` — public site key (client widget)
+- `TURNSTILE_SECRET` — matching secret from the same Turnstile widget (API only; not `TURNSTILE_SECRET_KEY`)
+- `APPS_SCRIPT_URL` — deployed Apps Script web app `/exec` URL
+- `APPS_SCRIPT_TOKEN` — shared secret (must equal Apps Script `SHARED_SECRET`)
+- `SUPABASE_SERVICE_ROLE_KEY` — server-only; inserts/updates `contacts` (also used locally for seed/upload)
+- `SUPABASE_URL` — optional; contact API falls back to `NEXT_PUBLIC_SUPABASE_URL`
 
 **Directory and Map (Supabase):**
 
-- `NEXT_PUBLIC_SUPABASE_URL` - Your Supabase project URL
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Supabase anonymous (public) key
+- `NEXT_PUBLIC_SUPABASE_URL` — your Supabase project URL
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` — Supabase anonymous (public) key
 
-Copy **`.env.local.example`** to **`.env.local`** and fill in values (see [CONNECTIONS.md](CONNECTIONS.md) and [docs/AGENT_HANDOFF.md](docs/AGENT_HANDOFF.md) for where each key is used). On Vercel, set the `NEXT_PUBLIC_*` Supabase and Turnstile variables in Project Settings → Environment Variables — the same Supabase URL and anon key are used **on the server** for species **`generateMetadata`** (Open Graph / Twitter) on `/directory/[slug]`, for **`/sitemap.xml`** (dynamic species URLs), and for JSON-LD breadcrumbs on species pages. The directory and map require a Supabase `species` table matching `src/types/species.ts`. Apply migrations (`001`–`008`) via **`npm run supabase:push`** (local, Supabase CLI + `SUPABASE_ACCESS_TOKEN`), then **`npm run seed:species`** so rows (including **`slug`**) stay aligned with **`data/Species_Final - Website.csv`**.
+Copy **`.env.local.example`** to **`.env.local`** and fill in values (see [CONNECTIONS.md](CONNECTIONS.md) and [docs/AGENT_HANDOFF.md](docs/AGENT_HANDOFF.md)). On Vercel, set Production (and Preview) env vars for Turnstile, Apps Script, Supabase URL/anon, and **`SUPABASE_SERVICE_ROLE_KEY`** (required for contact submissions). Redeploy after changing `NEXT_PUBLIC_*` or contact secrets. The directory and map require a Supabase `species` table matching `src/types/species.ts`. Apply migrations (including **`contacts`**) via **`npm run supabase:push`**, then **`npm run seed:species`** so species rows stay aligned with **`data/Species_Final - Website.csv`**.
 
 ## Site Features
 

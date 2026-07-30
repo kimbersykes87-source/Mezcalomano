@@ -18,7 +18,7 @@
 | **Vercel** | vercel.com | Hosting and builds (Next.js) |
 | **Domain** | Cloudflare DNS | mezcalomano.com points to Vercel |
 | **Redirects** | `next.config.ts` | `/buy`, `/shop` → Shopify; `/matrix` → `/directory` |
-| **Environment variables** | Vercel Dashboard + `.env.local` | Turnstile + Supabase `NEXT_PUBLIC_*` keys |
+| **Environment variables** | Vercel Dashboard + `.env.local` | Turnstile (`TURNSTILE_SECRET`), Apps Script, Supabase (incl. service role for contact) |
 | **Supabase** | Dashboard + CLI | Schema in `supabase/migrations/`; `npm run supabase:push` applies to hosted DB |
 
 ## Important URLs
@@ -68,8 +68,9 @@ Edit `next.config.ts` — add or change entries in the `redirects` array.
 
 ### Set environment variables
 
-- **Vercel**: Project → Settings → Environment Variables (Turnstile + `NEXT_PUBLIC_SUPABASE_*` for app and server metadata)
+- **Vercel**: Project → Settings → Environment Variables — contact: `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET`, `APPS_SCRIPT_URL`, `APPS_SCRIPT_TOKEN`, `SUPABASE_SERVICE_ROLE_KEY`; plus `NEXT_PUBLIC_SUPABASE_*`. **Redeploy** after changes.
 - **Local**: `.env.local` (copy from **`.env.local.example`** — lists all variables; `.env` also supported and is gitignored)
+- See [CONNECTIONS.md](CONNECTIONS.md) and [docs/deploy/SETUP_CHECKLIST.md](docs/deploy/SETUP_CHECKLIST.md).
 
 ### Deploy changes
 
