@@ -11,7 +11,7 @@ export default function Footer() {
             <img src="/assets/icons/icon_tiktok.svg" alt="" width={24} height={24} />
           </a>
         </div>
-        <p className="footer-copyright">&copy; 2026 Mezcalómano. All rights reserved.</p>
+        <p className="footer-copyright">&copy; 2026 Mezcalómano · Explore agave, sip mezcal. All rights reserved.</p>
       </div>
     </footer>
   );
