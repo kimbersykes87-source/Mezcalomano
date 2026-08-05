@@ -18,6 +18,7 @@ npm run sync:matrix-cards   # Sync matrix cards from SPECIES artwork folder
 npm run seed:species        # Upsert Supabase `species` from Website CSV (requires env vars)
 npm run normalize:agave-images  # Rename source/agave_images PNGs to slug names (see log)
 npm run supabase:push           # Link + apply supabase/migrations to hosted DB (needs SUPABASE_ACCESS_TOKEN)
+npm run keepalive:supabase      # Cheap species read to keep free-tier Supabase awake
 npm run sync:agave-matrix       # Copy slug PNGs → public/assets/matrix/cards + index.json from Website CSV
 npm run lint         # Run ESLint
 ```
@@ -73,6 +74,26 @@ npm run lint         # Run ESLint
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` — Supabase anonymous (public) key
 
 Copy **`.env.local.example`** to **`.env.local`** and fill in values (see [CONNECTIONS.md](CONNECTIONS.md) and [docs/AGENT_HANDOFF.md](docs/AGENT_HANDOFF.md)). On Vercel, set Production (and Preview) env vars for Turnstile, Apps Script, Supabase URL/anon, and **`SUPABASE_SERVICE_ROLE_KEY`** (required for contact submissions). Redeploy after changing `NEXT_PUBLIC_*` or contact secrets. The directory and map require a Supabase `species` table matching `src/types/species.ts`. Apply migrations (including **`contacts`**) via **`npm run supabase:push`**, then **`npm run seed:species`** so species rows stay aligned with **`data/Species_Final - Website.csv`**.
+
+## Keeping Supabase awake
+
+Free-tier Supabase projects pause after ~7 days with no database activity. This repo runs a scheduled GitHub Action that performs a real read on `public.species` (select + head/count) so the project stays awake.
+
+- **Workflow**: [`.github/workflows/supabase-keepalive.yml`](.github/workflows/supabase-keepalive.yml)
+- **Script**: `npm run keepalive:supabase` (`scripts/supabase-keepalive.mjs`)
+- **Schedule**: every 2 days at 09:00 UTC (`0 9 */2 * *`), plus manual `workflow_dispatch`
+- **Auth**: uses the public anon key. `public.species` already has RLS policy **"Allow public read access on species"** (`SELECT` / `using (true)`), so `SUPABASE_SERVICE_ROLE_KEY` is **not** required for keep-alive.
+
+**GitHub repository secrets** (Settings → Secrets and variables → Actions):
+
+| Secret | Value |
+|--------|--------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Same project URL as Vercel / `.env.local` |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Same anon key as Vercel / `.env.local` |
+
+**Manual run**: Actions → **Supabase keep-alive** → **Run workflow**.
+
+**Caveat**: GitHub disables scheduled workflows on repos with no activity for 60 days. Push a commit or run the workflow manually before that window closes if the site is quiet. Failed runs exit non-zero so you get GitHub’s failure email (if notifications are enabled).
 
 ## Site Features
 
