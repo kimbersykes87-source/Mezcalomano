@@ -943,9 +943,27 @@ button.directory-inline-link:hover {
   text-align: center;
 }
 
+/* Mobile-only: halve the vertical space around the signup form. The gap ABOVE is set
+   by the preceding paragraph's margin-bottom (24px), which collapses over this block's
+   own top margin; the gap BELOW is set by this block's bottom margin (16px). Both are
+   restored to their original values at >=768px, so tablet/desktop are unchanged. */
+.about-page__body p:has(+ .about-page__klaviyo) {
+  margin-bottom: var(--space-3);
+}
+
 .about-page__klaviyo {
   width: 100%;
-  margin: var(--space-4) 0;
+  margin: var(--space-2) 0;
+}
+
+@media (min-width: 768px) {
+  .about-page__body p:has(+ .about-page__klaviyo) {
+    margin-bottom: var(--space-6);
+  }
+
+  .about-page__klaviyo {
+    margin: var(--space-4) 0;
+  }
 }
 
 /* Beat Klaviyo's injected Open Sans Regular with site condensed face */
