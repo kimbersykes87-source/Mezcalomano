@@ -22,6 +22,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <section className="home-landing" aria-labelledby="home-landing-title">
+      {/* deploy-test 2026-08-25 */}
       <div className="home-landing__unit">
         {/* eslint-disable-next-line @next/next/no-img-element -- brand SVG lockup; sized via CSS */}
         <img
