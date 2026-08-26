@@ -14,6 +14,12 @@ const AGAVE_YELLOW = "#a29037";
 const AGAVE_YELLOW_DARK = "#7a6c2a";
 const MAP_CENTER: [number, number] = [-102, 23];
 const MAP_ZOOM = 4.5;
+// Mexico's bounding box plus padding. Doubles as the zoom-out floor: MapLibre derives a
+// min zoom from maxBounds, so the widest view is the country with modest breathing room.
+const MAP_MAX_BOUNDS: [[number, number], [number, number]] = [
+  [-121, 12],
+  [-84, 35],
+];
 
 /** MapLibre fill-color expression: map click highlight, then species filter, then data states. */
 function statesFillColorExpr(
@@ -384,6 +390,8 @@ export default function MapPage() {
       },
       center: MAP_CENTER,
       zoom: MAP_ZOOM,
+      maxBounds: MAP_MAX_BOUNDS,
+      renderWorldCopies: false,
       attributionControl: false,
     });
 
