@@ -975,6 +975,12 @@ button.directory-inline-link:hover {
   font-stretch: condensed !important;
 }
 
+/* Neutralize the min-height Klaviyo's script sets on its injected form wrapper, which
+   centers 178px of content in a 310px box and pads it with dead space top and bottom. */
+.about-page__klaviyo form > div {
+  min-height: 0 !important;
+}
+
 /* Fixed 4-slot collage band — max 4 images at ~380px; keep slot size when finals drop in */
 .about-page__collage {
   display: grid;
