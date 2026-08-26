@@ -745,6 +745,11 @@ button.directory-inline-link:hover {
   margin-bottom: 0;
 }
 
+/* Runs inline on mobile; breaks onto its own line from 768px up (see desktop block). */
+.contact-intro-prompt {
+  display: inline;
+}
+
 /* Contact page: no hero image, fills space between header and footer, components spaced vertically */
 .contact-page {
   flex: 1 1 0;
@@ -814,6 +819,10 @@ button.directory-inline-link:hover {
   .contact-intro {
     max-width: 32rem;
     font-size: 1.125rem;
+  }
+
+  .contact-intro-prompt {
+    display: block;
   }
 
   .contact-heading {
