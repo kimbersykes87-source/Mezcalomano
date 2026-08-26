@@ -14,11 +14,15 @@ const AGAVE_YELLOW = "#a29037";
 const AGAVE_YELLOW_DARK = "#7a6c2a";
 const MAP_CENTER: [number, number] = [-102, 23];
 const MAP_ZOOM = 4.5;
-// Mexico's bounding box plus padding. Doubles as the zoom-out floor: MapLibre derives a
-// min zoom from maxBounds, so the widest view is the country with modest breathing room.
+// Zoom-out floor. MapLibre derives a min zoom from maxBounds by fitting the viewport
+// INSIDE this box, so the non-limiting axis always shows less than the box: a box sized
+// tight to Mexico crops the country at the widest zoom (Baja on landscape screens, the
+// Yucatan on portrait ones). These spans are oversized on both axes so the full country
+// clears the frame from ~0.66 to ~2.5 container aspect ratio. Verified per axis; the
+// tightest case is a wide short laptop window, ~1 degree of vertical margin.
 const MAP_MAX_BOUNDS: [[number, number], [number, number]] = [
-  [-121, 12],
-  [-84, 35],
+  [-131, -3],
+  [-74, 47],
 ];
 
 /** MapLibre fill-color expression: map click highlight, then species filter, then data states. */
