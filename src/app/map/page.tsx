@@ -15,14 +15,16 @@ const AGAVE_YELLOW_DARK = "#7a6c2a";
 const MAP_CENTER: [number, number] = [-102, 23];
 const MAP_ZOOM = 4.5;
 // Zoom-out floor. MapLibre derives a min zoom from maxBounds by fitting the viewport
-// INSIDE this box, so the non-limiting axis always shows less than the box: a box sized
-// tight to Mexico crops the country at the widest zoom (Baja on landscape screens, the
-// Yucatan on portrait ones). These spans are oversized on both axes so the full country
-// clears the frame from ~0.66 to ~2.5 container aspect ratio. Verified per axis; the
-// tightest case is a wide short laptop window, ~1 degree of vertical margin.
+// INSIDE this box, so the non-limiting axis always shows less than the box. On a wide
+// desktop container LONGITUDE is what binds, which means the desktop's top/bottom
+// clearance is set by the longitude span, not the latitude span -- widening latitude
+// alone does nothing for a cropped northern border. The 71-degree longitude span below
+// is sized to leave ~4 degrees above Nogales and below Chiapas at a 2.4 container
+// aspect, and still clears the country at 3.0. The latitude span is what keeps phones
+// from cropping Baja and the Yucatan; it is deliberately far wider than Mexico.
 const MAP_MAX_BOUNDS: [[number, number], [number, number]] = [
-  [-131, -3],
-  [-74, 47],
+  [-138, -1],
+  [-67, 45],
 ];
 
 /** MapLibre fill-color expression: map click highlight, then species filter, then data states. */
