@@ -943,10 +943,11 @@ button.directory-inline-link:hover {
   text-align: center;
 }
 
-/* Mobile-only: halve the vertical space around the signup form. The gap ABOVE is set
-   by the preceding paragraph's margin-bottom (24px), which collapses over this block's
-   own top margin; the gap BELOW is set by this block's bottom margin (16px). Both are
-   restored to their original values at >=768px, so tablet/desktop are unchanged. */
+/* Signup form spacing. The gap ABOVE is set by the preceding paragraph's margin-bottom,
+   which collapses over this block's own top margin; the gap BELOW is set by this block's
+   bottom margin. Mobile keeps the tightened 12px/8px pair; at >=768px both sides sit on
+   the page's 24px block rhythm and the form is capped at 520px and centered so it does
+   not stretch the full text column. */
 .about-page__body p:has(+ .about-page__klaviyo) {
   margin-bottom: var(--space-3);
 }
@@ -962,7 +963,8 @@ button.directory-inline-link:hover {
   }
 
   .about-page__klaviyo {
-    margin: var(--space-4) 0;
+    max-width: 520px;
+    margin: var(--space-6) auto;
   }
 }
 
