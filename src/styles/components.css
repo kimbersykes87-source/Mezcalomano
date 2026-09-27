@@ -991,7 +991,8 @@ button.directory-inline-link:hover {
 @media (min-width: 768px) {
   .about-page__collage {
     grid-template-columns: repeat(4, 1fr);
-    padding: 0 var(--space-12);
+    max-width: 75rem;
+    padding: 0 var(--space-6);
     gap: var(--space-3);
   }
 }

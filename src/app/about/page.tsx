@@ -63,8 +63,8 @@ export default function AboutPage() {
           <img
             className="about-page__collage-img"
             src="/assets/photography/about-tile-1-sign.jpg"
-            width={800}
-            height={600}
+            width={1200}
+            height={900}
             loading="lazy"
             alt="A roadside sign pointing the way to Oaxaca, with a dog resting beneath it."
           />
@@ -73,8 +73,8 @@ export default function AboutPage() {
           <img
             className="about-page__collage-img"
             src="/assets/photography/about-tile-2-pit.jpg"
-            width={800}
-            height={600}
+            width={1200}
+            height={900}
             loading="lazy"
             alt="A guide explaining the stone roasting pit at a palenque in Oaxaca."
           />
@@ -83,8 +83,8 @@ export default function AboutPage() {
           <img
             className="about-page__collage-img"
             src="/assets/photography/about-tile-3-palenque.jpg"
-            width={800}
-            height={600}
+            width={1200}
+            height={900}
             loading="lazy"
             alt="Two people working beside the stone tahona inside an open-sided palenque."
           />
@@ -93,8 +93,8 @@ export default function AboutPage() {
           <img
             className="about-page__collage-img"
             src="/assets/photography/about-tile-4-agave.jpg"
-            width={800}
-            height={600}
+            width={1200}
+            height={900}
             loading="lazy"
             alt="Rows of agave growing on a hillside in the Oaxacan highlands."
           />
