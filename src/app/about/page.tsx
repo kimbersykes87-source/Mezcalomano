@@ -9,12 +9,14 @@ export default function AboutPage() {
     <article className="about-page">
       <img
         className="about-page__hero"
-        src="/assets/photography/about-hero-2000.jpg"
-        srcSet="/assets/photography/about-hero-1200.jpg 1200w, /assets/photography/about-hero-2000.jpg 2000w, /assets/photography/about-hero-3300.jpg 3300w"
+        src="/assets/photography/about-hero-2026-09-27-2000.jpg"
+        srcSet="/assets/photography/about-hero-2026-09-27-1200.jpg 1200w,
+                /assets/photography/about-hero-2026-09-27-2000.jpg 2000w,
+                /assets/photography/about-hero-2026-09-27-3300.jpg 3300w"
         sizes="100vw"
-        width={3300}
-        height={1386}
-        alt="The Mezcalómano Discovery Deck box beside five agave cards laid out on a wood table."
+        width={2000}
+        height={840}
+        alt="The Mezcalómano Discovery Deck box beside four agave cards laid out in a row on a wood table."
       />
 
       <div className="about-page__body">
