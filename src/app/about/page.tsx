@@ -9,10 +9,10 @@ export default function AboutPage() {
     <article className="about-page">
       <img
         className="about-page__hero"
-        src="/assets/photography/about-hero-2026-09-27-2000.jpg"
-        srcSet="/assets/photography/about-hero-2026-09-27-1200.jpg 1200w,
-                /assets/photography/about-hero-2026-09-27-2000.jpg 2000w,
-                /assets/photography/about-hero-2026-09-27-3300.jpg 3300w"
+        src="/assets/photography/about-hero-2026-09-27-tight-2000.jpg"
+        srcSet="/assets/photography/about-hero-2026-09-27-tight-1200.jpg 1200w,
+                /assets/photography/about-hero-2026-09-27-tight-2000.jpg 2000w,
+                /assets/photography/about-hero-2026-09-27-tight-3048.jpg 3048w"
         sizes="100vw"
         width={2000}
         height={840}
