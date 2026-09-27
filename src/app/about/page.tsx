@@ -9,9 +9,11 @@ export default function AboutPage() {
     <article className="about-page">
       <img
         className="about-page__hero"
-        src="/assets/photography/about-hero.jpg"
-        width={2400}
-        height={1008}
+        src="/assets/photography/about-hero-2000.jpg"
+        srcSet="/assets/photography/about-hero-1200.jpg 1200w, /assets/photography/about-hero-2000.jpg 2000w, /assets/photography/about-hero-3300.jpg 3300w"
+        sizes="100vw"
+        width={3300}
+        height={1386}
         alt="The Mezcalómano Discovery Deck box beside five agave cards laid out on a wood table."
       />
 
