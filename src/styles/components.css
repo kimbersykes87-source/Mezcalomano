@@ -893,19 +893,15 @@ button.directory-inline-link:hover {
   padding-bottom: var(--space-8);
 }
 
-.about-page__hero-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.about-page__hero {
+  display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
   max-height: 42vw;
   min-height: 140px;
-  background-color: #5a5c59;
+  object-fit: cover;
   margin-bottom: var(--space-8);
-  padding: var(--space-4);
   box-sizing: border-box;
-  text-align: center;
 }
 
 .about-page__placeholder-label {

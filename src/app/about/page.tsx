@@ -7,18 +7,13 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <article className="about-page">
-      {/* PLACEHOLDER — Hero image (final = cards + copitas shot, product in use). Replace grey block with final landscape asset. */}
-      <div
-        className="about-page__hero-placeholder"
-        role="img"
-        aria-label="Placeholder for About hero image: cards and copitas, product in use"
-      >
-        <span className="about-page__placeholder-label">
-          Hero image
-          <br />
-          Cards + copitas (product in use)
-        </span>
-      </div>
+      <img
+        className="about-page__hero"
+        src="/assets/photography/about-hero.jpg"
+        width={2400}
+        height={1008}
+        alt="The Mezcalómano Discovery Deck box beside five agave cards laid out on a wood table."
+      />
 
       <div className="about-page__body">
         <h1 className="about-page__title">ABOUT US</h1>
