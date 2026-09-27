@@ -64,6 +64,7 @@ export const metadata: Metadata = {
         url: OG_IMAGE_PATH,
         width: 1200,
         height: 630,
+        alt: "The Mezcalómano Discovery Deck box beside two agave cards, Pulquero and Castilla, on a wooden table.",
       },
     ],
   },

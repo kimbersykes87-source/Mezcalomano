@@ -16,6 +16,6 @@ export const HOME_META_DESCRIPTION =
 export const DISCOVERY_DECK_PRODUCT_DESCRIPTION =
   "Premium playing card deck celebrating agave species for mezcal lovers and the curious. Sold on the Mezcalómano shop.";
 
-export const OG_IMAGE_PATH = "/assets/og/mezcalomano_og_1200x630.png";
+export const OG_IMAGE_PATH = "/assets/og/og-share-1200x630.jpg";
 
 export const LOGO_IMAGE_PATH = "/assets/favicon/app_icon_512.png";

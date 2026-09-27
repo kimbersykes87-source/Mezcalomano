@@ -3,11 +3,11 @@ import { notFound } from "next/navigation";
 import JsonLd from "@/components/JsonLd";
 import { fetchSpeciesBySlug } from "@/lib/species-detail-server";
 import { resolveMatrixImagePathForCommonName } from "@/lib/matrix-card-urls-server";
-import { SITE_URL } from "@/lib/site-seo";
+import { OG_IMAGE_PATH, SITE_URL } from "@/lib/site-seo";
 import { speciesDirectorySlug } from "@/lib/slug";
 import SpeciesDetailClient from "./SpeciesDetailClient";
 
-const DEFAULT_OG = "/assets/og/mezcalomano_og_1200x630.png";
+const DEFAULT_OG = OG_IMAGE_PATH;
 
 type PageProps = { params: Promise<{ slug: string }> };
 

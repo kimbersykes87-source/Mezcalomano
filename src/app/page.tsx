@@ -9,7 +9,14 @@ export const metadata: Metadata = {
     title: "Mezcalómano | Discovery Deck & Agave Species Directory",
     description: HOME_META_DESCRIPTION,
     url: SITE_URL,
-    images: [{ url: OG_IMAGE_PATH, width: 1200, height: 630 }],
+    images: [
+      {
+        url: OG_IMAGE_PATH,
+        width: 1200,
+        height: 630,
+        alt: "The Mezcalómano Discovery Deck box beside two agave cards, Pulquero and Castilla, on a wooden table.",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
