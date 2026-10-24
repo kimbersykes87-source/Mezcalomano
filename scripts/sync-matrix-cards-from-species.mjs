@@ -16,7 +16,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, "..");
 
 const SPECIES_DIR =
-  "C:\\Users\\kimbe\\Dropbox\\Kimber\\Business\\Edward Kimber Sykes\\Clients\\Mezcalomano\\ARTWORK\\Discovery Deck\\SPECIES";
+  "C:\\Users\\kimbe\\Dropbox\\Kimber\\Business\\Edward Kimber Sykes\\Clients\\Mezcalomano\\02_PRODUCT\\SPECIES_ART\\SPECIES";
 const CARDS_DIR = path.join(projectRoot, "public", "assets", "matrix", "cards");
 const CSV_PATH = path.join(projectRoot, "data", "Species_Final - Cards.csv");
 const INDEX_PATH = path.join(CARDS_DIR, "index.json");
