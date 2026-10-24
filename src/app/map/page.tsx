@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback, useId } from "react";
-import type maplibregl from "maplibre-gl";
+import type * as maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 
 import centroid from "@turf/centroid";
@@ -619,8 +619,10 @@ export default function MapPage() {
     (async () => {
       debug("loading maplibre-gl...");
       const mod = await import("maplibre-gl");
-      const lib = mod.default ?? mod;
+      const lib = mod;
       if (cancelled) return;
+      // MapLibre 6 loads its worker from a separate file (copied to public/ at build time).
+      lib.setWorkerUrl("/maplibre/maplibre-gl-worker.mjs");
       function tryInit() {
         if (!mapArea) return false;
         const areaRect = mapArea.getBoundingClientRect();
