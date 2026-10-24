@@ -12,10 +12,14 @@ Common issues and fixes for the Mezcalómano Next.js site.
 
 ## Environment variables not available
 
-**Contact form: Turnstile keys not working**
+**Contact form: Turnstile / delivery not working**
 
-- **Vercel**: Project → Settings → Environment Variables. Use exact names: `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and `TURNSTILE_SECRET_KEY`. Enable for Production (and Preview if you need the form there). Redeploy after changing.
-- **Local**: Copy `.env.example` to `.env.local` and add the same keys. Only `NEXT_PUBLIC_*` vars are exposed to the browser; the secret key is used only in the API route.
+- **Exact names** (Vercel + `.env.local`): `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET`, `APPS_SCRIPT_URL`, `APPS_SCRIPT_TOKEN`, `SUPABASE_SERVICE_ROLE_KEY`, and Supabase URL (`SUPABASE_URL` or `NEXT_PUBLIC_SUPABASE_URL`).
+- **Do not use** `TURNSTILE_SECRET_KEY` or `PUBLIC_TURNSTILE_SITE_KEY` — unused by current code.
+- **Site key + secret** must be a matching pair from the **same** Cloudflare Turnstile widget. Mismatch → `Verification failed: TURNSTILE_SECRET does not match the site key`.
+- **Redeploy** after changing `NEXT_PUBLIC_*` or contact secrets (Vercel toast: “A new deployment is needed”).
+- **Local**: Copy `.env.local.example` → `.env.local`. Restart `npm run dev` after edits.
+- Missing required server env → HTTP **500** with the missing variable name. Invalid Turnstile token → HTTP **400** `{ ok: false, ... }` (expected for a wiring smoke test).
 
 ## Redirects not working
 
@@ -46,6 +50,10 @@ Common issues and fixes for the Mezcalómano Next.js site.
 
 - The handler lives in `src/app/api/contact/route.ts` and exports `POST`. GET is intentionally not implemented (405 is expected for GET).
 - If you get 404, confirm the file path and that the project built successfully.
+
+## Contact API still returns old `{ "success": true }` stub
+
+- Production has not picked up the new route. Confirm Vercel’s latest **Ready** deployment commit includes the current `route.ts`, then hard-refresh. An invalid-token POST should return **400** `{ "ok": false, "error": "..." }`.
 
 ---
 

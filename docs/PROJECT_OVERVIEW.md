@@ -20,7 +20,7 @@ Production-ready, mobile-first marketing website for Mezcalómano, built with Ne
 2. **About** (`/about`) — Project mission and information
 3. **Directory** (`/directory`) — Swipeable species cards, search; data from Supabase; `/directory/[slug]` for species detail
 4. **Map** (`/map`) — MapLibre Mexico states; Supabase species; combobox filters (layout aligned with header logo; **mobile**: filters in one row); **state tap** opens a **viewport-centered dialog** (dimmed map); links to **`/directory/{slug}`**
-5. **Contact** (`/contact`) — Contact form with Cloudflare Turnstile
+5. **Contact** (`/contact`) — Form with Cloudflare Turnstile; saves to Supabase `contacts` and emails via Google Apps Script
 
 ### App Router Structure
 
@@ -113,8 +113,10 @@ Production-ready, mobile-first marketing website for Mezcalómano, built with Ne
 
 ### Contact Form
 
-- **Cloudflare Turnstile**: Bot protection; keys in Vercel env and `.env.local`
-- **API**: `src/app/api/contact/route.ts` (validation, Turnstile verify, placeholder response)
+- **Cloudflare Turnstile**: Bot protection (`NEXT_PUBLIC_TURNSTILE_SITE_KEY` + `TURNSTILE_SECRET`)
+- **API**: `src/app/api/contact/route.ts` — verify Turnstile → validate → insert `contacts` → Apps Script mailer → mark `emailed`
+- **Email**: Google Apps Script web app (`APPS_SCRIPT_URL` + `APPS_SCRIPT_TOKEN`); failures leave `emailed=false` but still return success to the client
+- **Storage**: Supabase `contacts` table via `SUPABASE_SERVICE_ROLE_KEY` (RLS on; no client access)
 
 ## Build and Deployment
 

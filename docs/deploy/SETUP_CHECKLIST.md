@@ -31,13 +31,18 @@ git push origin main
 
 ## 3. Set environment variables (contact form)
 
-The contact form uses **Cloudflare Turnstile**. You need two keys.
+The contact form uses **Cloudflare Turnstile**, stores rows in Supabase **`contacts`**, and emails via a **Google Apps Script** web app.
 
-**Get the keys:**
+**Turnstile (matching pair from one widget):**
 
 1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com) → **Turnstile**.
-2. Create a site or use an existing one (e.g. `mezcalomano.com`).
+2. Create a site or use an existing one (hostnames must include `mezcalomano.com`, and `www` if used).
 3. Copy the **Site Key** and **Secret Key**.
+
+**Apps Script:**
+
+1. Deploy the mailer as a web app; copy the `/exec` URL → `APPS_SCRIPT_URL`.
+2. Set Script property `SHARED_SECRET` to a long random value → same value as `APPS_SCRIPT_TOKEN`.
 
 **Add them in Vercel:**
 
@@ -47,11 +52,17 @@ The contact form uses **Cloudflare Turnstile**. You need two keys.
    | Name | Value | Environment |
    |------|--------|-------------|
    | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | (paste Site Key) | Production, Preview |
-   | `TURNSTILE_SECRET_KEY` | (paste Secret Key) | Production, Preview |
+   | `TURNSTILE_SECRET` | (paste Secret Key) | Production, Preview |
+   | `APPS_SCRIPT_URL` | (paste `/exec` URL) | Production, Preview |
+   | `APPS_SCRIPT_TOKEN` | (= Apps Script `SHARED_SECRET`) | Production, Preview |
+   | `SUPABASE_SERVICE_ROLE_KEY` | (service_role key) | Production, Preview |
+   | `SUPABASE_URL` | (optional; else uses `NEXT_PUBLIC_SUPABASE_URL`) | Production, Preview |
 
-3. Save.
+3. Save. **Redeploy** after changing `NEXT_PUBLIC_*` or contact secrets.
 
-If you skip this, the site will still deploy; the contact form will either fail verification or show a Turnstile error until the keys are set.
+Do **not** use legacy names `TURNSTILE_SECRET_KEY`, `PUBLIC_TURNSTILE_SITE_KEY`, or Recaptcha keys — the app ignores them.
+
+If you skip contact vars, the site still deploys; `/api/contact` returns HTTP **500** naming the missing variable until they are set. An invalid Turnstile token should return **400** `{ "ok": false, ... }` once the new route is live (not the old stub `{ "success": true }`).
 
 ---
 
@@ -70,7 +81,7 @@ The **directory** (`/directory`), **species detail** (`/directory/[slug]`, inclu
 
 Without these, directory and map pages cannot load species data; species detail pages will not resolve titles or OG images correctly; **`/sitemap.xml`** will only list static pages until the vars are set.
 
-**Seeding and migrations** (updating `species` rows or schema) are run **from a developer machine** with the Supabase CLI and local `.env` — see **[../AGENT_HANDOFF.md](../AGENT_HANDOFF.md)**. Vercel does not run `seed:species` or `supabase:push` automatically.
+**Seeding and migrations** (updating `species` / `contacts` schema or species rows) are run **from a developer machine** with the Supabase CLI and local `.env` — see **[../AGENT_HANDOFF.md](../AGENT_HANDOFF.md)**. Apply the **`contacts`** migration for the contact form. Vercel does not run `seed:species` or `supabase:push` automatically.
 
 ---
 
@@ -119,7 +130,7 @@ If these are missing, the site still works; you may get 404s for favicons and a 
 |------|--------|
 | 1 | Push code to GitHub |
 | 2 | Import repo in Vercel (Next.js detected) |
-| 3 | Add Turnstile keys in Vercel |
+| 3 | Add Turnstile, Apps Script, and `SUPABASE_SERVICE_ROLE_KEY` in Vercel; Redeploy |
 | 3b | Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in Vercel |
 | 4 | Deploy and test the `.vercel.app` URL |
 | 5 | Add domain (e.g. mezcalomano.com) and DNS if you use it |

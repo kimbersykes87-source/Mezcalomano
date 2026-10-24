@@ -2,6 +2,26 @@
 
 All notable changes to the Mezcalómano marketing site project.
 
+## [2026-07-26] - Contact form delivery (Turnstile, Supabase, Apps Script)
+
+### Added
+
+- **`public.contacts`** table (migration `20260726143813_create_contacts.sql`) — stores every submission; RLS on, service-role writes only.
+- Contact API handoff to **Google Apps Script** (`APPS_SCRIPT_URL` + `APPS_SCRIPT_TOKEN`); sets `emailed=true` when the mailer returns `ok:true`.
+
+### Changed
+
+- **`src/app/api/contact/route.ts`** — full delivery path: fail-fast env check → Turnstile `siteverify` (no `remoteip`) → validate → insert → email; returns `{ ok: true }` / `{ ok: false, error }`.
+- **`src/components/ContactForm.tsx`** — Turnstile callback token, sending state, success copy, preserve fields + `turnstile.reset()` on error.
+- **`src/app/contact/page.tsx`** — final copy (“Get in touch” + support lines); centered mobile/desktop layout.
+- **Env names** — `TURNSTILE_SECRET` (replaces `TURNSTILE_SECRET_KEY`); document Apps Script + service-role requirements for Vercel.
+
+### Notes
+
+- Redeploy after changing Vercel Turnstile / contact secrets. Site key and secret must be a matching pair from the same widget.
+
+---
+
 ## [2026-04-05] - Map page: toolbar layout, centered state detail, spacing
 
 ### Changed

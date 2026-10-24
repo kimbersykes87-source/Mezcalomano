@@ -17,8 +17,7 @@ This document described the previous Astro-based deployment to Cloudflare Pages.
 
 No environment variables are required for the basic build.
 
-For production, you may want to set:
-- `TURNSTILE_SITE_KEY` - Cloudflare Turnstile site key for the contact form
+Legacy Astro/Pages env names do **not** apply to the current Vercel app. Contact form vars are documented in [vercel.md](vercel.md) (`NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET`, Apps Script, Supabase).
 
 ## Node Version Selection
 

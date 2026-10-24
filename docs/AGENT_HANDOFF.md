@@ -12,17 +12,20 @@ This document is for **future AI agents and developers** working on the Mezcaló
 |--------------|---------|-----------------|--------|
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL | Developer **`.env`** or **`.env.local`**; **Vercel** → Project → Settings → Environment Variables (Production + Preview) | No — values only in env |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public anon key (browser + server metadata fetch) | Same as above | No |
-| `SUPABASE_SERVICE_ROLE_KEY` | Bypass RLS for seed upserts | **Local only** (`.env` / `.env.local`) or a secure CI secret — **not** required on Vercel for the running site | No |
+| `SUPABASE_SERVICE_ROLE_KEY` | Bypass RLS: contact inserts + seed/upload | **Vercel** (contact API) + local `.env.local` for seed/upload | No |
 | `SUPABASE_ACCESS_TOKEN` (`sbp_…`) | Supabase CLI login for `db push` | **Local only** (`.env` / `.env.local`) | No |
 | `SUPABASE_DB_PASSWORD` | Optional; helps `supabase link` | Local `.env` / `.env.local` | No |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Contact form widget | Vercel env + local `.env.local` | No |
-| `TURNSTILE_SECRET_KEY` | Contact API route verification | Vercel env + local `.env.local` | No |
+| `TURNSTILE_SECRET` | Contact API Turnstile `siteverify` (must match site key) | Vercel env + local `.env.local` | No |
+| `APPS_SCRIPT_URL` | Apps Script mailer `/exec` URL | Vercel env + local `.env.local` | No |
+| `APPS_SCRIPT_TOKEN` | Shared secret (= Apps Script `SHARED_SECRET`) | Vercel env + local `.env.local` | No |
+| `SUPABASE_URL` | Optional; contact API URL (else `NEXT_PUBLIC_SUPABASE_URL`) | Vercel / local | No |
 
 **Template (no real values):** [`.env.local.example`](../.env.local.example) — lists variable names and short comments.
 
 **Load order (scripts):** `scripts/seed-species-from-csv.mjs` and `scripts/supabase-cli-push.mjs` load **`.env` first**, then **`.env.local`** (later file wins for duplicates). Next.js dev/build loads `.env.local` automatically.
 
-**Vercel:** Production and Preview need at least the **`NEXT_PUBLIC_*`** variables the app reads in the browser (`Supabase` + `Turnstile`). The directory detail page’s **`generateMetadata`** runs on the server and uses **`NEXT_PUBLIC_SUPABASE_URL`** and **`NEXT_PUBLIC_SUPABASE_ANON_KEY`** to fetch species for titles and OG tags — same keys as the client.
+**Vercel:** Production and Preview need **`NEXT_PUBLIC_*`** (Supabase + Turnstile site key), plus server-only **`TURNSTILE_SECRET`**, **`APPS_SCRIPT_URL`**, **`APPS_SCRIPT_TOKEN`**, and **`SUPABASE_SERVICE_ROLE_KEY`** for the contact form. Redeploy after changing any of these. Species **`generateMetadata`** still uses **`NEXT_PUBLIC_SUPABASE_URL`** and **`NEXT_PUBLIC_SUPABASE_ANON_KEY`**.
 
 **Supabase Dashboard:** Database password, service role key, and API keys are shown under **Project Settings** (API, Database). The personal **access token** for the CLI is under the user account (not the project).
 
@@ -86,6 +89,13 @@ The live directory and OG images then load cards from **Supabase CDN**; keep PNG
 - **State detail** — Rendered as a **React overlay** (not `maplibregl.Popup`), so it stays **viewport-centered**; closing it runs the same filter/highlight reset as before.
 - **Styles** — Toolbar grid: **`components.css`** (`.map-toolbar-content`, `.map-toolbar-center`); dialog + inner frame: **`global.css`** (`.map-state-detail-*`, `.mezcal-map-popup-*`).
 
+### H. Contact form (`/contact`)
+
+- **UI** — **`src/app/contact/page.tsx`** (copy) + **`src/components/ContactForm.tsx`** (Turnstile widget, submit UX).
+- **API** — **`src/app/api/contact/route.ts`**: fail-fast env check → Turnstile verify (no `remoteip`) → validate → insert **`contacts`** → Apps Script → mark `emailed`.
+- **DB** — migration **`supabase/migrations/20260726143813_create_contacts.sql`**; RLS enabled, no client policies; service role only.
+- **Env names** — use **`TURNSTILE_SECRET`** (not `TURNSTILE_SECRET_KEY`). Site key + secret must be from the **same** Cloudflare Turnstile widget.
+
 ---
 
 ## 3. Important file map (directory + data)
@@ -105,6 +115,8 @@ The live directory and OG images then load cards from **Supabase CDN**; keep PNG
 | Migrations push | `scripts/supabase-cli-push.mjs` |
 | Canonical CSV | `data/Species_Final - Website.csv` |
 | Map page | `src/app/map/page.tsx`; geo **`public/geo/mexico-states.geojson`** |
+| Contact form | `src/app/contact/page.tsx`, `src/components/ContactForm.tsx`, `src/app/api/contact/route.ts` |
+| Contacts table | `supabase/migrations/20260726143813_create_contacts.sql` |
 
 ---
 

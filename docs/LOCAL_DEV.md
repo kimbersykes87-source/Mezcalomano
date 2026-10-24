@@ -35,8 +35,8 @@ npm install
 
 3. **Optional for UI work**
 
-   - **Contact page** (`/contact`): set `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and `TURNSTILE_SECRET_KEY` if you need to test submissions end-to-end. Without them, the form may fail server verification—you can still edit layout and styles.
-   - **Seeding the database** (`npm run seed:species`): add `SUPABASE_SERVICE_ROLE_KEY` (Supabase dashboard → **Settings → API → service_role**). Never expose this key in client code or commit it.
+   - **Contact page** (`/contact`): for end-to-end submits, set `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET` (matching pair from the same Turnstile widget), `APPS_SCRIPT_URL`, `APPS_SCRIPT_TOKEN`, and `SUPABASE_SERVICE_ROLE_KEY` (plus Supabase URL). Missing server vars return HTTP 500 naming the variable. You can still edit layout/styles without them.
+   - **Seeding the database** (`npm run seed:species`): `SUPABASE_SERVICE_ROLE_KEY` (Supabase dashboard → **Settings → API → service_role**). Never expose this key in client code or commit it.
 
 ## Run the dev server
 

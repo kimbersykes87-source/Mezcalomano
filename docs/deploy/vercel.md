@@ -17,12 +17,16 @@ Set in Vercel: Project Settings → Environment Variables.
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | For contact form | Cloudflare Turnstile site key (public) |
-| `TURNSTILE_SECRET_KEY` | For contact form | Cloudflare Turnstile secret key (server-only) |
-| `NEXT_PUBLIC_SUPABASE_URL` | For directory, map, species SEO, **sitemap** | Supabase project URL (browser + **server** `generateMetadata` on `/directory/[slug]` + **`/sitemap.xml`**) |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Contact form | Cloudflare Turnstile site key (public; Redeploy after change) |
+| `TURNSTILE_SECRET` | Contact form | Matching Turnstile secret (server-only; **not** `TURNSTILE_SECRET_KEY`) |
+| `APPS_SCRIPT_URL` | Contact form | Google Apps Script web app `/exec` URL |
+| `APPS_SCRIPT_TOKEN` | Contact form | Shared secret (= Apps Script `SHARED_SECRET`) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Contact form | Inserts into `contacts` (also used locally for seed/upload) |
+| `SUPABASE_URL` | Optional | Contact API URL; falls back to `NEXT_PUBLIC_SUPABASE_URL` |
+| `NEXT_PUBLIC_SUPABASE_URL` | Directory, map, SEO, sitemap, contact fallback | Supabase project URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Same | Supabase anonymous key |
 
-**Not required on Vercel** for the marketing app: `SUPABASE_SERVICE_ROLE_KEY` (local seed only), `SUPABASE_ACCESS_TOKEN` (local CLI `supabase:push` only). See **[../AGENT_HANDOFF.md](../AGENT_HANDOFF.md)** and **[CONNECTIONS.md](../../CONNECTIONS.md)**.
+**Not required on Vercel:** `SUPABASE_ACCESS_TOKEN` (local CLI `supabase:push` only). See **[../AGENT_HANDOFF.md](../AGENT_HANDOFF.md)** and **[CONNECTIONS.md](../../CONNECTIONS.md)**.
 
 If Supabase vars are missing in production, the site still builds; **`/sitemap.xml`** will list only static routes (no per-species URLs) until the vars are set.
 
