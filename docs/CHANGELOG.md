@@ -2,6 +2,24 @@
 
 All notable changes to the Mezcalómano marketing site project.
 
+## [2026-10-24] - Repo cleanup: remove legacy Cloudflare Pages files, new CI
+
+### Removed
+
+- `_redirects` and `public/_redirects` (Cloudflare Pages format; redirects live in `next.config.ts`).
+- `config/wrangler.toml`, `scripts/build-cloudflare-like.sh`, `docs/deploy/cloudflare-pages.md` (old Astro/Cloudflare Pages deploy).
+- `assets.zip` (unused 4 MB archive; the same files are in `assets/` and `public/assets/`).
+
+### Changed
+
+- `.github/workflows/ci.yml`: replaced the Astro check and `dist/` upload with Node 22 `npm ci`, `npm run lint`, `npm run build`. No secrets needed.
+
+### Notes
+
+- The site is hosted only on Vercel. Cloudflare holds the domain registration, DNS and Turnstile.
+
+---
+
 ## [2026-07-26] - Contact form delivery (Turnstile, Supabase, Apps Script)
 
 ### Added

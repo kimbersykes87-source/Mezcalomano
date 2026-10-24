@@ -36,7 +36,6 @@ npm run lint         # Run ESLint
 | **[docs/deploy/SETUP_CHECKLIST.md](docs/deploy/SETUP_CHECKLIST.md)** | First-time Vercel deployment steps. |
 | **[docs/deploy/vercel.md](docs/deploy/vercel.md)** | Vercel build config and env vars. |
 | **[docs/deploy/DOMAIN_CLOUDFLARE_VERCEL.md](docs/deploy/DOMAIN_CLOUDFLARE_VERCEL.md)** | Connect mezcalomano.com (Cloudflare DNS) to Vercel. |
-| **[docs/deploy/cloudflare-pages.md](docs/deploy/cloudflare-pages.md)** | Legacy: previous Astro/Cloudflare Pages setup. |
 | **[docs/MATRIX_CARDS_PIPELINE.md](docs/MATRIX_CARDS_PIPELINE.md)** | Matrix card image build script. |
 | **[docs/troubleshooting/nextjs.md](docs/troubleshooting/nextjs.md)** | Next.js troubleshooting. |
 
