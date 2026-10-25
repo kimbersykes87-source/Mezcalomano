@@ -1479,3 +1479,223 @@ button.directory-inline-link:hover {
   font-size: 0.875rem;
   color: rgba(255, 255, 255, 0.6);
 }
+
+/* Footer text links (Press, later Sources): footer only, not the main nav */
+.footer-links {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 var(--space-1);
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.footer-links a:hover {
+  color: var(--color-white);
+  opacity: 1;
+}
+
+/* Press page (/press) */
+.press-page {
+  width: 100%;
+  padding: var(--space-8) 0 var(--space-12);
+  background-color: var(--color-dark);
+}
+
+.press-page__intro,
+.press-page__section {
+  width: 100%;
+  max-width: 40rem;
+  margin: 0 auto var(--space-12);
+  padding: 0 var(--space-6);
+  text-align: center;
+}
+
+.press-page__section--wide {
+  max-width: 75rem;
+}
+
+.press-page__title {
+  font-weight: var(--font-weight-regular);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: clamp(1.75rem, 6vw, 2.75rem);
+  line-height: 1.15;
+  margin: 0 0 var(--space-4);
+}
+
+.press-page__subhead {
+  font-size: clamp(1.0625rem, 3.4vw, 1.25rem);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 auto var(--space-6);
+  max-width: 34rem;
+}
+
+.press-page__facts {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.press-page__facts li {
+  border: var(--divider);
+  padding: var(--space-1) var(--space-3);
+  font-size: 0.9375rem;
+}
+
+.press-page__facts a {
+  color: var(--color-yellow);
+}
+
+.press-page__heading {
+  font-weight: var(--font-weight-regular);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: clamp(1.125rem, 3.6vw, 1.375rem);
+  color: var(--color-yellow);
+  margin: 0 0 var(--space-4);
+}
+
+.press-page__subheading {
+  font-weight: var(--font-weight-regular);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 1rem;
+  color: var(--color-yellow);
+  margin: var(--space-12) 0 var(--space-4);
+}
+
+.press-page__section p,
+.press-page__list li {
+  font-size: clamp(1rem, 3.2vw, 1.125rem);
+  line-height: 1.55;
+}
+
+.press-page__section p + p {
+  margin-top: var(--space-3);
+}
+
+.press-page__section a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.press-page__list {
+  list-style: none;
+}
+
+.press-page__list li + li {
+  margin-top: var(--space-2);
+}
+
+.press-page__note {
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: var(--space-4);
+}
+
+.press-page__grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .press-page__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+}
+
+.press-page__section .press-page__tile-link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  text-decoration: none;
+}
+
+.press-page__tile-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background-color: #5a5c59;
+}
+
+.press-page__tile-meta {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.press-page__tile-link:hover .press-page__tile-meta {
+  color: var(--color-white);
+}
+
+.press-page__section .press-page__zip {
+  border-radius: 0;
+  text-decoration: none;
+}
+
+.press-page__logos {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  max-width: 40rem;
+  margin: 0 auto var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .press-page__logos {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.press-page__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  border: var(--divider);
+}
+
+.press-page__logo img {
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+}
+
+.press-page__logo--light {
+  background-color: var(--color-white);
+}
+
+.press-page__logo--dark {
+  background-color: var(--color-dark);
+}
+
+.press-page__logo-links {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2) var(--space-6);
+  font-size: 0.9375rem;
+}
+
+.press-page__social {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-6);
+}
