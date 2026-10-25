@@ -42,10 +42,10 @@ function matchesSearch(s: Species, q: string): boolean {
   return hay.includes(t);
 }
 
-export default function DirectoryClient() {
-  const [species, setSpecies] = useState<Species[]>([]);
+export default function DirectoryClient({ initialSpecies = [] }: { initialSpecies?: Species[] }) {
+  const [species, setSpecies] = useState<Species[]>(initialSpecies);
   const [matrixCardMap, setMatrixCardMap] = useState<Record<string, string> | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(initialSpecies.length === 0);
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [rawCardIndex, setRawCardIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
@@ -78,11 +78,14 @@ export default function DirectoryClient() {
     setLoading(false);
   }, []);
 
+  // Species arrive from the server; only fetch in the browser if that failed.
+  const hasInitial = initialSpecies.length > 0;
   useEffect(() => {
+    if (hasInitial) return;
     void Promise.resolve().then(() => {
       void loadSpecies();
     });
-  }, [loadSpecies]);
+  }, [loadSpecies, hasInitial]);
 
   const speciesWithResolvedImages = useMemo(() => {
     return species.map((s) => {
