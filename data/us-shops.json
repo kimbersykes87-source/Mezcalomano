@@ -1,0 +1,26 @@
+{
+  "_about": "Shops that sell to US customers in US dollars. A producer link on one of these hosts is shown under 'Buy in the US' on the directory card, and the weekly link check (npm run check:links) reports species with none. Add a host here when you add a US shop link. Hosts are matched without 'www.'.",
+  "hosts": [
+    "astorwines.com",
+    "canalponds.com",
+    "caskcartel.com",
+    "creadorspirits.com",
+    "delmaguey.com",
+    "drinqy.com",
+    "erstwhilemezcal.com",
+    "fermentandstill.com",
+    "gomadreshop.com",
+    "klwines.com",
+    "laleyenda.io",
+    "lalunamezcal.myshopify.com",
+    "magueymelate.com",
+    "mezcalmillumbres.com",
+    "oldtowntequila.com",
+    "paqueramezcal.com",
+    "shop.klwines.com",
+    "shop.magueyspirits.com",
+    "tedwardwines.com",
+    "victoriosomezcal.com",
+    "wine.com"
+  ]
+}

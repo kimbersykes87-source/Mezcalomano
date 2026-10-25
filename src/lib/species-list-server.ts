@@ -25,3 +25,22 @@ export async function fetchSpeciesDirectorySegments(): Promise<string[]> {
     return [];
   }
 }
+
+/**
+ * All species for the directory list, sorted by common name, fetched on the server so the
+ * first card is in the HTML a phone gets after scanning the box QR. Returns [] on any error;
+ * the client then falls back to fetching in the browser.
+ */
+export async function fetchAllSpecies(): Promise<Species[]> {
+  try {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (!url || !key) return [];
+    const supabase = createClient(url, key);
+    const { data, error } = await supabase.from("species").select("*");
+    if (error || !data?.length) return [];
+    return (data as Species[]).sort((a, b) => a.common_name.localeCompare(b.common_name, "en"));
+  } catch {
+    return [];
+  }
+}

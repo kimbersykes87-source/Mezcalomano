@@ -1,19 +1,33 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import JsonLd from "@/components/JsonLd";
 import { fetchSpeciesBySlug } from "@/lib/species-detail-server";
 import { resolveMatrixImagePathForCommonName } from "@/lib/matrix-card-urls-server";
 import { OG_IMAGE_PATH, SITE_URL } from "@/lib/site-seo";
-import { speciesDirectorySlug } from "@/lib/slug";
+import { speciesDirectorySlug, toSlug } from "@/lib/slug";
 import SpeciesDetailClient from "./SpeciesDetailClient";
 
 const DEFAULT_OG = OG_IMAGE_PATH;
 
 type PageProps = { params: Promise<{ slug: string }> };
 
+/** Find a species from the URL, forgiving case, accents and hyphens ("Espadin", "espad%C3%ADn", "sierra-negra"). */
+async function resolveSpecies(slug: string) {
+  const exact = await fetchSpeciesBySlug(slug);
+  if (exact) return exact;
+  let decoded = slug;
+  try {
+    decoded = decodeURIComponent(slug);
+  } catch {
+    /* keep raw */
+  }
+  const normalized = toSlug(decoded.replace(/[-+]/g, " "));
+  return normalized && normalized !== slug ? fetchSpeciesBySlug(normalized) : null;
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const species = await fetchSpeciesBySlug(slug);
+  const species = await resolveSpecies(slug);
 
   if (!species) {
     return { title: "Species not found" };
@@ -22,7 +36,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = species.common_name;
   const description =
     species.description?.trim().slice(0, 160) ||
-    `${species.scientific_name} — agave species in the Mezcalómano directory.`;
+    `${species.scientific_name}, an agave species in the Mezcalómano directory.`;
   const cardImage = resolveMatrixImagePathForCommonName(species.common_name);
   const ogImage = cardImage ?? DEFAULT_OG;
 
@@ -46,10 +60,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function SpeciesDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const species = await fetchSpeciesBySlug(slug);
+  const species = await resolveSpecies(slug);
   if (!species) notFound();
 
   const pathSlug = speciesDirectorySlug(species);
+  if (pathSlug !== slug) permanentRedirect(`/directory/${pathSlug}`);
   const pageUrl = `${SITE_URL}/directory/${pathSlug}`;
   const breadcrumbLd = {
     "@context": "https://schema.org",

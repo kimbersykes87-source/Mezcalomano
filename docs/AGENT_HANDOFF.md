@@ -43,8 +43,8 @@ This document is for **future AI agents and developers** working on the Mezcaló
 ### A. Species copy, producers, or fields (no schema change)
 
 1. Edit **`data/Species_Final - Website.csv`** (canonical for the website seed).
-2. Keep **`data/Species_Final - Directory_updated_*.csv`** in sync if you maintain that export (same columns; copy row changes over when appropriate).
-3. **`producers`** and **`producer_links`** are comma-separated lists; **counts must match** (one URL per producer name in order). The seed script warns on mismatch.
+2. Producer changes go back into the Species_Final sheet with the `sync_producers_from_website` Apps Script (Dropbox `02_PRODUCT\SCRIPTS`); it reads this file from GitHub `main`, so push first.
+3. **`producers`** and **`producer_links`** are comma-separated lists; **counts must match** (one URL per producer name in order). The seed script refuses to run on a mismatch, a run-together URL or a stray quote mark. `npm run check:links` checks every link is live and on the right product; it also runs weekly on GitHub. Shops that sell to US customers are listed in `data/us-shops.json`; links on those hosts show first on the card under "Buy in the US".
 4. Run **`npm run seed:species`** (requires `SUPABASE_SERVICE_ROLE_KEY` or anon key per script docs).
 5. Commit CSV changes and push; Vercel does **not** run the seed — hosted DB updates only when someone runs the seed (or applies SQL manually).
 

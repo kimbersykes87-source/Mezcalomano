@@ -368,6 +368,14 @@ body:has(.directory-root) .footer {
   text-underline-offset: 0.2em;
 }
 
+/* Producer groups on the card: "Buy in the US" first, then "More producers" */
+.species-card-content .species-card-producer-group {
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
 /* Directory: text actions (e.g. clear search) — underline like producer links; beats global `a` / button resets */
 button.directory-inline-link {
   text-decoration: underline;
