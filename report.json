@@ -1,0 +1,660 @@
+{
+  "date": "2026-10-25",
+  "mode": "monday",
+  "counts": {
+    "BAD_URL": 0,
+    "DEAD": 7,
+    "GENERIC": 1,
+    "BLOCKED": 18,
+    "INFO": 16,
+    "OK": 198
+  },
+  "linksChecked": 240,
+  "autoChanges": [],
+  "urgent": [],
+  "suggestions": [
+    {
+      "action": "add",
+      "species": "Espadín",
+      "slug": "espadin",
+      "producer": "Rufina",
+      "to": "https://gomadreshop.com/products/rufina-maguey-silvestre-espadin-nuevo",
+      "title": "Rufina- Maguey Silvestre Espadin, (nuevo)",
+      "shop": "Madre Shop",
+      "price": 72.8
+    },
+    {
+      "action": "add",
+      "species": "Espadín",
+      "slug": "espadin",
+      "producer": "Rey Campero",
+      "to": "https://gomadreshop.com/products/rey-campero-fusion-criolla-espadin",
+      "title": "Rey Campero- Fusion Criolla, Espadin",
+      "shop": "Madre Shop",
+      "price": 95.55
+    },
+    {
+      "action": "swap",
+      "species": "Espadín",
+      "slug": "espadin",
+      "producer": "Dixeebe Mezcal",
+      "from": "https://mezcaldixeebe.com/product/espadin-5-edicion-2024/",
+      "to": "https://gomadreshop.com/products/dixeebe-3rd-edition-espadin",
+      "title": "Dixeebe - Espadin Edition 4",
+      "shop": "Madre Shop",
+      "price": 60
+    },
+    {
+      "action": "swap",
+      "species": "Espadín",
+      "slug": "espadin",
+      "producer": "Mezcal Vago",
+      "from": "https://mezcalvago.com/our-products/",
+      "to": "https://gomadreshop.com/products/copy-of-vago-pechuga-joel-barriga",
+      "title": "Vago Espadin - Joel Barriga",
+      "shop": "Madre Shop",
+      "price": 55
+    },
+    {
+      "action": "add",
+      "species": "Tobalá",
+      "slug": "tobala",
+      "producer": "Tepanal",
+      "to": "https://gomadreshop.com/products/tepanal-tobala-1",
+      "title": "Tepanal - Tobala",
+      "shop": "Madre Shop",
+      "price": 113
+    },
+    {
+      "action": "add",
+      "species": "Tobalá",
+      "slug": "tobala",
+      "producer": "MDM",
+      "to": "https://gomadreshop.com/products/mdm-tobala-rodolfo",
+      "title": "MDM Tobala - Rodolfo",
+      "shop": "Madre Shop",
+      "price": 113
+    },
+    {
+      "action": "swap",
+      "species": "Tobalá",
+      "slug": "tobala",
+      "producer": "Bozal",
+      "from": "http://bozalmezcal.com/spirits/#",
+      "to": "https://shop.magueyspirits.com/products/bozal-tobala-reserva-mezcal",
+      "title": "Bozal Mezcal Reserva (Tobala)",
+      "shop": "Maguey Spirits",
+      "price": 114.99
+    },
+    {
+      "action": "add",
+      "species": "Tepextate",
+      "slug": "tepextate",
+      "producer": "Rufina",
+      "to": "https://gomadreshop.com/products/rufina-maguey-silvestre-tepextate-nuevo",
+      "title": "Rufina- Maguey Silvestre Tepextate, (Nuevo)",
+      "shop": "Madre Shop",
+      "price": 127.4
+    },
+    {
+      "action": "add",
+      "species": "Tepextate",
+      "slug": "tepextate",
+      "producer": "Tres Tiempos",
+      "to": "https://gomadreshop.com/products/tres-tiempos-tepeztate-1",
+      "title": "Tres Tiempos - Tepeztate",
+      "shop": "Madre Shop",
+      "price": 163
+    },
+    {
+      "action": "add",
+      "species": "Tepextate",
+      "slug": "tepextate",
+      "producer": "Rezpiral",
+      "to": "https://gomadreshop.com/products/rezpiral-series-9-mexicanito",
+      "title": "Rezpiral Series 9  Tepeztate",
+      "shop": "Madre Shop",
+      "price": 149
+    },
+    {
+      "action": "swap",
+      "species": "Tepextate",
+      "slug": "tepextate",
+      "producer": "Bozal",
+      "from": "http://bozalmezcal.com/spirits/#",
+      "to": "https://shop.magueyspirits.com/products/bozal-tepeztate-mezcal",
+      "title": "Bozal Mezcal Single Maguey (Tepeztate)",
+      "shop": "Maguey Spirits",
+      "price": 69.99
+    },
+    {
+      "action": "add",
+      "species": "Cuishe",
+      "slug": "cuishe",
+      "producer": "Mal De Amor",
+      "to": "https://gomadreshop.com/products/mal-amor-4",
+      "title": "Mal De Amor - Cuishe",
+      "shop": "Madre Shop",
+      "price": 100
+    },
+    {
+      "action": "add",
+      "species": "Barril",
+      "slug": "barril",
+      "producer": "Mal De Amor",
+      "to": "https://gomadreshop.com/products/mal-amor-3",
+      "title": "Mal De Amor - Barril",
+      "shop": "Madre Shop",
+      "price": 104
+    },
+    {
+      "action": "add",
+      "species": "Barril",
+      "slug": "barril",
+      "producer": "Dixeebe Mezcal",
+      "to": "https://gomadreshop.com/products/dixeebe-barril-edition-1",
+      "title": "Dixeebe - Barril Edition 1",
+      "shop": "Madre Shop",
+      "price": 88
+    },
+    {
+      "action": "swap",
+      "species": "Barril",
+      "slug": "barril",
+      "producer": "Bozal",
+      "from": "http://bozalmezcal.com/spirits/#",
+      "to": "https://shop.magueyspirits.com/products/bozal-barill-mezcal-reserva",
+      "title": "Bozal Mezcal Reserva (Barril)",
+      "shop": "Maguey Spirits",
+      "price": 114.99
+    },
+    {
+      "action": "add",
+      "species": "Madrecuixe",
+      "slug": "madrecuixe",
+      "producer": "Rufina",
+      "to": "https://gomadreshop.com/products/rufina-madre-cuishe",
+      "title": "Rufina - Madre Cuishe",
+      "shop": "Madre Shop",
+      "price": 124
+    },
+    {
+      "action": "swap",
+      "species": "Madrecuixe",
+      "slug": "madrecuixe",
+      "producer": "Gusto Historico",
+      "from": "https://www.skurnik.com/sku/destilado-de-agave-madrecuixe-victor-ramos-gusto-historico-3/",
+      "to": "https://gomadreshop.com/products/gusto-historico-madrecuixe",
+      "title": "Gusto Historico - Madrecuixe",
+      "shop": "Madre Shop",
+      "price": 122
+    },
+    {
+      "action": "add",
+      "species": "Madrecuixe",
+      "slug": "madrecuixe",
+      "producer": "Mal de Amor",
+      "to": "https://gomadreshop.com/products/mal-de-amor-madrecuishe",
+      "title": "Mal de Amor - Madrecuishe",
+      "shop": "Madre Shop",
+      "price": 105
+    },
+    {
+      "action": "swap",
+      "species": "Madrecuixe",
+      "slug": "madrecuixe",
+      "producer": "Neta",
+      "from": "https://netaspirits.com/united-states/2025/9/4/madrecuixe-capn-may-2014-ranulfo-garca-pacheco-mdxran1405-fall-2025-release-258-bottles-pm-national",
+      "to": "https://gomadreshop.com/products/neta-madrecuixe-cap",
+      "title": "Neta - Madrecuixe Capón",
+      "shop": "Madre Shop",
+      "price": 170
+    },
+    {
+      "action": "swap",
+      "species": "Madrecuixe",
+      "slug": "madrecuixe",
+      "producer": "Bozal",
+      "from": "http://bozalmezcal.com/spirits/#",
+      "to": "https://shop.magueyspirits.com/products/bozal-madrecuishe-single-maguey-mezcal",
+      "title": "Bozal Mezcal Single Maguey (Madrecuishe)",
+      "shop": "Maguey Spirits",
+      "price": 69.99
+    },
+    {
+      "action": "swap",
+      "species": "Tobaziche",
+      "slug": "tobaziche",
+      "producer": "Bozal",
+      "from": "http://bozalmezcal.com/spirits/#",
+      "to": "https://shop.magueyspirits.com/products/bozal-tobasiche-mezcal",
+      "title": "Bozal Mezcal Single Maguey (Tobasiche)",
+      "shop": "Maguey Spirits",
+      "price": 69.99
+    },
+    {
+      "action": "add",
+      "species": "Arroqueño",
+      "slug": "arroqueno",
+      "producer": "MDM",
+      "to": "https://gomadreshop.com/products/mdm-arroqueno-teodomiro",
+      "title": "MDM Arroqueño - Teodomiro",
+      "shop": "Madre Shop",
+      "price": 120
+    },
+    {
+      "action": "swap",
+      "species": "Arroqueño",
+      "slug": "arroqueno",
+      "producer": "La Medida",
+      "from": "https://espiritusmisticos.site/la-medida/productos/la-medida-mezcal-artesanal-joven-100-agave-arroqueno",
+      "to": "https://gomadreshop.com/products/la-medida-arroqueno",
+      "title": "La Medida - Arroqueño",
+      "shop": "Madre Shop",
+      "price": 135
+    },
+    {
+      "action": "add",
+      "species": "Sierra Negra",
+      "slug": "sierra_negra",
+      "producer": "Cinco Sentidos",
+      "to": "https://gomadreshop.com/products/5-sentidos-sierra-nergra",
+      "title": "5 Sentidos - Sierra Negra",
+      "shop": "Madre Shop",
+      "price": 117
+    },
+    {
+      "action": "add",
+      "species": "Coyote",
+      "slug": "coyote",
+      "producer": "Rufina",
+      "to": "https://gomadreshop.com/products/rufina-maguey-silvestre-coyote-nuevo",
+      "title": "Rufina- Maguey Silvestre Coyote, (nuevo)",
+      "shop": "Madre Shop",
+      "price": 127.4
+    },
+    {
+      "action": "add",
+      "species": "Coyote",
+      "slug": "coyote",
+      "producer": "Noble Coyote",
+      "to": "https://gomadreshop.com/products/noble-coyote-2",
+      "title": "Noble Coyote - Coyote",
+      "shop": "Madre Shop",
+      "price": 105
+    },
+    {
+      "action": "swap",
+      "species": "Coyote",
+      "slug": "coyote",
+      "producer": "Bozal",
+      "from": "http://bozalmezcal.com/spirits/#",
+      "to": "https://shop.magueyspirits.com/products/bozal-coyote-reserva-mezcal",
+      "title": "Bozal Mezcal Reserva (Coyote)",
+      "shop": "Maguey Spirits",
+      "price": 114.99
+    },
+    {
+      "action": "add",
+      "species": "Mexicano",
+      "slug": "mexicano",
+      "producer": "Rufina",
+      "to": "https://gomadreshop.com/products/rufina-mexicano",
+      "title": "Rufina - Mexicano",
+      "shop": "Madre Shop",
+      "price": 124
+    },
+    {
+      "action": "add",
+      "species": "Mexicano",
+      "slug": "mexicano",
+      "producer": "Agua del Sol",
+      "to": "https://gomadreshop.com/products/agua-del-sol-mexicano-2023",
+      "title": "Agua Del Sol - Mexicano Oaxaca 2023",
+      "shop": "Madre Shop",
+      "price": 132
+    },
+    {
+      "action": "add",
+      "species": "Papalote",
+      "slug": "papalote",
+      "producer": "Animas",
+      "to": "https://gomadreshop.com/products/animas-maguey-papalote",
+      "title": "Animas - Papalote",
+      "shop": "Madre Shop",
+      "price": 100
+    },
+    {
+      "action": "add",
+      "species": "Papalote",
+      "slug": "papalote",
+      "producer": "Aguerrido",
+      "to": "https://gomadreshop.com/products/aguerrido-sonido-cupreata-edicion-especial-puntas",
+      "title": "Aguerrido - Sonido - Cupreata Edicion Especial Puntas",
+      "shop": "Madre Shop",
+      "price": 128
+    },
+    {
+      "action": "swap",
+      "species": "Papalote",
+      "slug": "papalote",
+      "producer": "Don Mateo",
+      "from": "https://mezcaldonmateo.com/product/don-mateo-cupreata/",
+      "to": "https://gomadreshop.com/products/don-mateo-cupreata",
+      "title": "Don Mateo - Cupreata",
+      "shop": "Madre Shop",
+      "price": 130
+    },
+    {
+      "action": "swap",
+      "species": "Cenizo",
+      "slug": "cenizo",
+      "producer": "Bozal",
+      "from": "http://bozalmezcal.com/spirits/#",
+      "to": "https://shop.magueyspirits.com/products/bozal-cenizo-mezcal",
+      "title": "Bozal Mezcal Single Maguey (Cenizo)",
+      "shop": "Maguey Spirits",
+      "price": 69.99
+    },
+    {
+      "action": "add",
+      "species": "Weber Azul",
+      "slug": "weber_azul",
+      "producer": "NETA",
+      "to": "https://gomadreshop.com/products/neta",
+      "title": "Neta- Tequilana",
+      "shop": "Madre Shop",
+      "price": 155
+    },
+    {
+      "action": "add",
+      "species": "Jabalí",
+      "slug": "jabali",
+      "producer": "Agua del Sol",
+      "to": "https://gomadreshop.com/products/agua-del-sol-jabali",
+      "title": "Agua Del Sol - Jabali",
+      "shop": "Madre Shop",
+      "price": 145
+    },
+    {
+      "action": "swap",
+      "species": "Jabalí",
+      "slug": "jabali",
+      "producer": "Bozal",
+      "from": "http://bozalmezcal.com/spirits/#",
+      "to": "https://shop.magueyspirits.com/products/bozal-jabali-mezcal",
+      "title": "Bozal Mezcal Reserva (Jabali)",
+      "shop": "Maguey Spirits",
+      "price": 114.99
+    },
+    {
+      "action": "swap",
+      "species": "Castilla",
+      "slug": "castilla",
+      "producer": "Bozal",
+      "from": "https://bozalmezcal.com/spirits/castilla/",
+      "to": "https://shop.magueyspirits.com/products/bozal-castilla-mezcal",
+      "title": "Bozal Mezcal Reserva (Castilla)",
+      "shop": "Maguey Spirits",
+      "price": 114.99
+    }
+  ],
+  "firstStrike": [
+    {
+      "species": "Cuishe",
+      "slug": "cuishe",
+      "producer": "Rey Campero",
+      "url": "https://mezcalreycampero.com/product/cuishe-rc/",
+      "firstFailed": "2026-10-25",
+      "lastFailed": "2026-10-25",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+    },
+    {
+      "species": "Jabalí",
+      "slug": "jabali",
+      "producer": "Rey Campero",
+      "url": "https://mezcalreycampero.com/product/jabali-rc/",
+      "firstFailed": "2026-10-25",
+      "lastFailed": "2026-10-25",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+    },
+    {
+      "species": "Madrecuixe",
+      "slug": "madrecuixe",
+      "producer": "Rey Campero",
+      "url": "https://mezcalreycampero.com/product/madrecuishe-rc/",
+      "firstFailed": "2026-10-25",
+      "lastFailed": "2026-10-25",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+    },
+    {
+      "species": "Sierra Negra",
+      "slug": "sierra_negra",
+      "producer": "Rey Campero",
+      "url": "https://mezcalreycampero.com/product/sierra-rc/",
+      "firstFailed": "2026-10-25",
+      "lastFailed": "2026-10-25",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+    },
+    {
+      "species": "Tepextate",
+      "slug": "tepextate",
+      "producer": "Rey Campero",
+      "url": "https://mezcalreycampero.com/product/tepeztate-rc/",
+      "firstFailed": "2026-10-25",
+      "lastFailed": "2026-10-25",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+    },
+    {
+      "species": "Tobalá",
+      "slug": "tobala",
+      "producer": "Rey Campero",
+      "url": "https://mezcalreycampero.com/product/tobala-rc/",
+      "firstFailed": "2026-10-25",
+      "lastFailed": "2026-10-25",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+    },
+    {
+      "species": "Weber Azul",
+      "slug": "weber_azul",
+      "producer": "Rey Campero",
+      "url": "https://mezcalreycampero.com/product/azul-rc/",
+      "firstFailed": "2026-10-25",
+      "lastFailed": "2026-10-25",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+    },
+    {
+      "species": "Cimarrón",
+      "slug": "cimarron",
+      "producer": "De Matachines",
+      "url": "https://sftequilashop.com/products/de-matachines-ahualulco-750ml?_pos=2&_sid=6f6f3ba80&_ss=r",
+      "firstFailed": "2026-10-25",
+      "lastFailed": "2026-10-25",
+      "strikes": 1,
+      "verdict": "INFO",
+      "note": "\"De Matachines Ahualulco 750ML\" is sold out"
+    },
+    {
+      "species": "Pulquero",
+      "slug": "pulquero",
+      "producer": "Puntiagudo",
+      "url": "https://gomadreshop.com/products/puntiagudo-pulquero?_pos=1&_sid=ceaa25d05&_ss=r",
+      "firstFailed": "2026-10-25",
+      "lastFailed": "2026-10-25",
+      "strikes": 1,
+      "verdict": "INFO",
+      "note": "\"Puntiagudo - Pulquero\" is sold out"
+    },
+    {
+      "species": "Pulquero",
+      "slug": "pulquero",
+      "producer": "Rufina",
+      "url": "https://gomadreshop.com/products/rufina-pulquero-puntas?_pos=2&_sid=ceaa25d05&_ss=r",
+      "firstFailed": "2026-10-25",
+      "lastFailed": "2026-10-25",
+      "strikes": 1,
+      "verdict": "INFO",
+      "note": "\"Rufina - Pulquero Puntas\" is sold out"
+    },
+    {
+      "species": "Sierra Negra",
+      "slug": "sierra_negra",
+      "producer": "Marca Negra",
+      "url": "https://buen-mezcal.myshopify.com/products/kit-sierra-negra",
+      "firstFailed": "2026-10-25",
+      "lastFailed": "2026-10-25",
+      "strikes": 1,
+      "verdict": "INFO",
+      "note": "\"Kit Sierra Negra\" is sold out"
+    },
+    {
+      "species": "Tepextate",
+      "slug": "tepextate",
+      "producer": "Marca Negra",
+      "url": "https://buen-mezcal.myshopify.com/products/kit-tepeztate",
+      "firstFailed": "2026-10-25",
+      "lastFailed": "2026-10-25",
+      "strikes": 1,
+      "verdict": "INFO",
+      "note": "\"Kit Tepeztate\" is sold out"
+    },
+    {
+      "species": "Tobalá",
+      "slug": "tobala",
+      "producer": "Marca Negra",
+      "url": "https://buen-mezcal.myshopify.com/products/kit-tobala",
+      "firstFailed": "2026-10-25",
+      "lastFailed": "2026-10-25",
+      "strikes": 1,
+      "verdict": "INFO",
+      "note": "\"Kit Tobalá\" is sold out"
+    }
+  ],
+  "noUs": [
+    "Montana",
+    "Lyobaa Coyote",
+    "Wocomahi",
+    "Cincoañero",
+    "Pulque Chino"
+  ],
+  "oneUs": [
+    "Lumbre (Creador)",
+    "Cimarrón (Chacolo)",
+    "Manso Sahuayo (La Luna)",
+    "Churique (Cumbrita de la Sierra)",
+    "Verde (Lamata)",
+    "Warash (Tosba)",
+    "Henequén (Erstwhile)",
+    "Chahuiqui (Maguey Melate (ensemble))",
+    "Chuparrosa (Maguey Melate)"
+  ],
+  "blocked": [
+    {
+      "species": "Arroqueño",
+      "producer": "Del Maguey",
+      "url": "https://delmaguey.com/arroqueno/"
+    },
+    {
+      "species": "Arroqueño",
+      "producer": "Koch",
+      "url": "https://mezcalkoch.com/expresiones/arroqueno.php"
+    },
+    {
+      "species": "Barril",
+      "producer": "Del Maguey",
+      "url": "https://delmaguey.com/barril/"
+    },
+    {
+      "species": "Barril",
+      "producer": "Koch",
+      "url": "https://mezcalkoch.com/expresiones/barril.php"
+    },
+    {
+      "species": "Castilla",
+      "producer": "Rey Campero",
+      "url": "https://www.wine.com/product/rey-campero-castilla-mezcal/539730#closePromoModal"
+    },
+    {
+      "species": "Chahuiqui",
+      "producer": "Maguey Melate (ensemble)",
+      "url": "https://shop.klwines.com/products/details/1678724"
+    },
+    {
+      "species": "Cuishe",
+      "producer": "Del Maguey",
+      "url": "https://delmaguey.com/cuixe/"
+    },
+    {
+      "species": "Jabalí",
+      "producer": "Del Maguey",
+      "url": "https://delmaguey.com/jabali/"
+    },
+    {
+      "species": "Madrecuixe",
+      "producer": "Del Maguey",
+      "url": "https://delmaguey.com/madrecuixe/"
+    },
+    {
+      "species": "Madrecuixe",
+      "producer": "Koch",
+      "url": "https://mezcalkoch.com/expresiones/madrecuishe.php"
+    },
+    {
+      "species": "Manso Sahuayo",
+      "producer": "Don Mateo",
+      "url": "https://mezcaldonmateo.com/product/mezcal-don-mateo-manso-de-sahuayo/"
+    },
+    {
+      "species": "Rayo",
+      "producer": "Gusto Historico",
+      "url": "https://www.astorwines.com/item/50517"
+    },
+    {
+      "species": "Tepextate",
+      "producer": "Del Maguey",
+      "url": "https://delmaguey.com/tepextate/"
+    },
+    {
+      "species": "Tepextate",
+      "producer": "Koch",
+      "url": "https://mezcalkoch.com/expresiones/tepeztate.php"
+    },
+    {
+      "species": "Tobalá",
+      "producer": "Del Maguey",
+      "url": "https://delmaguey.com/tobala/"
+    },
+    {
+      "species": "Tobaziche",
+      "producer": "Del Maguey",
+      "url": "https://delmaguey.com/tobaziche/"
+    },
+    {
+      "species": "Tobaziche",
+      "producer": "Koch",
+      "url": "https://mezcalkoch.com/expresiones/tobasiche.php"
+    },
+    {
+      "species": "Verde",
+      "producer": "Pechotierra",
+      "url": "https://www.cuchillo.ca/items/pecho-tierra-verde"
+    }
+  ],
+  "catalogProducts": 293,
+  "pullRequest": "",
+  "runUrl": "https://github.com/kimbersykes87-source/Mezcalomano/actions/runs/40222203041"
+}
