@@ -1,0 +1,142 @@
+name: Directory weekly update
+
+# Monday: check every producer link, scan US shop catalogs, fix links that have failed twice,
+#         and open a pull request with new US listings for approval.
+# Thursday: recheck, and fix links that failed on Monday and still fail.
+# Automatic fixes go straight to main and the live site (Supabase). The report and the
+# link-health memory are kept on the bot-reports branch, where the Species_Final Apps Script
+# picks them up to email hola@mezcalomano.com.
+#
+# Needs repo secrets NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY, and
+# Settings > Actions > General > "Allow GitHub Actions to create and approve pull requests".
+
+on:
+  schedule:
+    - cron: "17 8 * * 1" # Monday 08:17 UTC
+    - cron: "17 8 * * 4" # Thursday 08:17 UTC
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "monday (full scan + suggestions) or thursday (recheck only)"
+        default: monday
+      dry_run:
+        description: "true = report only, change nothing"
+        default: "false"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: directory-weekly
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Load link-health memory from bot-reports
+        run: |
+          mkdir -p .bot
+          if git fetch -q origin bot-reports 2>/dev/null; then
+            git show origin/bot-reports:link-health.json > .bot/link-health.json 2>/dev/null || rm -f .bot/link-health.json
+          fi
+
+      - name: Check links, scan US shops, fix what failed twice
+        id: run
+        run: |
+          MODE="${{ github.event.inputs.mode }}"
+          if [ -z "$MODE" ]; then
+            if [ "$(date -u +%u)" = "4" ]; then MODE=thursday; else MODE=monday; fi
+          fi
+          DRY=""
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then DRY="--dry-run"; fi
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+          node scripts/directory-weekly.mjs --mode "$MODE" --out .bot --state .bot/link-health.json $DRY
+          cat .bot/report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit automatic fixes to main and update the live site
+        if: github.event.inputs.dry_run != 'true'
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          if git diff --quiet -- "data/Species_Final - Website.csv"; then
+            echo "No automatic fixes this run."
+            exit 0
+          fi
+          git config user.name "Mezcalomano directory bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "data/Species_Final - Website.csv"
+          {
+            echo "Directory: automatic link fixes ($(date -u +%F))"
+            echo
+            jq -r '.autoChanges[] | "- \(.species), \(.producer): \(.action)"' .bot/report.json
+          } > /tmp/changes.txt
+          git commit -q -F /tmp/changes.txt
+          git push origin HEAD:main
+          npm run seed:species
+
+      - name: Open or update the suggestions pull request
+        if: github.event.inputs.dry_run != 'true' && hashFiles('.bot/suggestions.csv') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "Mezcalomano directory bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -q -C bot/directory-suggestions
+          cp .bot/suggestions.csv "data/Species_Final - Website.csv"
+          git add "data/Species_Final - Website.csv"
+          git commit -q -m "Directory: suggested US listings ($(date -u +%F))"
+          git push -q -f origin bot/directory-suggestions
+          {
+            echo "New US listings found by the weekly scan on $(date -u +%F). Merging this adds them to the live directory and the Species_Final sheet."
+            echo
+            echo "To drop a suggestion before merging, edit \`data/Species_Final - Website.csv\` in this pull request, or reply here."
+            echo
+            echo "| Species | Change | Producer | Bottle | Shop | Price |"
+            echo "|---|---|---|---|---|---|"
+            jq -r '.suggestions[] | "| \(.species) | \(if .action == "add" then "Add" else "Move to US shop" end) | \(.producer) | [\(.title | gsub("\\|"; "/"))](\(.to)) | \(.shop) | $\(.price | floor) |"' .bot/report.json
+          } > /tmp/pr.md
+          N=$(gh pr list --head bot/directory-suggestions --state open --json number -q '.[0].number')
+          if [ -n "$N" ]; then
+            gh pr edit "$N" --title "Directory: suggested US listings ($(date -u +%F))" --body-file /tmp/pr.md
+          else
+            gh pr create --base main --head bot/directory-suggestions --title "Directory: suggested US listings ($(date -u +%F))" --body-file /tmp/pr.md
+          fi
+          git switch -q main
+
+      - name: Publish report and link-health memory to bot-reports
+        if: always() && hashFiles('.bot/report.json') != ''
+        run: |
+          git config user.name "Mezcalomano directory bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          PR_URL=$(gh pr list --head bot/directory-suggestions --state open --json url -q '.[0].url' 2>/dev/null || true)
+          jq --arg pr "$PR_URL" --arg run "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+            '. + {pullRequest: $pr, runUrl: $run}' .bot/report.json > /tmp/report.json
+          if git rev-parse -q --verify origin/bot-reports >/dev/null; then
+            git worktree add -q -B bot-reports /tmp/rep origin/bot-reports
+          else
+            git worktree add -q --orphan -b bot-reports /tmp/rep
+          fi
+          cp /tmp/report.json .bot/report.md /tmp/rep/
+          [ -f .bot/link-health.json ] && cp .bot/link-health.json /tmp/rep/
+          cd /tmp/rep
+          git add -A
+          git commit -q -m "Report $(date -u +%F) (${{ steps.run.outputs.mode }})" || exit 0
+          git push -q origin bot-reports
+        env:
+          GH_TOKEN: ${{ github.token }}

@@ -1,0 +1,34 @@
+name: Directory seed
+
+# Whenever the species CSV changes on main (a merged pull request, or a push from your PC),
+# send it to Supabase so the live directory updates. No more running npm run seed:species by hand.
+# Pushes made by the weekly bot do not trigger this; that job seeds itself.
+# Needs repo secrets NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/Species_Final - Website.csv"
+  workflow_dispatch:
+
+concurrency:
+  group: directory-seed
+  cancel-in-progress: false
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Seed species to Supabase
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: npm run seed:species
