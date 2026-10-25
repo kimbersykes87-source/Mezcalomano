@@ -115,7 +115,7 @@ npm run normalize:agave-images
 npm run sync:agave-matrix
 ```
 
-Canonical species copy lives in **`data/Species_Final - Website.csv`** (keep `Species_Final - Directory_updated_*.csv` in sync by copying over when you refresh data). `sync:agave-matrix` reads that CSV and matches files like `espadin.png` (same rules as `toSlug(common_name)` in the app).
+Canonical species copy lives in **`data/Species_Final - Website.csv`**, the only species CSV in the repo. After changing it, run `npm run seed:species` (it refuses to run if any species has mismatched producers and links) and the `sync_producers_from_website` Apps Script in Species_Final to copy producer changes into the sheet. `sync:agave-matrix` reads that CSV and matches files like `espadin.png` (same rules as `toSlug(common_name)` in the app).
 
 **Supabase migrations** — Apply SQL in `supabase/migrations/` (e.g. `producer_links`, then `slug`) via the **SQL Editor** if `supabase db push` reports a migration history mismatch with the hosted project. The seed script loads **`.env` then `.env.local`** (local overrides), so `npm run seed:species` works when vars are only in `.env`.
 

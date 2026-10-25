@@ -83,6 +83,7 @@ async function main() {
   }
 
   console.log(`Loaded ${rows.length} rows from CSV`);
+  const problems = [];
 
   const speciesRows = rows.map((row, i) => {
     const producersRaw = row.producers ?? "";
@@ -92,10 +93,16 @@ async function main() {
 
     const pCount = producers ? producers.split(",").length : 0;
     const lCount = producerLinks ? producerLinks.split(",").length : 0;
+    const name = String(row.common_name ?? "").trim();
     if (pCount !== lCount && (pCount || lCount)) {
-      console.warn(
-        `Producer/link count mismatch for ${String(row.common_name ?? "").trim()}: ${pCount} names, ${lCount} URLs`
-      );
+      problems.push(`${name}: ${pCount} producers but ${lCount} links (names after the gap would open the wrong site)`);
+    }
+    for (const u of producerLinks ? producerLinks.split(",") : []) {
+      if (!/^https?:\/\//.test(u)) problems.push(`${name}: "${u.slice(0, 60)}" is not a URL`);
+      else if ((u.match(/https?:\/\//g) || []).length > 1) problems.push(`${name}: two URLs run together: ${u.slice(0, 80)}`);
+    }
+    for (const p of producers ? producers.split(",") : []) {
+      if (p.includes('"')) problems.push(`${name}: stray quote mark in producer "${p}"`);
     }
 
     const habitat =
@@ -123,6 +130,16 @@ async function main() {
       image_url: null,
     };
   });
+
+  if (problems.length) {
+    console.error(`\nNot seeding: ${problems.length} problem(s) in the CSV. Nothing was written to Supabase.\n`);
+    for (const p of problems) console.error(`  - ${p}`);
+    if (!process.argv.includes("--force")) {
+      console.error("\nFix them in data/Species_Final - Website.csv and run again (or pass --force to seed anyway).");
+      process.exit(1);
+    }
+    console.error("\n--force given: seeding anyway.");
+  }
 
   const { data: existing } = await supabase.from("species").select("id, common_name, species_id");
   const byCommonName = new Map((existing ?? []).map((s) => [s.common_name, s.id]));
