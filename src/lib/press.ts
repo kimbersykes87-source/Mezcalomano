@@ -8,17 +8,24 @@ export const PRESS_KIT_ZIP = "/press/mezcalomano-press-kit.zip";
  * Do not add photos that show the jacks or the box QR code.
  */
 const ALT_TEXT: Record<string, string> = {
-  "shop-pdp-01-box-card.jpg": "The Discovery Deck box with an agave card.",
-  "shop-pdp-02-grid-box.jpg": "A grid of Discovery Deck agave cards beside the box.",
-  "shop-pdp-03-box-front.jpg": "The front of the Discovery Deck box.",
-  "shop-pdp-04-guides.jpg": "The two reference cards: the flavor guide and taxonomy notes.",
-  "shop-pdp-05-madrecuixe.jpg": "The Madrecuixe agave card.",
-  "shop-pdp-07-backs.jpg": "The card backs of the Discovery Deck.",
+  "mezcalomano-press-01-four-agave-cards.jpg":
+    "A hand fanning four Discovery Deck agave cards, Madrecuixe, Castilla, Sierra Negra and Pulquero, over a spiky agave plant.",
+  "mezcalomano-press-02-alto-card.jpg":
+    "A hand holding the 9 of spades, the Alto agave card nicknamed Soaring Monarch, against a soft green background.",
+  "mezcalomano-press-03-oaxaca-tahona.jpg":
+    "A stone tahona wheel resting on a pit of roasted agave at a palenque in Oaxaca.",
+  "mezcalomano-press-04-jokers-and-backs.jpg":
+    "The two pollinator jokers and the patterned card backs of the Discovery Deck laid out on pine needles and rock.",
+  "mezcalomano-press-05-masparillo-card.jpg":
+    "The 7 of spades, the Masparillo agave card nicknamed Crag Ripper, propped against a rock.",
+  "mezcalomano-press-06-oaxaca-hierve-el-agua.jpg":
+    "The view from Hierve el Agua in Oaxaca, with green valleys and layered mountains under a cloudy sky.",
 };
 
 export type PressImage = {
   file: string;
   src: string;
+  thumbSrc: string;
   width: number;
   height: number;
   bytes: number;
@@ -26,10 +33,11 @@ export type PressImage = {
 };
 
 export const PRESS_IMAGES: PressImage[] = (
-  pressImages as { file: string; width: number; height: number; bytes: number }[]
+  pressImages as { file: string; thumb: string; width: number; height: number; bytes: number }[]
 ).map((img) => ({
   ...img,
   src: `/press/photos/${img.file}`,
+  thumbSrc: `/press/thumbs/${img.thumb}`,
   alt: ALT_TEXT[img.file] ?? "The Mezcalómano Discovery Deck.",
 }));
 

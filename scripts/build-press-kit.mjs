@@ -2,7 +2,8 @@
 //
 //   1. Reads the original photos in public/press/photos/ (copied byte for byte from
 //      Shared Drive 03_MARKETING/press; never re-encode them).
-//   2. Writes data/press-images.json (file name, pixel size, bytes) for the page.
+//   2. Writes grid thumbnails to public/press/thumbs/ (1000px square, sRGB, for display
+//      only) and data/press-images.json (file name, pixel size, bytes) for the page.
 //   3. Writes public/press/mezcalomano-press-kit.zip with the photos and logos,
 //      stored uncompressed so every file inside is identical to the original.
 //
@@ -19,6 +20,7 @@ const ROOT = process.cwd();
 const PRESS_DIR = path.join(ROOT, "public", "press");
 const PHOTO_DIR = path.join(PRESS_DIR, "photos");
 const LOGO_DIR = path.join(PRESS_DIR, "logos");
+const THUMB_DIR = path.join(PRESS_DIR, "thumbs");
 const ZIP_PATH = path.join(PRESS_DIR, "mezcalomano-press-kit.zip");
 const MANIFEST_PATH = path.join(ROOT, "data", "press-images.json");
 
@@ -38,6 +40,9 @@ if (photos.length === 0) {
   process.exit(1);
 }
 
+fs.rmSync(THUMB_DIR, { recursive: true, force: true });
+fs.mkdirSync(THUMB_DIR, { recursive: true });
+
 const manifest = [];
 for (const file of photos) {
   const full = path.join(PHOTO_DIR, file);
@@ -45,7 +50,14 @@ for (const file of photos) {
   const meta = await sharp(buf).metadata();
   const width = meta.autoOrient?.width ?? meta.width;
   const height = meta.autoOrient?.height ?? meta.height;
-  manifest.push({ file, width, height, bytes: buf.length });
+  const thumb = file.replace(/\.(jpe?g|png)$/i, ".jpg");
+  await sharp(buf)
+    .rotate()
+    .resize(1000, 1000, { fit: "cover", position: "centre" })
+    .toColorspace("srgb")
+    .jpeg({ quality: 80, mozjpeg: true })
+    .toFile(path.join(THUMB_DIR, thumb));
+  manifest.push({ file, thumb, width, height, bytes: buf.length });
   const notes = [];
   if (meta.exif) notes.push("HAS EXIF");
   if (meta.xmp) notes.push("HAS XMP");

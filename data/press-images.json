@@ -1,1 +1,44 @@
-[]
+[
+  {
+    "file": "mezcalomano-press-01-four-agave-cards.jpg",
+    "thumb": "mezcalomano-press-01-four-agave-cards.jpg",
+    "width": 4096,
+    "height": 2304,
+    "bytes": 2185495
+  },
+  {
+    "file": "mezcalomano-press-02-alto-card.jpg",
+    "thumb": "mezcalomano-press-02-alto-card.jpg",
+    "width": 2304,
+    "height": 4096,
+    "bytes": 3540409
+  },
+  {
+    "file": "mezcalomano-press-03-oaxaca-tahona.jpg",
+    "thumb": "mezcalomano-press-03-oaxaca-tahona.jpg",
+    "width": 4096,
+    "height": 2304,
+    "bytes": 4723650
+  },
+  {
+    "file": "mezcalomano-press-04-jokers-and-backs.jpg",
+    "thumb": "mezcalomano-press-04-jokers-and-backs.jpg",
+    "width": 4096,
+    "height": 2304,
+    "bytes": 4801000
+  },
+  {
+    "file": "mezcalomano-press-05-masparillo-card.jpg",
+    "thumb": "mezcalomano-press-05-masparillo-card.jpg",
+    "width": 2304,
+    "height": 4096,
+    "bytes": 11697880
+  },
+  {
+    "file": "mezcalomano-press-06-oaxaca-hierve-el-agua.jpg",
+    "thumb": "mezcalomano-press-06-oaxaca-hierve-el-agua.jpg",
+    "width": 4096,
+    "height": 2304,
+    "bytes": 4434818
+  }
+]

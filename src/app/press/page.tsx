@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { DISCOVERY_DECK_PRODUCT_URL } from "@/lib/site-seo";
 import { PRESS_IMAGES, PRESS_KIT_ZIP, PRESS_LOGOS, formatMegabytes } from "@/lib/press";
 
@@ -81,12 +80,13 @@ export default function PressPage() {
           {PRESS_IMAGES.map((img) => (
             <li key={img.file} className="press-page__tile">
               <a href={img.src} download={img.file} className="press-page__tile-link">
-                <Image
-                  src={img.src}
+                {/* eslint-disable-next-line @next/next/no-img-element -- pre-sized thumbnail; originals can exceed image optimizer limits */}
+                <img
+                  src={img.thumbSrc}
                   alt={img.alt}
-                  width={img.width}
-                  height={img.height}
-                  sizes="(min-width: 768px) 33vw, 50vw"
+                  width={1000}
+                  height={1000}
+                  loading="lazy"
                   className="press-page__tile-img"
                 />
                 <span className="press-page__tile-meta">
