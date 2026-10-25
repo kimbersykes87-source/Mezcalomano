@@ -21,6 +21,12 @@ const PRESS_DIR = path.join(ROOT, "public", "press");
 const PHOTO_DIR = path.join(PRESS_DIR, "photos");
 const LOGO_DIR = path.join(PRESS_DIR, "logos");
 const THUMB_DIR = path.join(PRESS_DIR, "thumbs");
+
+// Optional crop centre for a grid thumbnail, as fractions of the photo's width and height
+// (0.5 = middle). Use it when the subject is off centre, e.g. a card held high in the frame.
+const THUMB_FOCUS = {
+  "mezcalomano-press-02-alto-card.jpg": { x: 0.5, y: 0.43 },
+};
 const ZIP_PATH = path.join(PRESS_DIR, "mezcalomano-press-kit.zip");
 const MANIFEST_PATH = path.join(ROOT, "data", "press-images.json");
 
@@ -51,8 +57,19 @@ for (const file of photos) {
   const width = meta.autoOrient?.width ?? meta.width;
   const height = meta.autoOrient?.height ?? meta.height;
   const thumb = file.replace(/\.(jpe?g|png)$/i, ".jpg");
-  await sharp(buf)
-    .rotate()
+  const focus = THUMB_FOCUS[file];
+  let pipeline = sharp(buf).rotate();
+  if (focus) {
+    const side = Math.min(width, height);
+    const clamp = (v, max) => Math.max(0, Math.min(Math.round(v), max));
+    pipeline = pipeline.extract({
+      left: clamp(focus.x * width - side / 2, width - side),
+      top: clamp(focus.y * height - side / 2, height - side),
+      width: side,
+      height: side,
+    });
+  }
+  await pipeline
     .resize(1000, 1000, { fit: "cover", position: "centre" })
     .toColorspace("srgb")
     .jpeg({ quality: 80, mozjpeg: true })
