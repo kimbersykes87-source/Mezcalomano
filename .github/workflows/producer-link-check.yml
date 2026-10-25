@@ -1,0 +1,78 @@
+name: Producer link check
+
+# Weekly check of every producer link in the /directory.
+# Writes the report to the run summary and keeps one open GitHub issue
+# ("Directory link check") up to date, so GitHub emails you when something breaks.
+# No secrets needed: it reads data/Species_Final - Website.csv from the repo.
+
+on:
+  schedule:
+    # Mondays 08:17 UTC
+    - cron: "17 8 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check links
+        id: check
+        continue-on-error: true
+        run: node scripts/check-producer-links.mjs --json link-report.json --md link-report.md > /dev/null
+
+      - name: Add report to run summary
+        if: always()
+        run: cat link-report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Keep the report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: link-report
+          path: |
+            link-report.md
+            link-report.json
+          retention-days: 90
+
+      - name: Open or update the tracking issue
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const title = "Directory link check";
+            const report = JSON.parse(fs.readFileSync("link-report.json", "utf8"));
+            const body = fs.readFileSync("link-report.md", "utf8").slice(0, 64000);
+            const c = report.counts;
+            const problems = c.BAD_URL + c.DEAD + c.GENERIC + report.structural.length;
+            const { data: open } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo, state: "open", per_page: 100,
+            });
+            const existing = open.find((i) => i.title === title && !i.pull_request);
+            if (problems === 0) {
+              if (existing) {
+                await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: existing.number, body: "All producer links pass. Closing." });
+                await github.rest.issues.update({ owner: context.repo.owner, repo: context.repo.repo, issue_number: existing.number, state: "closed" });
+              }
+              return;
+            }
+            if (existing) {
+              await github.rest.issues.update({ owner: context.repo.owner, repo: context.repo.repo, issue_number: existing.number, body });
+              await github.rest.issues.createComment({
+                owner: context.repo.owner, repo: context.repo.repo, issue_number: existing.number,
+                body: `Weekly run ${report.date}: ${problems} problems (BAD_URL ${c.BAD_URL}, DEAD ${c.DEAD}, GENERIC ${c.GENERIC}, data ${report.structural.length}). Report above is updated. [Run log](${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID})`,
+              });
+            } else {
+              await github.rest.issues.create({ owner: context.repo.owner, repo: context.repo.repo, title, body });
+            }
