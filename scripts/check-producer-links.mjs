@@ -59,7 +59,7 @@ const SPECIES_ALIASES = {
   manso_sahuayo: ["manso", "sahuayo", "cementerio"],
   lyobaa_coyote: ["coyote", "lyobaa"],
   churique: ["lechuguilla"],
-  weber_azul: ["azul", "tequilana", "weber"],
+  weber_azul: ["azul", "tequilana", "weber", "blue agave"],
   verde: ["verde"],
   warash: ["warash"],
   rayo: ["rayo"],
@@ -76,6 +76,28 @@ const SPECIES_ALIASES = {
   chuparrosa: ["chuparrosa", "nussaviorum"],
   pulquero: ["pulquero", "mapisaga"],
   pulque_chino: ["pulque chino", "pulquechino"],
+};
+
+/**
+ * Pages a person has opened and confirmed sell this species, but that the checker
+ * cannot read (built in the browser, behind an age gate, or one page listing many
+ * bottles). They are still checked for being live; only the content test is skipped.
+ * Keyed by species slug. Add the date you checked so stale entries are easy to spot.
+ */
+const HAND_CHECKED = {
+  tepextate: { "https://casacortes.mx/ecommerce/producto/23": "2026-10-25" },
+  cuishe: { "https://casacortes.mx/ecommerce/producto/20": "2026-10-25" },
+  arroqueno: { "https://casacortes.mx/ecommerce/producto/12": "2026-10-25" },
+  barril: { "https://www.creadorspirits.com/buy-online": "2026-10-25", "https://casacortes.mx/ecommerce/producto/19": "2026-10-25" },
+  jabali: { "https://www.creadorspirits.com/buy-online": "2026-10-25" },
+  lumbre: { "https://www.creadorspirits.com/buy-online": "2026-10-25" },
+  mexicano: { "https://www.creadorspirits.com/buy-online": "2026-10-25", "https://casacortes.mx/ecommerce/producto/6": "2026-10-25" },
+  coyote: { "https://www.creadorspirits.com/buy-online": "2026-10-25", "https://casacortes.mx/ecommerce/producto/13": "2026-10-25" },
+  weber_azul: { "https://laleyenda.io/shop/": "2026-10-25" },
+  montana: { "https://eltinieblo.com.mx/donde-comprar/": "2026-10-25" },
+  cenizo: { "https://claseazul.com/clase-azul-family/mezcal-clase-azul_durango": "2026-10-25" },
+  papalote: { "https://claseazul.com/clase-azul-family/clase-azul-mezcal-guerrero": "2026-10-25" },
+  espadin: { "https://shop.ilegalmezcal.com/products/joven-750": "2026-10-25", "https://casacortes.mx/ecommerce/producto/21": "2026-10-25" },
 };
 
 const BUY_RE =
@@ -234,6 +256,8 @@ async function checkLink(slug, row, producer, url, keywords) {
   if (STORE_CLOSED_RE.test(body) || STORE_CLOSED_RE.test(r.title) || status === 423) return { ...r, verdict: "DEAD", note: "Shop is closed or unavailable" };
   if (status === 403 || status === 429 || status === 401 || status === 406 || BOT_WALL_RE.test(r.title))
     return { ...r, verdict: "BLOCKED", note: `HTTP ${status}, bot wall; open it by hand` };
+  const handChecked = HAND_CHECKED[slug]?.[url];
+  if (handChecked && status >= 200 && status < 400) return { ...r, verdict: "OK", note: `Live; content confirmed by hand ${handChecked}` };
   if (r.verdict === "GENERIC") return r;
 
   let fp;
