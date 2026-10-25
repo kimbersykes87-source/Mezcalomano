@@ -279,6 +279,16 @@
   overflow: hidden;
 }
 
+/* Directory (list and species pages): footer sits in the page flow instead of being pinned,
+   so it only appears once you scroll to the bottom and never covers the cards. */
+body:has(.directory-root) .footer {
+  position: static;
+}
+
+.page-content:has(.directory-root) {
+  padding-bottom: 0;
+}
+
 .directory-root {
   display: flex;
   flex: 1 1 auto;
