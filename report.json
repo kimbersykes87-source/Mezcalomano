@@ -5,9 +5,9 @@
     "BAD_URL": 0,
     "DEAD": 7,
     "GENERIC": 1,
-    "BLOCKED": 18,
-    "INFO": 16,
-    "OK": 198
+    "BLOCKED": 17,
+    "INFO": 14,
+    "OK": 201
   },
   "linksChecked": 240,
   "autoChanges": [],
@@ -489,28 +489,6 @@
       "note": "\"De Matachines Ahualulco 750ML\" is sold out"
     },
     {
-      "species": "Pulquero",
-      "slug": "pulquero",
-      "producer": "Puntiagudo",
-      "url": "https://gomadreshop.com/products/puntiagudo-pulquero?_pos=1&_sid=ceaa25d05&_ss=r",
-      "firstFailed": "2026-10-25",
-      "lastFailed": "2026-10-25",
-      "strikes": 1,
-      "verdict": "INFO",
-      "note": "\"Puntiagudo - Pulquero\" is sold out"
-    },
-    {
-      "species": "Pulquero",
-      "slug": "pulquero",
-      "producer": "Rufina",
-      "url": "https://gomadreshop.com/products/rufina-pulquero-puntas?_pos=2&_sid=ceaa25d05&_ss=r",
-      "firstFailed": "2026-10-25",
-      "lastFailed": "2026-10-25",
-      "strikes": 1,
-      "verdict": "INFO",
-      "note": "\"Rufina - Pulquero Puntas\" is sold out"
-    },
-    {
       "species": "Sierra Negra",
       "slug": "sierra_negra",
       "producer": "Marca Negra",
@@ -569,11 +547,6 @@
       "url": "https://delmaguey.com/arroqueno/"
     },
     {
-      "species": "Arroqueño",
-      "producer": "Koch",
-      "url": "https://mezcalkoch.com/expresiones/arroqueno.php"
-    },
-    {
       "species": "Barril",
       "producer": "Del Maguey",
       "url": "https://delmaguey.com/barril/"
@@ -604,6 +577,11 @@
       "url": "https://delmaguey.com/jabali/"
     },
     {
+      "species": "Lumbre",
+      "producer": "Koch",
+      "url": "https://mezcalkoch.com/expresiones/lumbre.php"
+    },
+    {
       "species": "Madrecuixe",
       "producer": "Del Maguey",
       "url": "https://delmaguey.com/madrecuixe/"
@@ -612,11 +590,6 @@
       "species": "Madrecuixe",
       "producer": "Koch",
       "url": "https://mezcalkoch.com/expresiones/madrecuishe.php"
-    },
-    {
-      "species": "Manso Sahuayo",
-      "producer": "Don Mateo",
-      "url": "https://mezcaldonmateo.com/product/mezcal-don-mateo-manso-de-sahuayo/"
     },
     {
       "species": "Rayo",
@@ -655,6 +628,6 @@
     }
   ],
   "catalogProducts": 293,
-  "pullRequest": "",
-  "runUrl": "https://github.com/kimbersykes87-source/Mezcalomano/actions/runs/40222203041"
+  "pullRequest": "https://github.com/kimbersykes87-source/Mezcalomano/pull/3",
+  "runUrl": "https://github.com/kimbersykes87-source/Mezcalomano/actions/runs/40222566554"
 }

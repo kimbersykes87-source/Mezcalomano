@@ -54,8 +54,6 @@
 - Tobalá, Rey Campero: No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE). https://mezcalreycampero.com/product/tobala-rc/
 - Weber Azul, Rey Campero: No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE). https://mezcalreycampero.com/product/azul-rc/
 - Cimarrón, De Matachines: "De Matachines Ahualulco 750ML" is sold out. https://sftequilashop.com/products/de-matachines-ahualulco-750ml?_pos=2&_sid=6f6f3ba80&_ss=r
-- Pulquero, Puntiagudo: "Puntiagudo - Pulquero" is sold out. https://gomadreshop.com/products/puntiagudo-pulquero?_pos=1&_sid=ceaa25d05&_ss=r
-- Pulquero, Rufina: "Rufina - Pulquero Puntas" is sold out. https://gomadreshop.com/products/rufina-pulquero-puntas?_pos=2&_sid=ceaa25d05&_ss=r
 - Sierra Negra, Marca Negra: "Kit Sierra Negra" is sold out. https://buen-mezcal.myshopify.com/products/kit-sierra-negra
 - Tepextate, Marca Negra: "Kit Tepeztate" is sold out. https://buen-mezcal.myshopify.com/products/kit-tepeztate
 - Tobalá, Marca Negra: "Kit Tobalá" is sold out. https://buen-mezcal.myshopify.com/products/kit-tobala
@@ -65,19 +63,18 @@
 - No US buy link: Montana, Lyobaa Coyote, Wocomahi, Cincoañero, Pulque Chino
 - Only one US buy link: Lumbre (Creador), Cimarrón (Chacolo), Manso Sahuayo (La Luna), Churique (Cumbrita de la Sierra), Verde (Lamata), Warash (Tosba), Henequén (Erstwhile), Chahuiqui (Maguey Melate (ensemble)), Chuparrosa (Maguey Melate)
 
-## Check by hand (18 links on shops that block automated checks)
+## Check by hand (17 links on shops that block automated checks)
 
 - Arroqueño, Del Maguey: https://delmaguey.com/arroqueno/
-- Arroqueño, Koch: https://mezcalkoch.com/expresiones/arroqueno.php
 - Barril, Del Maguey: https://delmaguey.com/barril/
 - Barril, Koch: https://mezcalkoch.com/expresiones/barril.php
 - Castilla, Rey Campero: https://www.wine.com/product/rey-campero-castilla-mezcal/539730#closePromoModal
 - Chahuiqui, Maguey Melate (ensemble): https://shop.klwines.com/products/details/1678724
 - Cuishe, Del Maguey: https://delmaguey.com/cuixe/
 - Jabalí, Del Maguey: https://delmaguey.com/jabali/
+- Lumbre, Koch: https://mezcalkoch.com/expresiones/lumbre.php
 - Madrecuixe, Del Maguey: https://delmaguey.com/madrecuixe/
 - Madrecuixe, Koch: https://mezcalkoch.com/expresiones/madrecuishe.php
-- Manso Sahuayo, Don Mateo: https://mezcaldonmateo.com/product/mezcal-don-mateo-manso-de-sahuayo/
 - Rayo, Gusto Historico: https://www.astorwines.com/item/50517
 - Tepextate, Del Maguey: https://delmaguey.com/tepextate/
 - Tepextate, Koch: https://mezcalkoch.com/expresiones/tepeztate.php

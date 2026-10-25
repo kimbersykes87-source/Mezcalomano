@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-25T18:38:55.286Z",
+  "updated": "2026-10-25T18:43:31.828Z",
   "links": {
     "cuishe|https://mezcalreycampero.com/product/cuishe-rc/": {
       "species": "Cuishe",
@@ -88,28 +88,6 @@
       "strikes": 1,
       "verdict": "INFO",
       "note": "\"De Matachines Ahualulco 750ML\" is sold out"
-    },
-    "pulquero|https://gomadreshop.com/products/puntiagudo-pulquero?_pos=1&_sid=ceaa25d05&_ss=r": {
-      "species": "Pulquero",
-      "slug": "pulquero",
-      "producer": "Puntiagudo",
-      "url": "https://gomadreshop.com/products/puntiagudo-pulquero?_pos=1&_sid=ceaa25d05&_ss=r",
-      "firstFailed": "2026-10-25",
-      "lastFailed": "2026-10-25",
-      "strikes": 1,
-      "verdict": "INFO",
-      "note": "\"Puntiagudo - Pulquero\" is sold out"
-    },
-    "pulquero|https://gomadreshop.com/products/rufina-pulquero-puntas?_pos=2&_sid=ceaa25d05&_ss=r": {
-      "species": "Pulquero",
-      "slug": "pulquero",
-      "producer": "Rufina",
-      "url": "https://gomadreshop.com/products/rufina-pulquero-puntas?_pos=2&_sid=ceaa25d05&_ss=r",
-      "firstFailed": "2026-10-25",
-      "lastFailed": "2026-10-25",
-      "strikes": 1,
-      "verdict": "INFO",
-      "note": "\"Rufina - Pulquero Puntas\" is sold out"
     },
     "sierra_negra|https://buen-mezcal.myshopify.com/products/kit-sierra-negra": {
       "species": "Sierra Negra",
