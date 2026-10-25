@@ -5,12 +5,12 @@
 /* CSS Custom Properties - Brand Colors */
 :root {
   --color-dark: #272926;
-  --color-olive: #7B815C;
-  --color-yellow: #A29037;
+  --color-olive: #83856C;
+  --color-yellow: #E0B825;
   --color-terracotta: #B86744;
   --color-white: #FFFFFF;
   /* Directory/Map (MM_Directory compatibility) */
-  --agave-yellow: #a29037;
+  --agave-yellow: #e0b825;
 
   /* Spacing Scale (4px base) */
   --space-1: 4px;
@@ -215,7 +215,7 @@ a:hover {
 .mezcal-map-popup-frame {
   min-width: 200px;
   max-width: min(92vw, 320px);
-  border: 2px solid var(--agave-yellow, #a29037);
+  border: 2px solid var(--agave-yellow, #e0b825);
   border-radius: 0.5rem;
   background: #272926;
   padding: 1rem 1.35rem 1.25rem;
@@ -230,7 +230,7 @@ a:hover {
   text-align: left;
   font-size: 1rem;
   font-weight: 700;
-  color: var(--agave-yellow, #a29037);
+  color: var(--agave-yellow, #e0b825);
   line-height: 1.25;
 }
 
@@ -258,11 +258,11 @@ a:hover {
 }
 
 .mezcal-map-popup-list li::marker {
-  color: var(--agave-yellow, #a29037);
+  color: var(--agave-yellow, #e0b825);
 }
 
 .mezcal-map-popup-list a {
-  color: var(--agave-yellow, #a29037);
+  color: var(--agave-yellow, #e0b825);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -280,7 +280,7 @@ a:hover {
 }
 
 .mezcal-map-popup-detail a {
-  color: var(--agave-yellow, #a29037);
+  color: var(--agave-yellow, #e0b825);
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 2px;
@@ -334,7 +334,7 @@ a:hover {
   border: none;
   border-radius: 0.35rem;
   background: transparent;
-  color: var(--agave-yellow, #a29037);
+  color: var(--agave-yellow, #e0b825);
   font-size: 1.5rem;
   line-height: 1;
   cursor: pointer;
@@ -346,7 +346,7 @@ a:hover {
 }
 
 .map-state-detail-close:focus-visible {
-  outline: 2px solid var(--agave-yellow, #a29037);
+  outline: 2px solid var(--agave-yellow, #e0b825);
   outline-offset: 2px;
 }
 

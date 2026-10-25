@@ -51,8 +51,8 @@ Production-ready, mobile-first marketing website for Mezcalómano, built with Ne
 
 ```css
 --color-dark: #272926      /* Background */
---color-olive: #7B815C     /* Primary accent, buttons */
---color-yellow: #A29037    /* Secondary accent */
+--color-olive: #83856C     /* Primary accent, buttons */
+--color-yellow: #E0B825    /* Secondary accent */
 --color-terracotta: #B86744 /* Hover states */
 --color-white: #FFFFFF     /* Text */
 ```

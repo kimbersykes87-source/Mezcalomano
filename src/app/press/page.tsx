@@ -13,7 +13,13 @@ export const metadata: Metadata = {
   },
 };
 
-const QUICK_FACTS = ["$29.99", "40 kinds of mezcal", "Ships from the US, free US standard shipping"];
+const QUICK_FACTS = [
+  "$29.99",
+  "40 kinds of mezcal",
+  "Pre-orders open October 27, ships from November 30",
+  "Order by December 17 for US Christmas delivery",
+  "Free US standard shipping",
+];
 
 export default function PressPage() {
   return (
@@ -23,6 +29,7 @@ export default function PressPage() {
         <p className="press-page__subhead">
           Playing cards that introduce 40 kinds of mezcal and the agaves behind them.
         </p>
+        <p className="press-page__tagline">Gift it to the friend who always orders espadín. Or keep it.</p>
         <ul className="press-page__facts" aria-label="Quick facts">
           {QUICK_FACTS.map((fact) => (
             <li key={fact}>{fact}</li>
@@ -36,10 +43,14 @@ export default function PressPage() {
       <section className="press-page__section" aria-labelledby="press-about">
         <h2 id="press-about" className="press-page__heading">About the deck</h2>
         <p>
-          A full deck of playing cards that works as a field guide, tasting companion and
-          conversation starter for mezcal. More than 80% of mezcal is made from one
-          agave, espadín. Each agave card gives its local and species name, a memorable nickname,
-          and a flavor compass that always reads smoke, then agave, then fermentation.
+          About 85% of mezcal is made from a single agave, espadín (COMERCAM, 2026). It&apos;s a
+          great place to start, but there&apos;s a lot more to taste. The Discovery Deck is a full
+          deck of playing cards that introduces 40 kinds of mezcal and the agaves behind them. Each
+          agave card gives its local and species name, a memorable nickname, and a flavor compass
+          for smoke, agave and fermentation. A QR code on the box opens an online directory of
+          where each agave grows and who&apos;s bottling it. No producer pays to be listed. It&apos;s a
+          field guide, a tasting companion and a conversation starter. And it&apos;s still a proper
+          deck of cards, so deal a hand while you pour.
         </p>
       </section>
 
@@ -57,9 +68,9 @@ export default function PressPage() {
         <h2 id="press-specs" className="press-page__heading">Specs</h2>
         <ul className="press-page__list">
           <li>Casino-quality 310gsm German black-core stock.</li>
-          <li>Poker size, 2.5&quot; x 3.5&quot;.</li>
+          <li>Poker size, 2.5&quot; x 3.5&quot;, rounded corners.</li>
           <li>Butter-varnish finish.</li>
-          <li>Custom printed box with matte lamination.</li>
+          <li>Custom printed box with matte lamination and a QR code to the online agave directory.</li>
         </ul>
       </section>
 

@@ -358,22 +358,22 @@ body:has(.directory-root) .footer {
 }
 
 .species-card-content .species-card-icon {
-  color: var(--agave-yellow, #a29037);
+  color: var(--agave-yellow, #e0b825);
 }
 
 /* Producer links: global `a { text-decoration: none }` is unlayered and beats Tailwind utilities */
 .species-card-content a.species-card-producer-link {
   text-decoration: underline;
-  text-decoration-color: var(--agave-yellow, #a29037);
+  text-decoration-color: var(--agave-yellow, #e0b825);
   text-underline-offset: 0.2em;
 }
 
 /* Directory: text actions (e.g. clear search) — underline like producer links; beats global `a` / button resets */
 button.directory-inline-link {
   text-decoration: underline;
-  text-decoration-color: var(--agave-yellow, #a29037);
+  text-decoration-color: var(--agave-yellow, #e0b825);
   text-underline-offset: 0.2em;
-  color: var(--agave-yellow, #a29037);
+  color: var(--agave-yellow, #e0b825);
   font-size: 1.3125rem;
   line-height: 1.35;
   background: transparent;
@@ -1417,7 +1417,7 @@ button.directory-inline-link:hover {
 }
 
 .form-success {
-  background-color: rgba(123, 129, 92, 0.2);
+  background-color: rgba(131, 133, 108, 0.2);
   border: 1px solid var(--color-olive);
   border-radius: var(--radius-md);
   padding: var(--space-4);
@@ -1714,4 +1714,16 @@ button.directory-inline-link:hover {
 .press-page__tile-img--contain {
   object-fit: contain;
   background-color: var(--color-white);
+}
+
+.press-page__subhead:has(+ .press-page__tagline) {
+  margin-bottom: var(--space-2);
+}
+
+.press-page__tagline {
+  font-size: clamp(1rem, 3.2vw, 1.125rem);
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 auto var(--space-6);
+  max-width: 34rem;
 }
