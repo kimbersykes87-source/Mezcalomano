@@ -20,7 +20,8 @@
     "sync:agave-matrix": "node scripts/sync-agave-images-to-matrix.mjs",
     "supabase:push": "node scripts/supabase-cli-push.mjs",
     "keepalive:supabase": "node scripts/supabase-keepalive.mjs",
-    "check:links": "node scripts/check-producer-links.mjs"
+    "check:links": "node scripts/check-producer-links.mjs",
+    "directory:weekly": "node scripts/directory-weekly.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.95.3",

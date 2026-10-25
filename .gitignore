@@ -8,3 +8,5 @@ dist
 out
 *.tsbuildinfo
 CLAUDE.md
+# weekly directory job working files
+.bot/

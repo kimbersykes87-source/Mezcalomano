@@ -1,0 +1,40 @@
+{
+  "_about": "US shops whose full catalog the weekly directory job scans for new bottles (Shopify stores only: they publish /products.json). Order matters: earlier shops are preferred when several stock the same bottle. 'producerFrom' says where the shop puts the producer name: 'title' (text before the first ' - '), 'vendor', or 'tag:Producer_'. 'skipVendors' drops stock that is not shipped from the US.",
+  "maxUsLinksPerSpecies": 5,
+  "shops": [
+    {
+      "host": "gomadreshop.com",
+      "name": "Madre Shop",
+      "producerFrom": "title"
+    },
+    {
+      "host": "shop.magueyspirits.com",
+      "name": "Maguey Spirits",
+      "producerFrom": "vendor"
+    },
+    {
+      "host": "caskcartel.com",
+      "name": "Cask Cartel",
+      "producerFrom": "tag:Producer_",
+      "skipVendors": [
+        "ConciergeUK"
+      ]
+    }
+  ],
+  "producerAliases": {
+    "5 sentidos": "Cinco Sentidos",
+    "neta": "NETA",
+    "la neta": "NETA",
+    "chaco": "Chacolo",
+    "bozal mezcal": "Bozal",
+    "burritto": "Burrito Fiestero",
+    "burrito": "Burrito Fiestero",
+    "pal alma": "Pal'alma",
+    "agua sol": "Agua del Sol",
+    "lalocura": "Lalocura",
+    "la locura": "Lalocura",
+    "rey campero": "Rey Campero",
+    "hacienda oponguio": "Hacienda de Bañuelos",
+    "noble": "Noble Coyote"
+  }
+}
