@@ -13,6 +13,7 @@ import {
   Wine,
 } from "lucide-react";
 import { speciesDirectorySlug } from "@/lib/slug";
+import { producerLinks, type ProducerLink } from "@/lib/producers";
 import type { Species } from "@/types/species";
 
 /** Shown only after species/matrix image URLs fail to load (not when URL is missing). */
@@ -27,6 +28,31 @@ function parseHabitat(habitat: Species["habitat"]) {
   const t = habitat as { terrain?: string };
   if (!t.terrain) return null;
   return t;
+}
+
+/** Comma-separated producer names, linked where there is a URL. */
+function ProducerNames({ list }: { list: ProducerLink[] }) {
+  return (
+    <span className="text-center text-sm">
+      {list.map((p, i) => (
+        <span key={p.name + "-" + i}>
+          {i > 0 && ", "}
+          {p.url ? (
+            <a
+              href={p.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="species-card-producer-link text-[var(--agave-yellow)] underline decoration-[var(--agave-yellow)] underline-offset-2 hover:opacity-90"
+            >
+              {p.name}
+            </a>
+          ) : (
+            p.name
+          )}
+        </span>
+      ))}
+    </span>
+  );
 }
 
 function SpeciesCardContent({
@@ -69,13 +95,10 @@ function SpeciesCardContent({
         : species.size_height_feet || species.size_height_meters
       : null;
 
-  const producerList = species.producers
-    ? species.producers.split(",").map((s) => s.trim()).filter(Boolean)
-    : [];
-  const linkList = species.producer_links
-    ? species.producer_links.split(",").map((u) => u.trim()).filter(Boolean)
-    : [];
-  const hasProducers = producerList.length > 0;
+  const producers = producerLinks(species);
+  const usProducers = producers.filter((p) => p.us);
+  const otherProducers = producers.filter((p) => !p.us);
+  const hasProducers = producers.length > 0;
 
   const statesFormatted =
     species.states &&
@@ -146,28 +169,18 @@ function SpeciesCardContent({
                     <Users className={ICON_CLASS} aria-hidden />
                     <span className="text-sm text-[var(--agave-yellow)]">Producers</span>
                   </div>
-                  <span className="text-center text-sm">
-                    {producerList.map((name, i) => {
-                      const url = linkList[i]?.startsWith("http") ? linkList[i] : null;
-                      return (
-                        <span key={name + "-" + i}>
-                          {i > 0 && ", "}
-                          {url ? (
-                            <a
-                              href={url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="species-card-producer-link text-[var(--agave-yellow)] underline decoration-[var(--agave-yellow)] underline-offset-2 hover:opacity-90"
-                            >
-                              {name}
-                            </a>
-                          ) : (
-                            name
-                          )}
-                        </span>
-                      );
-                    })}
-                  </span>
+                  {usProducers.length > 0 && (
+                    <div className="flex flex-col items-center" style={{ gap: 2 }}>
+                      <span className="species-card-producer-group">Buy in the US</span>
+                      <ProducerNames list={usProducers} />
+                    </div>
+                  )}
+                  {otherProducers.length > 0 && (
+                    <div className="flex flex-col items-center" style={{ gap: 2, marginTop: usProducers.length ? 6 : 0 }}>
+                      {usProducers.length > 0 && <span className="species-card-producer-group">More producers</span>}
+                      <ProducerNames list={otherProducers} />
+                    </div>
+                  )}
                 </div>
               )}
               {species.description && (
