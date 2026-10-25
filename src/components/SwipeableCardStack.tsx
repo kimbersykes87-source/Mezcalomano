@@ -241,7 +241,7 @@ export function SwipeableCardStack({
   ) : (
     <p className="min-w-0 flex-1 text-center text-sm text-white/85" aria-live="polite">
       {current
-        ? `${currentIndex + 1} of ${species.length} — ${current.common_name}`
+        ? `${currentIndex + 1} of ${species.length}: ${current.common_name}`
         : ""}
     </p>
   );
