@@ -1,0 +1,26 @@
+[
+  {
+    "file": "mezcalomano-packshot-01-transparent.png",
+    "thumb": "packshot-mezcalomano-packshot-01-transparent.jpg",
+    "width": 2775,
+    "height": 2023,
+    "bytes": 4126206,
+    "transparent": true
+  },
+  {
+    "file": "mezcalomano-packshot-02-hero-olive.jpg",
+    "thumb": "packshot-mezcalomano-packshot-02-hero-olive.jpg",
+    "width": 3000,
+    "height": 3000,
+    "bytes": 1599064,
+    "transparent": false
+  },
+  {
+    "file": "mezcalomano-packshot-03-hero-stone.jpg",
+    "thumb": "packshot-mezcalomano-packshot-03-hero-stone.jpg",
+    "width": 3000,
+    "height": 3000,
+    "bytes": 1599233,
+    "transparent": false
+  }
+]

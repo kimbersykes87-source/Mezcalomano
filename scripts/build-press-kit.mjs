@@ -27,8 +27,10 @@ const THUMB_DIR = path.join(PRESS_DIR, "thumbs");
 const THUMB_FOCUS = {
   "mezcalomano-press-02-alto-card.jpg": { x: 0.5, y: 0.43 },
 };
+const PACKSHOT_DIR = path.join(PRESS_DIR, "packshots");
 const ZIP_PATH = path.join(PRESS_DIR, "mezcalomano-press-kit.zip");
 const MANIFEST_PATH = path.join(ROOT, "data", "press-images.json");
+const PACKSHOT_MANIFEST_PATH = path.join(ROOT, "data", "press-packshots.json");
 
 const listFiles = (dir, exts) =>
   fs.existsSync(dir)
@@ -40,6 +42,7 @@ const listFiles = (dir, exts) =>
 
 const photos = listFiles(PHOTO_DIR, [".jpg", ".jpeg", ".png"]);
 const logos = listFiles(LOGO_DIR, [".png", ".svg"]);
+const packshots = listFiles(PACKSHOT_DIR, [".jpg", ".jpeg", ".png"]);
 
 if (photos.length === 0) {
   console.error("No photos found in public/press/photos/. Copy the originals there first.");
@@ -85,6 +88,25 @@ for (const file of photos) {
 }
 
 fs.writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2) + "\n");
+
+// Packshots (cut-outs and hero shots): thumbnails show the whole image, on white,
+// so the transparent cut-out previews the way an editor will use it.
+const packshotManifest = [];
+for (const file of packshots) {
+  const full = path.join(PACKSHOT_DIR, file);
+  const buf = fs.readFileSync(full);
+  const meta = await sharp(buf).metadata();
+  const thumb = "packshot-" + file.replace(/\.(jpe?g|png)$/i, ".jpg");
+  await sharp(buf)
+    .resize(1000, 1000, { fit: "contain", background: "#ffffff" })
+    .flatten({ background: "#ffffff" })
+    .toColorspace("srgb")
+    .jpeg({ quality: 82, mozjpeg: true })
+    .toFile(path.join(THUMB_DIR, thumb));
+  packshotManifest.push({ file, thumb, width: meta.width, height: meta.height, bytes: buf.length, transparent: !!meta.hasAlpha });
+  console.log(`${file}  ${meta.width}x${meta.height}  ${(buf.length / 1e6).toFixed(2)} MB  ${meta.hasAlpha ? "transparent" : "opaque"}`);
+}
+fs.writeFileSync(PACKSHOT_MANIFEST_PATH, JSON.stringify(packshotManifest, null, 2) + "\n");
 console.log(`Wrote ${path.relative(ROOT, MANIFEST_PATH)}`);
 
 // Minimal ZIP writer, STORE method only (no compression, no re-encoding).
@@ -96,6 +118,7 @@ function dosDateTime(d) {
 
 const entries = [
   ...photos.map((f) => ({ name: `mezcalomano-press-kit/photos/${f}`, full: path.join(PHOTO_DIR, f) })),
+  ...packshots.map((f) => ({ name: `mezcalomano-press-kit/packshots/${f}`, full: path.join(PACKSHOT_DIR, f) })),
   ...logos.map((f) => ({ name: `mezcalomano-press-kit/logos/${f}`, full: path.join(LOGO_DIR, f) })),
 ];
 

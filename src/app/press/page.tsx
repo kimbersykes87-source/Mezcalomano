@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { DISCOVERY_DECK_PRODUCT_URL } from "@/lib/site-seo";
-import { PRESS_IMAGES, PRESS_KIT_ZIP, PRESS_LOGOS, formatMegabytes } from "@/lib/press";
+import { PRESS_IMAGES, PRESS_KIT_ZIP, PRESS_LOGOS, PRESS_PACKSHOTS, formatMegabytes } from "@/lib/press";
 
 export const metadata: Metadata = {
   title: "Press",
@@ -96,6 +96,34 @@ export default function PressPage() {
             </li>
           ))}
         </ul>
+        {PRESS_PACKSHOTS.length > 0 && (
+          <>
+            <h3 className="press-page__subheading">Packshots</h3>
+            <p className="press-page__note">
+              The cut-out has a transparent background and a soft shadow, ready for white pages.
+            </p>
+            <ul className="press-page__grid">
+              {PRESS_PACKSHOTS.map((img) => (
+                <li key={img.file} className="press-page__tile">
+                  <a href={img.src} download={img.file} className="press-page__tile-link">
+                    {/* eslint-disable-next-line @next/next/no-img-element -- pre-sized thumbnail */}
+                    <img
+                      src={img.thumbSrc}
+                      alt={img.alt}
+                      width={1000}
+                      height={1000}
+                      loading="lazy"
+                      className="press-page__tile-img press-page__tile-img--contain"
+                    />
+                    <span className="press-page__tile-meta">
+                      {img.label} · {img.width} x {img.height} · {formatMegabytes(img.bytes)}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
         <a href={PRESS_KIT_ZIP} download className="btn btn-hero-cta--olive press-page__zip">
           Download all (zip)
         </a>
@@ -106,7 +134,7 @@ export default function PressPage() {
         <div className="press-page__logos">
           <div className="press-page__logo press-page__logo--light">
             {/* eslint-disable-next-line @next/next/no-img-element -- static SVG preview */}
-            <img src="/press/logos/mezcalomano-logo-for-light-backgrounds.svg" alt="Mezcalómano logo for light backgrounds" width={250} height={80} />
+            <img src="/press/logos/mezcalomano-logo-for-white-backgrounds.svg" alt="Mezcalómano logo for white backgrounds" width={250} height={80} />
           </div>
           <div className="press-page__logo press-page__logo--dark">
             {/* eslint-disable-next-line @next/next/no-img-element -- static SVG preview */}

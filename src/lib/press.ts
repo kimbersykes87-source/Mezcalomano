@@ -1,4 +1,5 @@
 import pressImages from "../../data/press-images.json";
+import pressPackshots from "../../data/press-packshots.json";
 
 /** Press kit zip, built by `npm run build:press-kit`. */
 export const PRESS_KIT_ZIP = "/press/mezcalomano-press-kit.zip";
@@ -41,10 +42,35 @@ export const PRESS_IMAGES: PressImage[] = (
   alt: ALT_TEXT[img.file] ?? "The Mezcalómano Discovery Deck.",
 }));
 
+const PACKSHOT_TEXT: Record<string, { label: string; alt: string }> = {
+  "mezcalomano-packshot-01-transparent.png": {
+    label: "Cut-out, transparent PNG with built-in shadow",
+    alt: "The Discovery Deck box beside the Sierra Negra card and a card back, cut out on a transparent background with a soft shadow.",
+  },
+  "mezcalomano-packshot-02-hero-olive.jpg": {
+    label: "Hero shot on olive",
+    alt: "The Discovery Deck box beside the Sierra Negra card and a card back on an olive green background.",
+  },
+  "mezcalomano-packshot-03-hero-stone.jpg": {
+    label: "Hero shot on stone",
+    alt: "The Discovery Deck box beside the Sierra Negra card and a card back on a warm stone background.",
+  },
+};
+
+export const PRESS_PACKSHOTS: (PressImage & { label: string })[] = (
+  pressPackshots as { file: string; thumb: string; width: number; height: number; bytes: number }[]
+).map((img) => ({
+  ...img,
+  src: `/press/packshots/${img.file}`,
+  thumbSrc: `/press/thumbs/${img.thumb}`,
+  label: PACKSHOT_TEXT[img.file]?.label ?? "Packshot",
+  alt: PACKSHOT_TEXT[img.file]?.alt ?? "The Mezcalómano Discovery Deck.",
+}));
+
 export const PRESS_LOGOS = [
-  { label: "Logo for light backgrounds, PNG", href: "/press/logos/mezcalomano-logo-for-light-backgrounds.png" },
+  { label: "Logo for white backgrounds, PNG", href: "/press/logos/mezcalomano-logo-for-white-backgrounds.png" },
   { label: "Logo for dark backgrounds, PNG", href: "/press/logos/mezcalomano-logo-for-dark-backgrounds.png" },
-  { label: "Logo for light backgrounds, SVG", href: "/press/logos/mezcalomano-logo-for-light-backgrounds.svg" },
+  { label: "Logo for white backgrounds, SVG", href: "/press/logos/mezcalomano-logo-for-white-backgrounds.svg" },
   { label: "Logo for dark backgrounds, SVG", href: "/press/logos/mezcalomano-logo-for-dark-backgrounds.svg" },
 ];
 
