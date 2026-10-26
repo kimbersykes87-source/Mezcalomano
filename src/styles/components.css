@@ -721,27 +721,23 @@ button.directory-inline-link:hover {
   filter: brightness(1.1);
 }
 
-/* Home landing: hero lines + copy + CTA, logo lives in the header.
-   Fit between header and footer on one screen when possible. */
+/* Home landing: headline, still life, CTA, then copy. Same stack on all breakpoints. */
 .page-content:has(.home-landing) {
   margin-top: 0;
   padding-bottom: 0;
-  overflow: hidden;
+  overflow: visible;
   min-height: 100svh;
-  height: 100svh;
+  height: auto;
 }
 
 .home-landing {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 100svh;
-  height: 100svh;
+  justify-content: flex-start;
   width: 100%;
   box-sizing: border-box;
-  /* Keep content clear of fixed header (88px) and footer (~72px) */
-  padding: 88px var(--space-4) 72px;
+  padding: 88px 0 88px;
   background-color: var(--color-dark);
   text-align: center;
 }
@@ -750,22 +746,54 @@ button.directory-inline-link:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--space-6);
   width: 100%;
-  max-width: 60ch;
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) var(--space-8);
 }
 
 .home-landing__lines {
   font-family: var(--font-family);
   font-weight: var(--font-weight-regular);
-  font-size: clamp(1.125rem, 4.5vw, 1.625rem);
-  line-height: 1.25;
+  font-size: clamp(1rem, 3.9vw, 1.625rem);
+  line-height: 1.3;
   letter-spacing: 0.02em;
   text-transform: none;
   color: var(--color-white);
   margin: 0;
   text-align: center;
+  padding: 0 var(--space-2);
+}
+
+@media (max-width: 430px) {
+  .home-landing__lines br {
+    display: none;
+  }
+
+  .home-landing__lines {
+    font-size: 1.0625rem;
+  }
+}
+
+.home-landing__visual {
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  line-height: 0;
+}
+
+.home-landing__img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: min(38svh, 20rem);
+  object-fit: contain;
+  object-position: center center;
 }
 
 .home-landing__copy {
@@ -793,6 +821,26 @@ button.directory-inline-link:hover {
 .home-landing__unit .btn {
   flex-shrink: 0;
   margin: 0;
+}
+
+@media (min-width: 768px) {
+  .home-landing__unit {
+    max-width: 36rem;
+    padding: var(--space-8) var(--space-6);
+    gap: var(--space-6);
+  }
+
+  .home-landing__lines {
+    font-size: clamp(1.25rem, 2vw, 1.625rem);
+  }
+
+  .home-landing__img {
+    max-height: min(42svh, 24rem);
+  }
+
+  .home-landing__copy p {
+    font-size: 1.125rem;
+  }
 }
 
 /* Page Hero (reusable): two-row layout, image capped + content in first viewport */

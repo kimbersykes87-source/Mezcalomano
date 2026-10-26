@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element -- LCP hero; CSS switches contain/cover by breakpoint */
 import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
@@ -59,6 +60,12 @@ export const metadata: Metadata = {
   },
 };
 
+const HOME_HERO_SRC = "/assets/photos/Hero_New.webp";
+const HOME_HERO_WIDTH = 713;
+const HOME_HERO_HEIGHT = 769;
+const HOME_HERO_ALT =
+  "A Discovery Deck card standing on terracotta plaster, its agave back casting a long shadow on the wall.";
+
 export default function HomePage() {
   return (
     <section className="home-landing" aria-labelledby="home-landing-title">
@@ -72,6 +79,19 @@ export default function HomePage() {
           <br />
           Gift it or keep it.
         </h1>
+        <div className="home-landing__visual">
+          <img
+            className="home-landing__img"
+            src={HOME_HERO_SRC}
+            alt={HOME_HERO_ALT}
+            width={HOME_HERO_WIDTH}
+            height={HOME_HERO_HEIGHT}
+            fetchPriority="high"
+          />
+        </div>
+        <Link href="/buy" className="btn btn-hero-cta btn-hero-cta--olive">
+          PRE-ORDER THE DISCOVERY DECK
+        </Link>
         <div className="home-landing__copy">
           <p>
             The Discovery Deck is a deck of playing cards that introduces 40 kinds of mezcal
@@ -89,9 +109,6 @@ export default function HomePage() {
             shipping. Pre-orders ship from November 30, in time for Christmas.
           </p>
         </div>
-        <Link href="/buy" className="btn btn-hero-cta btn-hero-cta--olive">
-          PRE-ORDER THE DISCOVERY DECK
-        </Link>
       </div>
     </section>
   );
