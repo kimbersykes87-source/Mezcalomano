@@ -214,6 +214,7 @@ a:hover {
 /* Map page: state detail content (centered dialog + inner frame) */
 .mezcal-map-popup-frame {
   min-width: 200px;
+  width: 100%;
   max-width: min(92vw, 320px);
   border: 2px solid var(--agave-yellow, #e0b825);
   border-radius: 0.5rem;
@@ -305,7 +306,7 @@ a:hover {
 
 .map-state-detail-panel {
   position: relative;
-  width: 100%;
+  width: fit-content;
   max-width: min(92vw, 22rem);
   max-height: min(85dvh, 36rem);
   overflow: auto;
