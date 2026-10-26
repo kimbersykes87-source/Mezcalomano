@@ -2,6 +2,7 @@ export const metadata = {
   title: "About",
   description:
     "Mezcalómano celebrates agave through the Discovery Deck playing cards and a free species directory for mezcal lovers and the curious.",
+  alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {
@@ -53,7 +54,7 @@ export default function AboutPage() {
         </p>
       </div>
 
-      {/* PLACEHOLDER — Collage band (final = agave, production, bottles, landscape; landscape crops). Max 4 images — keep these slot dimensions when swapping finals. */}
+      {/* PLACEHOLDER: Collage band (final = agave, production, bottles, landscape; landscape crops). Max 4 images: keep these slot dimensions when swapping finals. */}
       <div
         className="about-page__collage"
         role="group"

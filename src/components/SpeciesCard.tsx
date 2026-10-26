@@ -60,11 +60,13 @@ function SpeciesCardContent({
   showPermalink,
   primaryUrl,
   fallbackUrl,
+  commonNameAsHeading,
 }: {
   species: Species;
   showPermalink: boolean;
   primaryUrl: string | null;
   fallbackUrl: string | null;
+  commonNameAsHeading: boolean;
 }) {
   const [imageSrc, setImageSrc] = useState<string | null>(primaryUrl);
 
@@ -152,7 +154,15 @@ function SpeciesCardContent({
                   <Leaf className={ICON_CLASS} aria-hidden />
                   <span className="text-sm text-[var(--agave-yellow)]">Common name</span>
                 </div>
-                <span className="notranslate text-sm" translate="no">{species.common_name}</span>
+                {commonNameAsHeading ? (
+                  <h1 className="species-card-common-name notranslate text-sm" translate="no">
+                    {species.common_name}
+                  </h1>
+                ) : (
+                  <span className="species-card-common-name notranslate text-sm" translate="no">
+                    {species.common_name}
+                  </span>
+                )}
               </div>
               {species.mezcal_use && (
                 <div className="flex flex-col items-center" style={{ gap: 4 }}>
@@ -238,10 +248,12 @@ export function SpeciesCard({
   species,
   showPermalink = true,
   fallbackImageUrl,
+  commonNameAsHeading = false,
 }: {
   species: Species;
   showPermalink?: boolean;
   fallbackImageUrl?: string | null;
+  commonNameAsHeading?: boolean;
 }) {
   const primaryUrl = species.image_url?.trim() ?? null;
   const fallbackUrl =
@@ -256,6 +268,7 @@ export function SpeciesCard({
       showPermalink={showPermalink}
       primaryUrl={primaryUrl}
       fallbackUrl={fallbackUrl}
+      commonNameAsHeading={commonNameAsHeading}
     />
   );
 }

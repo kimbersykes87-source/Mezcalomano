@@ -1,12 +1,45 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { HOME_META_DESCRIPTION, OG_IMAGE_PATH, SITE_URL } from "@/lib/site-seo";
+import JsonLd from "@/components/JsonLd";
+import {
+  DISCOVERY_DECK_PRODUCT_DESCRIPTION,
+  DISCOVERY_DECK_PRODUCT_URL,
+  HOME_META_DESCRIPTION,
+  OG_IMAGE_PATH,
+  SITE_URL,
+} from "@/lib/site-seo";
+
+const OG_IMAGE_ALT =
+  "The Discovery Deck box beside the Sierra Negra card on a charcoal background";
+
+const HOME_TITLE = "The Discovery Deck: Mezcal Playing Cards | Mezcalómano";
+
+const discoveryDeckProductLd = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: "The Discovery Deck",
+  sku: "MM-1002",
+  brand: { "@type": "Brand", name: "Mezcalómano" },
+  description: DISCOVERY_DECK_PRODUCT_DESCRIPTION,
+  image: SITE_URL + OG_IMAGE_PATH,
+  url: DISCOVERY_DECK_PRODUCT_URL,
+  offers: {
+    "@type": "Offer",
+    url: DISCOVERY_DECK_PRODUCT_URL,
+    priceCurrency: "USD",
+    price: "29.99",
+    availability: "https://schema.org/PreOrder",
+    availabilityStarts: "2026-11-30",
+    itemCondition: "https://schema.org/NewCondition",
+  },
+};
 
 export const metadata: Metadata = {
-  title: "Mezcalómano | Discovery Deck & Agave Species Directory",
+  title: { absolute: HOME_TITLE },
   description: HOME_META_DESCRIPTION,
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Mezcalómano | Discovery Deck & Agave Species Directory",
+    title: HOME_TITLE,
     description: HOME_META_DESCRIPTION,
     url: SITE_URL,
     images: [
@@ -14,13 +47,13 @@ export const metadata: Metadata = {
         url: OG_IMAGE_PATH,
         width: 1200,
         height: 630,
-        alt: "The Mezcalómano Discovery Deck box beside two agave cards, Pulquero and Castilla, on a wooden table.",
+        alt: OG_IMAGE_ALT,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mezcalómano | Discovery Deck & Agave Species Directory",
+    title: HOME_TITLE,
     description: HOME_META_DESCRIPTION,
     images: [OG_IMAGE_PATH],
   },
@@ -30,11 +63,12 @@ export default function HomePage() {
   return (
     <section className="home-landing" aria-labelledby="home-landing-title">
       {/* deploy-test 2026-08-25 */}
+      <JsonLd data={discoveryDeckProductLd} />
       <div className="home-landing__unit">
         {/* eslint-disable-next-line @next/next/no-img-element -- brand SVG lockup; sized via CSS */}
         <img
           src="/assets/brand/logos/mezcalomano_lockup_stacked_dark.svg"
-          alt="Mezcalómano — Beyond Espadín"
+          alt="Mezcalómano, Beyond Espadín"
           className="home-landing__logo"
           width={250}
           height={80}
@@ -46,8 +80,25 @@ export default function HomePage() {
           <br />
           Gift it or keep it.
         </h1>
+        <div className="home-landing__copy">
+          <p>
+            The Discovery Deck is a deck of playing cards that introduces 40 kinds of mezcal
+            and the agaves behind them. About 85% of mezcal is made from a single agave,
+            espadín. It&apos;s a great place to start, but there&apos;s a lot more to taste.
+          </p>
+          <p>
+            Each agave card gives its local and species name, a memorable nickname, and a
+            flavor compass for smoke, agave and fermentation. A QR code on the box opens our
+            online directory: where each agave grows and who&apos;s bottling it. And it&apos;s
+            still a proper deck of cards, so deal a hand while you pour.
+          </p>
+          <p>
+            Gift it to the friend who always orders espadín. Or keep it. $29.99 with free US
+            shipping. Pre-orders ship from November 30, in time for Christmas.
+          </p>
+        </div>
         <Link href="/buy" className="btn btn-hero-cta btn-hero-cta--olive">
-          BUY THE DISCOVERY DECK
+          PRE-ORDER THE DISCOVERY DECK
         </Link>
       </div>
     </section>

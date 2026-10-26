@@ -19,6 +19,7 @@ const QUICK_FACTS = [
   "Pre-orders open October 27, ships from November 30",
   "Order by December 17 for US Christmas delivery",
   "Free US standard shipping",
+  "Also ships to Canada, Australia, New Zealand, Singapore and Hong Kong",
 ];
 
 export default function PressPage() {
@@ -168,6 +169,10 @@ export default function PressPage() {
         <p>
           Press, sample and stockist requests:{" "}
           <a href="mailto:hola@mezcalomano.com">hola@mezcalomano.com</a>
+        </p>
+        <p>
+          Link for coverage:{" "}
+          <a href={DISCOVERY_DECK_PRODUCT_URL}>{DISCOVERY_DECK_PRODUCT_URL}</a>
         </p>
         <p className="press-page__social">
           <a href="https://www.instagram.com/mezcalomano/" target="_blank" rel="noopener noreferrer">

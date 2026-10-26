@@ -3,8 +3,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
 import {
-  DISCOVERY_DECK_PRODUCT_DESCRIPTION,
-  DISCOVERY_DECK_PRODUCT_URL,
   LOGO_IMAGE_PATH,
   OG_IMAGE_PATH,
   SITE_META_DESCRIPTION,
@@ -15,7 +13,6 @@ import "@/styles/components.css";
 
 const orgId = `${SITE_URL}/#organization`;
 const websiteId = `${SITE_URL}/#website`;
-const productId = `${DISCOVERY_DECK_PRODUCT_URL}#product`;
 
 const siteStructuredData = {
   "@context": "https://schema.org",
@@ -26,6 +23,10 @@ const siteStructuredData = {
       name: "Mezcalómano",
       url: SITE_URL,
       logo: `${SITE_URL}${LOGO_IMAGE_PATH}`,
+      sameAs: [
+        "https://www.instagram.com/mezcalomano/",
+        "https://www.tiktok.com/@mezcalomano",
+      ],
     },
     {
       "@type": "WebSite",
@@ -34,15 +35,6 @@ const siteStructuredData = {
       name: "Mezcalómano",
       description: SITE_META_DESCRIPTION,
       publisher: { "@id": orgId },
-    },
-    {
-      "@type": "Product",
-      "@id": productId,
-      name: "Discovery Deck",
-      description: DISCOVERY_DECK_PRODUCT_DESCRIPTION,
-      url: DISCOVERY_DECK_PRODUCT_URL,
-      image: `${SITE_URL}${OG_IMAGE_PATH}`,
-      brand: { "@id": orgId },
     },
   ],
 };
@@ -64,7 +56,7 @@ export const metadata: Metadata = {
         url: OG_IMAGE_PATH,
         width: 1200,
         height: 630,
-        alt: "The Mezcalómano Discovery Deck box beside two agave cards, Pulquero and Castilla, on a wooden table.",
+        alt: "The Discovery Deck box beside the Sierra Negra card on a charcoal background",
       },
     ],
   },

@@ -269,7 +269,7 @@
   flex-direction: column;
 }
 
-/* Map: fixed viewport band under fixed header (88px) and above fixed footer (~72px) — no page scroll */
+/* Map: fixed viewport band under fixed header (88px) and above fixed footer (~72px): no page scroll */
 .page-content:has(.map-root) {
   flex: 1 1 0;
   min-height: calc(100dvh - 88px - 72px);
@@ -297,6 +297,69 @@ body:has(.directory-root) .footer {
   width: 100%;
 }
 
+.directory-page__title {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: clamp(1.375rem, 4vw, 2rem);
+  line-height: 1.2;
+  color: var(--color-white);
+  margin: var(--space-8) var(--space-4) 0;
+  text-align: center;
+  width: 100%;
+}
+
+.directory-species-index {
+  width: 100%;
+  padding: var(--space-8) var(--space-5) var(--space-12);
+  text-align: left;
+}
+
+.directory-species-index__heading {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-regular);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 var(--space-4);
+  text-align: center;
+}
+
+.directory-species-index__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 1;
+  column-gap: var(--space-8);
+}
+
+@media (min-width: 768px) {
+  .directory-species-index__list {
+    columns: 3;
+  }
+}
+
+.directory-species-index__list li {
+  break-inside: avoid;
+  margin: 0 0 0.35em;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.directory-species-index__list a {
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+}
+
+.directory-species-index__list a:hover,
+.directory-species-index__list a:focus-visible {
+  color: var(--agave-yellow, #e0b825);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 /* Map page: same flex layout as directory so content fills between header and footer. */
 .map-root {
   display: flex;
@@ -308,7 +371,7 @@ body:has(.directory-root) .footer {
 }
 
 /* Map filters: same 1fr | center | 1fr balance as .header-content, but middle track must not be
-   `auto` — percentage widths on children collapse to min-content. Use explicit max = directory max-w-xl / sm:max-w-2xl. */
+   `auto`: percentage widths on children collapse to min-content. Use explicit max = directory max-w-xl / sm:max-w-2xl. */
 .map-toolbar-content {
   display: grid;
   grid-template-columns: 1fr minmax(0, min(36rem, 100%)) 1fr;
@@ -357,6 +420,16 @@ body:has(.directory-root) .footer {
   font-family: var(--font-family);
 }
 
+.species-card-content .species-card-common-name {
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-regular);
+  line-height: inherit;
+  margin: 0;
+  letter-spacing: normal;
+  text-transform: none;
+  color: inherit;
+}
+
 .species-card-content .species-card-icon {
   color: var(--agave-yellow, #e0b825);
 }
@@ -376,7 +449,7 @@ body:has(.directory-root) .footer {
   color: rgba(255, 255, 255, 0.6);
 }
 
-/* Directory: text actions (e.g. clear search) — underline like producer links; beats global `a` / button resets */
+/* Directory: text actions (e.g. clear search): underline like producer links; beats global `a` / button resets */
 button.directory-inline-link {
   text-decoration: underline;
   text-decoration-color: var(--agave-yellow, #e0b825);
@@ -584,13 +657,14 @@ button.directory-inline-link:hover {
   filter: brightness(1.1);
 }
 
-/* Home landing: centered brand lockup + hero lines + CTA (no product image) */
+/* Home landing: centered brand lockup + hero lines + copy + CTA (no product image).
+   One-screen when it fits; the page can scroll if the copy needs more room. */
 .page-content:has(.home-landing) {
   margin-top: 0;
   padding-bottom: 0;
-  overflow: hidden;
+  overflow: visible;
   min-height: 100svh;
-  height: 100svh;
+  height: auto;
 }
 
 .home-landing {
@@ -614,7 +688,7 @@ button.directory-inline-link:hover {
   justify-content: center;
   gap: var(--space-8);
   width: 100%;
-  max-width: 28rem;
+  max-width: 60ch;
 }
 
 .home-landing__logo {
@@ -633,6 +707,28 @@ button.directory-inline-link:hover {
   color: var(--color-white);
   margin: 0;
   text-align: center;
+}
+
+.home-landing__copy {
+  max-width: 60ch;
+  width: 100%;
+  text-align: center;
+}
+
+.home-landing__copy p {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-regular);
+  font-size: clamp(1rem, 3.6vw, 1.25rem);
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--color-white);
+  margin: 0 0 0.85em;
+  text-align: center;
+}
+
+.home-landing__copy p:last-child {
+  margin-bottom: 0;
 }
 
 .home-landing__unit .btn {
@@ -820,7 +916,7 @@ button.directory-inline-link:hover {
   color: var(--color-white);
 }
 
-/* Desktop: same centered composition — intro + form, no email on page */
+/* Desktop: same centered composition. Intro + form, no email on page */
 @media (min-width: 768px) {
   .page-content:has(.contact-page) {
     height: auto;
@@ -994,7 +1090,7 @@ button.directory-inline-link:hover {
   min-height: 0 !important;
 }
 
-/* Fixed 4-slot collage band — max 4 images at ~380px; keep slot size when finals drop in */
+/* Fixed 4-slot collage band: max 4 images at ~380px; keep slot size when finals drop in */
 .about-page__collage {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

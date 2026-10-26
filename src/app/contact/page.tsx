@@ -4,6 +4,7 @@ export const metadata = {
   title: "Contact",
   description:
     "Get in touch with Mezcalómano. Need help with an order, a shipping question, or anything else? We'll reply within 1 to 2 business days.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {

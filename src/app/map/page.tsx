@@ -230,7 +230,7 @@ export default function MapPage() {
   const [mapClickedState, setMapClickedState] = useState<string | null>(null);
   const [geoJson, setGeoJson] = useState<GeoJSON.FeatureCollection | null>(null);
   const [mounted, setMounted] = useState(false);
-  /** State detail in a centered overlay (map dimmed behind) — same on all viewports */
+  /** State detail in a centered overlay (map dimmed behind): same on all viewports */
   const [mapStateDetailHtml, setMapStateDetailHtml] = useState<string | null>(null);
 
   useEffect(() => {
@@ -677,7 +677,7 @@ export default function MapPage() {
 
   return (
     <div className="flex h-full min-h-0 flex-1 flex-col gap-2.5 overflow-hidden">
-      {/* Same grid as .header-content: 1fr auto 1fr — center column matches logo alignment */}
+      {/* Same grid as .header-content: 1fr auto 1fr. Center column matches logo alignment */}
       <div className="shrink-0 bg-[#272926] py-3 sm:py-4">
         <div className="map-toolbar-content">
           <div className="map-toolbar-grid-spacer" aria-hidden />

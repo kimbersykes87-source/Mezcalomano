@@ -11,7 +11,7 @@ export function toSlug(name: string): string {
     .replace(/[^a-z0-9_]/g, "");
 }
 
-/** URL segment for `/directory/[slug]` — prefers DB `slug` when set. */
+/** URL segment for `/directory/[slug]`: prefers DB `slug` when set. */
 export function speciesDirectorySlug(species: {
   slug?: string | null;
   common_name: string;

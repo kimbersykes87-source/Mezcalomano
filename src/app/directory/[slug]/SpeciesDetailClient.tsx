@@ -43,6 +43,7 @@ export default function SpeciesDetailClient({ initialSpecies }: { initialSpecies
             species={speciesWithResolvedImage}
             showPermalink={false}
             fallbackImageUrl={speciesWithResolvedImage.fallbackImageUrl}
+            commonNameAsHeading
           />
         </div>
       </main>

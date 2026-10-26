@@ -43,6 +43,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title,
     description,
+    alternates: { canonical: `/directory/${speciesDirectorySlug(species)}` },
     openGraph: {
       title: `${title} | Mezcalómano`,
       description,

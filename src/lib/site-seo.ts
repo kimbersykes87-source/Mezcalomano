@@ -7,14 +7,14 @@ export const DISCOVERY_DECK_PRODUCT_URL = `${SHOP_ORIGIN}/products/discovery-dec
 
 /** Default meta / OG description: deck, gift angle, directory as education. */
 export const SITE_META_DESCRIPTION =
-  "Premium Discovery Deck playing cards for mezcal-curious drinkers—gift-ready or for yourself. Explore our agave species directory to learn what goes into great mezcal.";
+  "Mezcalómano makes the Discovery Deck, playing cards that introduce 40 kinds of mezcal and the agaves behind them, plus a free agave directory for the curious.";
 
 /** Slightly more homepage-specific for social previews. */
 export const HOME_META_DESCRIPTION =
-  "The Discovery Deck is premium playing cards celebrating agave—ideal as a gift or for your own table. Use our directory to learn the species behind mezcal.";
+  "Playing cards that introduce 40 kinds of mezcal and the agaves behind them. $29.99, free US shipping. Pre-orders ship November 30, in time for Christmas.";
 
 export const DISCOVERY_DECK_PRODUCT_DESCRIPTION =
-  "Premium playing card deck celebrating agave species for mezcal lovers and the curious. Sold on the Mezcalómano shop.";
+  "A deck of playing cards that introduces 40 kinds of mezcal and the agaves behind them. 56 cards, poker size, with a QR code to the online agave directory.";
 
 export const OG_IMAGE_PATH = "/assets/og/og-share-1200x630.jpg";
 

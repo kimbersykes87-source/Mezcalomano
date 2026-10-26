@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useLayoutEffect, useMemo, useCallback, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useMemo, useCallback, useRef, type ReactNode } from "react";
 import { X } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { getMatrixCardUrlMap, resolveSpeciesImageUrl } from "@/lib/matrix-card-urls";
@@ -42,7 +42,13 @@ function matchesSearch(s: Species, q: string): boolean {
   return hay.includes(t);
 }
 
-export default function DirectoryClient({ initialSpecies = [] }: { initialSpecies?: Species[] }) {
+export default function DirectoryClient({
+  initialSpecies = [],
+  children,
+}: {
+  initialSpecies?: Species[];
+  children?: ReactNode;
+}) {
   const [species, setSpecies] = useState<Species[]>(initialSpecies);
   const [matrixCardMap, setMatrixCardMap] = useState<Record<string, string> | null>(null);
   const [loading, setLoading] = useState(initialSpecies.length === 0);
@@ -215,6 +221,7 @@ export default function DirectoryClient({ initialSpecies = [] }: { initialSpecie
           </>
         )}
       </main>
+      {children}
     </div>
   );
 }
