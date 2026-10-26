@@ -58,13 +58,6 @@ const REFERENCE_GROUPS: { heading: string; items: Reference[] }[] = [
       { label: "Agaves Pro", href: "https://agaves.pro/" },
     ],
   },
-  {
-    heading: "Producers",
-    items: [
-      { label: "Del Maguey: Agave", href: "https://delmaguey.com/es/agave/" },
-      { label: "NETA", href: "https://netaspirits.com/" },
-    ],
-  },
 ];
 
 export default function SourcesPage() {
@@ -73,9 +66,9 @@ export default function SourcesPage() {
       <header className="press-page__intro">
         <h1 className="press-page__title">Sources</h1>
         <p className="press-page__subhead">
-          The Discovery Deck and our agave directory are built on other people’s work: botanists,
-          Mexico’s mezcal certifiers, producers, and the writers who have been documenting mezcal
-          for years. This page shows where our facts come from and how we put them together.
+          The Discovery Deck and our agave directory are built on the work of experts: botanists,
+          producers, and the writers who have been documenting mezcal for years. This page shows
+          where our facts come from and how we put them together.
         </p>
       </header>
 
@@ -99,10 +92,11 @@ export default function SourcesPage() {
       <section className="press-page__section" aria-labelledby="sources-choosing">
         <h2 id="sources-choosing" className="press-page__heading">How we chose 40 agaves</h2>
         <p>
-          Our research started in late 2025 with a list of more than 50 agaves linked to mezcal. We
-          cut it down to agaves you can actually find in a bottle, because that’s the whole point:
-          discover more, taste more. Every agave in the deck has at least one producer making
-          mezcal from it today.
+          We’ve been tasting mezcal and asking questions for about ten years. In September 2025 we
+          started writing it all down, beginning with a list of more than 50 agaves linked to
+          mezcal. We cut it to agaves you can actually find in a bottle, because that’s the whole
+          point: discover more, taste more. Every agave in the deck is in a bottle you can buy, or
+          on its way to one.
         </p>
         <p>
           Some made the cut because they’re rare, some because they’re everywhere, and a few
@@ -132,30 +126,19 @@ export default function SourcesPage() {
       </section>
 
       <section className="press-page__section" aria-labelledby="sources-cards">
-        <h2 id="sources-cards" className="press-page__heading">What’s on each card, and where it comes from</h2>
+        <h2 id="sources-cards" className="press-page__heading">Where the card details come from</h2>
         <p>
           <strong>Names and botany.</strong> Botanical names, ranges, heights and growing
-          conditions come from botanical databases, Mexican government plant records, published
-          field studies and Howard Scott Gentry’s <em>Agaves of Continental North America</em>, cross-checked against mezcal writers
-          and producers.
+          conditions come from the references below, cross-checked against mezcal writers and
+          producers.
         </p>
         <p>
-          <strong>Flavor.</strong> Each card has three flavor words, always in the same order:
-          smoke, agave, fermentation. Smoke runs from clean to toasty to smoky. The agave word is
-          green, roasted, floral, herbal or mineral. The fermentation word is fruity, funky, lactic,
-          savory or spicy. We built that vocabulary from the themes mezcal lovers and producers keep
-          coming back to, then chose the words for each agave from our own tasting and from how
-          producers and tasters describe it. Your bottle will vary with the producer, the place and
-          the batch. Use it as a starting point, then trust your palate.
+          <strong>Flavor.</strong> The three flavor words on each card come from our own tasting
+          and from how producers and tasters describe each agave, using a short vocabulary we built
+          from the themes they keep coming back to. Treat them as a starting point.
         </p>
         <p>
-          <strong>Nicknames.</strong> The nicknames are ours. They’re there to help you remember
-          the plant, not to describe it scientifically.
-        </p>
-        <p>
-          <strong>Face cards and jokers.</strong> The jacks, queens and kings show the people and
-          steps behind a bottle, from cutting the plant to the final taste. The jokers are bats,
-          which pollinate agaves.
+          <strong>Nicknames.</strong> The nicknames are ours, there to help you remember the plant.
         </p>
       </section>
 
@@ -191,8 +174,8 @@ export default function SourcesPage() {
           </div>
         ))}
         <p className="press-page__note">
-          We also used general encyclopedias and nursery listings to cross-check basics like height
-          and leaf shape.
+          We also used producers’ own agave pages, general encyclopedias and nursery listings to
+          cross-check basics like height and leaf shape.
         </p>
       </section>
 
