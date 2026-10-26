@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { DISCOVERY_DECK_PRODUCT_URL } from "@/lib/site-seo";
 import { PRESS_IMAGES, PRESS_KIT_ZIP, PRESS_LOGOS, PRESS_PACKSHOTS, formatMegabytes } from "@/lib/press";
 
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 const QUICK_FACTS = [
   "$29.99",
   "40 kinds of mezcal",
-  "Pre-orders open October 27, ships from November 30",
+  "Pre-orders open now, ships from November 30",
   "Order by December 17 for US Christmas delivery",
   "Free US standard shipping",
   "Also ships to Canada, Australia, New Zealand, Singapore and Hong Kong",
@@ -44,7 +45,7 @@ export default function PressPage() {
       <section className="press-page__section" aria-labelledby="press-about">
         <h2 id="press-about" className="press-page__heading">About the deck</h2>
         <p>
-          About 85% of mezcal is made from a single agave, espadín (COMERCAM, 2026). It&apos;s a
+          About 85% of mezcal is made from a single agave, espadín (<Link href="/sources">COMERCAM, 2026</Link>). It&apos;s a
           great place to start, but there&apos;s a lot more to taste. The Discovery Deck is a full
           deck of playing cards that introduces 40 kinds of mezcal and the agaves behind them. Each
           agave card gives its local and species name, a memorable nickname, and a flavor compass

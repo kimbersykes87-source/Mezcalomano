@@ -13,6 +13,7 @@ Mezcalómano is a brand for mezcal lovers and the mezcal-curious. We sell the Di
 - About: https://mezcalomano.com/about
 - Contact: https://mezcalomano.com/contact
 - Press (images, facts and press contact): https://mezcalomano.com/press
+- Sources (where our figures come from, including COMERCAM data on espadín): https://mezcalomano.com/sources
 
 ## Shop
 

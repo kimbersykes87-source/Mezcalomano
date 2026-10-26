@@ -1,8 +1,11 @@
 /* eslint-disable @next/next/no-img-element -- SVG social icons; fixed width/height on img */
 import Link from "next/link";
 
-/** Footer-only links (not in the main nav). Add Sources here once that page exists. */
-const FOOTER_LINKS = [{ href: "/press", label: "Press" }];
+/** Footer-only links (not in the main nav). */
+const FOOTER_LINKS = [
+  { href: "/press", label: "Press" },
+  { href: "/sources", label: "Sources" },
+];
 
 export default function Footer() {
   return (
