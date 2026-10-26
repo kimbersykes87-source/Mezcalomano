@@ -43,6 +43,10 @@ export const PRESS_IMAGES: PressImage[] = (
 }));
 
 const PACKSHOT_TEXT: Record<string, { label: string; alt: string }> = {
+  "mezcalomano-packshot-01-grid-box.jpg": {
+    label: "Box with a grid of agave cards",
+    alt: "The Discovery Deck box surrounded by a grid of agave cards",
+  },
   "mezcalomano-packshot-01-transparent.png": {
     label: "Cut-out, transparent PNG with built-in shadow",
     alt: "The Discovery Deck box beside the Sierra Negra card and a card back, cut out on a transparent background with a soft shadow.",

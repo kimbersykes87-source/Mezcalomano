@@ -62,11 +62,6 @@
   max-width: 240px;
 }
 
-/* Home: no header lockup; keep grid column so basket stays right */
-.header-logo-spacer {
-  grid-column: 2;
-}
-
 .header-nav {
   display: none;
   justify-self: end;
@@ -370,8 +365,13 @@ body:has(.directory-root) .footer {
   height: 100%;
 }
 
-/* Map filters: same 1fr | center | 1fr balance as .header-content, but middle track must not be
-   `auto`: percentage widths on children collapse to min-content. Use explicit max = directory max-w-xl / sm:max-w-2xl. */
+/* Map filters: one compact row, mezcal | state, on all breakpoints. */
+.map-toolbar {
+  flex-shrink: 0;
+  background-color: #272926;
+  padding: var(--space-2) 0;
+}
+
 .map-toolbar-content {
   display: grid;
   grid-template-columns: 1fr minmax(0, min(36rem, 100%)) 1fr;
@@ -384,7 +384,7 @@ body:has(.directory-root) .footer {
 
 @media (min-width: 640px) {
   .map-toolbar-content {
-    grid-template-columns: 1fr minmax(0, min(42rem, 100%)) 1fr;
+    grid-template-columns: 1fr minmax(0, min(40rem, 100%)) 1fr;
   }
 }
 
@@ -394,8 +394,72 @@ body:has(.directory-root) .footer {
 
 .map-toolbar-center {
   grid-column: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: var(--space-2);
   min-width: 0;
   width: 100%;
+}
+
+.map-filter-select__button {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 2.5rem;
+  padding: 0.5rem 2.25rem 0.5rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-white);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  line-height: 1.3;
+}
+
+.map-filter-select__button:focus {
+  outline: none;
+  border-color: var(--agave-yellow);
+}
+
+.map-filter-select__list {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  z-index: 100;
+  margin-top: 4px;
+  max-height: 14rem;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  background: #2a2c28;
+  padding: 0.25rem 0;
+}
+
+.map-filter-select__option {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  color: var(--color-white);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  line-height: 1.3;
+}
+
+.map-filter-select__option:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.map-filter-select__option--active {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--agave-yellow);
 }
 
 /* Remove MapLibre / canvas focus outline and any default border (reads as 1px black on dark bg) */
@@ -657,14 +721,14 @@ button.directory-inline-link:hover {
   filter: brightness(1.1);
 }
 
-/* Home landing: centered brand lockup + hero lines + copy + CTA (no product image).
-   One-screen when it fits; the page can scroll if the copy needs more room. */
+/* Home landing: hero lines + copy + CTA, logo lives in the header.
+   Fit between header and footer on one screen when possible. */
 .page-content:has(.home-landing) {
   margin-top: 0;
   padding-bottom: 0;
-  overflow: visible;
+  overflow: hidden;
   min-height: 100svh;
-  height: auto;
+  height: 100svh;
 }
 
 .home-landing {
@@ -673,6 +737,7 @@ button.directory-inline-link:hover {
   align-items: center;
   justify-content: center;
   min-height: 100svh;
+  height: 100svh;
   width: 100%;
   box-sizing: border-box;
   /* Keep content clear of fixed header (88px) and footer (~72px) */
@@ -686,15 +751,9 @@ button.directory-inline-link:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-8);
+  gap: var(--space-6);
   width: 100%;
   max-width: 60ch;
-}
-
-.home-landing__logo {
-  display: block;
-  width: min(16rem, 72vw);
-  height: auto;
 }
 
 .home-landing__lines {

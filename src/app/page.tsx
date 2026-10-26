@@ -65,14 +65,6 @@ export default function HomePage() {
       {/* deploy-test 2026-08-25 */}
       <JsonLd data={discoveryDeckProductLd} />
       <div className="home-landing__unit">
-        {/* eslint-disable-next-line @next/next/no-img-element -- brand SVG lockup; sized via CSS */}
-        <img
-          src="/assets/brand/logos/mezcalomano_lockup_stacked_dark.svg"
-          alt="Mezcalómano, Beyond Espadín"
-          className="home-landing__logo"
-          width={250}
-          height={80}
-        />
         <h1 id="home-landing-title" className="home-landing__lines">
           Life&apos;s too short for just one agave.
           <br />

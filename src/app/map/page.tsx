@@ -128,7 +128,7 @@ function MapDirectoryStyleSelect({
   };
 
   return (
-    <div ref={wrapRef} className="relative min-h-12 w-full min-w-0">
+    <div ref={wrapRef} className="map-filter-select relative w-full min-w-0">
       <label htmlFor={id} className="sr-only">
         {label}
       </label>
@@ -139,14 +139,10 @@ function MapDirectoryStyleSelect({
         aria-expanded={open}
         aria-controls={listId}
         onClick={() => setOpen((v) => !v)}
-        className="box-border flex h-auto min-h-12 w-full min-w-0 items-center rounded-lg border border-white/20 bg-white/5 px-3 py-2.5 pr-11 text-white focus:border-[var(--agave-yellow)] focus:outline-none sm:px-8 sm:pr-[4.75rem] md:px-[6rem]"
-        style={{
-          fontSize: "1.3125rem",
-          lineHeight: 1.35,
-        }}
+        className="map-filter-select__button"
       >
         <span
-          className={`min-w-0 flex-1 text-balance text-center break-words ${value ? "text-white" : "text-white/40"}`}
+          className={`min-w-0 flex-1 truncate text-center ${value ? "text-white" : "text-white/40"}`}
         >
           {display}
         </span>
@@ -162,22 +158,16 @@ function MapDirectoryStyleSelect({
           id={listId}
           role="listbox"
           aria-label={ariaLabel}
-          className="absolute left-0 right-0 top-full z-[100] mt-1 max-h-56 overflow-y-auto rounded-lg border border-white/20 bg-[#2a2c28] py-1 shadow-xl"
+          className="map-filter-select__list"
         >
           <li role="presentation">
             <button
               type="button"
               role="option"
               aria-selected={value === ""}
-              className={`w-full py-2.5 text-left hover:bg-white/10 ${
-                value === "" ? "bg-white/10 text-[var(--agave-yellow)]" : "text-white"
+              className={`map-filter-select__option ${
+                value === "" ? "map-filter-select__option--active" : ""
               }`}
-              style={{
-                fontSize: "1.3125rem",
-                lineHeight: 1.35,
-                paddingLeft: "1rem",
-                paddingRight: "1rem",
-              }}
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => pick("")}
             >
@@ -192,15 +182,9 @@ function MapDirectoryStyleSelect({
                   type="button"
                   role="option"
                   aria-selected={selected}
-                  className={`w-full py-2.5 text-left hover:bg-white/10 ${
-                    selected ? "bg-white/10 text-[var(--agave-yellow)]" : "text-white"
+                  className={`map-filter-select__option ${
+                    selected ? "map-filter-select__option--active" : ""
                   }`}
-                  style={{
-                    fontSize: "1.3125rem",
-                    lineHeight: 1.35,
-                    paddingLeft: "1rem",
-                    paddingRight: "1rem",
-                  }}
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={() => pick(name)}
                 >
@@ -677,63 +661,36 @@ export default function MapPage() {
 
   return (
     <div className="flex h-full min-h-0 flex-1 flex-col gap-2.5 overflow-hidden">
-      {/* Same grid as .header-content: 1fr auto 1fr. Center column matches logo alignment */}
-      <div className="shrink-0 bg-[#272926] py-3 sm:py-4">
+      <div className="map-toolbar">
         <div className="map-toolbar-content">
           <div className="map-toolbar-grid-spacer" aria-hidden />
-          <div className="map-toolbar-center flex w-full min-w-0 flex-row items-stretch gap-2 sm:flex-col sm:items-center sm:gap-3">
+          <div className="map-toolbar-center">
             {loading ? (
-              <p className="w-full py-2 text-center text-sm text-white/70 sm:w-auto">
+              <p className="w-full py-1 text-center text-sm text-white/70">
                 Loading species…
               </p>
             ) : (
               <>
-                <nav
-                  className="flex min-w-0 flex-1 items-center gap-2.5 sm:w-4/5 sm:gap-3"
-                  aria-label="Filter by mezcal"
-                >
-                  <span
-                    className="hidden size-10 shrink-0 sm:inline-flex"
-                    aria-hidden
-                  />
-                  <div className="min-w-0 flex-1">
-                    <MapDirectoryStyleSelect
-                      id="map-common-name"
-                      label="Select a mezcal"
-                      aria-label="Select a mezcal"
-                      value={selectedCommonName}
-                      onChange={setSelectedCommonName}
-                      placeholder="Select a mezcal…"
-                      options={commonNames}
-                    />
-                  </div>
-                  <span
-                    className="hidden size-10 shrink-0 sm:inline-flex"
-                    aria-hidden
+                <nav className="min-w-0 flex-1" aria-label="Filter by mezcal">
+                  <MapDirectoryStyleSelect
+                    id="map-common-name"
+                    label="Select a mezcal"
+                    aria-label="Select a mezcal"
+                    value={selectedCommonName}
+                    onChange={setSelectedCommonName}
+                    placeholder="Select a mezcal…"
+                    options={commonNames}
                   />
                 </nav>
-                <nav
-                  className="flex min-w-0 flex-1 items-center gap-2.5 sm:w-4/5 sm:gap-3"
-                  aria-label="Filter by state"
-                >
-                  <span
-                    className="hidden size-10 shrink-0 sm:inline-flex"
-                    aria-hidden
-                  />
-                  <div className="min-w-0 flex-1">
-                    <MapDirectoryStyleSelect
-                      id="map-state"
-                      label="Select a state"
-                      aria-label="Select a state"
-                      value={selectedState}
-                      onChange={setSelectedState}
-                      placeholder="Select a state…"
-                      options={stateNamesList}
-                    />
-                  </div>
-                  <span
-                    className="hidden size-10 shrink-0 sm:inline-flex"
-                    aria-hidden
+                <nav className="min-w-0 flex-1" aria-label="Filter by state">
+                  <MapDirectoryStyleSelect
+                    id="map-state"
+                    label="Select a state"
+                    aria-label="Select a state"
+                    value={selectedState}
+                    onChange={setSelectedState}
+                    placeholder="Select a state…"
+                    options={stateNamesList}
                   />
                 </nav>
               </>
