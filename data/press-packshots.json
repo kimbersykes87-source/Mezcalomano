@@ -30,5 +30,21 @@
     "height": 3000,
     "bytes": 1599233,
     "transparent": false
+  },
+  {
+    "file": "mezcalomano-packshot-04-box-front.jpg",
+    "thumb": "packshot-mezcalomano-packshot-04-box-front.jpg",
+    "width": 3024,
+    "height": 3024,
+    "bytes": 586990,
+    "transparent": false
+  },
+  {
+    "file": "mezcalomano-packshot-05-madrecuixe.jpg",
+    "thumb": "packshot-mezcalomano-packshot-05-madrecuixe.jpg",
+    "width": 3024,
+    "height": 3024,
+    "bytes": 1691747,
+    "transparent": false
   }
 ]

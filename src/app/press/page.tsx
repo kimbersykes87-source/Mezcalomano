@@ -128,7 +128,7 @@ export default function PressPage() {
                       className="press-page__tile-img press-page__tile-img--contain"
                     />
                     <span className="press-page__tile-meta">
-                      {img.label} · {img.width} x {img.height} · {formatMegabytes(img.bytes)}
+                      Download · {img.width} x {img.height} · {formatMegabytes(img.bytes)}
                     </span>
                   </a>
                 </li>

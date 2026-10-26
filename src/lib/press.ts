@@ -59,6 +59,14 @@ const PACKSHOT_TEXT: Record<string, { label: string; alt: string }> = {
     label: "Hero shot on stone",
     alt: "The Discovery Deck box beside the Sierra Negra card and a card back on a warm stone background.",
   },
+  "mezcalomano-packshot-04-box-front.jpg": {
+    label: "Box front on wood",
+    alt: "The front of the black Discovery Deck box with the Mezcalómano logo, on a wooden table.",
+  },
+  "mezcalomano-packshot-05-madrecuixe.jpg": {
+    label: "Madrecuixe card on wood",
+    alt: "The Madrecuixe card from the Discovery Deck on a wooden table, with a card back behind it.",
+  },
 };
 
 export const PRESS_PACKSHOTS: (PressImage & { label: string })[] = (
