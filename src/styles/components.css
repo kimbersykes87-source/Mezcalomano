@@ -350,7 +350,7 @@ body:has(.directory-root) .footer {
 
 .directory-species-index__list a:hover,
 .directory-species-index__list a:focus-visible {
-  color: var(--agave-yellow, #e0b825);
+  color: var(--agave-yellow, #dfb725);
   text-decoration: underline;
   text-underline-offset: 0.15em;
 }
@@ -495,13 +495,13 @@ body:has(.directory-root) .footer {
 }
 
 .species-card-content .species-card-icon {
-  color: var(--agave-yellow, #e0b825);
+  color: var(--agave-yellow, #dfb725);
 }
 
 /* Producer links: global `a { text-decoration: none }` is unlayered and beats Tailwind utilities */
 .species-card-content a.species-card-producer-link {
   text-decoration: underline;
-  text-decoration-color: var(--agave-yellow, #e0b825);
+  text-decoration-color: var(--agave-yellow, #dfb725);
   text-underline-offset: 0.2em;
 }
 
@@ -516,9 +516,9 @@ body:has(.directory-root) .footer {
 /* Directory: text actions (e.g. clear search): underline like producer links; beats global `a` / button resets */
 button.directory-inline-link {
   text-decoration: underline;
-  text-decoration-color: var(--agave-yellow, #e0b825);
+  text-decoration-color: var(--agave-yellow, #dfb725);
   text-underline-offset: 0.2em;
-  color: var(--agave-yellow, #e0b825);
+  color: var(--agave-yellow, #dfb725);
   font-size: 1.3125rem;
   line-height: 1.35;
   background: transparent;

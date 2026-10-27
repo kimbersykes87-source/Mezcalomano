@@ -142,8 +142,8 @@ npm run build:matrix-cards
 
 ### Colors
 - **Dark**: `#272926` (background)
-- **Olive**: `#83856C` (accent, buttons)
-- **Yellow**: `#E0B825` (accent)
+- **Olive**: `#84866D` (accent, buttons)
+- **Yellow**: `#DFB725` (accent)
 - **Terracotta**: `#B86744` (hover states)
 - **White**: `#FFFFFF` (text)
 

@@ -21,7 +21,7 @@ export const BRAND_FALLBACK_SRC = "/assets/favicon/app_icon_512.png";
 
 /* Match localhost: explicit size + fallback color so icons render the same in production */
 const ICON_CLASS =
-  "species-card-icon size-4 h-4 w-4 shrink-0 text-[var(--agave-yellow)] text-[#e0b825]";
+  "species-card-icon size-4 h-4 w-4 shrink-0 text-[var(--agave-yellow)] text-[#dfb725]";
 
 function parseHabitat(habitat: Species["habitat"]) {
   if (!habitat || typeof habitat !== "object") return null;

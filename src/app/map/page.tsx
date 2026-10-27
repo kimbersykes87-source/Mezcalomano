@@ -10,7 +10,7 @@ import { supabase } from "@/lib/supabase";
 import { getStatesInData, parseStatesForGeo } from "@/lib/map-utils";
 import type { Species } from "@/types/species";
 
-const AGAVE_YELLOW = "#e0b825";
+const AGAVE_YELLOW = "#dfb725";
 const AGAVE_YELLOW_DARK = "#7a6c2a";
 const MAP_CENTER: [number, number] = [-102, 23];
 const MAP_ZOOM = 4.5;
