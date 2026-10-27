@@ -1628,7 +1628,7 @@ button.directory-inline-link:hover {
 }
 
 .form-success {
-  background-color: rgba(131, 133, 108, 0.2);
+  background-color: rgba(132, 134, 109, 0.2);
   border: 1px solid var(--color-olive);
   border-radius: var(--radius-md);
   padding: var(--space-4);
