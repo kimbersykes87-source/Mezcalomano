@@ -2,6 +2,20 @@
 
 All notable changes to the Mezcalómano marketing site project.
 
+## [2026-10-28] - Analytics, phase 2 (nightly job)
+
+### Added
+
+- **`GET /api/cron/daily`**: collects yesterday (London time) from Cloudflare Web Analytics (both sites), Shopify (sales by SKU and country, session funnel, referrers), the Shopify email list, contact messages and outbound clicks, and saves it to Supabase `metrics_daily`. Each source runs separately and logs to `metrics_runs`. Protected by `CRON_SECRET`. Manual rerun: `?day=YYYY-MM-DD&sources=shop,email`.
+- **`vercel.json`**: Vercel Cron runs the job daily at 00:30 UTC (after London midnight all year).
+- `src/lib/metrics/` (time, store, cloudflare, shopify, local) and `shopifyAdminQuery` in `src/lib/shopify-subscribe.ts`.
+- Migration `20261028210000_create_metrics_daily.sql` (applied 28 Oct 2026).
+
+### Needs
+
+- Vercel env vars `CRON_SECRET` (Sensitive) and `CLOUDFLARE_ANALYTICS_TOKEN` (Sensitive, Cloudflare API token with Account Analytics Read).
+- Shopify app `Mezcalomano_website_mail_list`: add scopes `read_orders` and `read_reports`, and protected customer data access (Level 2), then approve the update in the store.
+
 ## [2026-10-28] - Analytics, phase 1 (admin dashboard)
 
 ### Added

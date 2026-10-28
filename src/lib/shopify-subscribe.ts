@@ -241,3 +241,15 @@ export async function subscribeEmail(email: string, consentedAt: string): Promis
   throwOnUserErrors("customerCreate", created.customerCreate.userErrors);
   return "created";
 }
+
+/**
+ * Runs any Admin GraphQL query with the same app credentials (server-only).
+ * Used by the nightly analytics job (src/lib/metrics/shopify.ts), which needs the
+ * extra scopes read_orders and read_reports on the same Dev Dashboard app.
+ */
+export async function shopifyAdminQuery<T>(
+  query: string,
+  variables: Record<string, unknown> = {}
+): Promise<T> {
+  return adminGraphQL<T>(readConfig(), query, variables);
+}
