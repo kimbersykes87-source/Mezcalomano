@@ -24,7 +24,7 @@ type Collector = (day: string, start: Date, end: Date) => Promise<MetricRow[]>;
 const COLLECTORS: Record<string, Collector> = {
   web_main: (_d, s, e) => collectCloudflare(CF_SITES.web_main, s, e),
   web_shop: (_d, s, e) => collectCloudflare(CF_SITES.web_shop, s, e),
-  shop: (d) => collectShop(d),
+  shop: (d, s, e) => collectShop(d, s, e),
   email: (_d, s, e) => collectEmailList(s, e),
   contact: (_d, s, e) => collectContacts(s, e),
   clicks: (_d, s, e) => collectClicks(s, e),
