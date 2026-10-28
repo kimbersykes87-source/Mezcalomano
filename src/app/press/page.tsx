@@ -11,6 +11,20 @@ export const metadata: Metadata = {
     title: "Press | Mezcalómano",
     description: "Images, facts and contact details for the Mezcalómano Discovery Deck.",
     url: "/press",
+    images: [
+      {
+        url: "/press/mezcalomano-press-share.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Stop The Press. A hand holding four Mezcalómano agave playing cards in front of agave leaves",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Press | Mezcalómano",
+    description: "Images, facts and contact details for the Mezcalómano Discovery Deck.",
+    images: ["/press/mezcalomano-press-share.jpg"],
   },
 };
 
