@@ -34,7 +34,6 @@ const QUICK_FACTS = [
   "Pre-orders open now, ships from November 30",
   "Order by December 17 for US Christmas delivery",
   "Free US standard shipping",
-  "Also ships to Canada, Australia, New Zealand, Singapore and Hong Kong",
 ];
 
 export default function PressPage() {
