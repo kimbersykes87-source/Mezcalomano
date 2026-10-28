@@ -138,6 +138,8 @@ The Turnstile pair above is shared with the contact form. Backup script source a
 - The shop (shop.mezcalomano.com) has its own Web Analytics site and token, added by hand in the Shopify theme (`theme.liquid`, before `</body>`).
 - Outbound link clicks go to `POST /api/track` and the Supabase `events` table, using the existing `SUPABASE_SERVICE_ROLE_KEY`.
 
+- **Nightly job** `/api/cron/daily` (Vercel Cron, 00:30 UTC daily, see `vercel.json`) saves daily figures to Supabase `metrics_daily` and logs each source to `metrics_runs`. Env: `CRON_SECRET` (Vercel sends it as `Authorization: Bearer`), `CLOUDFLARE_ANALYTICS_TOKEN` (Account Analytics Read). Optional overrides: `CF_ACCOUNT_ID`, `CF_SITE_TAG_MAIN`, `CF_SITE_TAG_SHOP`. Shopify figures use the mailing list app's credentials, which also need `read_orders`, `read_reports` and protected customer data access.
+
 ### Where keys live (summary)
 
 | Keys | Production / Preview | Local development |
