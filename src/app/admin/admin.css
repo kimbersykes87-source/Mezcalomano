@@ -1,0 +1,71 @@
+/* admin.mezcalomano.com: private dashboard. Brand colors from global.css. */
+.adm {
+  --adm-bg: #1f211e;
+  --adm-panel: #272926;
+  --adm-line: rgba(255, 255, 255, 0.12);
+  --adm-text: #f3f1ea;
+  --adm-muted: rgba(243, 241, 234, 0.62);
+  --adm-yellow: #dfb725;
+  --adm-olive: #84866d;
+  --adm-terracotta: #b86744;
+  --adm-good: #8fbf7a;
+  --adm-bad: #e08a6b;
+  min-height: 100vh;
+  background: var(--adm-bg);
+  color: var(--adm-text);
+  font-family: "Open Sans", sans-serif;
+  font-stretch: 75%;
+  font-size: 16px;
+  line-height: 1.45;
+  text-align: left;
+}
+.adm a { color: var(--adm-yellow); }
+.adm-wrap { max-width: 1180px; margin: 0 auto; padding: 24px 16px 64px; }
+.adm-top { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.adm-brand { font-size: 22px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.adm-brand span { color: var(--adm-yellow); }
+.adm-sub { color: var(--adm-muted); font-size: 14px; }
+.adm-periods { display: flex; flex-wrap: wrap; gap: 6px; }
+.adm-periods a, .adm-btn {
+  display: inline-block; padding: 6px 12px; border: 1px solid var(--adm-line); color: var(--adm-text);
+  text-decoration: none; font-size: 14px; background: transparent; cursor: pointer; font-family: inherit; font-stretch: inherit;
+}
+.adm-periods a[aria-current="page"] { background: var(--adm-olive); border-color: var(--adm-olive); }
+.adm-btn:hover, .adm-periods a:hover { border-color: var(--adm-yellow); }
+.adm-btn-primary { background: var(--adm-olive); border-color: var(--adm-olive); }
+.adm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; margin-bottom: 24px; }
+.adm-tile { background: var(--adm-panel); padding: 14px 14px 12px; border-top: 3px solid var(--adm-olive); }
+.adm-tile-label { color: var(--adm-muted); font-size: 13px; }
+.adm-tile-value { font-size: 28px; font-weight: 700; line-height: 1.15; margin-top: 2px; font-variant-numeric: tabular-nums; }
+.adm-tile-change { font-size: 13px; color: var(--adm-muted); margin-top: 2px; }
+.adm-up { color: var(--adm-good); }
+.adm-down { color: var(--adm-bad); }
+.adm-section { background: var(--adm-panel); padding: 16px; margin-bottom: 16px; }
+.adm-section h2 { font-size: 17px; font-weight: 700; margin: 0 0 12px; letter-spacing: 0.02em; }
+.adm-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+.adm-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.adm-table th, .adm-table td { text-align: left; padding: 6px 4px; border-bottom: 1px solid var(--adm-line); vertical-align: top; }
+.adm-table th { color: var(--adm-muted); font-weight: 600; }
+.adm-table td.num, .adm-table th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.adm-table td.name { word-break: break-word; }
+.adm-empty { color: var(--adm-muted); font-size: 14px; }
+.adm-chart { width: 100%; max-height: 300px; height: auto; display: block; }
+.adm-legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--adm-muted); margin-top: 6px; }
+.adm-legend i { display: inline-block; width: 12px; height: 3px; margin-right: 6px; vertical-align: middle; }
+.adm-funnel-row { display: grid; grid-template-columns: 130px 1fr 70px; gap: 10px; align-items: center; font-size: 14px; margin-bottom: 8px; }
+.adm-funnel-bar { height: 18px; background: var(--adm-olive); min-width: 2px; }
+.adm-ok { color: var(--adm-good); }
+.adm-err { color: var(--adm-bad); }
+.adm-login { max-width: 380px; margin: 12vh auto 0; padding: 0 16px; }
+.adm-login form { background: var(--adm-panel); padding: 24px; display: grid; gap: 12px; }
+.adm-login label { display: grid; gap: 4px; font-size: 14px; color: var(--adm-muted); }
+.adm-login input {
+  background: var(--adm-bg); border: 1px solid var(--adm-line); color: var(--adm-text); padding: 10px;
+  font-size: 16px; font-family: inherit; font-stretch: inherit;
+}
+.adm-login input:focus { outline: 2px solid var(--adm-yellow); outline-offset: 0; }
+.adm-msg { font-size: 14px; color: var(--adm-bad); min-height: 20px; }
+@media (max-width: 520px) {
+  .adm-tile-value { font-size: 24px; }
+  .adm-funnel-row { grid-template-columns: 100px 1fr 56px; }
+}
