@@ -1164,37 +1164,54 @@ button.directory-inline-link:hover {
    bottom margin. Mobile keeps the tightened 12px/8px pair; at >=768px both sides sit on
    the page's 24px block rhythm and the form is capped at 520px and centered so it does
    not stretch the full text column. */
-.about-page__body p:has(+ .about-page__klaviyo) {
+.about-page__body p:has(+ .about-page__signup) {
   margin-bottom: var(--space-3);
 }
 
-.about-page__klaviyo {
+.about-page__signup {
   width: 100%;
   margin: var(--space-2) 0;
 }
 
 @media (min-width: 768px) {
-  .about-page__body p:has(+ .about-page__klaviyo) {
+  .about-page__body p:has(+ .about-page__signup) {
     margin-bottom: var(--space-6);
   }
 
-  .about-page__klaviyo {
+  .about-page__signup {
     max-width: 520px;
     margin: var(--space-6) auto;
   }
 }
 
-/* Beat Klaviyo's injected Open Sans Regular with site condensed face */
-.klaviyo-form-QWV2jK,
-.klaviyo-form-QWV2jK * {
-  font-family: "Open Sans Condensed", "Open Sans", sans-serif !important;
-  font-stretch: condensed !important;
+/* Mailing list form (reuses the contact form's input, error and button styles) */
+.mailing-form .form-group {
+  margin-bottom: var(--space-3);
 }
 
-/* Neutralize the min-height Klaviyo's script sets on its injected form wrapper, which
-   centers 178px of content in a 310px box and pads it with dead space top and bottom. */
-.about-page__klaviyo form > div {
-  min-height: 0 !important;
+.mailing-form .turnstile-container {
+  margin: var(--space-3) 0;
+}
+
+.mailing-form .btn-submit {
+  width: 100%;
+}
+
+.mailing-form__note {
+  margin: var(--space-3) 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  opacity: 0.75;
+  text-align: center;
+}
+
+.mailing-form__note a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.mailing-form__success {
+  margin-bottom: 0;
 }
 
 /* Fixed 4-slot collage band: max 4 images at ~380px; keep slot size when finals drop in */

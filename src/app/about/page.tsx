@@ -1,3 +1,5 @@
+import MailingListForm from "@/components/MailingListForm";
+
 export const metadata = {
   title: "About",
   description:
@@ -43,8 +45,8 @@ export default function AboutPage() {
           list.
         </p>
 
-        <div className="about-page__klaviyo">
-          <div className="klaviyo-form-QWV2jK" />
+        <div className="about-page__signup">
+          <MailingListForm />
         </div>
 
         <p>

@@ -2,6 +2,20 @@
 
 All notable changes to the Mezcalómano marketing site project.
 
+## [2026-10-28] - Mailing list moves from Klaviyo to Shopify
+
+### Added
+
+- **`MailingListForm`** on the About page with a consent line and a link to the store privacy policy; Turnstile protected.
+- **`POST /api/subscribe`**: subscribes the email in Shopify (customer with email marketing consent) and writes a backup row to the shared Google Sheet `Mailing_List_Backup` via Apps Script (`docs/apps-script/mailing_list_backup.gs`).
+- Env vars `SHOPIFY_STORE_DOMAIN`, `SHOPIFY_ADMIN_TOKEN`, `SHOPIFY_API_VERSION` (optional), `MAILING_LIST_SHEET_URL`, `MAILING_LIST_SHEET_TOKEN` (see `.env.local.example`).
+
+### Removed
+
+- Klaviyo: the `klaviyo.js` script in `layout.tsx`, the embed div on the About page and its CSS overrides. No subscribers had been collected.
+
+---
+
 ## [2026-10-24] - Repo cleanup: remove legacy Cloudflare Pages files, new CI
 
 ### Removed

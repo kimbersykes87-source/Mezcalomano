@@ -106,6 +106,20 @@ Set these in **Vercel** (Project → Settings → Environment Variables) and loc
 - **Local**: Copy **`.env.local.example`** → **`.env.local`**. Never commit real secrets.
 - **Schema**: `public.contacts` (migration `20260726143813_create_contacts.sql`); RLS on, no client policies.
 
+### Mailing list: Turnstile + Shopify + Google Sheet backup
+
+The About page form posts `{ email, token }` to **`POST /api/subscribe`**. Flow: env check → Turnstile `siteverify` → validate email → in parallel (1) subscribe the address in **Shopify** as a customer with email marketing consent SUBSCRIBED (`src/lib/shopify-subscribe.ts`, Admin GraphQL API) and (2) append a row to the shared Google Sheet **Mailing_List_Backup** (Shared Drive `06_SALES_OPS`) through an Apps Script web app. Success if at least one of the two stored the address; failures are logged. The response is the same for new and existing addresses. Shopify Messaging (Shopify Email) sends the campaigns, and Shopify handles unsubscribes. The signup replaces the old Klaviyo embed (removed Oct 2026).
+
+| Variable | Purpose | Where used | Required |
+|----------|---------|------------|----------|
+| `SHOPIFY_STORE_DOMAIN` | The store's `myshopify.com` domain | `src/lib/shopify-subscribe.ts` | Yes |
+| `SHOPIFY_ADMIN_TOKEN` | Admin API token from a Shopify custom app (`read_customers`, `write_customers`) | `src/lib/shopify-subscribe.ts` | Yes |
+| `SHOPIFY_API_VERSION` | Pin the Admin API version (default set in code) | `src/lib/shopify-subscribe.ts` | Optional |
+| `MAILING_LIST_SHEET_URL` | Apps Script web app `/exec` URL for the backup sheet | `src/app/api/subscribe/route.ts` | Optional (backup skipped if unset) |
+| `MAILING_LIST_SHEET_TOKEN` | Shared secret (= the script's `SHARED_SECRET` property) | `src/app/api/subscribe/route.ts` | Optional |
+
+The Turnstile pair above is shared with the contact form. Backup script source and setup steps: **`docs/apps-script/mailing_list_backup.gs`** (deploy as hola@, container-bound to the sheet).
+
 ### Where keys live (summary)
 
 | Keys | Production / Preview | Local development |
@@ -122,6 +136,7 @@ Authoritative variable list: **`.env.local.example`**. Agent workflows: **[docs/
 
 - **Client**: `process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY` only (never expose the service role or Turnstile secret).
 - **Server**: `TURNSTILE_SECRET`, `APPS_SCRIPT_*`, `SUPABASE_SERVICE_ROLE_KEY`, and `SUPABASE_URL` \|\| `NEXT_PUBLIC_SUPABASE_URL` in `src/app/api/contact/route.ts`.
+- **Server (mailing list)**: `TURNSTILE_SECRET`, `SHOPIFY_STORE_DOMAIN`, `SHOPIFY_ADMIN_TOKEN`, `MAILING_LIST_SHEET_*` in `src/app/api/subscribe/route.ts` and `src/lib/shopify-subscribe.ts`.
 
 ---
 

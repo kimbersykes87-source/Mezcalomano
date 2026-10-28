@@ -96,6 +96,14 @@ The live directory and OG images then load cards from **Supabase CDN**; keep PNG
 - **DB** — migration **`supabase/migrations/20260726143813_create_contacts.sql`**; RLS enabled, no client policies; service role only.
 - **Env names** — use **`TURNSTILE_SECRET`** (not `TURNSTILE_SECRET_KEY`). Site key + secret must be from the **same** Cloudflare Turnstile widget.
 
+### I. Mailing list signup (About page)
+
+- **UI** - **`src/components/MailingListForm.tsx`** (email, Turnstile, consent line, privacy policy link) used in **`src/app/about/page.tsx`**. Reuses the contact form's input and button styles; spacing in **`components.css`** (`.about-page__signup`, `.mailing-form*`).
+- **API** - **`src/app/api/subscribe/route.ts`**: Turnstile verify → validate email → Shopify subscribe (`src/lib/shopify-subscribe.ts`) and Google Sheet backup row in parallel; succeeds if either stored it.
+- **List** - Shopify customers with email marketing consent; campaigns go out through Shopify Messaging. Backup sheet: Shared Drive `06_SALES_OPS/Mailing_List_Backup`, written by the Apps Script in **`docs/apps-script/mailing_list_backup.gs`**.
+- **Env names** - `SHOPIFY_STORE_DOMAIN`, `SHOPIFY_ADMIN_TOKEN`, optional `SHOPIFY_API_VERSION`, `MAILING_LIST_SHEET_URL`, `MAILING_LIST_SHEET_TOKEN` (see `.env.local.example`).
+- **Replaced Klaviyo** - the Klaviyo script, embed div and CSS overrides were removed Oct 2026.
+
 ---
 
 ## 3. Important file map (directory + data)
@@ -117,6 +125,7 @@ The live directory and OG images then load cards from **Supabase CDN**; keep PNG
 | Map page | `src/app/map/page.tsx`; geo **`public/geo/mexico-states.geojson`** |
 | Contact form | `src/app/contact/page.tsx`, `src/components/ContactForm.tsx`, `src/app/api/contact/route.ts` |
 | Contacts table | `supabase/migrations/20260726143813_create_contacts.sql` |
+| Mailing list signup | `src/components/MailingListForm.tsx`, `src/app/api/subscribe/route.ts`, `src/lib/shopify-subscribe.ts`, `docs/apps-script/mailing_list_backup.gs` |
 
 ---
 
