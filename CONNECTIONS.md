@@ -142,6 +142,12 @@ The Turnstile pair above is shared with the contact form. Backup script source a
 
 - **Instagram** (phase 3): Meta developer app, product Instagram, "API setup with Instagram login". Env `INSTAGRAM_APP_ID` (config), `INSTAGRAM_APP_SECRET` (Sensitive). Redirect URL registered in the Meta app: `https://mezcalomano.com/api/instagram/callback`. Connect or reconnect by opening `https://mezcalomano.com/api/instagram/connect` while logged into Instagram as @mezcalomano. Token stored in Supabase `admin_tokens`, refreshed weekly by the nightly job.
 
+- **Admin dashboard** (`admin.mezcalomano.com`, phase 5): same Next.js project; `src/proxy.ts` sends the `admin.` host to `/admin` and returns 404 for `/admin` on the public hosts. DNS: Cloudflare CNAME `admin` to the Vercel target (DNS only, not proxied); the domain is added to the Vercel project; the Turnstile widget MM_Contact lists the hostname. One login (hola@) with a 40+ character password. Env (Sensitive, Production): `ADMIN_PASSWORD_HASH` (make with `node scripts/admin-password-hash.mjs`), `ADMIN_SESSION_SECRET`. Optional `ADMIN_EMAIL`, `ADMIN_URL`. Ten failed logins in an hour locks the login (table `admin_login_attempts`).
+
+- **Weekly email** (phase 6): Mondays 08:00 London to hola@ only. Supabase pg_cron job `mm-weekly-email` calls `/api/cron/weekly` at 07:00 and 08:00 UTC on Mondays; the route sends only when it is 08:00 London and not already sent that week. It posts to a Google Apps Script web app (`docs/apps-script/weekly_report_sender.gs`, deployed as hola@, script property `SHARED_SECRET`). Env: `WEEKLY_EMAIL_URL`, `WEEKLY_EMAIL_TOKEN` (same value as `SHARED_SECRET`, Sensitive). Test from the dashboard button "Send the weekly email now".
+
+- **TikTok** (phase 4): TikTok for Developers app with Login Kit and Display API; redirect `https://mezcalomano.com/api/tiktok/callback`. Env `TIKTOK_CLIENT_KEY`, `TIKTOK_CLIENT_SECRET` (Sensitive). Connect by opening `https://mezcalomano.com/api/tiktok/connect` logged into the business account. Refresh token (1 year) is stored in `admin_tokens` and renewed by every nightly run.
+
 ### Where keys live (summary)
 
 | Keys | Production / Preview | Local development |
