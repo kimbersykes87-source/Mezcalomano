@@ -253,3 +253,8 @@ export async function shopifyAdminQuery<T>(
 ): Promise<T> {
   return adminGraphQL<T>(readConfig(), query, variables);
 }
+
+/** Drops the cached token so the next call fetches one with the app's current scopes. */
+export function resetShopifyToken() {
+  cachedToken = null;
+}

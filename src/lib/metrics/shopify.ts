@@ -1,4 +1,4 @@
-import { shopifyAdminQuery } from "@/lib/shopify-subscribe";
+import { resetShopifyToken, shopifyAdminQuery } from "@/lib/shopify-subscribe";
 import type { MetricRow } from "./store";
 
 /**
@@ -45,7 +45,7 @@ const num = (v: string | undefined) => {
   return Number.isFinite(n) ? n : 0;
 };
 
-export async function collectShop(day: string): Promise<MetricRow[]> {
+async function collectShopFromReports(day: string): Promise<MetricRow[]> {
   const range = `SINCE ${day} UNTIL ${day}`;
   const rows: MetricRow[] = [];
 
@@ -148,4 +148,109 @@ export async function collectEmailList(start: Date, end: Date): Promise<MetricRo
     { metric: "new_subscribers_by_source", dimension: "checkout or other", value: joined - joinedWebsite },
     { metric: "unsubscribes", value: left },
   ];
+}
+
+const isAccessDenied = (err: unknown) => err instanceof Error && /access denied/i.test(err.message);
+
+/**
+ * Shop figures for the day. Uses ShopifyQL reports when the app is allowed to;
+ * otherwise falls back to adding up the day's orders (no session funnel or
+ * country in that case) and records why, with the app's current scopes.
+ */
+export async function collectShop(day: string, start: Date, end: Date): Promise<MetricRow[]> {
+  try {
+    return await collectShopFromReports(day);
+  } catch (err) {
+    if (!isAccessDenied(err)) throw err;
+  }
+  // The cached token may predate a scope change: try once more with a fresh one.
+  resetShopifyToken();
+  try {
+    return await collectShopFromReports(day);
+  } catch (err) {
+    if (!isAccessDenied(err)) throw err;
+  }
+  const rows = await collectShopFromOrders(start, end);
+  const scopes = await appScopes().catch(() => "unknown");
+  rows.push({ metric: "source_note", dimension: `reports denied, used orders; app scopes: ${scopes}`, value: 1 });
+  return rows;
+}
+
+async function appScopes(): Promise<string> {
+  const data = await shopifyAdminQuery<{ currentAppInstallation: { accessScopes: { handle: string }[] } }>(
+    `query { currentAppInstallation { accessScopes { handle } } }`
+  );
+  return data.currentAppInstallation.accessScopes.map((s) => s.handle).sort().join(",");
+}
+
+type OrdersPage = {
+  orders: {
+    pageInfo: { hasNextPage: boolean; endCursor: string | null };
+    nodes: {
+      test: boolean;
+      cancelledAt: string | null;
+      subtotalPriceSet: { shopMoney: { amount: string } };
+      totalDiscountsSet: { shopMoney: { amount: string } };
+      totalRefundedSet: { shopMoney: { amount: string } };
+      currentTotalPriceSet: { shopMoney: { amount: string } };
+      lineItems: {
+        nodes: { sku: string | null; name: string; quantity: number; currentQuantity: number }[];
+      };
+    }[];
+  };
+};
+
+const ORDERS = /* GraphQL */ `
+  query Orders($q: String!, $after: String) {
+    orders(first: 100, after: $after, query: $q) {
+      pageInfo { hasNextPage endCursor }
+      nodes {
+        test
+        cancelledAt
+        subtotalPriceSet { shopMoney { amount } }
+        totalDiscountsSet { shopMoney { amount } }
+        totalRefundedSet { shopMoney { amount } }
+        currentTotalPriceSet { shopMoney { amount } }
+        lineItems(first: 50) { nodes { sku name quantity currentQuantity } }
+      }
+    }
+  }
+`;
+
+async function collectShopFromOrders(start: Date, end: Date): Promise<MetricRow[]> {
+  const q = `created_at:>='${start.toISOString()}' AND created_at:<'${end.toISOString()}'`;
+  let after: string | null = null;
+  let orders = 0, gross = 0, discounts = 0, refunds = 0, total = 0, units = 0;
+  const rows: MetricRow[] = [];
+  for (let page = 0; page < 20; page++) {
+    const data: OrdersPage = await shopifyAdminQuery<OrdersPage>(ORDERS, { q, after });
+    for (const o of data.orders.nodes) {
+      if (o.test) continue;
+      orders++;
+      const subtotal = num(o.subtotalPriceSet.shopMoney.amount);
+      const disc = num(o.totalDiscountsSet.shopMoney.amount);
+      gross += subtotal + disc;
+      discounts -= disc;
+      refunds -= num(o.totalRefundedSet.shopMoney.amount);
+      total += num(o.currentTotalPriceSet.shopMoney.amount);
+      for (const li of o.lineItems.nodes) {
+        units += li.currentQuantity;
+        const dim = `${li.sku || "(no SKU)"} | ${li.name}`;
+        rows.push({ metric: "orders_by_sku", dimension: dim, value: 1 });
+        rows.push({ metric: "units_by_sku", dimension: dim, value: li.currentQuantity });
+      }
+    }
+    if (!data.orders.pageInfo.hasNextPage) break;
+    after = data.orders.pageInfo.endCursor;
+  }
+  rows.push(
+    { metric: "orders", value: orders },
+    { metric: "gross_sales", value: Math.round(gross * 100) / 100 },
+    { metric: "discounts", value: Math.round(discounts * 100) / 100 },
+    { metric: "sales_reversals", value: Math.round(refunds * 100) / 100 },
+    { metric: "net_sales", value: Math.round((gross + discounts + refunds) * 100) / 100 },
+    { metric: "total_sales", value: Math.round(total * 100) / 100 },
+    { metric: "units", value: units }
+  );
+  return rows;
 }
