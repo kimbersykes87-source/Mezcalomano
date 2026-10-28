@@ -2,6 +2,21 @@
 
 All notable changes to the Mezcalómano marketing site project.
 
+## [2026-10-28] - Analytics, phases 4 to 6 (TikTok, admin site, weekly email)
+
+### Added
+
+- **Admin dashboard** at admin.mezcalomano.com (host routed by `src/proxy.ts`, noindex): headline tiles with change vs the previous period, visits chart, shop funnel, top pages, referrers, countries, products, clicks, Instagram and TikTok figures, data health. Public pages moved into a `(site)` route group so the admin has no public header or footer.
+- **Login**: one account, scrypt password hash, signed 30 day cookie, Turnstile, lockout after 10 failures an hour. Migration `20261028233000_admin_login_and_tiktok.sql`.
+- **Weekly email**: Monday 08:00 London to hola@, sent through an Apps Script web app; pg_cron schedule in migration `20261028233500_weekly_email_schedule.sql`.
+- **TikTok**: `/api/tiktok/connect` and `/callback`, nightly source `tiktok` (followers, following, likes, videos, recent video views).
+- List sizes and follower counts show a plain difference ("+14") instead of a percentage.
+
+### Needs
+
+- Vercel env vars: `ADMIN_PASSWORD_HASH`, `ADMIN_SESSION_SECRET`, `WEEKLY_EMAIL_URL`, `WEEKLY_EMAIL_TOKEN`, `TIKTOK_CLIENT_KEY`, `TIKTOK_CLIENT_SECRET`.
+- Apps Script deployment as hola@; apply the weekly email schedule migration after the site is deployed.
+
 ## [2026-10-28] - Analytics, phase 3 (Instagram)
 
 ### Added
