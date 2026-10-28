@@ -122,6 +122,16 @@ The About page form posts `{ email, token }` to **`POST /api/subscribe`**. Flow:
 
 The Turnstile pair above is shared with the contact form. Backup script source and setup steps: **`docs/apps-script/mailing_list_backup.gs`** (deploy as hola@, container-bound to the sheet).
 
+**Status:** live on `main` since 28 Oct 2026 (commit 88417e7). Tested end to end on mezcalomano.com/about: the customer appeared in Shopify as Subscribed and the row landed in the backup sheet.
+
+**Shopify app:** Dev Dashboard app `Mezcalomano_website_mail_list` (app ID 441200082945, organization dashboard 201236210), scopes `read_customers` and `write_customers`, installed on the MEZCALÓMANO store (`nba0qm-5b.myshopify.com`). Changing scopes means releasing a new app version and re-approving the install. The client secret is shown on the app's Settings page; keep it in Vercel (Sensitive) and `.env.local` only.
+
+**Backup script:** Apps Script project bound to the Mailing_List_Backup sheet, owned by hola@. The tab must be named `Sheet1` (row 1 holds the headers). After editing the script, use Deploy > Manage deployments > Edit > New version so the same `/exec` URL keeps working. `SHARED_SECRET` lives in the script's Script properties.
+
+**Testing on a Vercel preview:** the Turnstile widget only renders on hostnames listed in the widget in Cloudflare, so a preview shows "Unable to connect to website". To test there, add the branch alias hostname in Cloudflare > Turnstile > the widget > Hostname management, or test after merging to `main`. Environment variable changes only apply to new deployments, so Redeploy after changing them.
+
+**Sender and authentication:** Shopify's sender email is hola@mezcalomano.com and email domain authentication shows Authenticated (checked 28 Oct 2026). DMARC is still `p=none`; Shopify's DMARC setup steps are optional and can be done later.
+
 ### Where keys live (summary)
 
 | Keys | Production / Preview | Local development |

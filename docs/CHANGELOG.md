@@ -10,6 +10,11 @@ All notable changes to the Mezcalómano marketing site project.
 - **`POST /api/subscribe`**: subscribes the email in Shopify (customer with email marketing consent) and writes a backup row to the shared Google Sheet `Mailing_List_Backup` via Apps Script (`docs/apps-script/mailing_list_backup.gs`).
 - Env vars `SHOPIFY_STORE_DOMAIN`, `SHOPIFY_CLIENT_ID`, `SHOPIFY_CLIENT_SECRET` (Dev Dashboard app, 24 hour tokens fetched and cached by the code), `SHOPIFY_API_VERSION` (optional), `MAILING_LIST_SHEET_URL`, `MAILING_LIST_SHEET_TOKEN` (see `.env.local.example`).
 
+### Status
+
+- Merged to `main` and live 28 Oct 2026 (88417e7). Tested end to end on production. Shopify sender email hola@mezcalomano.com is authenticated.
+- To test on a Vercel preview, the preview hostname must be added to the Turnstile widget in Cloudflare (see `CONNECTIONS.md`).
+
 ### Removed
 
 - Klaviyo: the `klaviyo.js` script in `layout.tsx`, the embed div on the About page and its CSS overrides. No subscribers had been collected.

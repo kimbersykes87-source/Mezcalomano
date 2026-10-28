@@ -102,6 +102,7 @@ The live directory and OG images then load cards from **Supabase CDN**; keep PNG
 - **API** - **`src/app/api/subscribe/route.ts`**: Turnstile verify → validate email → Shopify subscribe (`src/lib/shopify-subscribe.ts`) and Google Sheet backup row in parallel; succeeds if either stored it.
 - **List** - Shopify customers with email marketing consent; campaigns go out through Shopify Messaging. Backup sheet: Shared Drive `06_SALES_OPS/Mailing_List_Backup`, written by the Apps Script in **`docs/apps-script/mailing_list_backup.gs`**.
 - **Env names** - `SHOPIFY_STORE_DOMAIN`, `SHOPIFY_CLIENT_ID`, `SHOPIFY_CLIENT_SECRET`, optional `SHOPIFY_API_VERSION` (old-style fixed `SHOPIFY_ADMIN_TOKEN` also works), `MAILING_LIST_SHEET_URL`, `MAILING_LIST_SHEET_TOKEN` (see `.env.local.example`).
+- **Status** - live on `main` since 28 Oct 2026, tested end to end. Shopify app, backup script and preview testing notes are in `CONNECTIONS.md` (Mailing list section).
 - **Replaced Klaviyo** - the Klaviyo script, embed div and CSS overrides were removed Oct 2026.
 
 ---
