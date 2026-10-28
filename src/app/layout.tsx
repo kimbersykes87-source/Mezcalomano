@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
+import SiteAnalytics from "@/components/SiteAnalytics";
 import {
   LOGO_IMAGE_PATH,
   OG_IMAGE_PATH,
@@ -97,6 +98,7 @@ export default function RootLayout({
         <Header />
         <main className="page-content">{children}</main>
         <Footer />
+        <SiteAnalytics />
       </body>
     </html>
   );

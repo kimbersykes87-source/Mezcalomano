@@ -2,6 +2,20 @@
 
 All notable changes to the Mezcalómano marketing site project.
 
+## [2026-10-28] - Analytics, phase 1 (admin dashboard)
+
+### Added
+
+- **`SiteAnalytics`** (`src/components/SiteAnalytics.tsx`, in the root layout): loads the Cloudflare Web Analytics beacon (cookieless page views) when `NEXT_PUBLIC_CF_BEACON_TOKEN` is set, and sends a beacon to `/api/track` for every click on a link that leaves the site.
+- **`POST /api/track`**: saves outbound clicks to the Supabase `events` table (page, link, host, species, link group, country, phone or desktop; no IP, no cookies). Skips obvious bots. Always answers 204.
+- Producer links on species cards carry `data-track-species` and `data-track-group` (`us` or `more`), so the dashboard can report clicks by species and shop.
+- Migration `supabase/migrations/20261028200000_create_events.sql` (RLS on, no policies; service role only).
+
+### Status
+
+- Nothing is counted until the migration is applied and `NEXT_PUBLIC_CF_BEACON_TOKEN` is set in Vercel (Production only) and the site is redeployed. Until then the code is inert.
+- Plan: Claude Docs "Mezcalómano Admin Dashboard Plan".
+
 ## [2026-10-28] - Mailing list moves from Klaviyo to Shopify
 
 ### Added

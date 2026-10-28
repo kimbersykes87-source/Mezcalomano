@@ -132,6 +132,12 @@ The Turnstile pair above is shared with the contact form. Backup script source a
 
 **Sender and authentication:** Shopify's sender email is hola@mezcalomano.com and email domain authentication shows Authenticated (checked 28 Oct 2026). DMARC is still `p=none`; Shopify's DMARC setup steps are optional and can be done later.
 
+### Analytics: Cloudflare Web Analytics + click events
+
+- `NEXT_PUBLIC_CF_BEACON_TOKEN`: Cloudflare Web Analytics site token for mezcalomano.com (Cloudflare > Analytics & Logs > Web Analytics). Public by design, not a secret. Set it in Vercel **Production only** so previews and local dev are not counted, then redeploy.
+- The shop (shop.mezcalomano.com) has its own Web Analytics site and token, added by hand in the Shopify theme (`theme.liquid`, before `</body>`).
+- Outbound link clicks go to `POST /api/track` and the Supabase `events` table, using the existing `SUPABASE_SERVICE_ROLE_KEY`.
+
 ### Where keys live (summary)
 
 | Keys | Production / Preview | Local development |

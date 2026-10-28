@@ -31,7 +31,15 @@ function parseHabitat(habitat: Species["habitat"]) {
 }
 
 /** Comma-separated producer names, linked where there is a URL. */
-function ProducerNames({ list }: { list: ProducerLink[] }) {
+function ProducerNames({
+  list,
+  speciesSlug,
+  group,
+}: {
+  list: ProducerLink[];
+  speciesSlug: string;
+  group: "us" | "more";
+}) {
   return (
     <span className="text-center text-sm">
       {list.map((p, i) => (
@@ -42,6 +50,8 @@ function ProducerNames({ list }: { list: ProducerLink[] }) {
               href={p.url}
               target="_blank"
               rel="noopener noreferrer"
+              data-track-species={speciesSlug}
+              data-track-group={group}
               className="species-card-producer-link text-[var(--agave-yellow)] underline decoration-[var(--agave-yellow)] underline-offset-2 hover:opacity-90"
             >
               {p.name}
@@ -182,13 +192,13 @@ function SpeciesCardContent({
                   {usProducers.length > 0 && (
                     <div className="flex flex-col items-center" style={{ gap: 2 }}>
                       <span className="species-card-producer-group">Buy in the US</span>
-                      <ProducerNames list={usProducers} />
+                      <ProducerNames list={usProducers} speciesSlug={speciesDirectorySlug(species)} group="us" />
                     </div>
                   )}
                   {otherProducers.length > 0 && (
                     <div className="flex flex-col items-center" style={{ gap: 2, marginTop: usProducers.length ? 6 : 0 }}>
                       {usProducers.length > 0 && <span className="species-card-producer-group">More producers</span>}
-                      <ProducerNames list={otherProducers} />
+                      <ProducerNames list={otherProducers} speciesSlug={speciesDirectorySlug(species)} group="more" />
                     </div>
                   )}
                 </div>
