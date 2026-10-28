@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { collectCloudflare, CF_SITES } from "@/lib/metrics/cloudflare";
+import { collectInstagram } from "@/lib/metrics/instagram";
 import { collectClicks, collectContacts } from "@/lib/metrics/local";
 import { collectEmailList, collectShop } from "@/lib/metrics/shopify";
 import { logRun, saveMetrics, type MetricRow } from "@/lib/metrics/store";
@@ -28,6 +29,7 @@ const COLLECTORS: Record<string, Collector> = {
   email: (_d, s, e) => collectEmailList(s, e),
   contact: (_d, s, e) => collectContacts(s, e),
   clicks: (_d, s, e) => collectClicks(s, e),
+  instagram: (_d, s, e) => collectInstagram(s, e),
 };
 
 export async function GET(request: Request) {
