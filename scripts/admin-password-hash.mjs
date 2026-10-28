@@ -19,23 +19,43 @@ function readHidden(prompt) {
     if (stdin.isTTY) stdin.setRawMode(true);
     stdin.resume();
     stdin.setEncoding("utf8");
-    const onData = (ch) => {
-      if (ch === "\r" || ch === "\n" || ch === "\u0004") {
-        if (stdin.isTTY) stdin.setRawMode(false);
-        stdin.pause();
-        stdin.off("data", onData);
-        process.stdout.write("\n");
-        resolve(value);
-      } else if (ch === "\u0003") {
-        process.exit(1);
-      } else if (ch === "\u007f" || ch === "\b") {
-        value = value.slice(0, -1);
-      } else {
-        value += ch;
+    const onData = (chunk) => {
+      // A paste arrives as one chunk, so go through it character by character and
+      // stop at the first Enter (a pasted trailing newline must not become part of the password).
+      for (const ch of chunk) {
+        if (ch === "\r" || ch === "\n" || ch === "\u0004") {
+          if (stdin.isTTY) stdin.setRawMode(false);
+          stdin.pause();
+          stdin.off("data", onData);
+          process.stdout.write("\n");
+          resolve(value);
+          return;
+        } else if (ch === "\u0003") {
+          process.exit(1);
+        } else if (ch === "\u007f" || ch === "\b") {
+          value = value.slice(0, -1);
+        } else {
+          value += ch;
+        }
       }
     };
     stdin.on("data", onData);
   });
+}
+
+if (process.argv[2] === "--check") {
+  // Test a hash against a password without changing anything: paste the hash, then the password.
+  const stored = (await readHidden("Paste the ADMIN_PASSWORD_HASH value: ")).trim();
+  const typed = await readHidden("Password: ");
+  const [tag, n, r, p, saltHex, hashHex] = stored.split("$");
+  if (tag !== "scrypt" || !hashHex) {
+    console.log("That is not a valid hash (it should start with scrypt$ and have 6 parts).");
+    process.exit(1);
+  }
+  const expected = Buffer.from(hashHex, "hex");
+  const got = scryptSync(typed, Buffer.from(saltHex, "hex"), expected.length, { N: Number(n), r: Number(r), p: Number(p) });
+  console.log(got.equals(expected) ? "MATCH: this hash belongs to that password." : "NO MATCH: the hash and password do not go together.");
+  process.exit(0);
 }
 
 const pw = await readHidden("Admin password (40+ characters): ");
