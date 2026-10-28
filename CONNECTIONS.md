@@ -113,7 +113,9 @@ The About page form posts `{ email, token }` to **`POST /api/subscribe`**. Flow:
 | Variable | Purpose | Where used | Required |
 |----------|---------|------------|----------|
 | `SHOPIFY_STORE_DOMAIN` | The store's `myshopify.com` domain | `src/lib/shopify-subscribe.ts` | Yes |
-| `SHOPIFY_ADMIN_TOKEN` | Admin API token from a Shopify custom app (`read_customers`, `write_customers`) | `src/lib/shopify-subscribe.ts` | Yes |
+| `SHOPIFY_CLIENT_ID` | Client ID of the Shopify Dev Dashboard app (scopes `read_customers`, `write_customers`) | `src/lib/shopify-subscribe.ts` | Yes |
+| `SHOPIFY_CLIENT_SECRET` | Client secret of that app; the code swaps it for a 24 hour Admin API token (client credentials grant) and caches it | `src/lib/shopify-subscribe.ts` | Yes |
+| `SHOPIFY_ADMIN_TOKEN` | Only for an old-style custom app made before 2026 with a fixed token; overrides the two above | `src/lib/shopify-subscribe.ts` | No |
 | `SHOPIFY_API_VERSION` | Pin the Admin API version (default set in code) | `src/lib/shopify-subscribe.ts` | Optional |
 | `MAILING_LIST_SHEET_URL` | Apps Script web app `/exec` URL for the backup sheet | `src/app/api/subscribe/route.ts` | Optional (backup skipped if unset) |
 | `MAILING_LIST_SHEET_TOKEN` | Shared secret (= the script's `SHARED_SECRET` property) | `src/app/api/subscribe/route.ts` | Optional |
@@ -136,7 +138,7 @@ Authoritative variable list: **`.env.local.example`**. Agent workflows: **[docs/
 
 - **Client**: `process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY` only (never expose the service role or Turnstile secret).
 - **Server**: `TURNSTILE_SECRET`, `APPS_SCRIPT_*`, `SUPABASE_SERVICE_ROLE_KEY`, and `SUPABASE_URL` \|\| `NEXT_PUBLIC_SUPABASE_URL` in `src/app/api/contact/route.ts`.
-- **Server (mailing list)**: `TURNSTILE_SECRET`, `SHOPIFY_STORE_DOMAIN`, `SHOPIFY_ADMIN_TOKEN`, `MAILING_LIST_SHEET_*` in `src/app/api/subscribe/route.ts` and `src/lib/shopify-subscribe.ts`.
+- **Server (mailing list)**: `TURNSTILE_SECRET`, `SHOPIFY_STORE_DOMAIN`, `SHOPIFY_CLIENT_ID`, `SHOPIFY_CLIENT_SECRET`, `MAILING_LIST_SHEET_*` in `src/app/api/subscribe/route.ts` and `src/lib/shopify-subscribe.ts`.
 
 ---
 

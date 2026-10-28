@@ -8,7 +8,7 @@ All notable changes to the Mezcalómano marketing site project.
 
 - **`MailingListForm`** on the About page with a consent line and a link to the store privacy policy; Turnstile protected.
 - **`POST /api/subscribe`**: subscribes the email in Shopify (customer with email marketing consent) and writes a backup row to the shared Google Sheet `Mailing_List_Backup` via Apps Script (`docs/apps-script/mailing_list_backup.gs`).
-- Env vars `SHOPIFY_STORE_DOMAIN`, `SHOPIFY_ADMIN_TOKEN`, `SHOPIFY_API_VERSION` (optional), `MAILING_LIST_SHEET_URL`, `MAILING_LIST_SHEET_TOKEN` (see `.env.local.example`).
+- Env vars `SHOPIFY_STORE_DOMAIN`, `SHOPIFY_CLIENT_ID`, `SHOPIFY_CLIENT_SECRET` (Dev Dashboard app, 24 hour tokens fetched and cached by the code), `SHOPIFY_API_VERSION` (optional), `MAILING_LIST_SHEET_URL`, `MAILING_LIST_SHEET_TOKEN` (see `.env.local.example`).
 
 ### Removed
 
