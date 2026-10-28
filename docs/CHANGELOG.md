@@ -2,6 +2,19 @@
 
 All notable changes to the Mezcalómano marketing site project.
 
+## [2026-10-28] - Analytics, phase 3 (Instagram)
+
+### Added
+
+- **`/api/instagram/connect`** and **`/api/instagram/callback`**: one-time connection of @mezcalomano through "Instagram API with Instagram Login" (no Facebook Page needed). Only the expected account is saved; the 60 day token goes to Supabase `admin_tokens` and is never shown or logged.
+- Nightly job source **`instagram`**: followers, following, posts, reach, views, profile views, accounts engaged, interactions, website clicks, link taps, new followers and unfollows (each metric fetched on its own; unavailable ones are noted in a `source_note` row), plus `token_days_left`. The token is refreshed once a week.
+- Migration `20261028230000_create_admin_tokens.sql`.
+
+### Needs
+
+- Meta developer app with the Instagram product, redirect URL `https://mezcalomano.com/api/instagram/callback`, @mezcalomano added as an Instagram tester.
+- Vercel env vars `INSTAGRAM_APP_ID` (config) and `INSTAGRAM_APP_SECRET` (Sensitive).
+
 ## [2026-10-28] - Analytics, phase 2 (nightly job)
 
 ### Added

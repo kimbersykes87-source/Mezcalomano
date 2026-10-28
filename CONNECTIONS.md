@@ -140,6 +140,8 @@ The Turnstile pair above is shared with the contact form. Backup script source a
 
 - **Nightly job** `/api/cron/daily` (Vercel Cron, 00:30 UTC daily, see `vercel.json`) saves daily figures to Supabase `metrics_daily` and logs each source to `metrics_runs`. Env: `CRON_SECRET` (Vercel sends it as `Authorization: Bearer`), `CLOUDFLARE_ANALYTICS_TOKEN` (Account Analytics Read). Optional overrides: `CF_ACCOUNT_ID`, `CF_SITE_TAG_MAIN`, `CF_SITE_TAG_SHOP`. Shopify figures use the mailing list app's credentials, which also need `read_orders`, `read_reports` and protected customer data access.
 
+- **Instagram** (phase 3): Meta developer app, product Instagram, "API setup with Instagram login". Env `INSTAGRAM_APP_ID` (config), `INSTAGRAM_APP_SECRET` (Sensitive). Redirect URL registered in the Meta app: `https://mezcalomano.com/api/instagram/callback`. Connect or reconnect by opening `https://mezcalomano.com/api/instagram/connect` while logged into Instagram as @mezcalomano. Token stored in Supabase `admin_tokens`, refreshed weekly by the nightly job.
+
 ### Where keys live (summary)
 
 | Keys | Production / Preview | Local development |
