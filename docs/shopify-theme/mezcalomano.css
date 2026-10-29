@@ -1,0 +1,92 @@
+/* Mezcalómano shop styling (Showcase, October 2026). Loaded by the mm-styles custom liquid section in the header group.
+   Mirrors src/styles/site.css on mezcalomano.com. Yellow = buy or leave the page, olive = within the
+   page, terracotta = small accents. Source copy: docs/shopify-theme/ in the website repo. */
+
+:root{--font-body-family:'Open Sans',sans-serif;--font-body-weight:300;--font-body-weight-bold:600;--font-heading-family:'Open Sans',sans-serif;--font-heading-weight:700;--mm-dark:#272926;--mm-olive:#84866D;--mm-yellow:#DFB725;--mm-terra:#B86744;--mm-muted:#D4D3CB;--mm-line:rgba(255,255,255,.14);--mm-panel:rgba(255,255,255,.05)}
+/* Theme setting overrides (kept here so settings_data.json stays untouched) */
+:root{--buttons-radius:40px;--buttons-radius-outset:41px;--buttons-border-offset:.3px;--inputs-radius:26px;--inputs-radius-outset:27px;--variant-pills-radius:40px;--media-radius:16px;--product-card-corner-radius:1.6rem;--collection-card-corner-radius:1.6rem;--popup-corner-radius:16px;--text-boxes-radius:16px;--badge-corner-radius:4rem}
+:root,.color-scheme-1{--color-button:223,183,37;--color-button-text:20,21,15;--color-secondary-button-text:255,255,255;--color-link:255,255,255}
+html{scrollbar-color:#84866D transparent}
+::-webkit-scrollbar{width:14px;height:8px}
+::-webkit-scrollbar-track,::-webkit-scrollbar-corner{background:rgba(255,255,255,.06)}
+::-webkit-scrollbar-thumb{background:#84866D;border-left:3px solid transparent;border-right:3px solid transparent;background-clip:padding-box}
+::-webkit-scrollbar-thumb:hover{background:#fff;background-clip:padding-box}
+body{font-stretch:100%;letter-spacing:.03em;color:rgba(255,255,255,.9)}
+body,.gradient{background:var(--mm-dark)}
+
+/* Titles: Bold Condensed caps */
+h1,h2,h3,.h0,.h1,.h2,.h3,.title,.product__title>*,.cart__title,.drawer__heading,.main-page-title{font-family:'Open Sans',sans-serif;font-weight:700;font-stretch:75%;text-transform:uppercase;letter-spacing:.04em;color:#fff}
+h1,.h1,.main-page-title{font-size:clamp(3.4rem,4.4vw,6.4rem);line-height:1}
+h4,h5,.caption-with-letter-spacing,.footer-block__heading{font-family:'Open Sans',sans-serif;font-weight:400;font-stretch:100%;text-transform:uppercase;letter-spacing:.06em}
+
+/* Buttons and fields */
+.button,.button--primary,.shopify-payment-button__button--unbranded,.cart__checkout-button{font-family:'Open Sans',sans-serif;font-weight:400;font-stretch:100%;text-transform:uppercase;letter-spacing:.06em;font-size:1.5rem;min-height:5.6rem}
+.button--primary,.product-form__submit,.cart__checkout-button{background:var(--mm-yellow)!important;color:#14150F!important}
+/* Buy it now: outlined, so Add to cart is the one yellow button */
+.shopify-payment-button__button--unbranded{background:transparent!important;color:#fff!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.5)!important}
+.shopify-payment-button__button--unbranded:hover{box-shadow:inset 0 0 0 1px #fff!important}
+.button--secondary{color:#fff}
+input.field__input,.select__select,.customer .field input,.quantity{border-radius:999px}
+textarea.field__input,.text-area{border-radius:16px}
+.quantity__button{color:#fff}
+
+/* Announcement bar */
+.announcement-bar-section .utility-bar{background:#1F211E;border-bottom:1px solid rgba(255,255,255,.08)}
+.announcement-bar__message{font-family:'Open Sans',sans-serif;font-weight:400;font-stretch:100%;letter-spacing:.06em;text-transform:uppercase;font-size:1.25rem;color:var(--mm-muted)}
+
+/* Header: burger, logo, basket */
+.header{padding-top:0;padding-bottom:0;min-height:8.8rem}
+.header__heading-logo{height:8rem;width:auto;max-height:8rem}
+.header__icon--account,.header__icon--search,.header__search,.header-localization,.desktop-localization-wrapper{display:none!important}
+.cart-count-bubble{background:var(--mm-olive);color:#14150F}
+.header__icon,.header__icon--menu{color:#fff}
+.menu-drawer,.menu-drawer__submenu{background:var(--mm-dark)}
+.menu-drawer__menu-item{font-family:'Open Sans',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.06em;font-size:1.8rem;border-bottom:1px solid rgba(255,255,255,.1)}
+@media (max-width:749px){.header{min-height:7.2rem}.header__heading-logo{height:6.4rem;max-height:6.4rem}}
+
+/* Product page */
+.product__info-container>*+*{margin-top:1.6rem}
+.mm-eyebrow{display:inline-flex;align-items:center;gap:10px;margin:0;font-size:1.4rem;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:#fff}
+.mm-eyebrow::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--mm-terra)}
+.product__title h1{font-size:clamp(3.4rem,3.6vw,4.8rem);line-height:1.04}
+.product .price .price-item{font-family:'Open Sans',sans-serif;font-weight:700;font-stretch:75%;letter-spacing:.03em;font-size:5.6rem;line-height:1;color:var(--mm-olive)}
+.product .price__badge-sale,.product .price__badge-sold-out{border-radius:999px}
+.mm-lede{margin:0;font-size:1.9rem;line-height:1.6;color:#fff}
+.mm-points{list-style:none;margin:0;padding:0}
+.mm-points li{display:flex;gap:12px;padding:6px 0;font-size:1.7rem;line-height:1.45}
+.mm-points li::before{content:"";flex:none;width:10px;height:10px;margin-top:.8rem;border-radius:50%;background:var(--mm-olive)}
+.mm-box{padding:18px 20px;border-radius:16px;background:var(--mm-panel);border:1px solid var(--mm-line);font-size:1.6rem;line-height:1.55;color:#E6E4DA}
+.mm-box b{display:block;margin-bottom:6px;font-size:1.3rem;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--mm-muted)}
+.product__media-item,.product__media-wrapper .media,.thumbnail{border-radius:16px;overflow:hidden}
+.thumbnail[aria-current]{box-shadow:0 0 0 2px #fff}
+.product-form__input--pill input[type=radio]+label{border-radius:999px}
+
+/* Description: the approved copy, styled like the site */
+.product__description{font-size:1.7rem;line-height:1.7;color:#E6E4DA}
+.product__description h3{margin:4rem 0 1.2rem;font-size:2.8rem;line-height:1.05;font-weight:700;font-stretch:75%;letter-spacing:.04em;text-transform:uppercase;color:#fff}
+.product__description h3:has(> br:only-child),.product__description h3:empty{display:none}
+.product__description h3:has(img){margin:2.4rem 0}
+.product__description img{display:block;width:100%;height:auto;border-radius:16px;border:1px solid var(--mm-line)}
+.product__description ul{list-style:none;padding:0;margin:0 0 1.6rem}
+.product__description li{display:flex;gap:12px;padding:6px 0}
+.product__description li::before{content:"";flex:none;width:10px;height:10px;margin-top:1rem;border-radius:50%;background:var(--mm-olive)}
+.product__description a[href*="/cart/add"]{display:inline-flex!important;align-items:center;justify-content:center;min-height:5.6rem;padding:0 2.8rem!important;border-radius:999px!important;background:var(--mm-yellow)!important;color:#14150F!important;font-family:'Open Sans',sans-serif!important;font-stretch:100%;font-weight:400!important;font-size:1.5rem!important;letter-spacing:.06em!important;text-transform:uppercase!important}
+
+/* Cart drawer and cart page */
+.drawer__inner,.cart-drawer{background:var(--mm-dark)}
+.cart-item__name{font-family:'Open Sans',sans-serif;font-weight:700;font-stretch:75%;letter-spacing:.04em;text-transform:uppercase;font-size:2rem;color:#fff}
+.cart-item__image{border-radius:12px}
+.totals__total-value,.totals__subtotal-value{font-weight:400;color:#fff}
+
+/* Footer: newsletter band then the small line */
+.footer{border-top:1px solid rgba(255,255,255,.1)}
+.footer-block__newsletter .footer-block__heading,.footer-block__newsletter h2{font-family:'Open Sans',sans-serif;font-weight:400;font-stretch:100%;letter-spacing:.06em;text-transform:uppercase;font-size:1.8rem}
+.newsletter-form__field-wrapper .field__input{border-radius:999px}
+.newsletter-form__button{border-radius:999px;background:var(--mm-terra);color:#fff}
+.footer__copyright,.copyright__content,.policies{font-size:1.3rem;color:var(--mm-muted)}
+.footer .list-social__link{color:#fff}
+
+/* Shared pages */
+.rte a,.link{color:#fff;text-decoration-color:var(--mm-yellow)}
+.card-wrapper .card,.card__inner{border-radius:16px}
+.badge{border-radius:999px}

@@ -1,0 +1,85 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "mm_eyebrow": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<p class=\"mm-eyebrow\">Pre-orders open</p>"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "mm_lede": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<p class=\"mm-lede\">One deck. 40 agaves. Endless rabbit holes. About 85% of mezcal is made from espadín. This deck is your passport to everything else.</p><ul class=\"mm-points\"><li>56 cards: 40 agaves, 12 production roles, 2 pollinator jokers, 2 reference cards</li><li>Proper poker size, so it plays like a regular deck</li><li>QR code on the box opens the online agave directory</li></ul>"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "mm_box": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div class=\"mm-box\"><b>When it lands</b>Free US shipping. Pre-orders ship from November 30. Order by December 14 for US Christmas delivery. 30 days, full refund on unopened decks.</div>"
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "mm_eyebrow",
+        "title",
+        "price",
+        "mm_lede",
+        "quantity_selector",
+        "buy_buttons",
+        "mm_box",
+        "description",
+        "share"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail",
+        "mobile_thumbnails": "show",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
