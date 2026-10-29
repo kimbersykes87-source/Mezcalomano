@@ -2,25 +2,17 @@
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
-    "footer": {
-      "type": "footer",
+    "mm-footer": {
+      "type": "custom-liquid",
       "settings": {
+        "custom_liquid": "<footer class=\"mm-foot\">\n  <section class=\"mm-news\" aria-labelledby=\"mm-news-title\">\n    <div>\n      <h2 id=\"mm-news-title\" class=\"mm-news-h\">Spot your next agave crush</h2>\n      <p>Discovery Deck news, new releases and agave guides. We're obsessed, and you will be too.</p>\n    </div>\n    {%- form 'customer', id: 'mm-news-form', class: 'mm-news-form' -%}\n      <input type=\"hidden\" name=\"contact[tags]\" value=\"newsletter\">\n      {%- if form.posted_successfully? -%}\n        <p class=\"mm-news-ok\" role=\"status\">You're on the list. Watch your inbox for news about the Discovery Deck.</p>\n      {%- else -%}\n        <div class=\"f\">\n          <input class=\"in\" type=\"email\" name=\"contact[email]\" placeholder=\"Email address\" aria-label=\"Email address\" autocomplete=\"email\" required>\n          <button class=\"go\" type=\"submit\">Count me in</button>\n        </div>\n        {%- if form.errors -%}<p class=\"mm-news-err\" role=\"alert\">Please check your email address and try again.</p>{%- endif -%}\n        <p class=\"mm-news-note\">Occasional emails, unsubscribe anytime. See our <a href=\"/policies/privacy-policy\">privacy policy</a>.</p>\n      {%- endif -%}\n    {%- endform -%}\n  </section>\n  <div class=\"mm-line\">\n    <span>&copy; {{ 'now' | date: '%Y' }} Mezcal&oacute;mano &middot; Explore agave, sip mezcal.</span>\n    <nav aria-label=\"Footer\">\n      <a href=\"https://www.instagram.com/mezcalomano/\" target=\"_blank\" rel=\"noopener\">Instagram</a>\n      <a href=\"https://www.tiktok.com/@mezcalomano\" target=\"_blank\" rel=\"noopener\">TikTok</a>\n      <a href=\"https://mezcalomano.com/press\">Press</a>\n      <a href=\"https://mezcalomano.com/sources\">Sources</a>\n      <a href=\"/policies/shipping-policy\">Shipping</a>\n      <a href=\"/policies/refund-policy\">Returns</a>\n      <a href=\"/policies/privacy-policy\">Privacy</a>\n      <a href=\"/policies/terms-of-service\">Terms</a>\n    </nav>\n  </div>\n  <div class=\"mm-pay\" aria-label=\"Payment methods\">{%- for type in shop.enabled_payment_types -%}{{ type | payment_type_svg_tag: class: 'mm-pay-icon' }}{%- endfor -%}</div>\n</footer>",
         "color_scheme": "scheme-1",
-        "newsletter_enable": true,
-        "newsletter_heading": "Spot your next agave crush",
-        "enable_follow_on_shop": false,
-        "show_social": true,
-        "enable_country_selector": false,
-        "enable_language_selector": false,
-        "payment_enable": true,
-        "show_policy": true,
-        "margin_top": 0,
-        "padding_top": 40,
-        "padding_bottom": 32
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     }
   },
   "order": [
-    "footer"
+    "mm-footer"
   ]
 }

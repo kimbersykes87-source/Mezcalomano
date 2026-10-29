@@ -102,3 +102,54 @@ textarea.field__input,.text-area{border-radius:16px}
 .product__description p:has(> a[href*="/cart/add"]){text-align:left!important;margin:2.4rem 0!important}
 .product__description a[href*="/cart/add"]{display:flex!important;width:100%}
 .cart__checkout-button{width:100%;max-width:none!important}
+
+/* ---- Design review fixes, 29 Oct 2026 ---- */
+body{color:#FFFFFF}
+/* Header: 88px (72px phone), the site's burger and basket icons */
+.header{min-height:0;height:8.8rem;padding-top:0!important;padding-bottom:0!important}
+.header__heading,.header__heading-link{margin:0;padding:0}
+svg.icon-hamburger,svg.icon-cart,svg.icon-cart-empty{width:24px;height:24px;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M4%205h16M4%2012h16M4%2019h16%22/%3E%3C/svg%3E") center/24px 24px no-repeat;mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M4%205h16M4%2012h16M4%2019h16%22/%3E%3C/svg%3E") center/24px 24px no-repeat}
+svg.icon-cart,svg.icon-cart-empty{-webkit-mask-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2011-1%209%22/%3E%3Cpath%20d%3D%22m19%2011-4-7%22/%3E%3Cpath%20d%3D%22M2%2011h20%22/%3E%3Cpath%20d%3D%22m3.5%2011%201.6%207.4a2%202%200%200%200%202%201.6h9.8a2%202%200%200%200%202-1.6l1.7-7.4%22/%3E%3Cpath%20d%3D%22M4.5%2015.5h15%22/%3E%3Cpath%20d%3D%22m5%2011%204-7%22/%3E%3Cpath%20d%3D%22m9%2011%201%209%22/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2011-1%209%22/%3E%3Cpath%20d%3D%22m19%2011-4-7%22/%3E%3Cpath%20d%3D%22M2%2011h20%22/%3E%3Cpath%20d%3D%22m3.5%2011%201.6%207.4a2%202%200%200%200%202%201.6h9.8a2%202%200%200%200%202-1.6l1.7-7.4%22/%3E%3Cpath%20d%3D%22M4.5%2015.5h15%22/%3E%3Cpath%20d%3D%22m5%2011%204-7%22/%3E%3Cpath%20d%3D%22m9%2011%201%209%22/%3E%3C/svg%3E")}
+svg.icon-hamburger *,svg.icon-cart *,svg.icon-cart-empty *{display:none}
+@media (max-width:749px){.header{height:7.2rem}}
+/* Announcement bar: short line on phones */
+@media (max-width:600px){.announcement-bar__message span{font-size:0}.announcement-bar__message span::before{content:"Order by Dec 14 for US Christmas delivery";font-size:1.25rem}}
+/* Footer: same band and line as mezcalomano.com */
+.mm-foot{border-top:1px solid rgba(255,255,255,.10)}
+.mm-news{background:rgba(255,255,255,.05);padding:28px 48px;display:flex;flex-wrap:wrap;gap:16px 40px;justify-content:space-between;align-items:center}
+.mm-news-h{margin:0;font-size:1.8rem;font-weight:400;font-stretch:100%;letter-spacing:.06em;text-transform:uppercase}
+.mm-news p{margin:4px 0 0;color:#D4D3CB;font-size:1.6rem}
+.mm-news-form{flex:1 1 380px;max-width:520px}
+.mm-news .f{display:flex;gap:10px}
+.mm-news .in{flex:1;min-width:0;height:46px;border-radius:999px;border:1px solid rgba(255,255,255,.30);background:transparent;padding:0 18px;color:#FFFFFF;font:inherit;font-size:1.6rem;font-weight:300;outline:0}
+.mm-news .in::placeholder{color:#D4D3CB}
+.mm-news .in:focus{border-color:#FFFFFF}
+.mm-news .go{flex:none;height:46px;padding:0 24px;border-radius:999px;border:0;background:#B86744;color:#FFFFFF;font:inherit;font-size:1.4rem;font-weight:400;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+.mm-news .mm-news-note{margin-top:10px;font-size:1.3rem;line-height:1.5;color:#B9B8B0}
+.mm-news .mm-news-note a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.mm-news .mm-news-err{margin-top:10px;font-size:1.4rem;color:#F2B8A0}
+.mm-news .mm-news-ok{margin:0;color:#FFFFFF;font-size:1.6rem}
+.mm-line{padding:20px 48px 8px;font-size:1.4rem;color:#D4D3CB;display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-between}
+.mm-line nav{display:flex;flex-wrap:wrap;gap:6px 18px}
+.mm-line a{color:#D4D3CB;text-decoration:none}
+.mm-line a:hover{color:#FFFFFF}
+.mm-pay{display:flex;flex-wrap:wrap;gap:8px;padding:8px 48px 24px;opacity:.6}
+.mm-pay-icon{height:20px;width:auto}
+@media (max-width:900px){.mm-news{padding:24px 16px;display:block}.mm-news-form{max-width:none;margin-top:16px}.mm-line{padding:20px 16px 8px;flex-direction:column;gap:8px;font-size:1.3rem}.mm-pay{padding:8px 16px 28px}}
+/* Policy pages: section labels like the site's */
+.shopify-policy__body br{display:none}
+.shopify-policy__body strong{display:block;margin:2.4rem 0 .6rem;font-size:1.4rem;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:#FFFFFF}
+.shopify-policy__body .rte{font-size:1.7rem;line-height:1.7;color:#E6E4DA}
+/* Empty cart: no account prompt */
+.cart__login-title,.cart__login-paragraph{display:none!important}
+/* Search and collection cards: directory card style */
+.card-wrapper .card--standard>.card__content,.card-wrapper .card__information{padding:1.2rem 1.6rem 1.6rem}
+.card-wrapper{border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);overflow:hidden}
+.card__heading,.card__heading a{font-family:'Open Sans',sans-serif;font-weight:700;font-stretch:75%;letter-spacing:.04em;text-transform:uppercase;font-size:2.4rem;line-height:1.05;color:#FFFFFF;text-decoration:none}
+.card-information .price{color:#84866D;font-weight:700;font-stretch:75%;font-size:2rem}
+/* Product page: What's inside tiles */
+.mm-stats-h{margin:0 0 1.2rem;font-size:2.8rem;line-height:1.05}
+.mm-stats ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;list-style:none;margin:0;padding:0}
+.mm-stats li{padding:16px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14)}
+.mm-stats b{display:block;font-size:4.4rem;line-height:1;font-weight:700;font-stretch:75%;color:#84866D}
+.mm-stats span{display:block;margin-top:8px;font-size:1.5rem;line-height:1.45;color:#E6E4DA}

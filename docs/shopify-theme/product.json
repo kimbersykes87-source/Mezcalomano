@@ -49,6 +49,12 @@
           "settings": {
             "share_label": "Share"
           }
+        },
+        "mm_stats": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div class=\"mm-stats\"><h2 class=\"mm-stats-h\">What's inside</h2><ul><li><b>40</b><span>agaves across the number cards</span></li><li><b>12</b><span>production roles on the face cards</span></li><li><b>2</b><span>pollinator jokers</span></li><li><b>2</b><span>reference cards: flavor guide and taxonomy notes</span></li></ul></div>"
+          }
         }
       },
       "block_order": [
@@ -59,6 +65,7 @@
         "quantity_selector",
         "buy_buttons",
         "mm_box",
+        "mm_stats",
         "description",
         "share"
       ],
