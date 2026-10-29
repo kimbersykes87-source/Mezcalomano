@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { requireAdmin } from "@/lib/admin/auth";
 import { addDays, buildSummary, fmtMoney, fmtNumber, headlineChange, latestRuns, type Headline, type Period } from "@/lib/admin/summary";
 import { latestInstagram, postCards } from "@/lib/admin/instagram-manual";
-import { londonYesterday } from "@/lib/metrics/time";
+import { londonToday, londonYesterday } from "@/lib/metrics/time";
 import LineChart from "./LineChart";
 import AdminActions from "./AdminActions";
 
@@ -16,7 +16,7 @@ const PERIODS = [
   { key: "week", label: "Last full week" },
 ] as const;
 
-/** "week" = the last full Monday to Sunday; numbers = that many days ending yesterday (London). */
+/** "week" = the last full Monday to Sunday; numbers = that many days ending today so far (London). */
 function periodRange(key: string): { from: string; to: string } {
   const yesterday = londonYesterday();
   if (key === "week") {
@@ -25,7 +25,8 @@ function periodRange(key: string): { from: string; to: string } {
     return { from: addDays(lastSunday, -6), to: lastSunday };
   }
   const n = Number(key) || 7;
-  return { from: addDays(yesterday, -(n - 1)), to: yesterday };
+  const today = londonToday();
+  return { from: addDays(today, -(n - 1)), to: today }; // includes today so far
 }
 
 const longDay = (d: string) =>
@@ -210,6 +211,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
               </a>
             ))}
           </nav>
+          {key !== "week" && <div className="adm-sub">Includes today so far</div>}
         </div>
       </header>
 
