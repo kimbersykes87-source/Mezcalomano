@@ -142,7 +142,7 @@ function MapDirectoryStyleSelect({
         className="map-filter-select__button"
       >
         <span
-          className={`min-w-0 flex-1 truncate text-center ${value ? "text-white" : "text-white/40"}`}
+          className={`min-w-0 flex-1 truncate text-left ${value ? "text-white" : "text-white/70"}`}
         >
           {display}
         </span>
@@ -200,7 +200,7 @@ function MapDirectoryStyleSelect({
 }
 
 export default function MapPage() {
-  const mapAreaRef = useRef<HTMLElement>(null);
+  const mapAreaRef = useRef<HTMLDivElement>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
@@ -337,15 +337,6 @@ export default function MapPage() {
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [mapStateDetailHtml, closeMapStateDetail]);
-
-  useEffect(() => {
-    if (!mapStateDetailHtml) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [mapStateDetailHtml]);
 
   const initMap = useCallback((MapLibre: typeof maplibregl) => {
     const container = mapContainerRef.current;
@@ -660,85 +651,84 @@ export default function MapPage() {
   }, []);
 
   return (
-    <div className="flex h-full min-h-0 flex-1 flex-col gap-2.5 overflow-hidden">
-      <div className="map-toolbar">
-        <div className="map-toolbar-content">
-          <div className="map-toolbar-grid-spacer" aria-hidden />
-          <div className="map-toolbar-center">
+    <>
+      <section className="m-head">
+        <div className="s-wrap">
+          <div>
+            <p className="s-eyebrow">Where agaves grow</p>
+            <h1>Find Your Agave</h1>
+            <p>Pick a species or a state</p>
+          </div>
+          <div className="m-sel">
             {loading ? (
-              <p className="w-full py-1 text-center text-sm text-white/70">
-                Loading species…
-              </p>
+              <p className="m-loading">Loading species…</p>
             ) : (
               <>
-                <nav className="min-w-0 flex-1" aria-label="Filter by mezcal">
+                <nav className="m-field" aria-label="Filter by species">
                   <MapDirectoryStyleSelect
                     id="map-common-name"
-                    label="Select a mezcal"
-                    aria-label="Select a mezcal"
+                    label="Species"
+                    aria-label="Species"
                     value={selectedCommonName}
                     onChange={setSelectedCommonName}
-                    placeholder="Select a mezcal…"
+                    placeholder="Species"
                     options={commonNames}
                   />
                 </nav>
-                <nav className="min-w-0 flex-1" aria-label="Filter by state">
+                <nav className="m-field" aria-label="Filter by state">
                   <MapDirectoryStyleSelect
                     id="map-state"
-                    label="Select a state"
-                    aria-label="Select a state"
+                    label="State"
+                    aria-label="State"
                     value={selectedState}
                     onChange={setSelectedState}
-                    placeholder="Select a state…"
+                    placeholder="State"
                     options={stateNamesList}
                   />
                 </nav>
               </>
             )}
           </div>
-          <div className="map-toolbar-grid-spacer" aria-hidden />
         </div>
-      </div>
+      </section>
 
-      <main
-        ref={mapAreaRef}
-        className="map-page-map-area relative min-h-0 w-full flex-1 overflow-hidden border-0 outline-none ring-0"
-        style={{ background: "#272926", minHeight: 240 }}
-      >
-        {mounted && (
+      <section className="m-body" aria-label="Map of Mexico">
+        <div className="s-wrap">
           <div
-            ref={mapContainerRef}
-            className="absolute inset-0 h-full w-full border-0 outline-none"
-            style={{ background: "#272926" }}
-          />
-        )}
-      </main>
-
-      {mapStateDetailHtml ? (
-        <div
-          className="map-state-detail-backdrop"
-          onClick={closeMapStateDetail}
-          role="presentation"
-        >
-          <div
-            className="map-state-detail-panel"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="map-state-detail-dialog-title"
-            onClick={(e) => e.stopPropagation()}
+            ref={mapAreaRef}
+            className="m-map map-page-map-area"
+            style={{ background: "#2B2D2A" }}
           >
-            <button
-              type="button"
-              className="map-state-detail-close"
-              onClick={closeMapStateDetail}
-              aria-label="Close"
-            >
-              ×
-            </button>
-            <div dangerouslySetInnerHTML={{ __html: mapStateDetailHtml }} />
+            {mounted && (
+              <div
+                ref={mapContainerRef}
+                className="absolute inset-0 h-full w-full border-0 outline-none"
+                style={{ background: "#2B2D2A" }}
+              />
+            )}
           </div>
+          <aside className="m-card" aria-live="polite">
+            {mapStateDetailHtml ? (
+              <>
+                <button
+                  type="button"
+                  className="m-card-close"
+                  onClick={closeMapStateDetail}
+                  aria-label="Clear selected state"
+                >
+                  ×
+                </button>
+                <div dangerouslySetInnerHTML={{ __html: mapStateDetailHtml }} />
+              </>
+            ) : (
+              <div className="m-card-empty">
+                <h2>Tap a state</h2>
+                <p>Choose a state on the map to see which agaves grow there.</p>
+              </div>
+            )}
+          </aside>
         </div>
-      ) : null}
-    </div>
+      </section>
+    </>
   );
 }

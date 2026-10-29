@@ -1,227 +1,253 @@
 "use client";
 
-import { useState, useEffect, useLayoutEffect, useMemo, useCallback, useRef, type ReactNode } from "react";
-import { X } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import AgaveImage from "@/components/AgaveImage";
 import { supabase } from "@/lib/supabase";
 import { getMatrixCardUrlMap, resolveSpeciesImageUrl } from "@/lib/matrix-card-urls";
-import { SwipeableCardStack } from "@/components/SwipeableCardStack";
+import { toAgaveCard, type AgaveCard } from "@/lib/agave-cards";
 import type { Species } from "@/types/species";
 
-function DirectoryCardSkeleton() {
+/** Cards shown before "Show all": three rows of four on desktop. */
+const FIRST_PAGE = 12;
+
+/** The fan in the hero and the "Start with" shortcuts. */
+const FAN_NAMES = ["Arroqueño", "Madrecuixe", "Tobalá", "Tepextate"];
+const QUICK_NAMES = ["Tobalá", "Espadín", "Madrecuixe"];
+
+type FilterId = "all" | "us" | "oaxaca" | "wild";
+const FILTERS: { id: FilterId; label: string; test: (c: AgaveCard) => boolean }[] = [
+  { id: "all", label: "All", test: () => true },
+  { id: "us", label: "Sold in the US", test: (c) => c.usCount > 0 },
+  { id: "oaxaca", label: "Oaxaca", test: (c) => c.states.includes("Oaxaca") },
+  { id: "wild", label: "Wild and semi wild", test: (c) => c.wild },
+];
+
+function fold(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "");
+}
+
+function matchesSearch(c: AgaveCard, q: string): boolean {
+  const t = fold(q.trim());
+  if (!t) return true;
+  return fold([c.name, c.sci, c.states.join(" ")].join(" ")).includes(t);
+}
+
+function SearchIcon() {
   return (
-    <div className="flex w-full min-w-0 max-w-4xl flex-col items-center animate-pulse px-5">
-      <div className="mx-auto mb-10 h-12 w-4/5 max-w-xl rounded-lg bg-white/10 sm:max-w-2xl" />
-      <div className="mx-auto w-full max-w-xl sm:max-w-2xl">
-          <div className="aspect-square w-full bg-white/10" />
-          <div className="flex min-h-[280px] flex-col gap-3 p-5">
-            <div className="h-4 w-[75%] rounded bg-white/10" />
-            <div className="h-4 w-[50%] rounded bg-white/10" />
-            <div className="mt-2 h-3 w-full rounded bg-white/10" />
-            <div className="h-3 w-full rounded bg-white/10" />
-            <div className="h-3 w-[80%] rounded bg-white/10" />
-          </div>
-      </div>
-    </div>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="m20 20-4-4" />
+    </svg>
   );
 }
 
-function matchesSearch(s: Species, q: string): boolean {
-  const t = q.trim().toLowerCase();
-  if (!t) return true;
-  const hay = [
-    s.common_name,
-    s.scientific_name,
-    s.states,
-    s.description,
-    s.geo_region,
-    s.mezcal_use,
-  ]
-    .filter(Boolean)
-    .join(" ")
-    .toLowerCase();
-  return hay.includes(t);
-}
-
-export default function DirectoryClient({
-  initialSpecies = [],
-  children,
-}: {
-  initialSpecies?: Species[];
-  children?: ReactNode;
-}) {
-  const [species, setSpecies] = useState<Species[]>(initialSpecies);
-  const [matrixCardMap, setMatrixCardMap] = useState<Record<string, string> | null>(null);
-  const [loading, setLoading] = useState(initialSpecies.length === 0);
+export default function DirectoryClient({ initialCards = [] }: { initialCards?: AgaveCard[] }) {
+  const router = useRouter();
+  const [cards, setCards] = useState<AgaveCard[]>(initialCards);
+  const [loading, setLoading] = useState(initialCards.length === 0);
   const [fetchError, setFetchError] = useState<string | null>(null);
-  const [rawCardIndex, setRawCardIndex] = useState(0);
-  const [searchQuery, setSearchQuery] = useState("");
-  const fetchIdRef = useRef(0);
+  const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState<FilterId>("all");
+  const [expanded, setExpanded] = useState(false);
+  const gridRef = useRef<HTMLElement>(null);
 
-  useLayoutEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    getMatrixCardUrlMap().then(setMatrixCardMap);
-  }, []);
-
+  // Species normally arrive from the server; only fetch in the browser if that failed.
   const loadSpecies = useCallback(async () => {
-    const id = ++fetchIdRef.current;
     setLoading(true);
     setFetchError(null);
-    const { data, error } = await supabase.from("species").select("*");
-    if (id !== fetchIdRef.current) return;
+    const [{ data, error }, matrix] = await Promise.all([
+      supabase.from("species").select("*"),
+      getMatrixCardUrlMap(),
+    ]);
     if (error) {
       console.error("Supabase error:", error);
-      setFetchError(error.message || "Could not load species.");
-      setSpecies([]);
+      setFetchError("We couldn't load the agaves just now.");
+      setCards([]);
     } else {
-      const sorted = ((data as Species[]) ?? []).sort((a, b) =>
-        a.common_name.localeCompare(b.common_name, "en")
-      );
-      setSpecies(sorted);
+      const sorted = ((data as Species[]) ?? []).sort((a, b) => a.common_name.localeCompare(b.common_name, "en"));
+      setCards(sorted.map((s) => toAgaveCard(s, resolveSpeciesImageUrl(s.image_url, s.common_name, matrix))));
     }
     setLoading(false);
   }, []);
 
-  // Species arrive from the server; only fetch in the browser if that failed.
-  const hasInitial = initialSpecies.length > 0;
+  const hasInitial = initialCards.length > 0;
   useEffect(() => {
     if (hasInitial) return;
-    void Promise.resolve().then(() => {
-      void loadSpecies();
-    });
-  }, [loadSpecies, hasInitial]);
+    void Promise.resolve().then(() => loadSpecies());
+  }, [hasInitial, loadSpecies]);
 
-  const speciesWithResolvedImages = useMemo(() => {
-    return species.map((s) => {
-      const resolved = resolveSpeciesImageUrl(s.image_url, s.common_name, matrixCardMap);
-      const fallbackImageUrl = resolveSpeciesImageUrl(null, s.common_name, matrixCardMap);
-      return {
-        ...s,
-        image_url: resolved,
-        fallbackImageUrl,
-      };
-    });
-  }, [species, matrixCardMap]);
+  const byName = useMemo(() => new Map(cards.map((c) => [c.name, c])), [cards]);
+  const fan = FAN_NAMES.map((n) => byName.get(n)).filter((c): c is AgaveCard => Boolean(c));
+  const quick = QUICK_NAMES.map((n) => byName.get(n)).filter((c): c is AgaveCard => Boolean(c));
 
-  const filteredSpecies = useMemo(() => {
-    return speciesWithResolvedImages.filter((s) => matchesSearch(s, searchQuery));
-  }, [speciesWithResolvedImages, searchQuery]);
+  const activeTest = FILTERS.find((f) => f.id === filter)?.test ?? (() => true);
+  const filtered = cards.filter((c) => activeTest(c) && matchesSearch(c, query));
+  const searching = query.trim() !== "" || filter !== "all";
+  const showAll = expanded || searching;
+  const visibleCount = showAll ? filtered.length : Math.min(FIRST_PAGE, filtered.length);
 
-  const maxCardIndex = Math.max(0, filteredSpecies.length - 1);
-  const currentIndex = Math.min(rawCardIndex, maxCardIndex);
+  const surprise = () => {
+    if (!cards.length) return;
+    const pick = cards[Math.floor(Math.random() * cards.length)];
+    router.push(`/directory/${pick.slug}`);
+  };
 
   return (
-    <div className="flex min-h-0 w-full max-w-4xl flex-1 flex-col items-center">
-        <main className="flex w-full min-w-0 flex-1 flex-col items-center gap-4 pb-6 pt-10">
-        {loading ? (
-          <DirectoryCardSkeleton />
-        ) : fetchError ? (
-          <div className="flex min-h-[40vh] flex-col items-center justify-center gap-4 px-4 text-center">
-            <p className="max-w-md text-white/80">{fetchError}</p>
-            <button
-              type="button"
-              onClick={() => loadSpecies()}
-              className="rounded-lg bg-[var(--agave-yellow)] px-4 py-2 font-medium text-[#272926] hover:opacity-90"
+    <>
+      <section className="l-hero">
+        <div className="s-wrap">
+          <div>
+            <p className="s-eyebrow">The Discovery Deck directory</p>
+            <h1>Espadín&apos;s Great, But Have You Met the Wild Ones?</h1>
+            <p className="sub">40 agaves, one deck. Pick a plant, learn its story, then find a bottle to try in the US.</p>
+            <form
+              className="l-search"
+              role="search"
+              onSubmit={(e) => {
+                e.preventDefault();
+                gridRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+              }}
             >
-              Retry
-            </button>
-          </div>
-        ) : (
-          <>
-            {filteredSpecies.length === 0 && searchQuery.trim() !== "" ? (
-              <div className="flex w-full min-w-0 max-w-4xl flex-col items-center px-5">
-                <div className="mx-auto flex w-full max-w-xl flex-col items-center gap-10 sm:max-w-2xl">
-                  <nav
-                    className="flex w-4/5 items-center gap-2.5 sm:gap-3"
-                    aria-label="Search"
-                  >
-                    <span
-                      className="inline-flex size-10 shrink-0"
-                      aria-hidden
-                    />
-                    <div className="relative min-h-12 min-w-0 flex-1">
-                      <label className="sr-only" htmlFor="directory-empty-search">
-                        Search species
-                      </label>
-                      <input
-                        id="directory-empty-search"
-                        type="text"
-                        inputMode="search"
-                        enterKeyHint="search"
-                        autoComplete="off"
-                        value={searchQuery}
-                        placeholder="Search or choose…"
-                        onChange={(e) => {
-                          setSearchQuery(e.target.value);
-                          setRawCardIndex(0);
-                        }}
-                        className="box-border min-h-12 w-full min-w-0 rounded-lg border border-white/20 bg-white/5 text-center text-white placeholder:text-white/40 focus:border-[var(--agave-yellow)] focus:outline-none"
-                        style={{
-                          fontSize: "1.3125rem",
-                          lineHeight: 1.35,
-                          paddingLeft: "6rem",
-                          paddingRight: "6rem",
-                          paddingTop: "0.625rem",
-                          paddingBottom: "0.625rem",
-                        }}
-                      />
-                      <div className="pointer-events-none absolute right-2 top-0 flex h-12 items-center">
-                        <button
-                          type="button"
-                          aria-label="Clear search"
-                          onMouseDown={(e) => e.preventDefault()}
-                          onClick={() => {
-                            setSearchQuery("");
-                            setRawCardIndex(0);
-                          }}
-                          className="pointer-events-auto inline-flex size-8 shrink-0 items-center justify-center rounded-md text-white/60 hover:bg-white/10 hover:text-white"
-                        >
-                          <X className="size-4" aria-hidden />
-                        </button>
-                      </div>
-                    </div>
-                    <span
-                      className="inline-flex size-10 shrink-0"
-                      aria-hidden
-                    />
-                  </nav>
-                  <div className="flex w-full flex-col items-center justify-center gap-3 pb-5 text-center sm:min-h-[280px]">
-                    <p className="text-sm text-white/85">
-                      No species match your search.
-                    </p>
-                    <button
-                      type="button"
-                      className="directory-inline-link"
-                      onClick={() => {
-                        setSearchQuery("");
-                        setRawCardIndex(0);
-                      }}
-                    >
-                      Clear search
-                    </button>
-                  </div>
-                </div>
+              <label>
+                <SearchIcon />
+                <span className="sr-only">Search agaves</span>
+                <input
+                  type="search"
+                  placeholder={`Search ${cards.length || 40} agaves`}
+                  value={query}
+                  enterKeyHint="search"
+                  autoComplete="off"
+                  onChange={(e) => setQuery(e.target.value)}
+                />
+              </label>
+              <button type="button" className="l-cta" onClick={surprise}>
+                Surprise me
+              </button>
+            </form>
+            {quick.length > 0 ? (
+              <div className="l-quick">
+                <span>Start with</span>
+                {quick.map((c) => (
+                  <Link key={c.slug} href={`/directory/${c.slug}`}>
+                    {c.name}
+                  </Link>
+                ))}
               </div>
-            ) : (
-              <SwipeableCardStack
-                species={filteredSpecies}
-                currentIndex={currentIndex}
-                onIndexChange={setRawCardIndex}
-                directoryToolbar={{
-                  searchQuery,
-                  onSearchChange: (q) => {
-                    setSearchQuery(q);
-                    setRawCardIndex(0);
-                  },
+            ) : null}
+          </div>
+          <div className="l-fan" aria-hidden="true">
+            {fan.map((c, i) => (
+              <Link key={c.slug} className={`f${i + 1}`} href={`/directory/${c.slug}`} tabIndex={-1}>
+                <AgaveImage src={c.img} alt="" eager />
+                <b>{c.name}</b>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="l-stat" aria-label="Why the directory exists">
+        <div className="s-wrap">
+          <strong>85%</strong>
+          <p>
+            About 85% of mezcal is made from a single agave, espadín. Time to mix it up.
+            <span>That is a lot of pressure on one plant. The other 39 are waiting.</span>
+          </p>
+        </div>
+      </section>
+
+      <section className="l-sec" ref={gridRef} aria-labelledby="directory-all">
+        <div className="s-wrap">
+          <div className="l-head">
+            <div>
+              <h2 id="directory-all">All 40 agaves</h2>
+              <p>Tap a plant to read its card, then find a bottle.</p>
+            </div>
+            {!loading && !fetchError ? (
+              <span className="l-count" aria-live="polite">
+                Showing {visibleCount} of {searching ? filtered.length : cards.length}
+              </span>
+            ) : null}
+          </div>
+          <div className="l-filters" role="group" aria-label="Filter agaves">
+            {FILTERS.map((f) => (
+              <button
+                key={f.id}
+                type="button"
+                className={`l-pill${filter === f.id ? " on" : ""}`}
+                aria-pressed={filter === f.id}
+                onClick={() => setFilter(f.id)}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+
+          {loading ? (
+            <p className="l-msg">Loading the agaves…</p>
+          ) : fetchError ? (
+            <div className="l-msg">
+              <p>{fetchError}</p>
+              <button type="button" className="l-more-btn" onClick={() => loadSpecies()}>
+                Try again
+              </button>
+            </div>
+          ) : filtered.length === 0 ? (
+            <div className="l-msg">
+              <p>No agaves match that. Try another name or state.</p>
+              <button
+                type="button"
+                className="l-more-btn"
+                onClick={() => {
+                  setQuery("");
+                  setFilter("all");
                 }}
-              />
-            )}
-          </>
-        )}
-      </main>
-      {children}
-    </div>
+              >
+                Clear search
+              </button>
+            </div>
+          ) : (
+            <ul className="l-grid">
+              {filtered.map((c, i) => (
+                <li key={c.slug} hidden={i >= visibleCount}>
+                  <Link className="l-card" href={`/directory/${c.slug}`}>
+                    <div className="im">
+                      {c.usCount > 0 ? (
+                        <span className="l-badge">
+                          {c.usCount} US {c.usCount === 1 ? "shop" : "shops"}
+                        </span>
+                      ) : null}
+                      <AgaveImage src={c.img} alt={`${c.name} agave`} />
+                    </div>
+                    <div className="tx">
+                      <h3 className="notranslate" translate="no">
+                        {c.name}
+                      </h3>
+                      <p>{c.sci}</p>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {!showAll && filtered.length > visibleCount ? (
+            <div className="l-more">
+              <button type="button" className="l-more-btn" onClick={() => setExpanded(true)}>
+                Show all {filtered.length} agaves
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" aria-hidden="true">
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </button>
+            </div>
+          ) : null}
+        </div>
+      </section>
+    </>
   );
 }

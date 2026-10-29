@@ -11,6 +11,7 @@ type SubscribeBody = {
 const SIGNUP_SOURCES: Record<string, string> = {
   about: "website-about",
   directory: "website-directory",
+  footer: "website-footer",
 };
 
 function jsonError(error: string, status: number) {

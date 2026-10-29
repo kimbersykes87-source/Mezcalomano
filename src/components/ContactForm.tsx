@@ -209,12 +209,13 @@ export default function ContactForm() {
       </div>
 
       <div className="form-group">
+        <label htmlFor="name" className="form-label">Name</label>
         <input
           type="text"
           id="name"
           name="name"
           className="form-input"
-          placeholder="Name"
+          placeholder="Your name"
           required
           aria-required
           aria-label="Name"
@@ -227,12 +228,13 @@ export default function ContactForm() {
       </div>
 
       <div className="form-group">
+        <label htmlFor="email" className="form-label">Email</label>
         <input
           type="email"
           id="email"
           name="email"
           className="form-input"
-          placeholder="Email"
+          placeholder="you@example.com"
           required
           aria-required
           aria-label="Email"
@@ -245,11 +247,12 @@ export default function ContactForm() {
       </div>
 
       <div className="form-group">
+        <label htmlFor="message" className="form-label">Message</label>
         <textarea
           id="message"
           name="message"
           className="form-textarea"
-          placeholder="Message"
+          placeholder="Tell us what’s on your mind"
           required
           aria-required
           aria-label="Message"

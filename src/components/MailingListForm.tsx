@@ -26,10 +26,12 @@ function turnstileApi(): TurnstileApi | undefined {
 
 type MailingListFormProps = {
   /** Which page the form sits on; saved as the signup source in the backup sheet. */
-  source?: "about" | "directory";
+  source?: "about" | "directory" | "footer";
+  /** "band" is the compact one-row form in the site footer; it loads the human check on first focus. */
+  variant?: "default" | "band";
 };
 
-export default function MailingListForm({ source = "about" }: MailingListFormProps) {
+export default function MailingListForm({ source = "about", variant = "default" }: MailingListFormProps) {
   const turnstileContainerRef = useRef<HTMLDivElement>(null);
   const turnstileWidgetIdRef = useRef<string | null>(null);
   const [turnstileToken, setTurnstileToken] = useState("");
@@ -37,6 +39,8 @@ export default function MailingListForm({ source = "about" }: MailingListFormPro
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
+  // The footer form is on every page, so only load Turnstile once someone starts typing.
+  const [armed, setArmed] = useState(variant !== "band");
 
   const turnstileSiteKey =
     typeof process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY === "string"
@@ -44,7 +48,7 @@ export default function MailingListForm({ source = "about" }: MailingListFormPro
       : "";
 
   useEffect(() => {
-    if (done || !turnstileSiteKey || !turnstileContainerRef.current) return;
+    if (done || !armed || !turnstileSiteKey || !turnstileContainerRef.current) return;
 
     let cancelled = false;
 
@@ -95,7 +99,7 @@ export default function MailingListForm({ source = "about" }: MailingListFormPro
         turnstileWidgetIdRef.current = null;
       }
     };
-  }, [turnstileSiteKey, done]);
+  }, [turnstileSiteKey, done, armed]);
 
   function resetTurnstile() {
     setTurnstileToken("");
@@ -148,6 +152,56 @@ export default function MailingListForm({ source = "about" }: MailingListFormPro
     } finally {
       setSending(false);
     }
+  }
+
+  if (variant === "band") {
+    if (done) {
+      return (
+        <p className="s-news-ok" role="status">
+          You&apos;re on the list. Watch your inbox for news about the Discovery Deck.
+        </p>
+      );
+    }
+    return (
+      <form onSubmit={handleSubmit} noValidate>
+        <div className="f">
+          <input
+            type="email"
+            name="email"
+            className="in"
+            placeholder="Email address"
+            autoComplete="email"
+            required
+            aria-required
+            aria-label="Email address"
+            value={email}
+            onFocus={() => setArmed(true)}
+            onChange={(ev) => {
+              setArmed(true);
+              setEmail(ev.target.value);
+            }}
+            disabled={sending}
+            maxLength={200}
+          />
+          <button type="submit" className="go" disabled={sending} aria-busy={sending}>
+            {sending ? "Joining…" : "Count me in"}
+          </button>
+        </div>
+        <div className="s-news-ts" ref={turnstileContainerRef} />
+        {error ? (
+          <p className="s-news-err" role="alert">
+            {error}
+          </p>
+        ) : null}
+        <p className="s-news-note">
+          Occasional emails, unsubscribe anytime. See our{" "}
+          <a href={PRIVACY_POLICY_URL} target="_blank" rel="noopener noreferrer">
+            privacy policy
+          </a>
+          .
+        </p>
+      </form>
+    );
   }
 
   if (done) {

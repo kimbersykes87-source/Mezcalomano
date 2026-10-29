@@ -68,48 +68,75 @@ const HOME_HERO_ALT =
 
 export default function HomePage() {
   return (
-    <section className="home-landing" aria-labelledby="home-landing-title">
-      {/* deploy-test 2026-08-25 */}
+    <>
       <JsonLd data={discoveryDeckProductLd} />
-      <div className="home-landing__unit">
-        <h1 id="home-landing-title" className="home-landing__lines">
-          Life&apos;s too short for just one agave.
-          <br />
-          So here are 40 in a deck of playing cards.
-          <br />
-          Gift it or keep it.
-        </h1>
-        <div className="home-landing__visual">
-          <img
-            className="home-landing__img"
-            src={HOME_HERO_SRC}
-            alt={HOME_HERO_ALT}
-            width={HOME_HERO_WIDTH}
-            height={HOME_HERO_HEIGHT}
-            fetchPriority="high"
-          />
+      <section className="h-hero" aria-labelledby="home-landing-title">
+        <div className="s-wrap">
+          <div>
+            <p className="s-eyebrow">The Discovery Deck</p>
+            <h1 id="home-landing-title">
+              <span>Life&apos;s too short for just one agave.</span>
+              <span>So here are 40 in a deck of playing cards.</span>
+              <span>Gift it or keep it.</span>
+            </h1>
+            <Link href="/buy" className="s-cta cta">
+              Pre-order the Discovery Deck
+            </Link>
+          </div>
+          <div className="h-photo">
+            <img
+              src={HOME_HERO_SRC}
+              alt={HOME_HERO_ALT}
+              width={HOME_HERO_WIDTH}
+              height={HOME_HERO_HEIGHT}
+              fetchPriority="high"
+            />
+          </div>
         </div>
-        <Link href="/buy" className="btn btn-hero-cta btn-hero-cta--olive">
-          PRE-ORDER THE DISCOVERY DECK
-        </Link>
-        <div className="home-landing__copy">
+      </section>
+
+      <section className="h-price" aria-label="Price and shipping">
+        <div className="s-wrap">
+          <strong>$29.99</strong>
           <p>
-            The Discovery Deck is a deck of playing cards that introduces 40 kinds of mezcal
-            and the agaves behind them. About 85% of mezcal is made from a single agave,
-            espadín. It&apos;s a great place to start, but there&apos;s a lot more to taste.
-          </p>
-          <p>
-            Each agave card gives its local and species name, a memorable nickname, and a
-            flavor compass for smoke, agave and fermentation. A QR code on the box opens our
-            online directory: where each agave grows and who&apos;s bottling it. And it&apos;s
-            still a proper deck of cards, so deal a hand while you pour.
-          </p>
-          <p>
-            Gift it to the friend who always orders espadín. Or keep it. $29.99 with free US
-            shipping. Pre-orders ship from November 30, in time for Christmas.
+            Free US shipping. Pre-orders ship from November 30, in time for Christmas.
+            <span>Gift it to the friend who always orders espadín. Or keep it.</span>
           </p>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section className="h-feat" aria-label="What the deck does">
+        <div className="s-wrap">
+          <div className="grid">
+            <div className="h-card">
+              <i>40</i>
+              <h2>Agaves in your hand</h2>
+              <p>
+                A deck of playing cards that introduces 40 kinds of mezcal and the agaves behind
+                them. About 85% of mezcal is made from espadín. It&apos;s a great place to start,
+                but there&apos;s a lot more to taste.
+              </p>
+            </div>
+            <div className="h-card">
+              <i>3</i>
+              <h2>Notes on every card</h2>
+              <p>
+                Each agave card gives its local and species name, a memorable nickname, and a
+                flavor compass for smoke, agave and fermentation.
+              </p>
+            </div>
+            <div className="h-card">
+              <i>QR</i>
+              <h2>Scan to explore</h2>
+              <p>
+                A QR code on the box opens our online directory: where each agave grows and
+                who&apos;s bottling it. And it&apos;s still a proper deck of cards, so deal a hand
+                while you pour.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
