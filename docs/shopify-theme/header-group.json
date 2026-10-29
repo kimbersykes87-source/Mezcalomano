@@ -5,7 +5,7 @@
     "mm-styles": {
       "type": "custom-liquid",
       "settings": {
-        "custom_liquid": "<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin><link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Open+Sans:ital,wdth,wght@0,75..100,300..700;1,75..100,300..700&display=swap\">{{ 'mezcalomano.css' | asset_url | stylesheet_tag }}",
+        "custom_liquid": "{%- if template.name == 'index' and request.design_mode == false -%}<script>window.location.replace('/products/discovery-deck' + window.location.search);</script>{%- endif -%}<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin><link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Open+Sans:ital,wdth,wght@0,75..100,300..700;1,75..100,300..700&display=swap\">{{ 'mezcalomano.css' | asset_url | stylesheet_tag }}",
         "color_scheme": "scheme-1",
         "padding_top": 0,
         "padding_bottom": 0
