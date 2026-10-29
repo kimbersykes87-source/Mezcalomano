@@ -2,7 +2,18 @@
 
 import { useState } from "react";
 
-type Saved = { followers?: number; profileViews?: number; reach?: number };
+type Saved = Record<string, number | undefined>;
+
+const FIELDS = [
+  { key: "followers", label: "Total followers (Followers section)", required: true },
+  { key: "profileVisits", label: "Profile visits (Profile section)", required: true },
+  { key: "views", label: "Views", required: false },
+  { key: "viewers", label: "Viewers (under Views)", required: false },
+  { key: "interactions", label: "Interactions", required: false },
+  { key: "accountsEngaged", label: "Accounts engaged (under Interactions)", required: false },
+  { key: "linkTaps", label: "External link taps (Profile section)", required: false },
+  { key: "posts", label: "Total posts on the profile", required: false },
+];
 
 const label = (d: string) =>
   `Week ending Sunday ${new Date(`${d}T12:00:00Z`).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })}`;
@@ -14,9 +25,7 @@ const inputStyle = {
 
 export default function InstagramForm({ weeks, initialWeek, initialSaved }: { weeks: string[]; initialWeek: string; initialSaved: Saved }) {
   const [week, setWeek] = useState(initialWeek);
-  const [followers, setFollowers] = useState(initialSaved.followers?.toString() ?? "");
-  const [views, setViews] = useState(initialSaved.profileViews?.toString() ?? "");
-  const [reach, setReach] = useState(initialSaved.reach?.toString() ?? "");
+  const [vals, setVals] = useState<Record<string, string>>(() => Object.fromEntries(FIELDS.map((f) => [f.key, initialSaved[f.key]?.toString() ?? ""])));
   const [by, setBy] = useState("");
   const [msg, setMsg] = useState("");
   const [ok, setOk] = useState(false);
@@ -30,7 +39,7 @@ export default function InstagramForm({ weeks, initialWeek, initialSaved }: { we
       const res = await fetch("/api/admin/instagram", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ weekEnd: week, followers, profileViews: views, reach, by }),
+        body: JSON.stringify({ weekEnd: week, ...vals, by }),
       });
       const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
       setOk(Boolean(data.ok));
@@ -53,18 +62,19 @@ export default function InstagramForm({ weeks, initialWeek, initialSaved }: { we
           ))}
         </select>
       </label>
-      <label>
-        Followers today
-        <input inputMode="numeric" required value={followers} onChange={(e) => setFollowers(e.target.value)} style={inputStyle} />
-      </label>
-      <label>
-        Profile visits, last 7 days
-        <input inputMode="numeric" required value={views} onChange={(e) => setViews(e.target.value)} style={inputStyle} />
-      </label>
-      <label>
-        Accounts reached, last 7 days (optional)
-        <input inputMode="numeric" value={reach} onChange={(e) => setReach(e.target.value)} style={inputStyle} />
-      </label>
+      {FIELDS.map((f) => (
+        <label key={f.key}>
+          {f.label}
+          {f.required ? "" : " (optional)"}
+          <input
+            inputMode="numeric"
+            required={f.required}
+            value={vals[f.key]}
+            onChange={(e) => setVals({ ...vals, [f.key]: e.target.value })}
+            style={inputStyle}
+          />
+        </label>
+      ))}
       <label>
         Your name (optional)
         <input value={by} onChange={(e) => setBy(e.target.value)} style={inputStyle} />

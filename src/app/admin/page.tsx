@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { requireAdmin } from "@/lib/admin/auth";
 import { addDays, buildSummary, fmtMoney, fmtNumber, headlineChange, latestRuns, type Headline, type Period } from "@/lib/admin/summary";
+import { latestInstagram } from "@/lib/admin/instagram-manual";
 import { londonYesterday } from "@/lib/metrics/time";
 import LineChart from "./LineChart";
 import AdminActions from "./AdminActions";
@@ -100,7 +101,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
   const { p = "week" } = await searchParams;
   const key = PERIODS.some((x) => x.key === p) ? p : "week";
   const { from, to } = periodRange(key);
-  const [summary, runs] = await Promise.all([buildSummary(from, to), latestRuns()]);
+  const [summary, runs, ig] = await Promise.all([buildSummary(from, to), latestRuns(), latestInstagram()]);
   const cur = summary.current;
   const notes = notesFor(cur, ["shop", "instagram", "tiktok"]);
 
@@ -133,6 +134,51 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
           </div>
         ))}
       </section>
+
+      {ig && (
+        <section className="adm-section" aria-label="Latest Instagram figures">
+          <h2>Latest Instagram figures</h2>
+          <p className="adm-sub" style={{ marginTop: 0 }}>
+            Entry for the week ending {longDay(ig.day)}. Views, interactions and visits cover the last 7 days when the figures were taken.
+            {ig.prevDay ? ` Change is against ${longDay(ig.prevDay)}.` : ""}
+          </p>
+          <table className="adm-table">
+            <thead>
+              <tr>
+                <th>Figure</th>
+                <th className="num">Latest</th>
+                <th className="num">Change</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(
+                [
+                  ["Total followers", "followers", true],
+                  ["Following", "following", true],
+                  ["Posts", "posts", true],
+                  ["Profile visits", "profile_views", false],
+                  ["Views", "views", false],
+                  ["Viewers", "reach", false],
+                  ["Interactions", "interactions", false],
+                  ["Accounts engaged", "accounts_engaged", false],
+                  ["External link taps", "website_clicks", false],
+                ] as const
+              )
+                .filter(([, m]) => ig.values[m] !== undefined)
+                .map(([label, m, level]) => {
+                  const diff = level && ig.prev[m] !== undefined ? ig.values[m] - ig.prev[m] : null;
+                  return (
+                    <tr key={m}>
+                      <td>{label}</td>
+                      <td className="num">{fmtNumber(ig.values[m])}</td>
+                      <td className="num">{diff === null ? "" : diff === 0 ? "no change" : `${diff > 0 ? "+" : ""}${fmtNumber(diff)}`}</td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </section>
+      )}
 
       <section className="adm-section">
         <h2>Visits per day</h2>
@@ -203,10 +249,13 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
           <tbody>
             {[
               ["Instagram followers (latest)", "instagram", "followers"],
+              ["Instagram posts (latest)", "instagram", "posts"],
               ["Instagram new followers", "instagram", "new_followers"],
               ["Instagram unfollows", "instagram", "unfollows"],
               ["Instagram profile views", "instagram", "profile_views"],
-              ["Instagram reach", "instagram", "reach"],
+              ["Instagram viewers (reach)", "instagram", "reach"],
+              ["Instagram interactions", "instagram", "interactions"],
+              ["Instagram accounts engaged", "instagram", "accounts_engaged"],
               ["Instagram views", "instagram", "views"],
               ["Instagram website clicks", "instagram", "website_clicks"],
               ["TikTok followers (latest)", "tiktok", "followers"],

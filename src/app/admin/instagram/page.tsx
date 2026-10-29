@@ -24,7 +24,7 @@ export default async function InstagramPage() {
       <section className="adm-section">
         <h2>Instagram figures, weekly</h2>
         <p className="adm-sub" style={{ marginTop: 0 }}>
-          Open @mezcalomano in the Instagram app, go to Professional dashboard, and set the date range to the last 7 days. Copy the numbers below.
+          Open @mezcalomano in the Instagram app (or instagram.com/accounts/insights on a computer), go to Professional dashboard, and set the range to the last 7 days. Copy each number across. Only the first two are required.
           Saving again for the same week replaces the earlier entry.
         </p>
         <InstagramForm

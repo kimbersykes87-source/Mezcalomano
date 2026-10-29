@@ -6,13 +6,26 @@ import { addDays } from "./summary";
  * Hand-entered Instagram figures (used until the Instagram API connection works).
  * Stored in metrics_daily under source 'instagram', dated the Sunday that ends
  * the week, so the dashboard and the Monday email read them like API data.
- * followers is a level (the count on that day); profile_views and reach are
- * the week's totals.
+ * followers and posts are levels (the count on that day); the rest are the week's totals
+ * (Instagram's last 7 days).
  */
 
-export type InstagramEntry = { weekEnd: string; followers: number; profileViews: number; reach?: number | null };
+/** The figures on Instagram's Professional dashboard (Insights), named as the dashboard names them. */
+export const FIELDS = [
+  { key: "followers", metric: "followers", label: "Total followers", required: true },
+  { key: "profileVisits", metric: "profile_views", label: "Profile visits", required: true },
+  { key: "views", metric: "views", label: "Views", required: false },
+  { key: "viewers", metric: "reach", label: "Viewers", required: false },
+  { key: "interactions", metric: "interactions", label: "Interactions", required: false },
+  { key: "accountsEngaged", metric: "accounts_engaged", label: "Accounts engaged", required: false },
+  { key: "linkTaps", metric: "website_clicks", label: "External link taps", required: false },
+  { key: "posts", metric: "posts", label: "Posts", required: false },
+] as const;
 
-const METRICS = ["followers", "profile_views", "reach"];
+export type FieldKey = (typeof FIELDS)[number]["key"];
+export type InstagramEntry = { weekEnd: string; values: Partial<Record<FieldKey, number>> };
+
+const METRICS: string[] = FIELDS.map((f) => f.metric);
 
 /** The week the form defaults to: the most recent Sunday on or before today (London), or the first Sunday after tracking began if that is earlier. */
 export const FIRST_WEEK = "2026-10-25"; // baseline Sunday, the day before the figures start
@@ -38,40 +51,44 @@ export function validateEntry(input: Record<string, unknown>): { ok: true; entry
   if (weekEnd < FIRST_WEEK) return { ok: false, error: "Tracking starts on 28 Oct 2026." };
   if (weekEnd > upcomingSunday()) return { ok: false, error: "That week has not finished yet." };
 
-  const whole = (v: unknown) => (typeof v === "string" && v.trim() !== "" ? Number(v.replace(/[, ]/g, "")) : typeof v === "number" ? v : NaN);
-  const followers = whole(input.followers);
-  const profileViews = whole(input.profileViews);
-  const reachRaw = input.reach;
-  const reach = reachRaw === "" || reachRaw == null ? null : whole(reachRaw);
-
-  const bad = (n: number | null) => n !== null && (!Number.isInteger(n) || n < 0 || n > 100_000_000);
-  if (bad(followers) || Number.isNaN(followers)) return { ok: false, error: "Followers must be a whole number." };
-  if (bad(profileViews) || Number.isNaN(profileViews)) return { ok: false, error: "Profile views must be a whole number." };
-  if (reach !== null && (bad(reach) || Number.isNaN(reach))) return { ok: false, error: "Reach must be a whole number, or left blank." };
-  return { ok: true, entry: { weekEnd, followers, profileViews, reach } };
+  const values: InstagramEntry["values"] = {};
+  for (const f of FIELDS) {
+    const raw = input[f.key];
+    const blank = raw === "" || raw == null;
+    if (blank) {
+      if (f.required) return { ok: false, error: `${f.label} is needed.` };
+      continue;
+    }
+    const n = typeof raw === "number" ? raw : Number(String(raw).replace(/[, ]/g, ""));
+    if (!Number.isInteger(n) || n < 0 || n > 100_000_000) return { ok: false, error: `${f.label} must be a whole number${f.required ? "" : ", or left blank"}.` };
+    values[f.key] = n;
+  }
+  return { ok: true, entry: { weekEnd, values } };
 }
 
 export async function saveInstagramEntry(e: InstagramEntry, by: string): Promise<void> {
   const db = serviceClient();
   const del = await db.from("metrics_daily").delete().eq("day", e.weekEnd).eq("source", "instagram").in("metric", METRICS);
   if (del.error) throw new Error(del.error.message);
-  const rows = [
-    { metric: "followers", value: e.followers },
-    { metric: "profile_views", value: e.profileViews },
-    ...(e.reach != null ? [{ metric: "reach", value: e.reach }] : []),
-  ].map((r) => ({ day: e.weekEnd, source: "instagram", dimension: "", ...r }));
+  const rows = FIELDS.filter((f) => e.values[f.key] !== undefined).map((f) => ({
+    day: e.weekEnd,
+    source: "instagram",
+    dimension: "",
+    metric: f.metric,
+    value: e.values[f.key] as number,
+  }));
   const ins = await db.from("metrics_daily").insert(rows);
   if (ins.error) throw new Error(ins.error.message);
   await db.from("metrics_runs").insert({
     day: e.weekEnd,
     source: "instagram_manual",
     ok: true,
-    detail: `entered by hand (${by}): followers ${e.followers}, profile views ${e.profileViews}${e.reach != null ? `, reach ${e.reach}` : ""}`,
+    detail: `entered by hand (${by}): ${FIELDS.filter((f) => e.values[f.key] !== undefined).map((f) => `${f.label} ${e.values[f.key]}`).join(", ")}`,
   });
 }
 
 /** The entry already saved for a week, if any (to prefill the form). */
-export async function savedEntry(weekEnd: string): Promise<{ followers?: number; profileViews?: number; reach?: number }> {
+export async function savedEntry(weekEnd: string): Promise<Partial<Record<FieldKey, number>>> {
   const { data } = await serviceClient()
     .from("metrics_daily")
     .select("metric, value")
@@ -79,14 +96,38 @@ export async function savedEntry(weekEnd: string): Promise<{ followers?: number;
     .eq("source", "instagram")
     .eq("dimension", "")
     .in("metric", METRICS);
-  const get = (m: string) => {
-    const r = (data ?? []).find((x) => x.metric === m);
-    return r ? Number(r.value) : undefined;
-  };
-  return { followers: get("followers"), profileViews: get("profile_views"), reach: get("reach") };
+  const out: Partial<Record<FieldKey, number>> = {};
+  for (const f of FIELDS) {
+    const r = (data ?? []).find((x) => x.metric === f.metric);
+    if (r) out[f.key] = Number(r.value);
+  }
+  return out;
 }
 
 export async function hasEntry(weekEnd: string): Promise<boolean> {
   const e = await savedEntry(weekEnd);
-  return e.followers !== undefined && e.profileViews !== undefined;
+  return e.followers !== undefined && e.profileVisits !== undefined;
+}
+
+export type LatestInstagram = {
+  day: string;
+  values: Record<string, number>;
+  prevDay: string | null;
+  prev: Record<string, number>;
+};
+
+/** The newest Instagram snapshot (whatever its date) and the one before it, for the dashboard panel. */
+export async function latestInstagram(): Promise<LatestInstagram | null> {
+  const { data } = await serviceClient()
+    .from("metrics_daily")
+    .select("day, metric, value")
+    .eq("source", "instagram")
+    .eq("dimension", "")
+    .order("day", { ascending: false })
+    .limit(200);
+  const rows = (data ?? []) as { day: string; metric: string; value: number }[];
+  if (!rows.length) return null;
+  const days = [...new Set(rows.map((r) => r.day))];
+  const pick = (d: string) => Object.fromEntries(rows.filter((r) => r.day === d).map((r) => [r.metric, Number(r.value)]));
+  return { day: days[0], values: pick(days[0]), prevDay: days[1] ?? null, prev: days[1] ? pick(days[1]) : {} };
 }

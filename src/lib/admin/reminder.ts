@@ -18,7 +18,7 @@ export function renderReminder(weekEnd: string): { subject: string; html: string
 <p style="margin:0 0 12px">Whoever is nearest a phone: please add this week's Instagram numbers so they make Monday's 8:00 report. It takes about a minute.</p>
 <ol style="margin:0 0 18px;padding-left:20px">
 <li>In the Instagram app, open @mezcalomano, then Professional dashboard, and set the range to the last 7 days.</li>
-<li>Note followers, profile visits and (if shown) accounts reached.</li>
+<li>Note total followers, profile visits, views, viewers, interactions, accounts engaged and external link taps.</li>
 <li>Enter them on the form below.</li>
 </ol>
 <p style="margin:0"><a href="${link}" style="background:#84866D;color:#ffffff;text-decoration:none;padding:10px 16px;display:inline-block;font-size:14px">Enter this week's figures</a></p>
@@ -26,7 +26,7 @@ export function renderReminder(weekEnd: string): { subject: string; html: string
 </td></tr></table>
 <p style="font-size:12px;color:#8a877d;margin:12px 0 0">Sent automatically every Sunday at 6:00 pm London time, only if the figures are not in yet.</p>
 </td></tr></table></body></html>`;
-  const text = `Please add this week's Instagram numbers so they make Monday's 8:00 report.\n\n1. In the Instagram app, open @mezcalomano, then Professional dashboard, last 7 days.\n2. Note followers, profile visits and accounts reached (if shown).\n3. Enter them here: ${link}\n\nWeek ending Sunday ${day(weekEnd)}. You will be asked to log in first.\n`;
+  const text = `Please add this week's Instagram numbers so they make Monday's 8:00 report.\n\n1. In the Instagram app, open @mezcalomano, then Professional dashboard, last 7 days.\n2. Note total followers, profile visits, views, viewers, interactions, accounts engaged and external link taps.\n3. Enter them here: ${link}\n\nWeek ending Sunday ${day(weekEnd)}. You will be asked to log in first.\n`;
   return { subject, html, text };
 }
 
