@@ -12,6 +12,7 @@ const FIELDS = [
   { key: "interactions", label: "Interactions", required: false },
   { key: "accountsEngaged", label: "Accounts engaged (under Interactions)", required: false },
   { key: "linkTaps", label: "External link taps (Profile section)", required: false },
+  { key: "posts", label: "Total posts on the profile", required: false },
 ];
 
 const label = (d: string) =>

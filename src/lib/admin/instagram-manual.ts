@@ -6,7 +6,7 @@ import { addDays } from "./summary";
  * Hand-entered Instagram figures (used until the Instagram API connection works).
  * Stored in metrics_daily under source 'instagram', dated the Sunday that ends
  * the week, so the dashboard and the Monday email read them like API data.
- * followers is a level (the count on that day); the rest are the week's totals
+ * followers and posts are levels (the count on that day); the rest are the week's totals
  * (Instagram's last 7 days).
  */
 
@@ -19,6 +19,7 @@ export const FIELDS = [
   { key: "interactions", metric: "interactions", label: "Interactions", required: false },
   { key: "accountsEngaged", metric: "accounts_engaged", label: "Accounts engaged", required: false },
   { key: "linkTaps", metric: "website_clicks", label: "External link taps", required: false },
+  { key: "posts", metric: "posts", label: "Posts", required: false },
 ] as const;
 
 export type FieldKey = (typeof FIELDS)[number]["key"];

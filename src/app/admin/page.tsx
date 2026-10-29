@@ -203,6 +203,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
           <tbody>
             {[
               ["Instagram followers (latest)", "instagram", "followers"],
+              ["Instagram posts (latest)", "instagram", "posts"],
               ["Instagram new followers", "instagram", "new_followers"],
               ["Instagram unfollows", "instagram", "unfollows"],
               ["Instagram profile views", "instagram", "profile_views"],
