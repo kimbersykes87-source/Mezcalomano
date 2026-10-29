@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
+import { EXCLUDE_UNTIL, EXCLUDED_COUNTRY_CODE } from "@/lib/metrics/exclude";
 
 /**
  * Click counter for links that leave the site (producer shops, Shopify,
@@ -41,6 +42,9 @@ export async function POST(request: Request) {
   try {
     const ua = request.headers.get("user-agent") ?? "";
     if (!ua || BOT_UA.test(ua)) return done();
+
+    // Own visits from Morocco are not counted until 14 Nov 2026.
+    if (Date.now() < EXCLUDE_UNTIL.getTime() && request.headers.get("x-vercel-ip-country") === EXCLUDED_COUNTRY_CODE) return done();
 
     const raw = await request.text();
     if (!raw || raw.length > MAX_BODY) return done();
