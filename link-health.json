@@ -1,16 +1,148 @@
 {
-  "updated": "2026-10-29T11:22:33.884Z",
+  "updated": "2026-10-29T15:13:37.415Z",
   "links": {
-    "lamparillo|https://ultramundo.mx/usa-shop/?v=5435c69ed3bc": {
-      "species": "Lamparillo",
-      "slug": "lamparillo",
-      "producer": "Ultramundo",
-      "url": "https://ultramundo.mx/usa-shop/?v=5435c69ed3bc",
+    "cuishe|https://mezcalreycampero.com/product/cuishe-rc/": {
+      "species": "Cuishe",
+      "slug": "cuishe",
+      "producer": "Rey Campero",
+      "url": "https://mezcalreycampero.com/product/cuishe-rc/",
       "firstFailed": "2026-10-29",
       "lastFailed": "2026-10-29",
       "strikes": 1,
       "verdict": "DEAD",
-      "note": "No response (fetch failed)"
+      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+    },
+    "jabali|https://mezcalreycampero.com/product/jabali-rc/": {
+      "species": "Jabalí",
+      "slug": "jabali",
+      "producer": "Rey Campero",
+      "url": "https://mezcalreycampero.com/product/jabali-rc/",
+      "firstFailed": "2026-10-29",
+      "lastFailed": "2026-10-29",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+    },
+    "madrecuixe|https://mezcalreycampero.com/product/madrecuishe-rc/": {
+      "species": "Madrecuixe",
+      "slug": "madrecuixe",
+      "producer": "Rey Campero",
+      "url": "https://mezcalreycampero.com/product/madrecuishe-rc/",
+      "firstFailed": "2026-10-29",
+      "lastFailed": "2026-10-29",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+    },
+    "sierra_negra|https://mezcalreycampero.com/product/sierra-rc/": {
+      "species": "Sierra Negra",
+      "slug": "sierra_negra",
+      "producer": "Rey Campero",
+      "url": "https://mezcalreycampero.com/product/sierra-rc/",
+      "firstFailed": "2026-10-29",
+      "lastFailed": "2026-10-29",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+    },
+    "tepextate|https://mezcalreycampero.com/product/tepeztate-rc/": {
+      "species": "Tepextate",
+      "slug": "tepextate",
+      "producer": "Rey Campero",
+      "url": "https://mezcalreycampero.com/product/tepeztate-rc/",
+      "firstFailed": "2026-10-29",
+      "lastFailed": "2026-10-29",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+    },
+    "tobala|https://mezcalreycampero.com/product/tobala-rc/": {
+      "species": "Tobalá",
+      "slug": "tobala",
+      "producer": "Rey Campero",
+      "url": "https://mezcalreycampero.com/product/tobala-rc/",
+      "firstFailed": "2026-10-29",
+      "lastFailed": "2026-10-29",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+    },
+    "weber_azul|https://mezcalreycampero.com/product/azul-rc/": {
+      "species": "Weber Azul",
+      "slug": "weber_azul",
+      "producer": "Rey Campero",
+      "url": "https://mezcalreycampero.com/product/azul-rc/",
+      "firstFailed": "2026-10-29",
+      "lastFailed": "2026-10-29",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+    },
+    "cimarron|https://sftequilashop.com/products/de-matachines-ahualulco-750ml?_pos=2&_sid=6f6f3ba80&_ss=r": {
+      "species": "Cimarrón",
+      "slug": "cimarron",
+      "producer": "De Matachines",
+      "url": "https://sftequilashop.com/products/de-matachines-ahualulco-750ml?_pos=2&_sid=6f6f3ba80&_ss=r",
+      "firstFailed": "2026-10-29",
+      "lastFailed": "2026-10-29",
+      "strikes": 1,
+      "verdict": "INFO",
+      "note": "\"De Matachines Ahualulco 750ML\" is sold out"
+    },
+    "pulquero|https://gomadreshop.com/products/puntiagudo-pulquero?_pos=1&_sid=ceaa25d05&_ss=r": {
+      "species": "Pulquero",
+      "slug": "pulquero",
+      "producer": "Puntiagudo",
+      "url": "https://gomadreshop.com/products/puntiagudo-pulquero?_pos=1&_sid=ceaa25d05&_ss=r",
+      "firstFailed": "2026-10-29",
+      "lastFailed": "2026-10-29",
+      "strikes": 1,
+      "verdict": "INFO",
+      "note": "\"Puntiagudo - Pulquero\" is sold out"
+    },
+    "pulquero|https://gomadreshop.com/products/rufina-pulquero-puntas?_pos=2&_sid=ceaa25d05&_ss=r": {
+      "species": "Pulquero",
+      "slug": "pulquero",
+      "producer": "Rufina",
+      "url": "https://gomadreshop.com/products/rufina-pulquero-puntas?_pos=2&_sid=ceaa25d05&_ss=r",
+      "firstFailed": "2026-10-29",
+      "lastFailed": "2026-10-29",
+      "strikes": 1,
+      "verdict": "INFO",
+      "note": "\"Rufina - Pulquero Puntas\" is sold out"
+    },
+    "sierra_negra|https://buen-mezcal.myshopify.com/products/kit-sierra-negra": {
+      "species": "Sierra Negra",
+      "slug": "sierra_negra",
+      "producer": "Marca Negra",
+      "url": "https://buen-mezcal.myshopify.com/products/kit-sierra-negra",
+      "firstFailed": "2026-10-29",
+      "lastFailed": "2026-10-29",
+      "strikes": 1,
+      "verdict": "INFO",
+      "note": "\"Kit Sierra Negra\" is sold out"
+    },
+    "tepextate|https://buen-mezcal.myshopify.com/products/kit-tepeztate": {
+      "species": "Tepextate",
+      "slug": "tepextate",
+      "producer": "Marca Negra",
+      "url": "https://buen-mezcal.myshopify.com/products/kit-tepeztate",
+      "firstFailed": "2026-10-29",
+      "lastFailed": "2026-10-29",
+      "strikes": 1,
+      "verdict": "INFO",
+      "note": "\"Kit Tepeztate\" is sold out"
+    },
+    "tobala|https://buen-mezcal.myshopify.com/products/kit-tobala": {
+      "species": "Tobalá",
+      "slug": "tobala",
+      "producer": "Marca Negra",
+      "url": "https://buen-mezcal.myshopify.com/products/kit-tobala",
+      "firstFailed": "2026-10-29",
+      "lastFailed": "2026-10-29",
+      "strikes": 1,
+      "verdict": "INFO",
+      "note": "\"Kit Tobalá\" is sold out"
     }
   }
 }
