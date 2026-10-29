@@ -10,13 +10,17 @@ import { useEffect } from "react";
  *    NEXT_PUBLIC_CF_BEACON_TOKEN is set, so local dev and previews stay quiet
  *    unless the variable is added there. The token is public by design (it is
  *    visible in the page source), so it is not a secret.
- * 2. Outbound link click counter. Any click on a link that leaves
+ * 2. Google Analytics 4 (gtag.js). Only renders when NEXT_PUBLIC_GA_MEASUREMENT_ID
+ *    is set (Production only in Vercel). The measurement ID is public by design.
+ *    GA4 enhanced measurement counts App Router page changes on its own.
+ * 3. Outbound link click counter. Any click on a link that leaves
  *    mezcalomano.com is sent to /api/track with navigator.sendBeacon, which
  *    saves it to the Supabase `events` table. Links can add
  *    data-track-species and data-track-group for directory reporting.
  */
 
 const CF_BEACON_TOKEN = process.env.NEXT_PUBLIC_CF_BEACON_TOKEN?.trim() ?? "";
+const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() ?? "";
 
 const OWN_HOSTS = new Set(["mezcalomano.com", "www.mezcalomano.com", "localhost"]);
 
@@ -71,14 +75,27 @@ export default function SiteAnalytics() {
     };
   }, []);
 
-  if (!CF_BEACON_TOKEN) return null;
-
   return (
-    <Script
-      id="cf-web-analytics"
-      src="https://static.cloudflareinsights.com/beacon.min.js"
-      strategy="afterInteractive"
-      data-cf-beacon={JSON.stringify({ token: CF_BEACON_TOKEN, spa: true })}
-    />
+    <>
+      {CF_BEACON_TOKEN && (
+        <Script
+          id="cf-web-analytics"
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          strategy="afterInteractive"
+          data-cf-beacon={JSON.stringify({ token: CF_BEACON_TOKEN, spa: true })}
+        />
+      )}
+      {GA_ID && (
+        <>
+          <Script id="ga-loader" src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_ID)}`} strategy="afterInteractive" />
+          <Script id="ga-init" strategy="afterInteractive">
+            {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GA_ID}');`}
+          </Script>
+        </>
+      )}
+    </>
   );
 }
