@@ -99,7 +99,7 @@ export default function HomePage() {
         <div className="s-wrap">
           <strong>$29.99</strong>
           <p>
-            Free US shipping. Pre-orders ship from November 30, in time for Christmas.
+            Free US shipping. Pre-orders ship from November 30. Order by December 14 for US Christmas delivery.
             <span>Gift it to the friend who always orders espadín. Or keep it.</span>
           </p>
         </div>

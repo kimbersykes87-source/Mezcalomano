@@ -1,0 +1,26 @@
+{
+  "_note": "One list of the brand values used by mezcalomano.com (src/styles/site.css) and the Shopify theme (docs/shopify-theme/mezcalomano.css). Run npm run check:brand after editing either stylesheet; it fails on any color not listed here.",
+  "colors": {
+    "dark": "#272926",
+    "olive": "#84866D",
+    "yellow": "#DFB725",
+    "terracotta": "#B86744",
+    "white": "#FFFFFF",
+    "text-on-yellow": "#14150F",
+    "muted": "#D4D3CB",
+    "soft-text": "#E6E4DA",
+    "placeholder": "#B9B8B0",
+    "card-dark": "#2F322F",
+    "map-panel": "#2B2D2A",
+    "bar": "#1F211E",
+    "error": "#F2B8A0"
+  },
+  "fonts": {
+    "family": "Open Sans",
+    "body": "300, width 100",
+    "labels-and-buttons": "400, caps, tracking 0.06em",
+    "titles": "700, width 75, caps, tracking 0.04em"
+  },
+  "radius": { "pill": "999px", "card": "16px", "small-card": "12px" },
+  "button-height": "56px"
+}

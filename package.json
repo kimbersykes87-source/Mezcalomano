@@ -21,7 +21,8 @@
     "supabase:push": "node scripts/supabase-cli-push.mjs",
     "keepalive:supabase": "node scripts/supabase-keepalive.mjs",
     "check:links": "node scripts/check-producer-links.mjs",
-    "directory:weekly": "node scripts/directory-weekly.mjs"
+    "directory:weekly": "node scripts/directory-weekly.mjs",
+    "check:brand": "node scripts/check-brand.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.95.3",

@@ -630,3 +630,9 @@ button.l-pill.on{background:#84866D;color:#14150F}
 .p-logo-col{min-width:0}
 .p-logo-col .p-dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
 .p-logo-col .p-dl a{display:flex;width:100%}
+
+/* Slim announcement bar (Home only), same as the shop's */
+.s-bar{display:flex;align-items:center;justify-content:center;gap:8px;min-height:36px;padding:8px 16px;background:#1F211E;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);font-size:12.5px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:#D4D3CB;text-align:center}
+.s-bar:hover{color:#FFFFFF}
+.s-bar .short{display:none}
+@media (max-width:600px){.s-bar .long{display:none}.s-bar .short{display:inline}}
