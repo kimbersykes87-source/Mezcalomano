@@ -14,18 +14,29 @@ export type InstagramEntry = { weekEnd: string; followers: number; profileViews:
 
 const METRICS = ["followers", "profile_views", "reach"];
 
-/** The most recent Sunday on or before today (London): tonight if it is Sunday, otherwise the Sunday just gone. */
+/** The week the form defaults to: the most recent Sunday on or before today (London), or the first Sunday after tracking began if that is earlier. */
+export const FIRST_WEEK = "2026-10-25"; // baseline Sunday, the day before the figures start
+const TRACKING_START = "2026-10-28";
+
+export function upcomingSunday(): string {
+  const today = londonToday();
+  const dow = new Date(`${today}T12:00:00Z`).getUTCDay();
+  return addDays(today, (7 - dow) % 7);
+}
+
 export function defaultWeekEnd(): string {
   const today = londonToday();
   const dow = new Date(`${today}T12:00:00Z`).getUTCDay();
-  return addDays(today, -dow);
+  const recent = addDays(today, -dow);
+  return recent < TRACKING_START ? upcomingSunday() : recent;
 }
 
 export function validateEntry(input: Record<string, unknown>): { ok: true; entry: InstagramEntry } | { ok: false; error: string } {
   const weekEnd = String(input.weekEnd ?? "");
   if (!/^\d{4}-\d{2}-\d{2}$/.test(weekEnd) || Number.isNaN(Date.parse(weekEnd))) return { ok: false, error: "Pick a valid week." };
   if (new Date(`${weekEnd}T12:00:00Z`).getUTCDay() !== 0) return { ok: false, error: "The week must end on a Sunday." };
-  if (weekEnd < "2026-10-28") return { ok: false, error: "Tracking starts on 28 Oct 2026." };
+  if (weekEnd < FIRST_WEEK) return { ok: false, error: "Tracking starts on 28 Oct 2026." };
+  if (weekEnd > upcomingSunday()) return { ok: false, error: "That week has not finished yet." };
 
   const whole = (v: unknown) => (typeof v === "string" && v.trim() !== "" ? Number(v.replace(/[, ]/g, "")) : typeof v === "number" ? v : NaN);
   const followers = whole(input.followers);

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { requireAdmin } from "@/lib/admin/auth";
-import { defaultWeekEnd, savedEntry } from "@/lib/admin/instagram-manual";
+import { defaultWeekEnd, FIRST_WEEK, savedEntry } from "@/lib/admin/instagram-manual";
 import { addDays } from "@/lib/admin/summary";
 import InstagramForm from "./InstagramForm";
 
@@ -12,7 +12,7 @@ export default async function InstagramPage() {
   await requireAdmin("/instagram");
   const weekEnd = defaultWeekEnd();
   const saved = await savedEntry(weekEnd);
-  const weeks = [0, 1, 2, 3].map((i) => addDays(weekEnd, -7 * i)).filter((d) => d >= "2026-10-28");
+  const weeks = [0, 1, 2, 3].map((i) => addDays(weekEnd, -7 * i)).filter((d) => d >= FIRST_WEEK);
   return (
     <div className="adm-wrap" style={{ maxWidth: 640 }}>
       <p className="adm-brand">
