@@ -1,7 +1,7 @@
 "use client";
 
 import Script from "next/script";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * Site-wide analytics, added once in the root layout.
@@ -17,7 +17,24 @@ import { useEffect } from "react";
  *    mezcalomano.com is sent to /api/track with navigator.sendBeacon, which
  *    saves it to the Supabase `events` table. Links can add
  *    data-track-species and data-track-group for directory reporting.
+ * 4. Own-browser switch. Open mezcalomano.com/?ignore=1 once in a browser to
+ *    stop it being counted anywhere (page views, GA4, clicks, and the shop if the
+ *    theme snippet is added); ?ignore=0 turns counting back on. It sets a plain
+ *    cookie `mm_ignore=1` on .mezcalomano.com, only in that browser.
  */
+
+const IGNORE_COOKIE = "mm_ignore";
+
+function readIgnore(): boolean {
+  const params = new URLSearchParams(window.location.search);
+  const flag = params.get("ignore");
+  const secure = window.location.protocol === "https:" ? "; Secure" : "";
+  const domain = window.location.hostname.endsWith("mezcalomano.com") ? "; Domain=.mezcalomano.com" : "";
+  if (flag === "1") document.cookie = `${IGNORE_COOKIE}=1; Max-Age=31536000; Path=/; SameSite=Lax${domain}${secure}`;
+  if (flag === "0") document.cookie = `${IGNORE_COOKIE}=; Max-Age=0; Path=/; SameSite=Lax${domain}${secure}`;
+  if (flag === "0") return false;
+  return flag === "1" || document.cookie.split("; ").includes(`${IGNORE_COOKIE}=1`);
+}
 
 const CF_BEACON_TOKEN = process.env.NEXT_PUBLIC_CF_BEACON_TOKEN?.trim() ?? "";
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() ?? "";
@@ -60,7 +77,17 @@ function sendClick(anchor: HTMLAnchorElement) {
 }
 
 export default function SiteAnalytics() {
+  // null = not checked yet; nothing is loaded until we know this browser is not ignored.
+  const [ignored, setIgnored] = useState<boolean | null>(null);
+
   useEffect(() => {
+    // The cookie can only be read in the browser, so this has to run after mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIgnored(readIgnore());
+  }, []);
+
+  useEffect(() => {
+    if (ignored !== false) return;
     const onClick = (event: MouseEvent) => {
       const el = event.target as Element | null;
       const anchor = el?.closest?.("a[href]") as HTMLAnchorElement | null;
@@ -73,7 +100,9 @@ export default function SiteAnalytics() {
       document.removeEventListener("click", onClick, { capture: true });
       document.removeEventListener("auxclick", onClick, { capture: true });
     };
-  }, []);
+  }, [ignored]);
+
+  if (ignored !== false) return null;
 
   return (
     <>
