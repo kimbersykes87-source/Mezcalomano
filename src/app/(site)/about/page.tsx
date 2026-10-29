@@ -1,5 +1,4 @@
-import MailingListForm from "@/components/MailingListForm";
-
+/* eslint-disable @next/next/no-img-element -- responsive srcset photos sized by CSS */
 export const metadata = {
   title: "About",
   description:
@@ -7,102 +6,79 @@ export const metadata = {
   alternates: { canonical: "/about" },
 };
 
+const COLLAGE = [
+  { src: "/assets/photography/about-tile-1-sign.jpg", alt: "A roadside sign pointing the way to Oaxaca, with a dog resting beneath it." },
+  { src: "/assets/photography/about-tile-2-pit.jpg", alt: "A guide explaining the stone roasting pit at a palenque in Oaxaca." },
+  { src: "/assets/photography/about-tile-3-palenque.jpg", alt: "Two people working beside the stone tahona inside an open-sided palenque." },
+  { src: "/assets/photography/about-tile-4-agave.jpg", alt: "Rows of agave growing on a hillside in the Oaxacan highlands." },
+];
+
 export default function AboutPage() {
   return (
-    <article className="about-page">
-      <img
-        className="about-page__hero"
-        src="/assets/photography/about-hero-2026-10-20-2000.jpg"
-        srcSet="/assets/photography/about-hero-2026-10-20-1200.jpg 1200w,
-                /assets/photography/about-hero-2026-10-20-2000.jpg 2000w,
-                /assets/photography/about-hero-2026-10-20-3048.jpg 3048w"
-        sizes="100vw"
-        width={2000}
-        height={840}
-        alt="The Mezcalómano Discovery Deck box beside four agave cards laid out in a row on a wood table."
-      />
+    <article>
+      <section className="a-hero">
+        <img
+          src="/assets/photography/about-hero-2026-10-20-2000.jpg"
+          srcSet="/assets/photography/about-hero-2026-10-20-1200.jpg 1200w,
+                  /assets/photography/about-hero-2026-10-20-2000.jpg 2000w,
+                  /assets/photography/about-hero-2026-10-20-3048.jpg 3048w"
+          sizes="100vw"
+          width={2000}
+          height={840}
+          fetchPriority="high"
+          alt="The Mezcalómano Discovery Deck box beside four agave cards laid out in a row on a wood table."
+        />
+      </section>
 
-      <div className="about-page__body">
-        <h1 className="about-page__title">ABOUT US</h1>
-
-        <p>
-          Mezcalómano started as a small project between two people who love mezcal, love
-          learning, and spent years visiting Mexico and tasting everything we could find. Along
-          the way we noticed something: too many people order a mezcal at a bar and get
-          whatever&apos;s closest, usually espadín, and rarely venture beyond it. Mezcal deserves
-          the same kind of exploration as wine or whiskey.
-        </p>
-
-        <p>
-          The Discovery Deck is our way to bring mezcal to the table, with playing cards that make
-          it feel approachable, visual, and fun, whether you&apos;re already hooked or just getting
-          curious.
-        </p>
-
-        <p>
-          Our first print run is small and ships from the US. If you want first dibs on new decks,
-          fresh releases, and the other mezcal adventures we&apos;re cooking up, join our mailing
-          list.
-        </p>
-
-        <div className="about-page__signup">
-          <MailingListForm />
+      <section className="a-body">
+        <div className="s-wrap">
+          <div>
+            <p className="s-eyebrow">Two people, one deck</p>
+            <h1>About us</h1>
+            <p className="tag">Mezcal deserves the same kind of exploration as wine or whiskey.</p>
+          </div>
+          <div className="a-text">
+            <p>
+              Mezcalómano started as a small project between two people who love mezcal, love
+              learning, and spent years visiting Mexico and tasting everything we could find. Along
+              the way we noticed something: too many people order a mezcal at a bar and get
+              whatever&apos;s closest, usually espadín, and rarely venture beyond it.
+            </p>
+            <p>
+              The Discovery Deck is our way to bring mezcal to the table, with playing cards that
+              make it feel approachable, visual, and fun, whether you&apos;re already hooked or just
+              getting curious.
+            </p>
+            <p>
+              Our first print run is small and ships from the US. If you want first dibs on new
+              decks, fresh releases, and the other mezcal adventures we&apos;re cooking up, join our
+              mailing list in the footer below.
+            </p>
+            <p>
+              When your deck lands, scan the QR code to unlock our agave directory and discover even
+              more: where different agaves grow across Mexico, and who&apos;s bottling them.
+            </p>
+          </div>
         </div>
+      </section>
 
-        <p>
-          When your deck lands, scan the QR code to unlock our agave directory and discover even
-          more: where different agaves grow across Mexico, and who&apos;s bottling them. Because
-          life&apos;s too short for just one agave.
-        </p>
-      </div>
+      <section className="a-collage" aria-label="Photos from Oaxaca">
+        <div className="s-wrap">
+          <div className="grid">
+            {COLLAGE.map((img) => (
+              <figure key={img.src}>
+                <img src={img.src} alt={img.alt} width={1200} height={900} loading="lazy" />
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      {/* PLACEHOLDER: Collage band (final = agave, production, bottles, landscape; landscape crops). Max 4 images: keep these slot dimensions when swapping finals. */}
-      <div
-        className="about-page__collage"
-        role="group"
-        aria-label="Placeholder collage: up to four landscape images"
-      >
-        <div className="about-page__collage-slot">
-          <img
-            className="about-page__collage-img"
-            src="/assets/photography/about-tile-1-sign.jpg"
-            width={1200}
-            height={900}
-            loading="lazy"
-            alt="A roadside sign pointing the way to Oaxaca, with a dog resting beneath it."
-          />
+      <section className="a-close">
+        <div className="s-wrap">
+          <p>Because life&apos;s too short for just one agave.</p>
         </div>
-        <div className="about-page__collage-slot">
-          <img
-            className="about-page__collage-img"
-            src="/assets/photography/about-tile-2-pit.jpg"
-            width={1200}
-            height={900}
-            loading="lazy"
-            alt="A guide explaining the stone roasting pit at a palenque in Oaxaca."
-          />
-        </div>
-        <div className="about-page__collage-slot">
-          <img
-            className="about-page__collage-img"
-            src="/assets/photography/about-tile-3-palenque.jpg"
-            width={1200}
-            height={900}
-            loading="lazy"
-            alt="Two people working beside the stone tahona inside an open-sided palenque."
-          />
-        </div>
-        <div className="about-page__collage-slot">
-          <img
-            className="about-page__collage-img"
-            src="/assets/photography/about-tile-4-agave.jpg"
-            width={1200}
-            height={900}
-            loading="lazy"
-            alt="Rows of agave growing on a hillside in the Oaxacan highlands."
-          />
-        </div>
-      </div>
+      </section>
     </article>
   );
 }

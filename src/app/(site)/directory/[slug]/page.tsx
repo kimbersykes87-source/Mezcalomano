@@ -6,6 +6,8 @@ import { resolveMatrixImagePathForCommonName } from "@/lib/matrix-card-urls-serv
 import { OG_IMAGE_PATH, SITE_URL } from "@/lib/site-seo";
 import { speciesDirectorySlug, toSlug } from "@/lib/slug";
 import SpeciesDetailClient from "./SpeciesDetailClient";
+import { fetchAllSpecies } from "@/lib/species-list-server";
+import { toAgaveCard } from "@/lib/agave-cards";
 
 const DEFAULT_OG = OG_IMAGE_PATH;
 
@@ -77,10 +79,14 @@ export default async function SpeciesDetailPage({ params }: PageProps) {
     ],
   };
 
+  const all = await fetchAllSpecies();
+  const rail = all.map((s) => toAgaveCard(s, resolveMatrixImagePathForCommonName(s.common_name)));
+  const image = resolveMatrixImagePathForCommonName(species.common_name) ?? species.image_url;
+
   return (
     <>
       <JsonLd data={breadcrumbLd} />
-      <SpeciesDetailClient initialSpecies={species} />
+      <SpeciesDetailClient species={species} image={image} rail={rail} />
     </>
   );
 }

@@ -8,6 +8,7 @@ import {
 } from "@/lib/site-seo";
 import "@/styles/global.css";
 import "@/styles/components.css";
+import "@/styles/site.css";
 
 const orgId = `${SITE_URL}/#organization`;
 const websiteId = `${SITE_URL}/#website`;
@@ -86,7 +87,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Open+Sans:wdth,wght@75,300;75,400;75,600;75,700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wdth,wght@0,75..100,300..700;1,75..100,300..700&display=swap"
           rel="stylesheet"
         />
       </head>

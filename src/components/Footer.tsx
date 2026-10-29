@@ -1,32 +1,25 @@
-/* eslint-disable @next/next/no-img-element -- SVG social icons; fixed width/height on img */
 import Link from "next/link";
+import MailingListForm from "@/components/MailingListForm";
 
-/** Footer-only links (not in the main nav). */
-const FOOTER_LINKS = [
-  { href: "/press", label: "Press" },
-  { href: "/sources", label: "Sources" },
-];
-
+/** Newsletter band and footer line, on every public page. */
 export default function Footer() {
   return (
-    <footer className="footer">
-      <div className="footer-content">
-        <div className="footer-social">
-          <a href="https://www.instagram.com/mezcalomano/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-            <img src="/assets/icons/icon_instagram.svg" alt="" width={24} height={24} />
-          </a>
-          <a href="https://www.tiktok.com/@mezcalomano" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
-            <img src="/assets/icons/icon_tiktok.svg" alt="" width={24} height={24} />
-          </a>
+    <footer>
+      <section className="s-news" aria-labelledby="s-news-title">
+        <div>
+          <h2 id="s-news-title" className="s-news-h">Spot your next agave crush</h2>
+          <p>Discovery Deck news, new releases and agave guides. We&apos;re obsessed, and you will be too.</p>
         </div>
-        <nav className="footer-links" aria-label="Footer">
-          {FOOTER_LINKS.map((link) => (
-            <Link key={link.href} href={link.href}>
-              {link.label}
-            </Link>
-          ))}
+        <MailingListForm variant="band" source="footer" />
+      </section>
+      <div className="s-foot">
+        <span>&copy; 2026 Mezcalómano · Explore agave, sip mezcal.</span>
+        <nav aria-label="Footer">
+          <a href="https://www.instagram.com/mezcalomano/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="https://www.tiktok.com/@mezcalomano" target="_blank" rel="noopener noreferrer">TikTok</a>
+          <Link href="/press">Press</Link>
+          <Link href="/sources">Sources</Link>
         </nav>
-        <p className="footer-copyright">&copy; 2026 Mezcalómano · Explore agave, sip mezcal. All rights reserved.</p>
       </div>
     </footer>
   );

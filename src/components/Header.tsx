@@ -1,45 +1,43 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element -- SVG / small UI assets; dimensions driven by existing CSS */
+/* eslint-disable @next/next/no-img-element -- SVG logo; sizing from CSS */
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import MobileNav from "./MobileNav";
 
 export default function Header() {
-  const pathname = usePathname();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   return (
     <>
-      <header className="header">
-        <div className="header-content">
+      <header className="s-top">
+        <div className="s-top-in">
           <button
-            className="header-burger"
-            id="mobile-nav-toggle"
+            className="s-burger"
             type="button"
             aria-label="Open menu"
             aria-expanded={mobileNavOpen}
             onClick={() => setMobileNavOpen((o) => !o)}
           >
-            <img src="/assets/ui/icons/icon_burger.svg" alt="" />
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M4 5h16M4 12h16M4 19h16" />
+            </svg>
           </button>
 
-          <Link href="/" className="header-logo" aria-label="Mezcalómano Home">
+          <Link href="/" className="s-logo" aria-label="Mezcalómano home">
             <img src="/assets/brand/logos/mezcalomano_lockup_stacked_dark.svg" alt="" />
           </Link>
 
-          <nav className="header-nav" aria-label="Main navigation">
-            <ul className="header-nav-desktop">
-              <li><Link href="/" className={pathname === "/" ? "active" : ""}>HOME</Link></li>
-              <li><Link href="/about" className={pathname === "/about" ? "active" : ""}>ABOUT</Link></li>
-              <li><Link href="/contact" className={pathname === "/contact" ? "active" : ""}>CONTACT</Link></li>
-              <li><Link href="/map" className={pathname === "/map" ? "active" : ""}>MAP</Link></li>
-            </ul>
-          </nav>
-
-          <a href="https://shop.mezcalomano.com" className="header-shop" aria-label="Shop">
-            <img src="/assets/ui/icons/icon_shopping-basket.svg" alt="" />
+          <a href="https://shop.mezcalomano.com" className="s-basket" aria-label="Shop">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="m15 11-1 9" />
+              <path d="m19 11-4-7" />
+              <path d="M2 11h20" />
+              <path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4" />
+              <path d="M4.5 15.5h15" />
+              <path d="m5 11 4-7" />
+              <path d="m9 11 1 9" />
+            </svg>
           </a>
         </div>
       </header>
