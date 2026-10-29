@@ -4,6 +4,13 @@ import { missingShopifyEnv, subscribeEmail } from "@/lib/shopify-subscribe";
 type SubscribeBody = {
   email?: string;
   token?: string;
+  source?: string;
+};
+
+/** Pages that host the signup form; anything else is saved as the About page. */
+const SIGNUP_SOURCES: Record<string, string> = {
+  about: "website-about",
+  directory: "website-directory",
 };
 
 function jsonError(error: string, status: number) {
@@ -35,7 +42,7 @@ async function verifyTurnstile(secret: string, token: string): Promise<boolean> 
  * a small Apps Script web app owned by hola@. Optional: skipped when the env vars are not
  * set, so previews work before the script is deployed. Returns true if the row was saved.
  */
-async function saveBackupRow(email: string, consentedAt: string): Promise<boolean> {
+async function saveBackupRow(email: string, consentedAt: string, source: string): Promise<boolean> {
   const url = envValue("MAILING_LIST_SHEET_URL");
   const secret = envValue("MAILING_LIST_SHEET_TOKEN");
   if (!url || !secret) {
@@ -46,7 +53,7 @@ async function saveBackupRow(email: string, consentedAt: string): Promise<boolea
     const res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, source: "website-about", consentedAt, secret }),
+      body: JSON.stringify({ email, source, consentedAt, secret }),
       redirect: "follow",
     });
     const json = (await res.json().catch(() => null)) as { ok?: boolean } | null;
@@ -90,6 +97,7 @@ export async function POST(request: Request) {
     }
 
     const consentedAt = new Date().toISOString();
+    const source = SIGNUP_SOURCES[typeof data.source === "string" ? data.source : ""] ?? "website-about";
 
     // Shopify is the list that gets emailed; the sheet is the backup. Run both, succeed if
     // at least one stored the address (the other is logged and can be reconciled later).
@@ -101,7 +109,7 @@ export async function POST(request: Request) {
           return false;
         }
       ),
-      saveBackupRow(email, consentedAt),
+      saveBackupRow(email, consentedAt, source),
     ]);
 
     if (!shopifyOutcome && !backupSaved) {
