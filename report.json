@@ -1,51 +1,114 @@
 {
-  "date": "2026-10-26",
-  "mode": "monday",
+  "date": "2026-10-29",
+  "mode": "thursday",
   "counts": {
     "BAD_URL": 0,
     "DEAD": 8,
     "GENERIC": 1,
     "BLOCKED": 17,
-    "INFO": 15,
-    "OK": 219
+    "INFO": 14,
+    "OK": 220
   },
   "linksChecked": 260,
-  "autoChanges": [],
+  "autoChanges": [
+    {
+      "action": "removed",
+      "species": "Cuishe",
+      "producer": "Rey Campero",
+      "from": "https://mezcalreycampero.com/product/cuishe-rc/",
+      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-25)"
+    },
+    {
+      "action": "removed",
+      "species": "Jabalí",
+      "producer": "Rey Campero",
+      "from": "https://mezcalreycampero.com/product/jabali-rc/",
+      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-25)"
+    },
+    {
+      "action": "removed",
+      "species": "Madrecuixe",
+      "producer": "Rey Campero",
+      "from": "https://mezcalreycampero.com/product/madrecuishe-rc/",
+      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-25)"
+    },
+    {
+      "action": "removed",
+      "species": "Sierra Negra",
+      "producer": "Rey Campero",
+      "from": "https://mezcalreycampero.com/product/sierra-rc/",
+      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-25)"
+    },
+    {
+      "action": "removed",
+      "species": "Tepextate",
+      "producer": "Rey Campero",
+      "from": "https://mezcalreycampero.com/product/tepeztate-rc/",
+      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-25)"
+    },
+    {
+      "action": "removed",
+      "species": "Tobalá",
+      "producer": "Rey Campero",
+      "from": "https://mezcalreycampero.com/product/tobala-rc/",
+      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-25)"
+    },
+    {
+      "action": "removed",
+      "species": "Weber Azul",
+      "producer": "Rey Campero",
+      "from": "https://mezcalreycampero.com/product/azul-rc/",
+      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-25)"
+    },
+    {
+      "action": "removed",
+      "species": "Cimarrón",
+      "producer": "De Matachines",
+      "from": "https://sftequilashop.com/products/de-matachines-ahualulco-750ml?_pos=2&_sid=6f6f3ba80&_ss=r",
+      "why": "\"De Matachines Ahualulco 750ML\" is sold out (failing since 2026-10-25)"
+    },
+    {
+      "action": "removed",
+      "species": "Pulquero",
+      "producer": "Puntiagudo",
+      "from": "https://gomadreshop.com/products/puntiagudo-pulquero?_pos=1&_sid=ceaa25d05&_ss=r",
+      "why": "\"Puntiagudo - Pulquero\" is sold out (failing since 2026-10-26)"
+    },
+    {
+      "action": "removed",
+      "species": "Sierra Negra",
+      "producer": "Marca Negra",
+      "from": "https://buen-mezcal.myshopify.com/products/kit-sierra-negra",
+      "why": "\"Kit Sierra Negra\" is sold out (failing since 2026-10-25)"
+    },
+    {
+      "action": "removed",
+      "species": "Tepextate",
+      "producer": "Marca Negra",
+      "from": "https://buen-mezcal.myshopify.com/products/kit-tepeztate",
+      "why": "\"Kit Tepeztate\" is sold out (failing since 2026-10-25)"
+    },
+    {
+      "action": "removed",
+      "species": "Tobalá",
+      "producer": "Marca Negra",
+      "from": "https://buen-mezcal.myshopify.com/products/kit-tobala",
+      "why": "\"Kit Tobalá\" is sold out (failing since 2026-10-25)"
+    }
+  ],
   "urgent": [],
   "suggestions": [],
   "firstStrike": [
     {
-      "species": "Cuishe",
-      "slug": "cuishe",
-      "producer": "Bozal",
-      "url": "http://bozalmezcal.com/spirits/#",
-      "firstFailed": "2026-10-26",
-      "lastFailed": "2026-10-26",
+      "species": "Lamparillo",
+      "slug": "lamparillo",
+      "producer": "Ultramundo",
+      "url": "https://ultramundo.mx/usa-shop/?v=5435c69ed3bc",
+      "firstFailed": "2026-10-29",
+      "lastFailed": "2026-10-29",
       "strikes": 1,
       "verdict": "DEAD",
-      "note": "HTTP 504"
-    },
-    {
-      "species": "Pulquero",
-      "slug": "pulquero",
-      "producer": "Puntiagudo",
-      "url": "https://gomadreshop.com/products/puntiagudo-pulquero?_pos=1&_sid=ceaa25d05&_ss=r",
-      "firstFailed": "2026-10-26",
-      "lastFailed": "2026-10-26",
-      "strikes": 1,
-      "verdict": "INFO",
-      "note": "\"Puntiagudo - Pulquero\" is sold out"
-    },
-    {
-      "species": "Pulquero",
-      "slug": "pulquero",
-      "producer": "Rufina",
-      "url": "https://gomadreshop.com/products/rufina-pulquero-puntas?_pos=2&_sid=ceaa25d05&_ss=r",
-      "firstFailed": "2026-10-26",
-      "lastFailed": "2026-10-26",
-      "strikes": 1,
-      "verdict": "INFO",
-      "note": "\"Rufina - Pulquero Puntas\" is sold out"
+      "note": "No response (fetch failed)"
     }
   ],
   "noUs": [
@@ -120,8 +183,8 @@
     },
     {
       "species": "Pulquero",
-      "producer": "MDM",
-      "url": "https://gomadreshop.com/products/mdm-pulquero-reina?_pos=3&_sid=ceaa25d05&_ss=r"
+      "producer": "Rufina",
+      "url": "https://gomadreshop.com/products/rufina-pulquero-puntas?_pos=2&_sid=ceaa25d05&_ss=r"
     },
     {
       "species": "Tepextate",
@@ -154,7 +217,7 @@
       "url": "https://www.cuchillo.ca/items/pecho-tierra-verde"
     }
   ],
-  "catalogProducts": 293,
+  "catalogProducts": 291,
   "pullRequest": "",
-  "runUrl": "https://github.com/kimbersykes87-source/Mezcalomano/actions/runs/40346894188"
+  "runUrl": "https://github.com/kimbersykes87-source/Mezcalomano/actions/runs/40864838234"
 }
