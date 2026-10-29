@@ -95,3 +95,10 @@ textarea.field__input,.text-area{border-radius:16px}
 .rte a,.link{color:#fff;text-decoration-color:var(--mm-yellow)}
 .card-wrapper .card,.card__inner{border-radius:16px}
 .badge{border-radius:999px}
+
+/* Yellow buttons run the full width of the text column */
+.product-form__buttons,.product-form,.product-form__submit{max-width:none!important;width:100%}
+.shopify-payment-button{max-width:none!important;width:100%}
+.product__description p:has(> a[href*="/cart/add"]){text-align:left!important;margin:2.4rem 0!important}
+.product__description a[href*="/cart/add"]{display:flex!important;width:100%}
+.cart__checkout-button{width:100%;max-width:none!important}
