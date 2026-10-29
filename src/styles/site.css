@@ -627,3 +627,6 @@ button.l-pill.on{background:#84866D;color:#14150F}
 .m-card-list button:hover{color:#DFB725}
 .m-card-none{font-size:17px;color:#D4D3CB}
 @media (max-width:900px){.m-card-title{font-size:36px}.m-card-list{max-height:none}}
+.p-logo-col{min-width:0}
+.p-logo-col .p-dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+.p-logo-col .p-dl a{display:flex;width:100%}

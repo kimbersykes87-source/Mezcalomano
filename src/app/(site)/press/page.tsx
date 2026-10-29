@@ -208,24 +208,27 @@ export default function PressPage() {
 
           <h3 className="p-sub">Logo</h3>
           <div className="p-logos">
-            <div className="p-logo light">
-              {/* eslint-disable-next-line @next/next/no-img-element -- static SVG preview */}
-              <img src="/press/logos/mezcalomano-logo-for-white-backgrounds.svg" alt="Mezcalómano logo for white backgrounds" width={250} height={80} />
-            </div>
-            <div className="p-logo dark">
-              {/* eslint-disable-next-line @next/next/no-img-element -- static SVG preview */}
-              <img src="/press/logos/mezcalomano-logo-for-dark-backgrounds.svg" alt="Mezcalómano logo for dark backgrounds" width={250} height={80} />
-            </div>
-          </div>
-          <ul className="p-dl">
-            {PRESS_LOGOS.map((logo) => (
-              <li key={logo.href}>
-                <a href={logo.href} download>
-                  {logo.label}
-                </a>
-              </li>
+            {[
+              { tone: "light", label: "Mezcalómano logo for white backgrounds", file: "mezcalomano-logo-for-white-backgrounds" },
+              { tone: "dark", label: "Mezcalómano logo for dark backgrounds", file: "mezcalomano-logo-for-dark-backgrounds" },
+            ].map((logo) => (
+              <div key={logo.tone} className="p-logo-col">
+                <div className={`p-logo ${logo.tone}`}>
+                  {/* eslint-disable-next-line @next/next/no-img-element -- static SVG preview */}
+                  <img src={`/press/logos/${logo.file}.svg`} alt={logo.label} width={250} height={80} />
+                </div>
+                <ul className="p-dl">
+                  {PRESS_LOGOS.filter((l) => l.href.includes(logo.file)).map((l) => (
+                    <li key={l.href}>
+                      <a href={l.href} download>
+                        Download {l.href.endsWith(".svg") ? "SVG" : "PNG"}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </section>
 
