@@ -101,6 +101,15 @@ export async function sendWeekly(range = lastWeek()): Promise<{ to: string; subj
   const summary = await buildSummary(range.from, range.to);
   const mail = renderWeekly(summary);
   const to = weeklyTo();
+  await postMail(to, mail);
+  return { to, subject: mail.subject };
+}
+
+/** Sends one email through the Apps Script web app (hola@ only). */
+export async function postMail(to: string, mail: { subject: string; html: string; text: string }): Promise<void> {
+  const url = process.env.WEEKLY_EMAIL_URL?.trim();
+  const token = process.env.WEEKLY_EMAIL_TOKEN?.trim();
+  if (!url || !token) throw new Error("WEEKLY_EMAIL_URL or WEEKLY_EMAIL_TOKEN is not set");
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -109,7 +118,6 @@ export async function sendWeekly(range = lastWeek()): Promise<{ to: string; subj
   });
   const data = (await res.json().catch(() => null)) as { ok?: boolean; error?: string } | null;
   if (!data?.ok) throw new Error(`email script: ${data?.error ?? `HTTP ${res.status}`}`);
-  return { to, subject: mail.subject };
 }
 
 /** True if the email for the week starting `from` was already sent. */

@@ -66,6 +66,6 @@ export async function isLoggedIn(): Promise<boolean> {
 }
 
 /** For admin pages: sends anyone without a valid session to the login page. */
-export async function requireAdmin() {
-  if (!(await isLoggedIn())) redirect("/admin/login");
+export async function requireAdmin(next?: string) {
+  if (!(await isLoggedIn())) redirect(next ? `/admin/login?next=${encodeURIComponent(next)}` : "/admin/login");
 }

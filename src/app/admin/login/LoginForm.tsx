@@ -7,7 +7,7 @@ type TurnstileApi = {
   reset?: (id: string) => void;
 };
 
-export default function LoginForm({ siteKey }: { siteKey: string }) {
+export default function LoginForm({ siteKey, next = "/" }: { siteKey: string; next?: string }) {
   const box = useRef<HTMLDivElement>(null);
   const widget = useRef<string | null>(null);
   const [token, setToken] = useState("");
@@ -48,7 +48,7 @@ export default function LoginForm({ siteKey }: { siteKey: string }) {
       });
       const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
       if (data.ok) {
-        window.location.href = "/admin";
+        window.location.href = next === "/instagram" ? "/admin/instagram" : "/admin";
         return;
       }
       setMsg(data.error ?? "Could not log in.");
