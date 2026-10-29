@@ -1,4 +1,5 @@
 import type { MetricRow } from "./store";
+import { EXCLUDE_UNTIL, EXCLUDED_COUNTRY_NAME } from "./exclude";
 
 /**
  * Visits and page views from Cloudflare Web Analytics (GraphQL Analytics API,
@@ -67,6 +68,8 @@ export async function collectCloudflare(siteTag: string, start: Date, end: Date)
       { datetime_geq: start.toISOString(), datetime_lt: end.toISOString() },
       { siteTag },
       { bot: 0 },
+      // Kimber's own visits from Morocco are left out until 14 Nov 2026 (see exclude.ts).
+      ...(end.getTime() <= EXCLUDE_UNTIL.getTime() ? [{ countryName_neq: EXCLUDED_COUNTRY_NAME }] : []),
     ],
   };
 
