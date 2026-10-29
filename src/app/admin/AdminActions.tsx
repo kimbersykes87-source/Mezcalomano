@@ -29,6 +29,9 @@ export default function AdminActions() {
       <button className="adm-btn" onClick={sendTest} disabled={busy}>
         {busy ? "Sending" : "Send the weekly email now"}
       </button>
+      <a className="adm-btn" href="/admin/instagram">
+        Enter Instagram figures
+      </a>
       <button className="adm-btn" onClick={logout}>
         Log out
       </button>
