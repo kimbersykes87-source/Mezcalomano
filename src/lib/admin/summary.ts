@@ -154,7 +154,7 @@ export async function buildSummary(from: string, to: string): Promise<Summary> {
 
   // Hand-entered or browser-read Instagram figures are dated the Sunday that ends the week, which can be
   // later than "yesterday". On the live views (ending yesterday) show the newest entry in the Instagram tiles.
-  if (to === londonYesterday()) {
+  if (to >= londonYesterday()) {
     const ig = await newestInstagram(to);
     if (ig) {
       const followers = headlines.find((h) => h.key === "ig_followers");
