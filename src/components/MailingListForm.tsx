@@ -24,7 +24,12 @@ function turnstileApi(): TurnstileApi | undefined {
   return (window as unknown as { turnstile?: TurnstileApi }).turnstile;
 }
 
-export default function MailingListForm() {
+type MailingListFormProps = {
+  /** Which page the form sits on; saved as the signup source in the backup sheet. */
+  source?: "about" | "directory";
+};
+
+export default function MailingListForm({ source = "about" }: MailingListFormProps) {
   const turnstileContainerRef = useRef<HTMLDivElement>(null);
   const turnstileWidgetIdRef = useRef<string | null>(null);
   const [turnstileToken, setTurnstileToken] = useState("");
@@ -123,7 +128,7 @@ export default function MailingListForm() {
       const response = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: trimmed, token: turnstileToken }),
+        body: JSON.stringify({ email: trimmed, token: turnstileToken, source }),
       });
       const result = (await response.json().catch(() => null)) as {
         ok?: boolean;

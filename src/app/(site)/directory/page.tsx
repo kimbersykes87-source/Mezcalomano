@@ -1,4 +1,5 @@
 import Link from "next/link";
+import MailingListForm from "@/components/MailingListForm";
 import { fetchAllSpecies } from "@/lib/species-list-server";
 import { speciesDirectorySlug } from "@/lib/slug";
 import DirectoryClient from "./DirectoryClient";
@@ -16,6 +17,15 @@ export default async function DirectoryPage() {
     <>
       <h1 className="directory-page__title">Agave species directory</h1>
       <DirectoryClient initialSpecies={species}>
+        <section className="directory-signup" aria-labelledby="directory-signup-heading">
+          <h2 id="directory-signup-heading" className="directory-signup__heading">
+            Stay in the loop
+          </h2>
+          <p className="directory-signup__text">
+            Join our mailing list for Discovery Deck news, new releases and more agave guides.
+          </p>
+          <MailingListForm source="directory" />
+        </section>
         <nav className="directory-species-index" aria-labelledby="directory-all-agaves">
           <h2 id="directory-all-agaves" className="directory-species-index__heading">
             All 40 agaves

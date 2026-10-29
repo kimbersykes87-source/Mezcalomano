@@ -305,6 +305,32 @@ body:has(.directory-root) .footer {
   width: 100%;
 }
 
+/* Mailing list signup on the directory page, between the card stack and the species index. */
+.directory-signup {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-5) 0;
+  text-align: center;
+}
+
+.directory-signup__heading {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-regular);
+  font-size: 1.125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-white);
+  margin: 0 0 var(--space-2);
+}
+
+.directory-signup__text {
+  margin: 0 0 var(--space-4);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+}
+
 .directory-species-index {
   width: 100%;
   padding: var(--space-8) var(--space-5) var(--space-12);
