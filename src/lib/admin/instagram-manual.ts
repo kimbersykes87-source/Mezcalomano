@@ -108,3 +108,26 @@ export async function hasEntry(weekEnd: string): Promise<boolean> {
   const e = await savedEntry(weekEnd);
   return e.followers !== undefined && e.profileVisits !== undefined;
 }
+
+export type LatestInstagram = {
+  day: string;
+  values: Record<string, number>;
+  prevDay: string | null;
+  prev: Record<string, number>;
+};
+
+/** The newest Instagram snapshot (whatever its date) and the one before it, for the dashboard panel. */
+export async function latestInstagram(): Promise<LatestInstagram | null> {
+  const { data } = await serviceClient()
+    .from("metrics_daily")
+    .select("day, metric, value")
+    .eq("source", "instagram")
+    .eq("dimension", "")
+    .order("day", { ascending: false })
+    .limit(200);
+  const rows = (data ?? []) as { day: string; metric: string; value: number }[];
+  if (!rows.length) return null;
+  const days = [...new Set(rows.map((r) => r.day))];
+  const pick = (d: string) => Object.fromEntries(rows.filter((r) => r.day === d).map((r) => [r.metric, Number(r.value)]));
+  return { day: days[0], values: pick(days[0]), prevDay: days[1] ?? null, prev: days[1] ? pick(days[1]) : {} };
+}
