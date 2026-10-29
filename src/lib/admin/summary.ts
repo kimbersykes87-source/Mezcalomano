@@ -1,4 +1,5 @@
 import { serviceClient } from "@/lib/metrics/store";
+import { londonYesterday } from "@/lib/metrics/time";
 
 /**
  * Reads metrics_daily and turns it into the figures shown on the dashboard
@@ -151,6 +152,25 @@ export async function buildSummary(from: string, to: string): Promise<Summary> {
     flow("contact", "Contact messages", "contact", "messages"),
   ];
 
+  // Hand-entered or browser-read Instagram figures are dated the Sunday that ends the week, which can be
+  // later than "yesterday". On the live views (ending yesterday) show the newest entry in the Instagram tiles.
+  if (to === londonYesterday()) {
+    const ig = await newestInstagram(to);
+    if (ig) {
+      const followers = headlines.find((h) => h.key === "ig_followers");
+      const views = headlines.find((h) => h.key === "ig_profile_views");
+      if (followers && ig.values.followers !== undefined) {
+        followers.value = ig.values.followers;
+        followers.previous = ig.prev.followers ?? followers.previous;
+      }
+      if (views && ig.values.profile_views !== undefined) {
+        views.value = ig.values.profile_views;
+        views.previous = ig.prev.profile_views ?? null;
+        views.label = "Instagram profile views (latest entry)";
+      }
+    }
+  }
+
   const funnel = [
     { label: "Shop sessions", value: current.value("shop", "sessions") },
     { label: "Added to cart", value: current.value("shop", "sessions_added_to_cart") },
@@ -159,6 +179,22 @@ export async function buildSummary(from: string, to: string): Promise<Summary> {
   ];
 
   return { current, previous, headlines, funnel };
+}
+
+/** The newest Instagram snapshot dated after `after`, with the one before it (for the headline tiles). */
+async function newestInstagram(after: string): Promise<{ values: Record<string, number>; prev: Record<string, number> } | null> {
+  const { data } = await serviceClient()
+    .from("metrics_daily")
+    .select("day, metric, value")
+    .eq("source", "instagram")
+    .eq("dimension", "")
+    .order("day", { ascending: false })
+    .limit(200);
+  const rows = (data ?? []) as { day: string; metric: string; value: number }[];
+  const days = [...new Set(rows.map((r) => r.day))];
+  if (!days.length || days[0] <= after) return null;
+  const pick = (d: string) => Object.fromEntries(rows.filter((r) => r.day === d).map((r) => [r.metric, Number(r.value)]));
+  return { values: pick(days[0]), prev: days[1] ? pick(days[1]) : {} };
 }
 
 export async function latestRuns(): Promise<{ source: string; ok: boolean; ran_at: string; detail: string | null; day: string }[]> {
