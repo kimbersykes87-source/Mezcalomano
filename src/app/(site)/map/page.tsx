@@ -22,6 +22,11 @@ const MAP_ZOOM = 4.5;
 // is sized to leave ~4 degrees above Nogales and below Chiapas at a 2.4 container
 // aspect, and still clears the country at 3.0. The latitude span is what keeps phones
 // from cropping Baja and the Yucatan; it is deliberately far wider than Mexico.
+/** Mexico's outline, used to centre and fit the map in its panel. */
+const MEXICO_BOUNDS: [[number, number], [number, number]] = [
+  [-118.4, 14.5],
+  [-86.7, 32.7],
+];
 const MAP_MAX_BOUNDS: [[number, number], [number, number]] = [
   [-138, -1],
   [-67, 45],
@@ -494,10 +499,31 @@ export default function MapPage() {
       }
       map.on("click", onMapClick);
 
+      // Centre Mexico in the panel, and keep it centred as the panel resizes until someone
+      // moves the map themselves.
+      let userMoved = false;
+      const fitMexico = () => {
+        if (userMoved) return;
+        map.fitBounds(MEXICO_BOUNDS, { padding: 24, animate: false });
+      };
+      map.on("dragstart", () => {
+        userMoved = true;
+      });
+      map.on("zoomstart", (e) => {
+        if ((e as { originalEvent?: unknown }).originalEvent) userMoved = true;
+      });
+      map.on("click", () => {
+        userMoved = true;
+      });
       map.resize();
-      requestAnimationFrame(() => map.resize());
+      fitMexico();
+      requestAnimationFrame(() => {
+        map.resize();
+        fitMexico();
+      });
       resizeObserverRef.current = new ResizeObserver(() => {
         mapRef.current?.resize();
+        fitMexico();
       });
       resizeObserverRef.current.observe(container);
       mapRef.current = map;
