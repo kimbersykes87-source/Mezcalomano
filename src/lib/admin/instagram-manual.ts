@@ -131,3 +131,53 @@ export async function latestInstagram(): Promise<LatestInstagram | null> {
   const pick = (d: string) => Object.fromEntries(rows.filter((r) => r.day === d).map((r) => [r.metric, Number(r.value)]));
   return { day: days[0], values: pick(days[0]), prevDay: days[1] ?? null, prev: days[1] ? pick(days[1]) : {} };
 }
+
+export type PostCard = {
+  shortcode: string;
+  title: string;
+  alt: string;
+  thumb: string | null;
+  postedOn: string | null;
+  views: number;
+  change: number | null;
+};
+
+/** Every known post with its newest view count (and the change since the snapshot before), most viewed first. */
+export async function postCards(): Promise<{ day: string | null; cards: PostCard[] }> {
+  const db = serviceClient();
+  const [posts, views] = await Promise.all([
+    db.from("instagram_posts").select("shortcode, title, alt, thumb, posted_on"),
+    db
+      .from("metrics_daily")
+      .select("day, dimension, value")
+      .eq("source", "instagram")
+      .eq("metric", "post_views")
+      .order("day", { ascending: false })
+      .limit(600),
+  ]);
+  const meta = new Map((posts.data ?? []).map((p) => [p.shortcode as string, p]));
+  const latest = new Map<string, { day: string; value: number }>();
+  const before = new Map<string, number>();
+  for (const r of (views.data ?? []) as { day: string; dimension: string; value: number }[]) {
+    const prev = latest.get(r.dimension);
+    if (!prev) latest.set(r.dimension, { day: r.day, value: Number(r.value) });
+    else if (!before.has(r.dimension) && r.day < prev.day) before.set(r.dimension, Number(r.value));
+  }
+  const keys = new Set([...meta.keys(), ...latest.keys()]);
+  const cards = [...keys].map((k) => {
+    const m = meta.get(k);
+    const v = latest.get(k);
+    return {
+      shortcode: k,
+      title: (m?.title as string) || "New post",
+      alt: (m?.alt as string) || "Instagram post",
+      thumb: (m?.thumb as string) ?? null,
+      postedOn: (m?.posted_on as string) ?? null,
+      views: v?.value ?? 0,
+      change: v && before.has(k) ? v.value - (before.get(k) as number) : null,
+    };
+  });
+  cards.sort((a, b) => b.views - a.views);
+  const day = [...latest.values()].map((x) => x.day).sort().pop() ?? null;
+  return { day, cards };
+}
