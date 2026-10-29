@@ -71,18 +71,6 @@ function debug(...args: unknown[]) {
   if (DEBUG) console.log("[Map Debug]", ...args);
 }
 
-function escapeHtml(s: string): string {
-  const div = document.createElement("div");
-  div.textContent = s;
-  return div.innerHTML;
-}
-
-function parseHabitatTerrain(habitat: Species["habitat"]): string {
-  if (!habitat || typeof habitat !== "object") return "";
-  const t = habitat as { terrain?: string };
-  return t.terrain?.trim() ?? "";
-}
-
 /** Directory-style filter control: matches `/directory` combobox field + list (not native `<select>`). */
 function MapDirectoryStyleSelect({
   id,
@@ -214,8 +202,10 @@ export default function MapPage() {
   const [mapClickedState, setMapClickedState] = useState<string | null>(null);
   const [geoJson, setGeoJson] = useState<GeoJSON.FeatureCollection | null>(null);
   const [mounted, setMounted] = useState(false);
-  /** State detail in a centered overlay (map dimmed behind): same on all viewports */
-  const [mapStateDetailHtml, setMapStateDetailHtml] = useState<string | null>(null);
+  /** What the side card shows: the species or state picked last (dropdown or map tap). */
+  const [focus, setFocus] = useState<{ kind: "species" | "state"; name: string } | null>(null);
+  const setFocusRef = useRef(setFocus);
+  setFocusRef.current = setFocus;
 
   useEffect(() => {
     setMounted(true);
@@ -319,24 +309,22 @@ export default function MapPage() {
   setMapClickedStateRef.current = setMapClickedState;
   const mapInitializedRef = useRef(false);
   const mapLibRef = useRef<typeof maplibregl | null>(null);
-  const setMapStateDetailHtmlRef = useRef(setMapStateDetailHtml);
-  setMapStateDetailHtmlRef.current = setMapStateDetailHtml;
 
   const closeMapStateDetail = useCallback(() => {
-    setMapStateDetailHtml(null);
+    setFocus(null);
     setSelectedCommonName("");
     setSelectedState("");
     setMapClickedState(null);
   }, []);
 
   useEffect(() => {
-    if (!mapStateDetailHtml) return;
+    if (!focus) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeMapStateDetail();
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [mapStateDetailHtml, closeMapStateDetail]);
+  }, [focus, closeMapStateDetail]);
 
   const initMap = useCallback((MapLibre: typeof maplibregl) => {
     const container = mapContainerRef.current;
@@ -474,6 +462,9 @@ export default function MapPage() {
         if (!stateName) return;
 
         setMapClickedStateRef.current(stateName);
+        setSelectedCommonNameRef.current("");
+        setSelectedStateRef.current(stateName);
+        setFocusRef.current({ kind: "state", name: stateName });
 
         const panMapToState =
           typeof window !== "undefined" &&
@@ -500,49 +491,6 @@ export default function MapPage() {
           }
         }
 
-        const currentSpecies = speciesRef.current;
-        const speciesInState = currentSpecies.filter((s) => {
-          const states = parseStatesForGeo(s.states);
-          return states.includes(stateName);
-        });
-        const commonNamesInState = [...new Set(speciesInState.map((s) => s.common_name))].sort((a, b) => a.localeCompare(b, "en"));
-
-        const selName = selectedCommonNameRef.current;
-        const selSet = selectedStatesSetRef.current;
-        const selSpecies = selectedSpeciesRef.current;
-        const titleIdAttr = ' id="map-state-detail-dialog-title"';
-        const stateTitle =
-          '<div class="mezcal-map-popup-title"' + titleIdAttr + ">" + escapeHtml(stateName) + "</div>";
-        let body = "";
-        if (selName && selSet.has(stateName)) {
-          const sp = selSpecies[0];
-          if (sp) {
-            const terrain = parseHabitatTerrain(sp.habitat);
-            body =
-              '<div class="mezcal-map-popup-body">' +
-              '<p class="mezcal-map-popup-detail">' +
-              escapeHtml(sp.common_name) +
-              "</p>" +
-              (terrain
-                ? '<p class="mezcal-map-popup-detail"><span class="mezcal-map-popup-muted">Terrain:</span> ' +
-                  escapeHtml(terrain) +
-                  "</p>"
-                : "") +
-              "</div>";
-          }
-        } else {
-          const listHtml = commonNamesInState.length
-            ? commonNamesInState.map((n) => "<li>" + escapeHtml(n) + "</li>").join("")
-            : '<li><span class="mezcal-map-popup-muted">None in directory</span></li>';
-          body =
-            '<div class="mezcal-map-popup-body">' +
-            '<p class="mezcal-map-popup-lead">Mezcals in this state:</p>' +
-            '<ul class="mezcal-map-popup-list">' +
-            listHtml +
-            "</ul></div>";
-        }
-        const frameHtml = '<div class="mezcal-map-popup-frame">' + stateTitle + body + "</div>";
-        setMapStateDetailHtmlRef.current(frameHtml);
       }
       map.on("click", onMapClick);
 
@@ -646,9 +594,18 @@ export default function MapPage() {
       }
       mapLibRef.current = null;
       mapInitializedRef.current = false;
-      setMapStateDetailHtml(null);
     };
   }, []);
+
+  const cardItems: string[] = !focus
+    ? []
+    : focus.kind === "species"
+      ? [...new Set(species.filter((sp) => sp.common_name === focus.name).flatMap((sp) => parseStatesForGeo(sp.states)))].sort(
+          (a, b) => a.localeCompare(b, "es")
+        )
+      : [...new Set(species.filter((sp) => parseStatesForGeo(sp.states).includes(focus.name)).map((sp) => sp.common_name))].sort(
+          (a, b) => a.localeCompare(b, "en")
+        );
 
   return (
     <>
@@ -670,7 +627,12 @@ export default function MapPage() {
                     label="Species"
                     aria-label="Species"
                     value={selectedCommonName}
-                    onChange={setSelectedCommonName}
+                    onChange={(v) => {
+                      setSelectedCommonName(v);
+                      setSelectedState("");
+                      setMapClickedState(null);
+                      setFocus(v ? { kind: "species", name: v } : null);
+                    }}
                     placeholder="Species"
                     options={commonNames}
                   />
@@ -681,7 +643,12 @@ export default function MapPage() {
                     label="State"
                     aria-label="State"
                     value={selectedState}
-                    onChange={setSelectedState}
+                    onChange={(v) => {
+                      setSelectedState(v);
+                      setSelectedCommonName("");
+                      setMapClickedState(null);
+                      setFocus(v ? { kind: "state", name: v } : null);
+                    }}
                     placeholder="State"
                     options={stateNamesList}
                   />
@@ -708,22 +675,56 @@ export default function MapPage() {
             )}
           </div>
           <aside className="m-card" aria-live="polite">
-            {mapStateDetailHtml ? (
+            {focus ? (
               <>
                 <button
                   type="button"
                   className="m-card-close"
                   onClick={closeMapStateDetail}
-                  aria-label="Clear selected state"
+                  aria-label={`Clear ${focus.name}`}
                 >
                   ×
                 </button>
-                <div dangerouslySetInnerHTML={{ __html: mapStateDetailHtml }} />
+                <h2 className="m-card-title notranslate" translate="no">
+                  {focus.name}
+                </h2>
+                <p className="m-card-lead">
+                  {focus.kind === "species" ? "Grows in these states" : "Mezcals in this state"}
+                </p>
+                {cardItems.length > 0 ? (
+                  <ul className="m-card-list">
+                    {cardItems.map((item) => (
+                      <li key={item}>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (focus.kind === "species") {
+                              setSelectedCommonName("");
+                              setSelectedState(item);
+                              setFocus({ kind: "state", name: item });
+                            } else {
+                              setSelectedState("");
+                              setSelectedCommonName(item);
+                              setFocus({ kind: "species", name: item });
+                            }
+                            setMapClickedState(null);
+                          }}
+                        >
+                          <span className="notranslate" translate="no">{item}</span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="m-card-none">
+                    {focus.kind === "species" ? "No states listed yet." : "None in the directory yet."}
+                  </p>
+                )}
               </>
             ) : (
               <div className="m-card-empty">
                 <h2>Tap a state</h2>
-                <p>Choose a state on the map to see which agaves grow there.</p>
+                <p>Choose a state on the map, or pick a species or state above.</p>
               </div>
             )}
           </aside>

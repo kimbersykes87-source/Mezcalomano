@@ -620,3 +620,10 @@ button.l-pill.on{background:#84866D;color:#14150F}
 .l-hero{overflow:hidden}
 .p-contact .s-wrap > div,.p-sec .s-wrap > div,.o-sec .s-wrap > div{min-width:0}
 .p-contact a.u{overflow-wrap:anywhere}
+.m-card-title{margin:0 48px 0 0;font-size:44px;line-height:1;font-weight:700;font-stretch:75%;letter-spacing:.04em;text-transform:uppercase;color:#FFFFFF}
+.m-card-lead{margin:12px 0 16px;font-size:13px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:#D4D3CB}
+.m-card-list{max-height:520px;overflow-y:auto}
+.m-card-list button{display:flex;align-items:center;width:100%;min-height:52px;padding:0 4px;border:0;border-top:1px solid rgba(255,255,255,.12);background:none;color:#FFFFFF;font:inherit;font-size:21px;font-weight:700;font-stretch:75%;letter-spacing:.04em;text-transform:uppercase;text-align:left;cursor:pointer}
+.m-card-list button:hover{color:#DFB725}
+.m-card-none{font-size:17px;color:#D4D3CB}
+@media (max-width:900px){.m-card-title{font-size:36px}.m-card-list{max-height:none}}
