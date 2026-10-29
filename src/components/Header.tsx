@@ -28,7 +28,7 @@ export default function Header() {
             <img src="/assets/brand/logos/mezcalomano_lockup_stacked_dark.svg" alt="" />
           </Link>
 
-          <a href="https://shop.mezcalomano.com" className="s-basket" aria-label="Shop">
+          <a href="https://shop.mezcalomano.com/products/discovery-deck" className="s-basket" aria-label="Shop">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="m15 11-1 9" />
               <path d="m19 11-4-7" />

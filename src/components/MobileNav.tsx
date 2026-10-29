@@ -52,7 +52,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
             <Link href="/contact" className="mobile-nav-link" onClick={onClose}>CONTACT</Link>
           </li>
           <li className="mobile-nav-item">
-            <a href="https://shop.mezcalomano.com" className="mobile-nav-link mobile-nav-shop" onClick={onClose}>SHOP</a>
+            <a href="https://shop.mezcalomano.com/products/discovery-deck" className="mobile-nav-link mobile-nav-shop" onClick={onClose}>SHOP</a>
           </li>
         </ul>
       </nav>

@@ -19,7 +19,7 @@ Mezcalómano is a brand for mezcal lovers and the mezcal-curious. We sell the Di
 
 Purchases (Discovery Deck and other products) are on our Shopify store, not on the marketing domain:
 
-- Shop: https://shop.mezcalomano.com
+- Shop: https://shop.mezcalomano.com/products/discovery-deck
 - Discovery Deck product: https://shop.mezcalomano.com/products/discovery-deck
 
 The marketing site path `/buy` redirects to that product URL.
