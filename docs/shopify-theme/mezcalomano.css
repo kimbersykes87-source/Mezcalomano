@@ -153,3 +153,16 @@ svg.icon-hamburger *,svg.icon-cart *,svg.icon-cart-empty *{display:none}
 .mm-stats li{padding:16px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14)}
 .mm-stats b{display:block;font-size:4.4rem;line-height:1;font-weight:700;font-stretch:75%;color:#84866D}
 .mm-stats span{display:block;margin-top:8px;font-size:1.5rem;line-height:1.45;color:#E6E4DA}
+/* ---- Siona's feedback, 30 Oct 2026 ---- */
+/* Tighter bullet lists */
+.product__description li,.mm-points li{padding:2px 0;line-height:1.5}
+.product__description li::before{margin-top:.75rem}
+.mm-points li::before{margin-top:.7rem}
+.product__description ul{margin:.4rem 0 1.6rem}
+/* Reviews block: same gutters and left alignment as the rest of the page */
+.shopify-app-block .jdgm-review-widget,#judgeme_product_reviews{padding:0 1.5rem;text-align:left}
+#judgeme_product_reviews .jm-review-widget{border-top:1px solid rgba(255,255,255,.10);padding-top:3.2rem}
+#judgeme_product_reviews .jm-review-widget *{text-align:left}
+#judgeme_product_reviews .jm-cluster{justify-content:flex-start!important}
+#judgeme_product_reviews :is(.jm-stack,.jm-empty-state,[class*="empty-state"]){align-items:flex-start!important;justify-content:flex-start!important}
+@media (min-width:750px){#judgeme_product_reviews{padding:0 5rem}}

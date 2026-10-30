@@ -76,7 +76,10 @@ export default function AboutPage() {
 
       <section className="a-close">
         <div className="s-wrap">
-          <p>Because life&apos;s too short for just one agave.</p>
+          <p>
+            Because life&apos;s too short for just
+            <br className="a-br" /> one agave.
+          </p>
         </div>
       </section>
     </article>

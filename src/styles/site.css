@@ -698,3 +698,7 @@ select.s-intl-in option{background:#2F322F;color:#FFFFFF}
   .s-intl-check label{font-size:13px;line-height:1.5}
   .s-intl-go{height:52px}
 }
+
+/* About closing line: break after "just" on phones */
+.a-close .a-br{display:none}
+@media (max-width:600px){.a-close .a-br{display:inline}}
