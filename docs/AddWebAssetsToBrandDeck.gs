@@ -25,7 +25,10 @@ function addWebAssets() {
 
   // ---------- helpers ----------
   const newSlide = (kicker, title) => {
-    const s = deck.appendSlide(SlidesApp.PredefinedLayout.BLANK);
+    // This deck's master has no BLANK layout: use the layout with the fewest placeholders, then clear it.
+    const layout = deck.getLayouts().reduce((a, b) => (b.getPlaceholders().length < a.getPlaceholders().length ? b : a));
+    const s = deck.appendSlide(layout);
+    s.getPageElements().forEach(e => e.remove());
     s.getBackground().setSolidFill(C.dark);
     s.getNotesPage().getSpeakerNotesShape().getText().setText(TAG + ' (added by AddWebAssetsToBrandDeck.gs)');
     const k = text(s, kicker.toUpperCase(), 48, 34, 600, 22, 11, C.muted, false, 400, 0);
