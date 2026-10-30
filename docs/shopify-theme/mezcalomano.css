@@ -162,7 +162,8 @@ svg.icon-hamburger *,svg.icon-cart *,svg.icon-cart-empty *{display:none}
 /* Reviews block: everything centered (title, line and button) */
 #judgeme_product_reviews .jm-review-widget{border-top:1px solid rgba(255,255,255,.10);padding-top:3.2rem}
 #judgeme_product_reviews .jm-review-widget *{text-align:center!important}
-#judgeme_product_reviews .jm-cluster{justify-content:center!important}
+#judgeme_product_reviews .jm-cluster{--cluster-justify:center!important;justify-content:center!important}
+#judgeme_product_reviews .jm-cluster>*{flex:1 1 100%}
 #judgeme_product_reviews :is(.jm-stack,.jm-no-reviews-state,.jm-empty-state,[class*="empty-state"]){align-items:center!important;justify-content:center!important}
 #judgeme_product_reviews .jm-no-reviews-state{margin:.8rem auto 0!important}
 /* Menu drawer: no account link, like the header */
