@@ -5,6 +5,8 @@ type SubscribeBody = {
   email?: string;
   token?: string;
   source?: string;
+  /** Two-letter country code, only sent by the international delivery form. */
+  country?: string;
 };
 
 /** Pages that host the signup form; anything else is saved as the About page. */
@@ -12,6 +14,7 @@ const SIGNUP_SOURCES: Record<string, string> = {
   about: "website-about",
   directory: "website-directory",
   footer: "website-footer",
+  intl: "website-intl",
 };
 
 function jsonError(error: string, status: number) {
@@ -98,12 +101,24 @@ export async function POST(request: Request) {
     }
 
     const consentedAt = new Date().toISOString();
-    const source = SIGNUP_SOURCES[typeof data.source === "string" ? data.source : ""] ?? "website-about";
+    let source = SIGNUP_SOURCES[typeof data.source === "string" ? data.source : ""] ?? "website-about";
+
+    // International delivery interest: tag the customer with the country they asked for, so
+    // the monthly Flow email can count signups per country. The sheet row gets it too.
+    const extraTags: string[] = [];
+    if (data.source === "intl") {
+      const country = typeof data.country === "string" ? data.country.trim().toUpperCase() : "";
+      if (!/^[A-Z]{2}$/.test(country) || country === "US") {
+        return jsonError("Please choose your country", 400);
+      }
+      extraTags.push("intl-interest", `intl-${country}`);
+      source = `website-intl-${country}`;
+    }
 
     // Shopify is the list that gets emailed; the sheet is the backup. Run both, succeed if
     // at least one stored the address (the other is logged and can be reconciled later).
     const [shopifyOutcome, backupSaved] = await Promise.all([
-      subscribeEmail(email, consentedAt).then(
+      subscribeEmail(email, consentedAt, extraTags).then(
         () => true,
         (err: unknown) => {
           console.error("[subscribe] Shopify subscribe failed:", err);

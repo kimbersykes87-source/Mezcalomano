@@ -182,6 +182,19 @@ const UPDATE_CONSENT = /* GraphQL */ `
   }
 `;
 
+const ADD_TAGS = /* GraphQL */ `
+  mutation AddSignupTags($id: ID!, $tags: [String!]!) {
+    tagsAdd(id: $id, tags: $tags) {
+      userErrors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+type AddTagsData = { tagsAdd: { userErrors: UserError[] } };
+
 type FindCustomerData = {
   customers: {
     nodes: { id: string; emailMarketingConsent: { marketingState: string } | null }[];
@@ -200,8 +213,13 @@ type UpdateConsentData = {
  * Subscribes an email address to marketing in Shopify. Safe to call twice for the same
  * address: an existing subscribed customer is left alone, anyone else is moved to subscribed.
  * `consentedAt` is when the person submitted the form (ISO 8601).
+ * `extraTags` (for example `intl-interest`, `intl-AU`) are added to new and existing customers.
  */
-export async function subscribeEmail(email: string, consentedAt: string): Promise<SubscribeResult> {
+export async function subscribeEmail(
+  email: string,
+  consentedAt: string,
+  extraTags: string[] = []
+): Promise<SubscribeResult> {
   const config = readConfig();
   const consent = {
     marketingState: "SUBSCRIBED",
@@ -218,6 +236,13 @@ export async function subscribeEmail(email: string, consentedAt: string): Promis
 
   const existing = found.customers.nodes[0];
   if (existing) {
+    if (extraTags.length > 0) {
+      const tagged = await adminGraphQL<AddTagsData>(config, ADD_TAGS, {
+        id: existing.id,
+        tags: extraTags,
+      });
+      throwOnUserErrors("tagsAdd", tagged.tagsAdd.userErrors);
+    }
     if (existing.emailMarketingConsent?.marketingState === "SUBSCRIBED") {
       return "already-subscribed";
     }
@@ -234,7 +259,7 @@ export async function subscribeEmail(email: string, consentedAt: string): Promis
   const created = await adminGraphQL<CreateCustomerData>(config, CREATE_CUSTOMER, {
     input: {
       email: safeEmail,
-      tags: ["mailing-list", "website-signup"],
+      tags: ["mailing-list", "website-signup", ...extraTags],
       emailMarketingConsent: consent,
     },
   });

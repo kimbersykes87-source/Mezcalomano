@@ -5,14 +5,18 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import MobileNav from "./MobileNav";
+import { IntlBar, useIntlVisitor } from "./IntlDelivery";
 
 export default function Header() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const pathname = usePathname();
+  const visitor = useIntlVisitor();
+  const intl = visitor.status === "intl";
 
   return (
     <>
-      {pathname === "/" ? (
+      {intl ? <IntlBar visitor={visitor} /> : null}
+      {pathname === "/" && !intl && visitor.status !== "hidden" ? (
         <Link href="/buy" className="s-bar">
         <span className="long">Pre-orders ship from November 30. Order by December 14 for US Christmas delivery.</span>
         <span className="short">Order by Dec 14 for US Christmas delivery</span>
