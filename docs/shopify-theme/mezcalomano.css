@@ -160,9 +160,11 @@ svg.icon-hamburger *,svg.icon-cart *,svg.icon-cart-empty *{display:none}
 .mm-points li::before{margin-top:.7rem}
 .product__description ul{margin:.4rem 0 1.6rem}
 /* Reviews block: same gutters and left alignment as the rest of the page */
-.shopify-app-block .jdgm-review-widget,#judgeme_product_reviews{padding:0 1.5rem;text-align:left}
+#judgeme_product_reviews{text-align:left}
+#judgeme_product_reviews .jm-no-reviews-state{align-items:flex-start!important;margin:0!important}
 #judgeme_product_reviews .jm-review-widget{border-top:1px solid rgba(255,255,255,.10);padding-top:3.2rem}
 #judgeme_product_reviews .jm-review-widget *{text-align:left}
 #judgeme_product_reviews .jm-cluster{justify-content:flex-start!important}
 #judgeme_product_reviews :is(.jm-stack,.jm-empty-state,[class*="empty-state"]){align-items:flex-start!important;justify-content:flex-start!important}
-@media (min-width:750px){#judgeme_product_reviews{padding:0 5rem}}
+/* Menu drawer: no account link, like the header */
+.menu-drawer__account,.menu-drawer__utility-links .menu-drawer__account{display:none!important}
