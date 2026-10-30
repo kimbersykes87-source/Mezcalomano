@@ -11,6 +11,10 @@
         "padding_bottom": 0
       }
     },
+    "mm-intl": {
+      "type": "mm-intl",
+      "settings": {}
+    },
     "announcement-bar": {
       "type": "announcement-bar",
       "blocks": {
@@ -57,6 +61,7 @@
   },
   "order": [
     "mm-styles",
+    "mm-intl",
     "announcement-bar",
     "header"
   ]
