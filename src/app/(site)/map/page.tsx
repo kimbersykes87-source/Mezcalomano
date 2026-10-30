@@ -217,6 +217,66 @@ export default function MapPage() {
     debug("mounted=true");
   }, []);
 
+  /**
+   * Phones: the map pins to the top of the screen. A downward scroll anywhere above the map glides
+   * straight to it (hiding the header, title and pickers); an upward scroll from there glides back
+   * to the very top, so the page never rests half way.
+   */
+  useEffect(() => {
+    const phone = window.matchMedia("(max-width: 900px)");
+    let lastY = window.scrollY;
+    let target: number | null = null;
+    let release: number | undefined;
+    const mapTop = () => {
+      const body = mapAreaRef.current?.closest(".m-body") as HTMLElement | null;
+      const top = body ? body.getBoundingClientRect().top + window.scrollY : 0;
+      return Math.min(top, document.documentElement.scrollHeight - window.innerHeight);
+    };
+    const glide = (top: number) => {
+      target = top;
+      window.clearTimeout(release);
+      release = window.setTimeout(() => (target = null), 900);
+      window.scrollTo({ top, behavior: "smooth" });
+    };
+    // While a finger is down, only note the direction; glide once it lifts (iOS ignores scrolls mid drag).
+    let touching = false;
+    let dir = 0;
+    const settle = () => {
+      const y = window.scrollY;
+      const top = mapTop();
+      if (y > 0 && y < top - 1) glide(dir > 0 ? top : 0);
+    };
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (target !== null) {
+        if (Math.abs(y - target) < 2) target = null;
+        lastY = y;
+        return;
+      }
+      if (y !== lastY) dir = y > lastY ? 1 : -1;
+      lastY = y;
+      if (phone.matches && !touching) settle();
+    };
+    const onTouchStart = () => {
+      touching = true;
+    };
+    const onTouchEnd = () => {
+      touching = false;
+      if (phone.matches && target === null) settle();
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("touchcancel", onTouchEnd, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("touchcancel", onTouchEnd);
+      window.clearTimeout(release);
+    };
+  }, []);
+
 
   useEffect(() => {
     async function fetchSpecies() {
