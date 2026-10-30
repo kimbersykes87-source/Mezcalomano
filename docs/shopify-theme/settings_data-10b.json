@@ -1,0 +1,222 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "logo": "shopify://shop_images/Fullmark_crop1024x1024px.png",
+    "logo_width": 300,
+    "favicon": "shopify://shop_images/Logomark_YellowOnGray_1024x1024_f042ebab-388c-49dd-bb2d-20d9b5aff312.png",
+    "type_header_font": "open_sans_condensed_n4",
+    "heading_scale": 100,
+    "type_body_font": "open_sans_condensed_n3",
+    "body_scale": 100,
+    "page_width": 1200,
+    "spacing_sections": 0,
+    "spacing_grid_horizontal": 40,
+    "spacing_grid_vertical": 40,
+    "animations_reveal_on_scroll": true,
+    "animations_hover_elements": "none",
+    "buttons_border_thickness": 1,
+    "buttons_border_opacity": 100,
+    "buttons_radius": 40,
+    "buttons_shadow_opacity": 0,
+    "buttons_shadow_horizontal_offset": 0,
+    "buttons_shadow_vertical_offset": 4,
+    "buttons_shadow_blur": 5,
+    "variant_pills_border_thickness": 1,
+    "variant_pills_border_opacity": 100,
+    "variant_pills_radius": 40,
+    "variant_pills_shadow_opacity": 0,
+    "variant_pills_shadow_horizontal_offset": 0,
+    "variant_pills_shadow_vertical_offset": 4,
+    "variant_pills_shadow_blur": 5,
+    "inputs_border_thickness": 1,
+    "inputs_border_opacity": 100,
+    "inputs_radius": 26,
+    "inputs_shadow_opacity": 0,
+    "inputs_shadow_horizontal_offset": 0,
+    "inputs_shadow_vertical_offset": 4,
+    "inputs_shadow_blur": 5,
+    "card_style": "standard",
+    "card_image_padding": 0,
+    "card_text_alignment": "left",
+    "card_color_scheme": "scheme-1",
+    "card_border_thickness": 0,
+    "card_border_opacity": 10,
+    "card_corner_radius": 16,
+    "card_shadow_opacity": 0,
+    "card_shadow_horizontal_offset": 0,
+    "card_shadow_vertical_offset": 4,
+    "card_shadow_blur": 5,
+    "collection_card_style": "standard",
+    "collection_card_image_padding": 0,
+    "collection_card_text_alignment": "left",
+    "collection_card_color_scheme": "scheme-1",
+    "collection_card_border_thickness": 0,
+    "collection_card_border_opacity": 10,
+    "collection_card_corner_radius": 16,
+    "collection_card_shadow_opacity": 0,
+    "collection_card_shadow_horizontal_offset": 0,
+    "collection_card_shadow_vertical_offset": 4,
+    "collection_card_shadow_blur": 5,
+    "blog_card_style": "standard",
+    "blog_card_image_padding": 0,
+    "blog_card_text_alignment": "left",
+    "blog_card_color_scheme": "scheme-1",
+    "blog_card_border_thickness": 0,
+    "blog_card_border_opacity": 10,
+    "blog_card_corner_radius": 16,
+    "blog_card_shadow_opacity": 0,
+    "blog_card_shadow_horizontal_offset": 0,
+    "blog_card_shadow_vertical_offset": 4,
+    "blog_card_shadow_blur": 5,
+    "text_boxes_border_thickness": 0,
+    "text_boxes_border_opacity": 10,
+    "text_boxes_radius": 16,
+    "text_boxes_shadow_opacity": 0,
+    "text_boxes_shadow_horizontal_offset": 0,
+    "text_boxes_shadow_vertical_offset": 4,
+    "text_boxes_shadow_blur": 5,
+    "media_border_thickness": 0,
+    "media_border_opacity": 10,
+    "media_radius": 16,
+    "media_shadow_opacity": 0,
+    "media_shadow_horizontal_offset": 0,
+    "media_shadow_vertical_offset": 4,
+    "media_shadow_blur": 5,
+    "popup_border_thickness": 1,
+    "popup_border_opacity": 100,
+    "popup_corner_radius": 16,
+    "popup_shadow_opacity": 5,
+    "popup_shadow_horizontal_offset": 0,
+    "popup_shadow_vertical_offset": 4,
+    "popup_shadow_blur": 5,
+    "drawer_border_thickness": 1,
+    "drawer_border_opacity": 100,
+    "drawer_shadow_opacity": 0,
+    "drawer_shadow_horizontal_offset": 0,
+    "drawer_shadow_vertical_offset": 4,
+    "drawer_shadow_blur": 5,
+    "badge_position": "top left",
+    "badge_corner_radius": 40,
+    "sale_badge_color_scheme": "scheme-5",
+    "sold_out_badge_color_scheme": "scheme-1",
+    "brand_headline": "",
+    "brand_description": "<p></p>",
+    "brand_image_width": 100,
+    "social_facebook_link": "",
+    "social_instagram_link": "https://www.instagram.com/mezcalomano",
+    "social_youtube_link": "",
+    "social_tiktok_link": "https://www.tiktok.com/@mezcalomano",
+    "social_twitter_link": "",
+    "social_snapchat_link": "",
+    "social_pinterest_link": "",
+    "social_tumblr_link": "",
+    "social_vimeo_link": "",
+    "predictive_search_enabled": true,
+    "predictive_search_show_vendor": false,
+    "predictive_search_show_price": false,
+    "currency_code_enabled": false,
+    "cart_type": "drawer",
+    "show_vendor": false,
+    "show_cart_note": true,
+    "cart_drawer_collection": "",
+    "cart_color_scheme": "scheme-1",
+    "sections": {
+      "main-password-header": {
+        "type": "main-password-header",
+        "settings": {
+          "color_scheme": "scheme-1"
+        }
+      },
+      "main-password-footer": {
+        "type": "main-password-footer",
+        "settings": {
+          "color_scheme": "scheme-1"
+        }
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      }
+    },
+    "color_schemes": {
+      "scheme-1": {
+        "settings": {
+          "background": "#272926",
+          "background_gradient": "",
+          "text": "#ffffff",
+          "button": "#dfb725",
+          "button_label": "#14150f",
+          "secondary_button_label": "#ffffff",
+          "shadow": "#272926"
+        }
+      },
+      "scheme-2": {
+        "settings": {
+          "background": "#ffffff",
+          "background_gradient": "",
+          "text": "#11151c",
+          "button": "#11151c",
+          "button_label": "#ffffff",
+          "secondary_button_label": "#11151c",
+          "shadow": "#11151c"
+        }
+      },
+      "scheme-3": {
+        "settings": {
+          "background": "#11151c",
+          "background_gradient": "",
+          "text": "#ffffff",
+          "button": "#ffffff",
+          "button_label": "#11151c",
+          "secondary_button_label": "#ffffff",
+          "shadow": "#11151c"
+        }
+      },
+      "scheme-4": {
+        "settings": {
+          "background": "#855832",
+          "background_gradient": "",
+          "text": "#dfdfd8",
+          "button": "#dfdfd8",
+          "button_label": "#855832",
+          "secondary_button_label": "#dfdfd8",
+          "shadow": "#11151c"
+        }
+      },
+      "scheme-5": {
+        "settings": {
+          "background": "#4c6762",
+          "background_gradient": "",
+          "text": "#dfdfd8",
+          "button": "#dfdfd8",
+          "button_label": "#4c6762",
+          "secondary_button_label": "#dfdfd8",
+          "shadow": "#11151c"
+        }
+      }
+    }
+  },
+  "platform_customizations": {
+    "custom_css": [
+      ".jdgm-write-review-modal__content{background:#272926!important;border:1px solid rgba(255,255,255,.14);border-radius:16px!important}",
+      ".jdgm-write-review-modal__content :is(div,p,label,span){color:#E6E4DA!important}",
+      ".jdgm-write-review-modal__title{color:#fff!important;font-weight:700!important;font-stretch:75%;text-transform:uppercase;letter-spacing:.04em}",
+      ".jdgm-write-review-modal__field-input{background:transparent!important;color:#fff!important;border:1px solid rgba(255,255,255,.3)!important;border-radius:16px!important}",
+      ".jdgm-write-review-modal__nav-btn,.jdgm-write-review-modal__btn{border-radius:999px!important;min-height:48px;padding:0 28px!important;text-transform:uppercase;letter-spacing:.06em;color:#fff!important}",
+      ".jdgm-write-review-modal__nav-btn:not(.jdgm-write-review-modal__nav-btn-next){background:transparent!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.5)}",
+      ".jdgm-write-review-modal__close-btn{color:#fff!important}"
+    ]
+  }
+}
