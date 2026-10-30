@@ -159,12 +159,11 @@ svg.icon-hamburger *,svg.icon-cart *,svg.icon-cart-empty *{display:none}
 .product__description li::before{margin-top:.75rem}
 .mm-points li::before{margin-top:.7rem}
 .product__description ul{margin:.4rem 0 1.6rem}
-/* Reviews block: same gutters and left alignment as the rest of the page */
-#judgeme_product_reviews{text-align:left}
-#judgeme_product_reviews .jm-no-reviews-state{align-items:flex-start!important;margin:.8rem 0 0!important}
+/* Reviews block: everything centered (title, line and button) */
 #judgeme_product_reviews .jm-review-widget{border-top:1px solid rgba(255,255,255,.10);padding-top:3.2rem}
-#judgeme_product_reviews .jm-review-widget *{text-align:left}
-#judgeme_product_reviews .jm-cluster{justify-content:flex-start!important}
-#judgeme_product_reviews :is(.jm-stack,.jm-empty-state,[class*="empty-state"]){align-items:flex-start!important;justify-content:flex-start!important}
+#judgeme_product_reviews .jm-review-widget *{text-align:center!important}
+#judgeme_product_reviews .jm-cluster{justify-content:center!important}
+#judgeme_product_reviews :is(.jm-stack,.jm-no-reviews-state,.jm-empty-state,[class*="empty-state"]){align-items:center!important;justify-content:center!important}
+#judgeme_product_reviews .jm-no-reviews-state{margin:.8rem auto 0!important}
 /* Menu drawer: no account link, like the header */
 .menu-drawer__account,.menu-drawer__utility-links .menu-drawer__account{display:none!important}
