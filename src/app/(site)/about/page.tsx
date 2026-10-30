@@ -17,6 +17,17 @@ export default function AboutPage() {
   return (
     <article>
       <section className="a-hero">
+        <picture>
+          {/* Phones: a taller crop of the wider shot, so the box and all four cards stay in view */}
+          <source
+            media="(max-width: 900px)"
+            srcSet="/assets/photography/about-hero-mobile-2026-10-30-800.jpg 800w,
+                    /assets/photography/about-hero-mobile-2026-10-30-1200.jpg 1200w,
+                    /assets/photography/about-hero-mobile-2026-10-30-1800.jpg 1800w"
+            sizes="100vw"
+            width={1200}
+            height={700}
+          />
         <img
           src="/assets/photography/about-hero-2026-10-20-2000.jpg"
           srcSet="/assets/photography/about-hero-2026-10-20-1200.jpg 1200w,
@@ -28,6 +39,7 @@ export default function AboutPage() {
           fetchPriority="high"
           alt="The Mezcalómano Discovery Deck box beside four agave cards laid out in a row on a wood table."
         />
+        </picture>
       </section>
 
       <section className="a-body">
