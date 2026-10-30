@@ -24,8 +24,9 @@
   .mm-intl-overlay :focus-visible{outline:2px solid #FFFFFF;outline-offset:3px;box-shadow:none}
   .mm-intl-card{position:relative;width:100%;margin:auto;background:#2F322F;border:1px solid rgba(255,255,255,.14);border-radius:16px}
   .mm-intl-card[hidden]{display:none!important}
-  .mm-intl-form{max-width:880px;padding:40px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px;align-items:center}
-  .mm-intl-form form{display:contents}
+  .mm-intl-form{max-width:880px;padding:40px}
+  .mm-intl-form form{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px;align-items:center}
+  .mm-intl-form form>:not(.mm-intl-intro):not(.mm-intl-fields):not(.mm-intl-x){display:none!important}
   .mm-intl-done{max-width:480px;padding:32px 24px;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
   .mm-intl-x{position:absolute;top:8px;right:8px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:none;border:0;color:#FFFFFF;cursor:pointer;padding:0}
   .mm-intl-intro{display:flex;flex-direction:column;gap:14px}
@@ -59,7 +60,8 @@
   .mm-intl-back{min-height:44px;background:none;border:0;font-family:inherit;font-weight:400;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:#D4D3CB;cursor:pointer}
   .mm-intl-back:hover{color:#FFFFFF}
   @media (max-width:900px){
-    .mm-intl-form{grid-template-columns:minmax(0,1fr);gap:14px;padding:20px 18px;max-width:480px}
+    .mm-intl-form{padding:20px 18px;max-width:480px}
+    .mm-intl-form form{grid-template-columns:minmax(0,1fr);gap:14px}
     .mm-intl-art{padding:4px;max-width:170px;margin:0 auto;width:100%}
     .mm-intl-intro{gap:8px}
     .mm-intl-eye{margin-top:2px}
