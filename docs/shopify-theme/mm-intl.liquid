@@ -1,0 +1,227 @@
+{% comment %}
+  Mezcalómano international delivery notice (Oct 2026). Rendered in layout/theme.liquid just
+  before the header group. Visitors outside the US (country from Shopify's
+  /browsing_context_suggestions.json) see a slim bar and can open a centered dialog to leave
+  their email. The form is Shopify's own customer form: tags newsletter (marketing consent),
+  intl-interest and intl-<country>. Same design as mezcalomano.com (src/components/IntlDelivery.tsx).
+  Testing: ?intl=AU forces the bar, ?intl=reset clears the remembered dismissal.
+{% endcomment %}
+<style>
+  .mm-intl-bar{position:relative;display:none;align-items:center;justify-content:center;min-height:44px;padding:4px 52px 4px 16px;background:#1F211E;border-bottom:1px solid rgba(255,255,255,.08);font-family:'Open Sans',sans-serif;font-stretch:100%;font-size:12.5px;font-weight:400;letter-spacing:.06em;line-height:1.5;text-transform:uppercase;color:#D4D3CB;text-align:center}
+  html.mm-intl-on .mm-intl-bar{display:flex}
+  html.mm-intl-on .utility-bar,html.mm-intl-on .announcement-bar-section{display:none!important}
+  .mm-intl-bar p{margin:0;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:4px 20px}
+  .mm-intl-bar .mm-short{display:none}
+  .mm-intl-link{background:none;border:0;padding:0;min-height:36px;font:inherit;letter-spacing:inherit;text-transform:inherit;color:#FFFFFF;cursor:pointer;text-decoration:underline;text-decoration-color:#84866D;text-decoration-thickness:2px;text-underline-offset:3px}
+  .mm-intl-link:hover{text-decoration-color:#FFFFFF}
+  .mm-intl-bar-x{position:absolute;right:4px;top:50%;transform:translateY(-50%);width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:none;border:0;color:#D4D3CB;cursor:pointer;padding:0}
+  .mm-intl-bar-x:hover{color:#FFFFFF}
+  @media (max-width:600px){.mm-intl-bar .mm-long{display:none}.mm-intl-bar .mm-short{display:inline}.mm-intl-bar p{gap:4px 10px}}
+
+  .mm-intl-overlay{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(31,33,30,.86);overflow-y:auto;font-family:'Open Sans',sans-serif;font-stretch:100%;font-weight:300;letter-spacing:.03em;line-height:1.6;color:#FFFFFF;text-align:left}
+  .mm-intl-overlay.is-open{display:flex}
+  .mm-intl-overlay *{box-sizing:border-box}
+  .mm-intl-overlay :focus-visible{outline:2px solid #FFFFFF;outline-offset:3px;box-shadow:none}
+  .mm-intl-card{position:relative;width:100%;margin:auto;background:#2F322F;border:1px solid rgba(255,255,255,.14);border-radius:16px}
+  .mm-intl-card[hidden]{display:none!important}
+  .mm-intl-form{max-width:880px;padding:40px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px;align-items:center}
+  .mm-intl-form form{display:contents}
+  .mm-intl-done{max-width:480px;padding:32px 24px;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+  .mm-intl-x{position:absolute;top:8px;right:8px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:none;border:0;color:#FFFFFF;cursor:pointer;padding:0}
+  .mm-intl-intro{display:flex;flex-direction:column;gap:14px}
+  .mm-intl-eye{margin:10px 0 0;display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:#D4D3CB}
+  .mm-intl-eye::before{content:"";width:10px;height:10px;border-radius:50%;background:#B86744}
+  .mm-intl-done .mm-intl-eye{margin:0}
+  .mm-intl-art{border-radius:16px;background:#272926;border:1px solid rgba(255,255,255,.14);padding:12px}
+  .mm-intl-tag{display:block;width:100%;height:auto}
+  .mm-intl-done .mm-intl-tag{max-width:320px}
+  .mm-intl-h{margin:0;font-family:'Open Sans',sans-serif;font-size:38px;line-height:1.02;font-weight:700;font-stretch:75%;letter-spacing:.04em;text-transform:uppercase;color:#FFFFFF}
+  .mm-intl-p{margin:0;font-size:17px;line-height:1.65;color:#E6E4DA}
+  .mm-intl-fields{display:flex;flex-direction:column;gap:20px}
+  .mm-intl-field{display:flex;flex-direction:column;gap:8px}
+  .mm-intl-field label{font-size:13px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:#FFFFFF}
+  .mm-intl-in{height:52px;width:100%;margin:0;padding:0 22px;border-radius:999px;border:1px solid rgba(255,255,255,.30);background:transparent;color:#FFFFFF;font-family:inherit;font-size:16px;font-weight:300;letter-spacing:.03em;outline:0;appearance:none;-webkit-appearance:none;box-shadow:none}
+  .mm-intl-in::placeholder{color:#D4D3CB}
+  .mm-intl-in:focus{border-color:#FFFFFF}
+  select.mm-intl-in{cursor:pointer;padding-right:48px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 18px center;background-size:18px}
+  select.mm-intl-in option{background:#2F322F;color:#FFFFFF}
+  .mm-intl-help{font-size:13px;color:#D4D3CB;padding-left:22px}
+  .mm-intl-check{display:flex;gap:12px;align-items:flex-start}
+  .mm-intl-check input{width:20px;height:20px;margin:3px 0 0;flex:none;accent-color:#84866D;cursor:pointer}
+  .mm-intl-check label{font-size:14px;line-height:1.6;color:#D4D3CB;cursor:pointer}
+  .mm-intl-err{margin:0;font-size:14px;color:#F2B8A0}
+  .mm-intl-err:empty{display:none}
+  .mm-intl-go{height:56px;padding:0 28px;border:0;border-radius:999px;background:#DFB725;color:#14150F;font-family:inherit;font-weight:400;font-size:15px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+  .mm-intl-go:disabled{opacity:.7;cursor:default}
+  .mm-intl-note{margin:0;font-size:12.5px;color:#B9B8B0;text-align:center}
+  .mm-intl-note a{color:#B9B8B0;text-decoration:underline;text-underline-offset:3px}
+  .mm-intl-olive{display:flex;align-items:center;justify-content:center;width:100%;height:56px;border-radius:999px;background:#84866D;color:#14150F;font-weight:400;font-size:15px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none}
+  .mm-intl-back{min-height:44px;background:none;border:0;font-family:inherit;font-weight:400;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:#D4D3CB;cursor:pointer}
+  .mm-intl-back:hover{color:#FFFFFF}
+  @media (max-width:900px){
+    .mm-intl-form{grid-template-columns:minmax(0,1fr);gap:14px;padding:20px 18px;max-width:480px}
+    .mm-intl-art{padding:4px;max-width:170px;margin:0 auto;width:100%}
+    .mm-intl-intro{gap:8px}
+    .mm-intl-eye{margin-top:2px}
+    .mm-intl-h{font-size:28px}
+    .mm-intl-p{font-size:15px;line-height:1.55}
+    .mm-intl-fields{gap:12px}
+    .mm-intl-field{gap:6px}
+    .mm-intl-in{height:48px}
+    .mm-intl-help{display:none}
+    .mm-intl-check label{font-size:13px;line-height:1.5}
+    .mm-intl-go{height:52px}
+  }
+</style>
+
+{%- capture mm_tag_svg -%}
+<svg class="mm-intl-tag" role="img" aria-label="A luggage style delivery tag reading from USA, to your country, next stop coming soon" viewBox="30 36 296 168"><path d="M40 120 C20 120 14 70 40 52" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.6"/><g transform="rotate(-4 179 120)"><path d="M64 44 L300 44 Q316 44 316 60 L316 180 Q316 196 300 196 L64 196 L40 170 L40 70 Z" fill="rgba(255,255,255,.05)" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/><circle cx="58" cy="120" r="7" fill="none" stroke="#FFFFFF" stroke-width="2"/><circle cx="58" cy="120" r="3" fill="#B86744"/><line x1="84" y1="56" x2="84" y2="184" stroke="#FFFFFF" stroke-width="1.5" stroke-dasharray="3 5" opacity="0.4"/><text x="104" y="76" fill="#D4D3CB" font-family="Open Sans, sans-serif" font-size="10.5" letter-spacing="0.7">FROM</text><text x="104" y="100" fill="#FFFFFF" font-family="Open Sans, sans-serif" font-size="22" font-weight="700" font-stretch="75%" letter-spacing="0.9">USA</text><text x="104" y="126" fill="#D4D3CB" font-family="Open Sans, sans-serif" font-size="10.5" letter-spacing="0.7">TO</text><text x="104" y="150" fill="#FFFFFF" font-family="Open Sans, sans-serif" font-size="22" font-weight="700" font-stretch="75%" letter-spacing="0.9">YOUR COUNTRY</text><text x="104" y="178" fill="#84866D" font-family="Open Sans, sans-serif" font-size="12" font-weight="700" font-stretch="75%" letter-spacing="0.6">NEXT STOP: COMING SOON</text><g transform="translate(270 76)" fill="#84866D"><path d="M0 26 C-3 16 -2 6 0 -2 C2 6 3 16 0 26Z"/><path d="M0 26 C-3 16 -2 6 0 -2 C2 6 3 16 0 26Z" transform="rotate(-34 0 26)"/><path d="M0 26 C-3 16 -2 6 0 -2 C2 6 3 16 0 26Z" transform="rotate(34 0 26)"/><path d="M0 26 C-3 16 -2 6 0 -2 C2 6 3 16 0 26Z" transform="rotate(-68 0 26)"/><path d="M0 26 C-3 16 -2 6 0 -2 C2 6 3 16 0 26Z" transform="rotate(68 0 26)"/></g><path d="M246 150 V178 M252 150 V178 M256 150 V178 M264 150 V178 M268 150 V178 M276 150 V178 M280 150 V178 M286 150 V178 M294 150 V178" stroke="#FFFFFF" stroke-width="2" opacity="0.7"/></g></svg>
+{%- endcapture -%}
+
+<div class="mm-intl-bar" role="region" aria-label="Delivery notice">
+  <p>
+    <span class="mm-long">We deliver to US addresses only, for now. Gifting to the US? Free US delivery.</span>
+    <span class="mm-short">US delivery only, for now.</span>
+    <button type="button" class="mm-intl-link" data-mm-intl-open>
+      <span class="mm-long">Want delivery to <span data-mm-intl-name></span>? Get notified</span>
+      <span class="mm-short">Get notified</span>
+    </button>
+  </p>
+  <button type="button" class="mm-intl-bar-x" aria-label="Dismiss delivery notice" data-mm-intl-dismiss>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+</div>
+
+<div class="mm-intl-overlay" data-mm-intl-overlay>
+  <div class="mm-intl-card mm-intl-form" role="dialog" aria-modal="true" aria-labelledby="mm-intl-title" data-mm-intl-formcard>
+    {%- form 'customer', id: 'mm-intl-form', novalidate: 'novalidate' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter,intl-interest" data-mm-intl-tags>
+      <button type="button" class="mm-intl-x" aria-label="Close" data-mm-intl-close>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="mm-intl-intro">
+        <div class="mm-intl-art">{{ mm_tag_svg }}</div>
+        <p class="mm-intl-eye">International delivery</p>
+        <h2 id="mm-intl-title" class="mm-intl-h">Delivering to <span data-mm-intl-name></span>, soon</h2>
+        <p class="mm-intl-p">We deliver within the US for now. Leave your email and we'll tell you the moment we can deliver the Discovery Deck to your country.</p>
+      </div>
+      <div class="mm-intl-fields">
+        <div class="mm-intl-field">
+          <label for="mm-intl-email">Email</label>
+          <input id="mm-intl-email" class="mm-intl-in" type="email" name="contact[email]" placeholder="you@example.com" autocomplete="email" maxlength="200" required>
+        </div>
+        <div class="mm-intl-field">
+          <label for="mm-intl-country">Country</label>
+          <select id="mm-intl-country" class="mm-intl-in" data-mm-intl-country></select>
+          <span class="mm-intl-help">Filled in from your location. Change it if it's wrong.</span>
+        </div>
+        <div class="mm-intl-check">
+          <input id="mm-intl-consent" type="checkbox" data-mm-intl-consent>
+          <label for="mm-intl-consent">Yes, email me when you deliver to my country, plus the occasional Mezcalómano update. Unsubscribe anytime.</label>
+        </div>
+        <p class="mm-intl-err" role="alert" data-mm-intl-err>{%- if form.errors -%}{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}{%- endif -%}</p>
+        <button type="submit" class="mm-intl-go">Notify me</button>
+        <p class="mm-intl-note">We only use your email for Mezcalómano updates. <a href="{{ shop.privacy_policy.url | default: '/policies/privacy-policy' }}">Privacy</a></p>
+      </div>
+    {%- endform -%}
+  </div>
+  <div class="mm-intl-card mm-intl-done" role="dialog" aria-modal="true" aria-labelledby="mm-intl-done-title" data-mm-intl-donecard hidden>
+    <button type="button" class="mm-intl-x" aria-label="Close" data-mm-intl-close>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    {{ mm_tag_svg }}
+    <p class="mm-intl-eye">International delivery</p>
+    <h2 id="mm-intl-done-title" class="mm-intl-h">You're on the list</h2>
+    <p class="mm-intl-p">We'll email you as soon as we deliver the Discovery Deck to <span data-mm-intl-name></span>. Until then, go and meet the wild ones.</p>
+    <a class="mm-intl-olive" href="https://mezcalomano.com/map">Find your agave</a>
+    <button type="button" class="mm-intl-back" data-mm-intl-close>Back to the shop</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  var KEY = 'mm-intl', PENDING = 'mm-intl-pending';
+  var US = ['US', 'PR', 'GU', 'VI', 'AS', 'MP', 'UM'];
+  var CODES = 'AD AE AF AG AI AL AM AO AR AT AU AW AZ BA BB BD BE BF BG BH BI BJ BM BN BO BR BS BT BW BY BZ CA CD CF CG CH CI CL CM CN CO CR CU CV CY CZ DE DJ DK DM DO DZ EC EE EG ER ES ET FI FJ FO FR GA GB GD GE GH GI GL GM GN GR GT GY HK HN HR HT HU ID IE IL IN IQ IR IS IT JM JO JP KE KG KH KM KN KR KW KY KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MG MK ML MM MN MO MR MT MU MV MW MX MY MZ NA NE NG NI NL NO NP NZ OM PA PE PG PH PK PL PS PT PY QA RO RS RW SA SB SC SE SG SI SK SL SM SN SO SR SV SY SZ TC TG TH TJ TL TM TN TO TR TT TW TZ UA UG UY UZ VC VE VN VU WS XK YE ZA ZM ZW'.split(' ');
+  var root = document.documentElement;
+  var overlay = document.querySelector('[data-mm-intl-overlay]');
+  if (!overlay || (window.Shopify && window.Shopify.designMode)) return;
+  var formCard = overlay.querySelector('[data-mm-intl-formcard]');
+  var doneCard = overlay.querySelector('[data-mm-intl-donecard]');
+  var form = document.getElementById('mm-intl-form');
+  var select = overlay.querySelector('[data-mm-intl-country]');
+  var tags = overlay.querySelector('[data-mm-intl-tags]');
+  var consent = overlay.querySelector('[data-mm-intl-consent]');
+  var err = overlay.querySelector('[data-mm-intl-err]');
+  var email = document.getElementById('mm-intl-email');
+  var lastFocus = null;
+
+  function read() { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } }
+  function write(v) { try { var o = read(); for (var k in v) o[k] = v[k]; localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {} }
+  function nameOf(code) { try { return new Intl.DisplayNames(['en'], { type: 'region' }).of(code) || code; } catch (e) { return code; } }
+  function setCountry(code) {
+    var n = nameOf(code);
+    document.querySelectorAll('[data-mm-intl-name]').forEach(function (el) { el.textContent = n; });
+    tags.value = 'newsletter,intl-interest,intl-' + code;
+  }
+
+  var list = CODES.map(function (c) { return { c: c, n: nameOf(c) }; }).sort(function (a, b) { return a.n.localeCompare(b.n, 'en'); });
+  list.forEach(function (o) { var opt = document.createElement('option'); opt.value = o.c; opt.textContent = o.n; select.appendChild(opt); });
+  select.addEventListener('change', function () { setCountry(select.value); });
+
+  function open(done) {
+    lastFocus = document.activeElement;
+    formCard.hidden = !!done;
+    doneCard.hidden = !done;
+    overlay.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    (done ? doneCard.querySelector('.mm-intl-olive') : email).focus();
+  }
+  function close() {
+    overlay.classList.remove('is-open');
+    document.body.style.overflow = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  document.querySelectorAll('[data-mm-intl-open]').forEach(function (b) { b.addEventListener('click', function () { open(false); }); });
+  overlay.querySelectorAll('[data-mm-intl-close]').forEach(function (b) { b.addEventListener('click', close); });
+  overlay.addEventListener('mousedown', function (e) { if (e.target === overlay) close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && overlay.classList.contains('is-open')) close(); });
+  document.querySelectorAll('[data-mm-intl-dismiss]').forEach(function (b) {
+    b.addEventListener('click', function () { write({ dismissed: true }); root.classList.remove('mm-intl-on'); });
+  });
+
+  form.addEventListener('submit', function (e) {
+    err.textContent = '';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) { e.preventDefault(); err.textContent = 'Please enter a valid email address.'; return; }
+    if (!consent.checked) { e.preventDefault(); err.textContent = 'Please tick the box so we can email you.'; return; }
+    try { sessionStorage.setItem(PENDING, select.value); } catch (x) {}
+  });
+
+  // Back from Shopify after posting the form: show the confirmation, or reopen with the error.
+  var pending = null;
+  try { pending = sessionStorage.getItem(PENDING); } catch (x) {}
+  var params = new URLSearchParams(location.search);
+  if (pending) {
+    try { sessionStorage.removeItem(PENDING); } catch (x) {}
+    select.value = pending; setCountry(pending);
+    if (params.get('customer_posted') === 'true') { write({ signedUp: true }); open(true); return; }
+    if (err.textContent.trim()) { open(false); return; }
+  }
+
+  function decide(code) {
+    if (!code || US.indexOf(code) !== -1) return;
+    if (CODES.indexOf(code) === -1) return;
+    select.value = code; setCountry(code);
+    var r = read();
+    if (r.dismissed || r.signedUp) return;
+    root.classList.add('mm-intl-on');
+  }
+  var forced = (params.get('intl') || '').toUpperCase();
+  if (forced === 'RESET') { try { localStorage.removeItem(KEY); } catch (x) {} }
+  if (/^[A-Z]{2}$/.test(forced)) { decide(forced); return; }
+  fetch('/browsing_context_suggestions.json', { credentials: 'same-origin' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) { decide(d && d.detected_values && d.detected_values.country && d.detected_values.country.handle); })
+    .catch(function () {});
+})();
+</script>
