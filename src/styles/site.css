@@ -555,9 +555,11 @@
 .m-sel{display:flex;flex-direction:row;gap:10px;width:100%}
 .m-field{flex:1 1 0;min-width:0}
 .m-field .map-filter-select__button{padding:0 36px 0 16px}
-.m-map{min-height:380px}
+.m-map{min-height:0;height:clamp(240px,calc(100svh - 410px),460px)}
 .m-card .mezcal-map-popup-title,.m-card-empty h2{font-size:36px}
 }
+/* Phones: the map keeps one fixed height (small viewport units, so it does not jump when the browser bar hides),
+   sized so the top of the card underneath shows on first view */
 
 /* Press */
 .p-facts{margin-top:28px}
