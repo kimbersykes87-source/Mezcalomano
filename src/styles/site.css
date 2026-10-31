@@ -702,3 +702,74 @@ select.s-intl-in option{background:#2F322F;color:#FFFFFF}
 /* About closing line: break after "just" on phones */
 .a-close .a-br{display:none}
 @media (max-width:600px){.a-close .a-br{display:inline}}
+
+/* Mezcal Diaries (working title): /diaries list and articles */
+.j-head{border-top:1px solid rgba(255,255,255,.10)}
+.j-head .s-wrap{padding-top:64px;padding-bottom:40px}
+.j-head h1{margin:16px 0 0;font-size:64px;line-height:1;font-weight:700;font-stretch:75%;letter-spacing:.04em;text-transform:uppercase}
+.j-sub{margin:20px 0 0;max-width:720px;font-size:22px;line-height:1.45;font-style:italic}
+.j-list .s-wrap{padding-top:16px;padding-bottom:96px}
+.j-empty{font-size:19px;line-height:1.7}
+.j-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.j-card{display:flex;flex-direction:column;gap:10px;height:100%;padding:16px 16px 22px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14)}
+.j-card img{display:block;width:100%;aspect-ratio:12/5;object-fit:cover;border-radius:12px}
+.j-card h2{font-size:26px;line-height:1.1;font-weight:700;font-stretch:75%;letter-spacing:.04em;text-transform:uppercase}
+.j-card p{font-size:17px;line-height:1.6;color:#E6E4DA}
+.j-card time{font-size:13px;letter-spacing:.06em;text-transform:uppercase;font-weight:400;color:#D4D3CB}
+.j-cat{font-size:13px;letter-spacing:.06em;text-transform:uppercase;font-weight:400;color:#84866D}
+.j-card:hover h2{text-decoration:underline;text-underline-offset:4px}
+.j-col{max-width:760px;margin:0 auto;padding:0 48px}
+.j-draft{background:#DFB725;color:#14150F}
+.j-draft .s-wrap{padding-top:14px;padding-bottom:14px;font-size:15px;line-height:1.5}
+.j-draft strong{font-weight:700}
+.j-draft ul{margin-top:8px;padding-left:20px;list-style:disc}
+.j-draft li{padding:2px 0}
+.j-art-head{border-top:1px solid rgba(255,255,255,.10);padding:56px 0 32px}
+.j-art-head h1{margin:16px 0 0;font-size:52px;line-height:1.02;font-weight:700;font-stretch:75%;letter-spacing:.04em;text-transform:uppercase}
+.j-answer{margin:22px 0 0;font-size:22px;line-height:1.5;font-style:italic}
+.j-by{margin:18px 0 0;font-size:14px;letter-spacing:.06em;text-transform:uppercase;font-weight:400;color:#D4D3CB}
+.j-hero{max-width:1320px;margin:0 auto;padding:0 48px}
+.j-hero img{display:block;width:100%;aspect-ratio:12/5;object-fit:cover;border-radius:16px}
+.j-body{padding:40px 0 80px}
+.j-body h2{margin:44px 0 14px;font-size:34px;line-height:1.08;font-weight:700;font-stretch:75%;letter-spacing:.04em;text-transform:uppercase}
+.j-body>.j-col>p{margin:0 0 20px;font-size:19px;line-height:1.7}
+.j-bullets{margin:0 0 20px}
+.j-bullets li{position:relative;padding:8px 0 8px 28px;font-size:19px;line-height:1.65}
+.j-bullets li::before{content:"";position:absolute;left:0;top:19px;width:10px;height:10px;border-radius:50%;background:#84866D}
+.j-body strong{font-weight:700}
+.s .j-link{text-decoration:underline;text-underline-offset:3px}
+.s .j-out{text-decoration-color:#DFB725}
+.j-table-wrap{margin:0 0 20px;overflow-x:auto;border-radius:16px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05)}
+.j-table-wrap table{width:100%;border-collapse:collapse;font-size:17px;line-height:1.5}
+.j-table-wrap th,.j-table-wrap td{padding:14px 18px;text-align:left;vertical-align:top;border-top:1px solid rgba(255,255,255,.10)}
+.j-table-wrap thead th{border-top:0;font-size:13px;letter-spacing:.06em;text-transform:uppercase;font-weight:400;color:#D4D3CB}
+.j-table-wrap tbody th{font-weight:400}
+.j-faq>div{padding:16px 0;border-top:1px solid rgba(255,255,255,.10)}
+.j-faq dt{font-size:19px;line-height:1.4;font-weight:400}
+.j-faq dt::before{content:"Q: ";color:#B86744}
+.j-faq dd{margin:8px 0 0;font-size:18px;line-height:1.65;color:#E6E4DA}
+.j-cta{margin:48px 0 0;padding:28px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14)}
+.j-cta p{font-size:26px;line-height:1.15;font-weight:700;font-stretch:75%;letter-spacing:.04em;text-transform:uppercase}
+.j-cta div{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.j-btn{display:inline-flex;align-items:center;justify-content:center;height:56px;padding:0 28px;border-radius:999px;background:#DFB725;color:#14150F!important;font-size:15px;font-weight:400;letter-spacing:.06em;text-transform:uppercase}
+.j-btn-ghost{background:transparent;color:#FFFFFF!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.5)}
+.j-back{margin-top:28px;font-size:15px;letter-spacing:.06em;text-transform:uppercase;font-weight:400}
+@media (max-width:1200px) and (min-width:901px){.j-head h1{font-size:52px}.j-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:900px){
+.j-head .s-wrap{padding-top:28px;padding-bottom:20px}
+.j-head h1{font-size:34px}
+.j-sub{font-size:19px}
+.j-list .s-wrap{padding-bottom:48px}
+.j-grid{grid-template-columns:1fr}
+.j-col{padding:0 16px}
+.j-hero{padding:0 16px}
+.j-art-head{padding:28px 0 20px}
+.j-art-head h1{font-size:34px}
+.j-answer{font-size:19px}
+.j-body{padding:28px 0 48px}
+.j-body h2{font-size:28px;margin-top:34px}
+.j-body>.j-col>p,.j-bullets li{font-size:17px}
+.j-faq dt{font-size:17px}
+.j-faq dd{font-size:17px}
+.j-btn{width:100%}
+}

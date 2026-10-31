@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { fetchSpeciesDirectorySegments } from "@/lib/species-list-server";
 import { SITE_URL } from "@/lib/site-seo";
+import { hasPublishedDiaries, publishedDiaries } from "@/lib/diaries";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
@@ -28,5 +29,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.75,
   }));
 
-  return [...staticEntries, ...speciesEntries];
+  const diaryEntries: MetadataRoute.Sitemap = hasPublishedDiaries()
+    ? [
+        { url: `${SITE_URL}/diaries`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.8 },
+        ...publishedDiaries().map((e) => ({
+          url: `${SITE_URL}/diaries/${e.slug}`,
+          lastModified: new Date(e.updated + "T12:00:00Z"),
+          changeFrequency: "monthly" as const,
+          priority: 0.7,
+        })),
+      ]
+    : [];
+
+  return [...staticEntries, ...diaryEntries, ...speciesEntries];
 }

@@ -3,6 +3,7 @@
 /* eslint-disable @next/next/no-img-element -- SVG close icon; sizing from CSS */
 import { useEffect } from "react";
 import Link from "next/link";
+import { DIARIES_NAME, hasPublishedDiaries } from "@/lib/diaries";
 
 interface MobileNavProps {
   isOpen: boolean;
@@ -48,6 +49,11 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
           <li className="mobile-nav-item">
             <Link href="/map" className="mobile-nav-link" onClick={onClose}>MAP</Link>
           </li>
+          {hasPublishedDiaries() && (
+            <li className="mobile-nav-item">
+              <Link href="/diaries" className="mobile-nav-link" onClick={onClose}>{DIARIES_NAME.toUpperCase()}</Link>
+            </li>
+          )}
           <li className="mobile-nav-item">
             <Link href="/contact" className="mobile-nav-link" onClick={onClose}>CONTACT</Link>
           </li>
