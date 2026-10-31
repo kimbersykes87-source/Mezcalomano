@@ -20,7 +20,7 @@ export const giftsForMezcalLovers: DiaryEntry = {
     { type: "h2", text: "Why not just buy them a bottle?" },
     {
       type: "p",
-      text: "Because a bottle is the riskiest gift on the list. Mezcal ranges from soft and fruity to wild and herbal, and about 85% of it is made from one agave, espadín. If you don't know which agave your person loves, you are guessing, and you might hand a Tobalá fan another espadín.",
+      text: "Because a bottle is the riskiest gift on the list. Mezcal ranges from soft and fruity to wild and herbal, and about 85% of it is made from one agave, espadín ([COMERCAM, the council that certifies mezcal, put it at 84.53% of certified production in 2025](https://comercam-dom.org.mx/wp-content/uploads/2026/05/INFORME-2026_VERSION-PUBLICA.pdf)). If you don't know which agave your person loves, you are guessing, and you might hand a Tobalá fan another espadín.",
     },
     {
       type: "p",
@@ -81,7 +81,7 @@ export const giftsForMezcalLovers: DiaryEntry = {
     },
   ],
   reviewNotes: [
-    "Facts used: 85% espadín, deck contents, $29.99, free US shipping, pre-orders from Nov 30, order by Dec 14. Please confirm they are still right.",
+    "Facts used: 85% espadín (sourced to COMERCAM, Informe Estadístico 2026), deck contents, $29.99, free US shipping, pre-orders from Nov 30, order by Dec 14. Please confirm they are still right.",
     "No specific brands or prices are named for copitas, sal de gusano, books or classes. Add 1 or 2 real picks you would vouch for, with a link, before publishing: that is what makes a gift guide worth sharing.",
     "Add one photo of the cards with a pair of copitas, if you have one, to replace the hero image.",
     "Check the claim about orange and salt as the classic Oaxaca serving, and the shipping line, against your own experience and the Sources page.",
