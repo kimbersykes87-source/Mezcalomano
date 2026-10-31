@@ -1,11 +1,12 @@
 import type { DiaryEntry } from "./types";
 import { giftsForMezcalLovers } from "./gifts-for-mezcal-lovers";
+import { giftsForTequilaLovers } from "./gifts-for-tequila-lovers";
 import { howToReadAMezcalMenu } from "./how-to-read-a-mezcal-menu";
 
 export const DIARIES_NAME = "Mezcal Diaries"; // working title
 
 /** Add new articles to this list, newest first. */
-const ALL: DiaryEntry[] = [giftsForMezcalLovers, howToReadAMezcalMenu];
+const ALL: DiaryEntry[] = [giftsForMezcalLovers, giftsForTequilaLovers, howToReadAMezcalMenu];
 
 export const allDiaries = (): DiaryEntry[] => ALL;
 export const publishedDiaries = (): DiaryEntry[] => ALL.filter((e) => e.status === "published");
