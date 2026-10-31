@@ -111,7 +111,7 @@ export default async function DiaryPage({ params }: { params: Promise<Params> })
                   <thead><tr>{b.head.map((h) => <th key={h} scope="col">{h}</th>)}</tr></thead>
                   <tbody>
                     {b.rows.map((r) => (
-                      <tr key={r[0]}>{r.map((c, ci) => (ci === 0 ? <th key={c} scope="row">{c}</th> : <td key={c}>{c}</td>))}</tr>
+                      <tr key={r[0]}>{r.map((c, ci) => (ci === 0 ? <th key={c} scope="row"><DiaryText text={c} /></th> : <td key={c}><DiaryText text={c} /></td>))}</tr>
                     ))}
                   </tbody>
                 </table>
