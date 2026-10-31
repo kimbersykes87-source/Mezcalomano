@@ -57,7 +57,7 @@ export const mezcalVsTequila: DiaryEntry = {
     { type: "h2", text: "Is all mezcal smoky?" },
     {
       type: "p",
-      text: "No. In our deck, 20 agaves are marked clean on smoke, 17 toasty and only 2 smoky. Clean means minimal smoke or ash, toasty means warm roast and browned notes, and smoky means clear campfire, char and ash. If you are a tequila drinker wary of smoke, start with a clean one.",
+      text: "No. In our deck, 21 agaves are marked clean on smoke, 17 toasty and only 2 smoky. Clean means minimal smoke or ash, toasty means warm roast and browned notes, and smoky means clear campfire, char and ash. If you are a tequila drinker wary of smoke, start with a clean one.",
     },
     { type: "h2", text: "Which should you try first?" },
     {
@@ -80,7 +80,7 @@ export const mezcalVsTequila: DiaryEntry = {
     },
   ],
   reviewNotes: [
-    "Our directory and card data supplies: Weber Azul (Agave tequilana, Jalisco, occasionally used in mezcal), the compass lines, and the count of 20 clean, 17 toasty, 2 smoky agaves. The count leaves one agave, Churique, whose smoke slot in the cards CSV says 'funky'. That looks like a data slip to fix in Species_Final.",
+    "Our directory and card data supplies: Weber Azul (Agave tequilana, Jalisco, occasionally used in mezcal), the compass lines, and the count of 21 clean, 17 toasty, 2 smoky agaves, rechecked 31 Oct 2026 against the live Species_Final sheet (Churique now reads clean, mineral, lactic). The Cards CSV copies are older; re-export them.",
     "Facts from outside our data: tequila is made from blue Weber agave only, and mostly in Jalisco (100% agave tequila uses nothing else; mixto tequila may add other sugars; confirm the wording against NOM-006-SCFI-2012); tequila is steam baked in masonry ovens or autoclaves; Oaxaca as mezcal's heartland. The mezcal category methods (ancestral stone pits only, artesanal pits or raised stone basins, the widest category also allows autoclaves) were checked 31 Oct 2026 against the official English translation of NOM-070-SCFI-2016 hosted by COMERCAM (sections 4.4 to 4.4.3; Spanish prevails). The tequila statements rest on a third-party WSET Level 2 study guide summary and have not been checked against the tequila standard.",
     "'Usually little' smoke for tequila is my general statement, not a sourced one. Keep or soften.",
     "The 'long roast with fire in the pit is the usual explanation' line is general knowledge. The linked account calls the roasted agave sweet and smoky but does not explain smoke levels.",

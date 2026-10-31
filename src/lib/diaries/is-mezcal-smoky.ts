@@ -7,7 +7,7 @@ export const isMezcalSmoky: DiaryEntry = {
     "Is mezcal smoky? Not always. Learn where smoke comes from, which agaves are clean, toasty or smoky, and how to find a low-smoke mezcal.",
   category: "Flavor",
   answer:
-    "No. Smoke in mezcal ranges from almost none to a clear campfire, and in our deck 20 agaves are marked clean on smoke, 17 toasty and only 2 smoky. Smoke mostly comes from how the agave is cooked, so it depends on the maker and the method as well as the plant.",
+    "No. Smoke in mezcal ranges from almost none to a clear campfire, and in our deck 21 agaves are marked clean on smoke, 17 toasty and only 2 smoky. Smoke mostly comes from how the agave is cooked, so it depends on the maker and the method as well as the plant.",
   status: "draft",
   updated: "2026-10-31",
   image: {
@@ -43,7 +43,7 @@ export const isMezcalSmoky: DiaryEntry = {
     { type: "h2", text: "Which agaves are clean, and which are smoky?" },
     {
       type: "p",
-      text: "Count the cards and you find 20 clean, 17 toasty and 2 smoky. A few examples from the deck:",
+      text: "Count the cards and you find 21 clean, 17 toasty and 2 smoky. A few examples from the deck:",
     },
     {
       type: "list",
@@ -85,7 +85,7 @@ export const isMezcalSmoky: DiaryEntry = {
     },
     {
       q: "Is there mezcal with no smoke at all?",
-      a: "There are mezcals with minimal smoke or ash. On our cards, 20 agaves are marked clean on smoke, and many drinkers find those the easiest place to start.",
+      a: "There are mezcals with minimal smoke or ash. On our cards, 21 agaves are marked clean on smoke, and many drinkers find those the easiest place to start.",
     },
     {
       q: "Does more smoke mean better mezcal?",
@@ -93,7 +93,7 @@ export const isMezcalSmoky: DiaryEntry = {
     },
   ],
   reviewNotes: [
-    "The counts (20 clean, 17 toasty, 2 smoky) come from the smoke word of every compass in Species_Final Cards. One agave, Churique, has 'funky' in its smoke slot in the CSV, which looks like a data slip. Please check and fix the sheet, and tell me if the counts change.",
+    "The counts (21 clean, 17 toasty, 2 smoky, 40 agaves) come from the smoke word of every compass in the live Species_Final sheet, rechecked 31 Oct 2026 after Churique was corrected to 'clean, mineral, lactic'. The Cards CSV copies in the repo and Dropbox are older and still show the old value, so re-export them.",
     "Compass examples come straight from the Cards CSV. Definitions of clean, toasty and smoky are from the deck's flavor guide card.",
     "From outside our data: the pit-roast description (an Oaxaca culture article) and the idea that pit roasting is 'the usual reason' for smoky reputation. The article does not state what sets the smoke level, so the 'it depends on the maker and method' line is general knowledge. Please verify with a producer if you can.",
     "'Clean mezcals with fruity or herbal compass words tend to feel lifted rather than heavy' is my inference, not a sourced fact. Keep or cut.",
