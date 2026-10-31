@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./admin.css";
+import AdminNav from "./AdminNav";
 
 export const metadata: Metadata = {
   title: { default: "Dashboard", template: "%s | Mezcalómano admin" },
@@ -7,5 +8,10 @@ export const metadata: Metadata = {
 };
 
 export default function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <div className="adm">{children}</div>;
+  return (
+    <div className="adm">
+      <AdminNav />
+      {children}
+    </div>
+  );
 }
