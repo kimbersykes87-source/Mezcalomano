@@ -91,7 +91,7 @@ export const giftsForTequilaLovers: DiaryEntry = {
   reviewNotes: [
     "Facts used: tequila is made from blue Weber agave only; Weber Azul is occasionally used in mezcal (from the directory data); deck contents, $29.99, free US shipping, pre-orders from Nov 30, order by Dec 14. Please confirm.",
     "The 'Which mezcal matches which tequila' pairings are my reading of the flavor compass, not tasting notes. Please sanity check them against what you have actually tasted, and change any you disagree with.",
-    "No specific brands or prices are named. Add one or two real picks with links (copitas, a book, a gentle mini) before publishing.",
+    "We are agave first, so this article names no brands and should not. If a gift needs more detail, describe it by what it is: the shape and material of the cups, the kind of book, which agaves to look for, and how it tastes.",
     "The last paragraph promises a gift guide for mezcal lovers on Mezcal Diaries. Publish that article first, then link to it here instead of the promise.",
     "Swap the hero photo for something with tequila and mezcal glasses side by side, if you can shoot one.",
     "Siona has final sign-off on customer-facing copy.",

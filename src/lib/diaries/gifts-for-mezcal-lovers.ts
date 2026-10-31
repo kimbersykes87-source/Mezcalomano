@@ -82,7 +82,7 @@ export const giftsForMezcalLovers: DiaryEntry = {
   ],
   reviewNotes: [
     "Facts used: 85% espadín (sourced to COMERCAM, Informe Estadístico 2026), deck contents, $29.99, free US shipping, pre-orders from Nov 30, order by Dec 14. Please confirm they are still right.",
-    "No specific brands or prices are named for copitas, sal de gusano, books or classes. Add 1 or 2 real picks you would vouch for, with a link, before publishing: that is what makes a gift guide worth sharing.",
+    "We are agave first, so this article names no brands and should not. If a gift needs more detail, describe it by what it is: the shape and material of the cups, the kind of book, which agaves to look for in a flight, and how it tastes.",
     "Add one photo of the cards with a pair of copitas, if you have one, to replace the hero image.",
     "Check the claim about orange and salt as the classic Oaxaca serving, and the shipping line, against your own experience and the Sources page.",
     "Siona has final sign-off on customer-facing copy.",

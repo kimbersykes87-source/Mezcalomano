@@ -97,3 +97,7 @@ Body text is 17 to 19px on desktop and 17px on phones. Labels are 13 to 15px.
 - Don't introduce new colors, fonts, gradients or drop shadows on buttons.
 - Don't use yellow for anything that isn't buying or leaving the page.
 - Don't use sentence-case titles or Bold at full width for titles. Titles are always Bold Condensed caps.
+
+## Editorial rule: agave first, no brands
+
+Mezcalómano is an agave first company. In articles, gift guides, captions and emails we talk about taste, agave and common names (the names people see on menus and labels), and we do not name bottle brands, producers, shops or products. Describe a thing by what it is: the agave, how it tastes (the smoke, agave, fermentation compass), the region, the style (joven, reposado, ancestral) and the shape or material of an object. The only product we name is our own Discovery Deck, and we say it is ours. Agave names with accents (Espadín, Tobalá) and the official body that certifies mezcal (COMERCAM) are facts, not brands, and are fine to name and cite.
