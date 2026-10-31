@@ -20,15 +20,15 @@ export const artesanalVsAncestralMezcal: DiaryEntry = {
     { type: "h2", text: "What are the three categories of mezcal?" },
     {
       type: "p",
-      text: "Mezcal is a legal label, and the official standard, NOM-070-SCFI-2016, sorts it into three categories by how it is made. You will see the category on a label as **Mezcal**, **Mezcal Artesanal** or **Mezcal Ancestral**.",
+      text: "Mezcal is a legal label, and the official standard, [NOM-070-SCFI-2016](https://comercam-dom.org.mx/wp-content/uploads/2022/04/DOF-2017.02.23-NOM-070-SCFI-2016-Alcoholic-Beverages-Mezcal-Specifications.pdf), sorts it into three categories by how it is made. You will see the category on a label as **Mezcal**, **Mezcal Artesanal** or **Mezcal Ancestral**.",
     },
     {
       type: "table",
       head: ["Category", "How it is made, in short"],
       rows: [
-        ["Mezcal", "The widest category. Allows modern methods such as autoclave cooking, diffusers, industrial mills and a broad range of stills."],
-        ["Mezcal Artesanal", "Traditional methods with some flexibility, for example masonry or pit ovens, mechanical shredders and alembic stills."],
-        ["Mezcal Ancestral", "The strictest. Pit-oven cooking, hand or stone milling, and distillation in clay pot stills over direct fire."],
+        ["Mezcal", "The widest category. Cooking in underground ovens, stone basins or an autoclave, milling with a tahona, mills, a shredder or a diffuser, and a broad range of stills."],
+        ["Mezcal Artesanal", "Traditional methods with some flexibility: pits or raised stone basins for cooking, mauls, tahona, mills or a shredder for crushing, and direct fire in copper or clay stills."],
+        ["Mezcal Ancestral", "The strictest. Stone pits only for cooking, mauls, tahona or mills for crushing, and distillation in a clay pot over direct fire."],
       ],
     },
     {
@@ -39,24 +39,24 @@ export const artesanalVsAncestralMezcal: DiaryEntry = {
     {
       type: "list",
       items: [
-        "**Cooking:** the agave is baked in earthen pit ovens.",
-        "**Milling:** the cooked agave is crushed by hand with a mallet or with a stone wheel called a tahona.",
+        "**Cooking:** the agave is baked in stone pits only.",
+        "**Milling:** the cooked agave is crushed with mauls, a stone wheel called a tahona, or an Egyptian or Chilean mill.",
         "**Fermentation:** in vessels such as wooden tanks, stone, clay or even animal hides, and agave fiber may stay in.",
-        "**Distillation:** in clay pot stills heated over direct fire, sometimes with a clay or wooden top (a montera).",
+        "**Distillation:** in a clay pot heated over direct fire, with clay or wooden coils.",
       ],
     },
     {
       type: "p",
-      text: "It is the most hands-on way to make mezcal, and the one closest to how it was made for generations. Ancestral producers also work with wild and cultivated agaves, and the [directory](/directory) shows which agaves grow wild.",
+      text: "It is the most hands-on way to make mezcal, and the one closest to how it was made for generations. Our [directory](/directory) shows which agaves grow wild.",
     },
     { type: "h2", text: "What makes a mezcal artesanal?" },
     {
       type: "p",
-      text: "Artesanal covers traditional, small-scale production with more room to choose tools. A maker might cook in a pit or a masonry oven, mill with a tahona or a mechanical shredder, and distill in an alembic still of copper or clay. It sits between the industrial category and the strict ancestral one, and most bottles that mention a traditional method fall here.",
+      text: "Artesanal keeps traditional methods but allows more choice of tools. A maker might cook in a pit or a raised stone basin, crush with mauls, a tahona, a mill or a shredder, and distill over direct fire in a copper or clay still. It sits between the widest category and the strict ancestral one.",
     },
     {
       type: "p",
-      text: "The standard also restricts additives in the two traditional categories, which is part of what the words promise. Because the exact rules are detailed, always look for the category printed on the label rather than inferring it from a marketing phrase.",
+      text: "All three categories are 100% agave spirits. Because the exact rules are detailed, look for the category printed on the label rather than inferring it from a marketing phrase.",
     },
     { type: "h2", text: "Does the category change how mezcal tastes?" },
     {
@@ -88,8 +88,8 @@ export const artesanalVsAncestralMezcal: DiaryEntry = {
     },
   ],
   reviewNotes: [
-    "IMPORTANT: legal definitions. I could not retrieve the full official text of NOM-070-SCFI-2016. The ancestral details (pit oven, mallet or tahona, fermentation vessels including hides, clay pot stills over direct fire) match two secondary sources (Mezcalistas https://www.mezcalistas.com/what-is-ancestral-mezcal/ and a summary of the standard at https://www.normasoficiales.mx/nom/nom-070-scfi-2016). The artesanal and 'mezcal' (industrial) rows are looser: please verify the exact permitted cooking, milling and still types for each category against the official text or COMERCAM before publishing.",
-    "The line that additives are restricted in the two traditional categories comes from one summary of the standard. Verify.",
+    "Legal definitions checked 31 Oct 2026 against the official English translation of NOM-070-SCFI-2016 hosted by COMERCAM (sections 4.4, 4.4.2 and 4.4.3). Spanish prevails in disputes, so have the Spanish text, or COMERCAM, confirm once if you can.",
+    "The earlier line about restricted additives was removed: the standard text does not tie it to a category in a way I could confirm. The article now says only that all three are 100% agave.",
     "'Often more expensive because slower and smaller scale' and 'pit ovens give much of the toasty and smoky character' are inferences or general knowledge, flagged as such.",
     "We are agave first, so this article names no brands and should not.",
     "Swap the hero photo if you have a better palenque or pit shot.",

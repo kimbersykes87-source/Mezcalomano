@@ -20,7 +20,7 @@ export const giftsForTequilaLovers: DiaryEntry = {
     { type: "h2", text: "Why is mezcal a natural next step for a tequila fan?" },
     {
       type: "p",
-      text: "Tequila is made from one plant, the blue Weber agave. Mezcal can be made from dozens of agaves, and that is where its range of flavors comes from. Someone who already sips tequila slowly and cares what is in the bottle is exactly who mezcal rewards.",
+      text: "100% agave tequila is made from one plant, the blue Weber agave. Mezcal can be made from dozens of agaves, and that is where its range of flavors comes from. Someone who already sips tequila slowly and cares what is in the bottle is exactly who mezcal rewards.",
     },
     {
       type: "p",
@@ -77,7 +77,7 @@ export const giftsForTequilaLovers: DiaryEntry = {
   faq: [
     {
       q: "Is mezcal like tequila?",
-      a: "They are cousins. Both are agave spirits. Tequila is made from one plant, the blue Weber agave. Mezcal can be made from many agaves, so its flavors range much more widely.",
+      a: "They are cousins. Both are agave spirits. 100% agave tequila is made from one plant, the blue Weber agave. Mezcal can be made from many agaves, so its flavors range much more widely.",
     },
     {
       q: "Does mezcal always taste smoky?",

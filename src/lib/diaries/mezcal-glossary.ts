@@ -47,13 +47,13 @@ export const mezcalGlossary: DiaryEntry = {
       head: ["Term", "Meaning"],
       rows: [
         ["**Mezcal**", "A certified agave spirit made inside Mexico's Denomination of Origin. The broadest category, which allows more modern equipment."],
-        ["**Mezcal artesanal**", "Made in pit or raised masonry ovens, crushed by mallet or mill, and distilled over direct fire in pot stills."],
-        ["**Mezcal ancestral**", "The most traditional category: pit ovens only, and distillation in clay or wooden pots over direct fire."],
+        ["**Mezcal artesanal**", "Made in pits or raised stone basins, crushed with mauls, a tahona, mills or a shredder, and distilled over direct fire in copper or clay stills."],
+        ["**Mezcal ancestral**", "The most traditional category: stone pits only, and distillation in a clay pot over direct fire."],
         ["**Destilado de agave**", "An agave spirit made outside the rules or without certification. It cannot say mezcal, even when it is made with great care."],
         ["**DOM (Denomination of Origin)**", "The legal area and rule book that define where mezcal can be made and how."],
         ["**Joven**", "Young and unaged, bottled soon after distillation."],
         ["**Reposado**", "Rested in wood for at least two months and less than a year."],
-        ["**Añejo**", "Aged at least a year in small wooden barrels."],
+        ["**Añejo**", "Aged more than a year in wood, in containers under 1,000 liters."],
         ["**Madurado en vidrio**", "Rested in glass for at least a year, with no wood."],
         ["**Abocado**", "Flavored after distillation, with ingredients such as fruit, herbs or spices."],
         ["**Ensamble**", "Mezcal made from more than one agave. Check whether they were made together or blended afterward."],
@@ -82,7 +82,7 @@ export const mezcalGlossary: DiaryEntry = {
   faq: [
     {
       q: "What is the difference between mezcal, artesanal and ancestral?",
-      a: "Mezcal is the broadest category and allows more modern equipment. Artesanal uses pit or raised masonry ovens and pot stills. Ancestral is the most traditional, with pit ovens only and clay or wooden distilling pots.",
+      a: "Mezcal is the broadest category and allows more modern equipment. Artesanal uses pits or raised stone basins and copper or clay stills. Ancestral is the most traditional, with stone pits only and a clay distilling pot.",
     },
     {
       q: "What does destilado de agave mean?",
@@ -96,7 +96,7 @@ export const mezcalGlossary: DiaryEntry = {
   reviewNotes: [
     "Sources used: a study of mezcal production in Mexico (Frontiers in Sustainable Food Systems, 2022) for the categories (mezcal, artesanal, ancestral), pit ovens, native yeasts, two-step distillation and cutting heads and tails; a general mezcal styles guide for joven, reposado, añejo, madurado en vidrio, abocado and ensamble; a general jimador overview for coa and piña; a mezcal guide for the tahona. Please check each against the Sources page or the NOM-070 text itself.",
     "Less certain: 'Palenque', 'Ordinario' and 'Piña' are general knowledge and not defined in our sources. 'Maestro mezcalero' is a plain description. 'A pit oven is one reason some mezcal tastes of smoke' is general knowledge too.",
-    "Aging: reposado is at least two months and under a year in wood, and añejo is at least a year in barrels of up to 1,000 liters. The norm requires wood but may not name oak. We say 'wood' and 'small wooden barrels'. Check the exact rules.",
+    "Aging and the categories were checked 31 Oct 2026 against the official English translation of NOM-070-SCFI-2016 hosted by COMERCAM: reposado is 2 to 12 months in wood, añejo is more than 12 months in wood in containers under 1,000 liters, and madurado en vidrio is more than 12 months in glass (sections 4.5 and 4.4.2 to 4.4.3). The standard says wood, not oak. Spanish prevails in disputes.",
     "Ensamble definitions differ. One source says it is made from two or more species processed together. Others say it is a blend of finished spirits. The article tells readers to check.",
     "The compass definitions are the deck's flavor guide card wording.",
     "We are agave first, so this article names no brands and should not.",

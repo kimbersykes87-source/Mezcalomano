@@ -26,7 +26,7 @@ export const mezcalVsTequila: DiaryEntry = {
       type: "table",
       head: ["", "Tequila", "Mezcal"],
       rows: [
-        ["The plant", "One species: blue Weber agave", "Many agaves. Our deck features 40"],
+        ["The plant", "One species: blue Weber agave (mixto tequila may also use other sugars)", "Many agaves. Our deck features 40"],
         ["Where", "Mostly Jalisco", "Made in a legally defined area, with Oaxaca as the heartland"],
         ["Cooking", "Steam baked in masonry ovens or pressure cookers", "Traditionally in earth pits, in some styles in masonry ovens"],
         ["Smoke", "Usually little", "From almost none to a clear campfire"],
@@ -52,7 +52,7 @@ export const mezcalVsTequila: DiaryEntry = {
     },
     {
       type: "p",
-      text: "Mexico's mezcal rules have three categories. Ancestral mezcal is the strictest and uses pit ovens only. Artesanal allows pit or masonry ovens. The industrial category also allows steam cookers. So \"mezcal\" on a label does not guarantee smoke, and the cooking method on the label is worth a look.",
+      text: "Mexico's mezcal rules have three categories. Ancestral mezcal is the strictest and uses stone pits only. Artesanal allows pits or raised stone basins. The widest category also allows autoclaves, which are steam pressure cookers. So \"mezcal\" on a label does not guarantee smoke, and the cooking method on the label is worth a look.",
     },
     { type: "h2", text: "Is all mezcal smoky?" },
     {
@@ -72,7 +72,7 @@ export const mezcalVsTequila: DiaryEntry = {
     },
     {
       q: "Are mezcal and tequila made from the same plant?",
-      a: "Only by exception. Tequila uses blue Weber agave, and mezcal is made from many agaves. Blue Weber is occasionally used in mezcal in certain regions.",
+      a: "Only by exception. Tequila uses blue Weber agave (100% agave tequila uses nothing else), and mezcal is made from many agaves. Blue Weber is occasionally used in mezcal in certain regions.",
     },
     {
       q: "Which is smokier, mezcal or tequila?",
@@ -81,7 +81,7 @@ export const mezcalVsTequila: DiaryEntry = {
   ],
   reviewNotes: [
     "Our directory and card data supplies: Weber Azul (Agave tequilana, Jalisco, occasionally used in mezcal), the compass lines, and the count of 20 clean, 17 toasty, 2 smoky agaves. The count leaves one agave, Churique, whose smoke slot in the cards CSV says 'funky'. That looks like a data slip to fix in Species_Final.",
-    "Facts from outside our data: tequila is made only from blue Weber agave and mostly in Jalisco; tequila is steam baked in masonry ovens or pressure cookers (autoclaves); mezcal categories (ancestral pit only, artesanal pit or masonry, industrial allows steam cookers) and Oaxaca as the heartland. Sources: a WSET Level 2 study guide summary of NOM-006 and NOM-070 (third party, not official), plus the Oaxaca pit roast account linked in the article. Please verify against the official standards (NOM-070-SCFI-2016 for mezcal, NOM-006-SCFI for tequila) before publishing.",
+    "Facts from outside our data: tequila is made from blue Weber agave only, and mostly in Jalisco (100% agave tequila uses nothing else; mixto tequila may add other sugars; confirm the wording against NOM-006-SCFI-2012); tequila is steam baked in masonry ovens or autoclaves; Oaxaca as mezcal's heartland. The mezcal category methods (ancestral stone pits only, artesanal pits or raised stone basins, the widest category also allows autoclaves) were checked 31 Oct 2026 against the official English translation of NOM-070-SCFI-2016 hosted by COMERCAM (sections 4.4 to 4.4.3; Spanish prevails). The tequila statements rest on a third-party WSET Level 2 study guide summary and have not been checked against the tequila standard.",
     "'Usually little' smoke for tequila is my general statement, not a sourced one. Keep or soften.",
     "The 'long roast with fire in the pit is the usual explanation' line is general knowledge. The linked account calls the roasted agave sweet and smoky but does not explain smoke levels.",
     "We are agave first, so this article names no brands and should not.",

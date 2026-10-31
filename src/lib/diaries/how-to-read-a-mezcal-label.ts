@@ -4,10 +4,10 @@ export const howToReadAMezcalLabel: DiaryEntry = {
   slug: "how-to-read-a-mezcal-label",
   title: "How to Read a Mezcal Label",
   description:
-    "How to read a mezcal label: what mezcal vs destilado de agave means, where to find the agave, batch, producer code and strength, and what to look for.",
+    "How to read a mezcal label: what mezcal vs destilado de agave means, where to find the agave, the lot number, the seal and the strength, and what to look for.",
   category: "Basics",
   answer:
-    "A mezcal label tells you the category (mezcal or destilado de agave), the agave, how it was made, and who made it. Look for the agave name first, then the certification details (producer code and batch or lot number) on the back, and use our flavor compass to guess what is in the bottle.",
+    "A mezcal label tells you the category (mezcal or destilado de agave), the agave, how it was made, and who made it. Look for the agave name first, then the lot number and the numbered certification seal, and use our flavor compass to guess what is in the bottle.",
   status: "draft",
   updated: "2026-10-31",
   image: {
@@ -32,26 +32,27 @@ export const howToReadAMezcalLabel: DiaryEntry = {
       head: ["On the label", "What it tells you"],
       rows: [
         ["Mezcal or destilado de agave", "The legal category (see above)."],
-        ["The agave name", "The plant, such as Espadín or Tobalá. The most useful clue to flavor."],
+        ["The agave name", "The plant, by its common or scientific name, such as Espadín or Tobalá. If more than one agave is used, they are listed by amount. The most useful clue to flavor."],
         ["Artesanal or ancestral", "A style of traditional production. Not every bottle shows one."],
-        ["ABV (percent alcohol)", "Strength. Higher numbers tend to taste bigger and warmer."],
-        ["Region or state", "Where it was made. Our [map](/map) shows where each agave grows."],
+        ["ABV (% Alc. Vol.)", "Strength. The standard allows 35 to 55 percent. Higher numbers tend to taste bigger and warmer."],
+        ["State of production", "The label must name the Mexican state where it was made. Our [map](/map) shows where each agave grows."],
+        ["100% Agave", "Required wording. Mezcal is a 100% agave spirit."],
       ],
     },
     {
       type: "p",
-      text: "Not sure what artesanal or ancestral mean? They are production categories in the official mezcal standard, and the words you see on the label describe how the bottle was made.",
+      text: "Not sure what artesanal or ancestral mean? They are production categories in the [official mezcal standard](https://comercam-dom.org.mx/wp-content/uploads/2022/04/DOF-2017.02.23-NOM-070-SCFI-2016-Alcoholic-Beverages-Mezcal-Specifications.pdf), and the words you see on the label describe how the bottle was made.",
     },
     { type: "h2", text: "What is on the back label?" },
     {
       type: "p",
-      text: "The back is where a bottle shows its paperwork. On certified mezcal you will often see official certification details such as a producer code, a batch or lot number, and sometimes the name of the maker.",
+      text: "The back is where a bottle shows its paperwork. On certified mezcal the standard requires a lot identification and a numbered certification seal, along with the name and address of the producer, bottler or brand holder. Some labels add the name of the person who made it.",
     },
     {
       type: "list",
       items: [
-        "**Batch or lot number.** Mezcal is often made in small runs, and a batch number shows that this bottle came from one of them. It is a sign of traceability.",
-        "**Producer code.** An identifier that links the bottle to the registered producer. It is an identifier, not a quality score, and several labels can come from the same distillery.",
+        "**Lot number.** Required on the label and marked on the bottle. It shows which production run this bottle came from, which makes it traceable.",
+        "**Certification seal.** A numbered seal from the certifying body, with a unique code for each bottle. It shows the bottle is certified. It is not a quality score.",
         "**Maker or maestro.** Some labels name the person who made it, and some tell you the village. It is a nice detail, and it tells you where to look the plant up.",
         "**Production notes.** Some labels list the agave, how it was cooked and distilled, and the vintage. More detail is usually a good sign.",
       ],
@@ -70,9 +71,9 @@ export const howToReadAMezcalLabel: DiaryEntry = {
       type: "list",
       items: [
         "The agave is named, not just \"agave\".",
-        "A batch or lot number and certification details on the back.",
+        "A lot number and the certification seal.",
         "A region or state, and ideally a maker.",
-        "A strength you are comfortable with. Most bottles fall somewhere around 40 to 50 percent.",
+        "A strength you are comfortable with. The standard allows 35 to 55 percent.",
       ],
     },
     {
@@ -99,10 +100,10 @@ export const howToReadAMezcalLabel: DiaryEntry = {
     },
   ],
   reviewNotes: [
-    "The mezcal vs destilado de agave wording and 'producer code, batch or lot, artesanal or ancestral' come from the deck's Introduction card. The karwinskii example comes from our Cards CSV.",
-    "The list of what appears on the back label (batch, producer code, maker) is general industry knowledge from sources like Mezcalistas (https://www.mezcalistas.com/nom/) and The Tasting Alliance. I could not retrieve the full official labeling rules. Please check the label requirements in NOM-070-SCFI-2016 and with COMERCAM before publishing.",
-    "'Producer code is an identifier, not a quality score, and several labels can come from the same distillery' is from Mezcalistas. Please confirm.",
-    "'Most bottles fall around 40 to 50 percent' is a loose generalization. Check or soften.",
+    "The mezcal vs destilado de agave wording comes from the deck's Introduction card. The card says 'producer code, batch or lot number'; the standard text I read names the producer's name, address and tax ID, a lot identification and a numbered certification seal, and does not define a 'producer code'. Check whether the card wording should change, or whether the producer NOM number on bottles is what the card means.",
+    "Label requirements checked 31 Oct 2026 against section 6.1 of the official English translation of NOM-070-SCFI-2016 hosted by COMERCAM (Spanish prevails in disputes): category word, class word, 100% agave, ABV as % Alc. Vol., agave name, 'Protected Denomination of Origin', state, producer details and lot. ABV range 35 to 55 percent is Table 2.",
+    "The 'Maker or maestro' and 'Production notes' bullets are optional extras that appear on some labels, not requirements.",
+    "The 40 to 50 percent claim was replaced with the standard's allowed range, 35 to 55 percent.",
     "We are agave first, so this article names no brands and should not.",
     "Swap the hero photo for a bottle label shot (no brand visible) if you can.",
     "Siona has final sign-off on customer-facing copy.",

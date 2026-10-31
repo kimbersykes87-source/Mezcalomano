@@ -132,7 +132,7 @@ export const howToReadAMezcalMenu: DiaryEntry = {
   ],
   reviewNotes: [
     "The flavor compass words and the eight compass lines come straight from the deck's flavor guide card and Species_Final cards data. Please check they match the printed cards.",
-    "The 'What do the label words mean' list is written from the Introduction card plus general knowledge (artesanal, ancestral, joven, reposado, añejo). Check each against the Sources page and your own experience before publishing.",
+    "The label words were checked 31 Oct 2026 against the official English translation of NOM-070-SCFI-2016 hosted by COMERCAM: joven is colorless with no processing after distillation, reposado is 2 to 12 months in wood, añejo is more than 12 months in wood. Artesanal and ancestral are production categories (ancestral uses stone pits and a clay distilling pot). Spanish prevails in disputes.",
     "The menu line (Tobalá, Oaxaca, ancestral, 47%, 2 oz) is invented for illustration and the article says so.",
     "Ask a bartender friend to read the 'What should you ask' list and say whether they would answer those questions happily.",
     "Swap the hero photo for something at a bar, with a menu in shot if you can.",
