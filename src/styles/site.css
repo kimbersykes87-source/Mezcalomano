@@ -772,4 +772,7 @@ select.s-intl-in option{background:#2F322F;color:#FFFFFF}
 .j-faq dt{font-size:17px}
 .j-faq dd{font-size:17px}
 .j-btn{width:100%}
+.j-table-wrap table{font-size:15px}
+.j-table-wrap th,.j-table-wrap td{padding:10px 9px;letter-spacing:.01em}
+.j-table-wrap tbody th{width:27%}
 }
