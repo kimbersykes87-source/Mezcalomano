@@ -143,7 +143,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
           </div>
         </div>
         <div className="adm-top-right">
-          <details className={`adm-health${failing.length ? " adm-health-bad" : ""}`} open={failing.length > 0}>
+          <details className={`adm-health${failing.length ? " adm-health-bad" : ""}`}>
             <summary>
               <span className="adm-dot" aria-hidden="true" />
               {failing.length
