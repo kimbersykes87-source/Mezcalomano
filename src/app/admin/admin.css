@@ -131,3 +131,5 @@
 .adm-dot-bad { color: #d9694a; }
 .adm-note { background: var(--adm-bg); border-left: 3px solid var(--adm-yellow); padding: 8px 12px; margin: 0 0 16px; color: var(--adm-muted); font-size: 14px; }
 .adm-fail { background: var(--adm-bg); border-left: 3px solid #d9694a; padding: 10px 12px; font-size: 14px; }
+.adm-subscribers summary { cursor: pointer; padding: 2px 0 10px; }
+.adm-subscribers[open] summary { margin-bottom: 4px; }

@@ -6,8 +6,8 @@ import { section, type Section } from "./cache";
 
 /**
  * Live email figures. The mailing list is the set of Shopify customers with
- * email marketing consent, read straight from Shopify. No email addresses are
- * shown or stored here, only counts.
+ * email marketing consent, read straight from Shopify. Addresses are only
+ * shown in the collapsed list on the (login protected) Email page, never stored.
  */
 
 type CustomersPage = {
@@ -16,7 +16,7 @@ type CustomersPage = {
     nodes: {
       createdAt: string;
       tags: string[];
-      defaultEmailAddress: { marketingState: string | null; marketingUpdatedAt: string | null } | null;
+      defaultEmailAddress: { emailAddress: string | null; marketingState: string | null; marketingUpdatedAt: string | null } | null;
     }[];
   };
 };
@@ -28,7 +28,7 @@ const CUSTOMERS = /* GraphQL */ `
       nodes {
         createdAt
         tags
-        defaultEmailAddress { marketingState marketingUpdatedAt }
+        defaultEmailAddress { emailAddress marketingState marketingUpdatedAt }
       }
     }
   }
@@ -44,6 +44,8 @@ export type EmailList = {
   joinedOther: number;
   left: number;
   daily: { day: string; joined: number; left: number }[];
+  /** Everyone currently subscribed, newest first. `date` is when consent was last set (falls back to when the customer was created). */
+  subscribers: { email: string; date: string; source: string }[];
 };
 
 export async function liveEmailList(from: string, to: string): Promise<EmailList> {
@@ -51,6 +53,7 @@ export async function liveEmailList(from: string, to: string): Promise<EmailList
   const end = londonDayRange(to).end;
   const daily = new Map(eachDay(from, to).map((d) => [d, { day: d, joined: 0, left: 0 }]));
   const states = new Map<string, number>();
+  const subscribers: EmailList["subscribers"] = [];
   let total = 0, joined = 0, joinedWebsite = 0, left = 0;
 
   let after: string | null = null;
@@ -64,6 +67,11 @@ export async function liveEmailList(from: string, to: string): Promise<EmailList
       const inRange = changed !== null && changed >= start && changed < end;
       if (state === "SUBSCRIBED") {
         total++;
+        subscribers.push({
+          email: c.defaultEmailAddress?.emailAddress ?? "(no address)",
+          date: changedIso ?? c.createdAt,
+          source: c.tags.includes("website-signup") ? "website form" : "checkout or other",
+        });
         if (inRange && changedIso) {
           joined++;
           if (c.tags.includes("website-signup")) joinedWebsite++;
@@ -88,6 +96,7 @@ export async function liveEmailList(from: string, to: string): Promise<EmailList
     joinedOther: joined - joinedWebsite,
     left,
     daily: [...daily.values()],
+    subscribers: subscribers.sort((a, b) => b.date.localeCompare(a.date)),
   };
 }
 

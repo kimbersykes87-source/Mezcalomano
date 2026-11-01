@@ -162,9 +162,45 @@ export default async function EmailPage({ searchParams }: { searchParams: Promis
         </section>
       </div>
 
+      {l && (
+        <details className="adm-section adm-subscribers">
+          <summary>
+            <strong>Subscribed email addresses ({fmtNumber(l.subscribers.length)})</strong>
+            <span className="adm-sub"> Newest first. Open to see the list.</span>
+          </summary>
+          {l.subscribers.length ? (
+            <table className="adm-table">
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Subscribed</th>
+                  <th>From</th>
+                </tr>
+              </thead>
+              <tbody>
+                {l.subscribers.map((x) => (
+                  <tr key={`${x.email}${x.date}`}>
+                    <td className="name">{x.email}</td>
+                    <td>
+                      {new Date(x.date).toLocaleDateString("en-GB", { timeZone: "Europe/London", day: "numeric", month: "short", year: "numeric" })}
+                    </td>
+                    <td>{x.source}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p className="adm-empty">Nobody is subscribed yet.</p>
+          )}
+          <p className="adm-sub">
+            The date is when the person&apos;s marketing consent was last set in Shopify, which is the day they subscribed unless they later changed it.
+          </p>
+        </details>
+      )}
+
       <p className="adm-sub">
         How this is counted: a person counts as new or unsubscribed on the day their marketing consent last changed in Shopify. Open rates are left out
-        on purpose, because Apple Mail Privacy Protection makes them unreliable. List growth and clicks are the real signals. No email addresses are shown on this page.
+        on purpose, because Apple Mail Privacy Protection makes them unreliable. List growth and clicks are the real signals. Addresses appear only in the collapsed list above, behind the admin login.
       </p>
     </div>
   );
