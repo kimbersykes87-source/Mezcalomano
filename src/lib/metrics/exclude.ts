@@ -9,3 +9,6 @@ export const EXCLUDED_COUNTRY_NAME = "Morocco";
 export const EXCLUDED_COUNTRY_CODE = "MA";
 /** First instant after 14 Nov 2026 (London). */
 export const EXCLUDE_UNTIL = londonDayStartUtc("2026-11-15");
+
+/** Discount codes used only for testing checkout. Orders using them never count as sales. */
+export const TEST_DISCOUNT_CODES = ["TESTFREE"];

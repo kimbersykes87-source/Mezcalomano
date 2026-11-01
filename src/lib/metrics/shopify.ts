@@ -28,7 +28,7 @@ const QL = /* GraphQL */ `
 `;
 
 /** Runs a ShopifyQL query and returns rows as objects keyed by column name. */
-async function ql(q: string): Promise<Record<string, string>[]> {
+export async function ql(q: string): Promise<Record<string, string>[]> {
   const data = await shopifyAdminQuery<QlData>(QL, { q });
   const r = data.shopifyqlQuery;
   if (r.parseErrors?.length) throw new Error(`ShopifyQL: ${r.parseErrors.join("; ")}`);

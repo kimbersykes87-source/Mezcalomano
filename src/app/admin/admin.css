@@ -124,3 +124,10 @@
 .adm-soon { background: var(--adm-panel); padding: 28px 22px; border-top: 3px solid var(--adm-olive); max-width: 640px; }
 .adm-soon h1 { margin: 0 0 8px; font-size: 22px; }
 .adm-soon p { margin: 6px 0; color: var(--adm-muted); }
+
+/* Live pages (Shop, Email) */
+.adm-live-title { margin: 0 0 4px; font-size: 24px; letter-spacing: 0.02em; }
+.adm-dot-ok { color: #8fbf6a; }
+.adm-dot-bad { color: #d9694a; }
+.adm-note { background: var(--adm-bg); border-left: 3px solid var(--adm-yellow); padding: 8px 12px; margin: 0 0 16px; color: var(--adm-muted); font-size: 14px; }
+.adm-fail { background: var(--adm-bg); border-left: 3px solid #d9694a; padding: 10px 12px; font-size: 14px; }
