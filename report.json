@@ -1,163 +1,104 @@
 {
-  "date": "2026-10-29",
-  "mode": "thursday",
+  "date": "2026-11-02",
+  "mode": "monday",
   "counts": {
     "BAD_URL": 0,
     "DEAD": 7,
     "GENERIC": 1,
-    "BLOCKED": 31,
-    "INFO": 15,
-    "OK": 206
+    "BLOCKED": 33,
+    "INFO": 14,
+    "OK": 205
   },
   "linksChecked": 260,
-  "autoChanges": [],
-  "urgent": [],
-  "suggestions": [],
-  "firstStrike": [
+  "autoChanges": [
     {
+      "action": "removed",
       "species": "Cuishe",
-      "slug": "cuishe",
       "producer": "Rey Campero",
-      "url": "https://mezcalreycampero.com/product/cuishe-rc/",
-      "firstFailed": "2026-10-29",
-      "lastFailed": "2026-10-29",
-      "strikes": 1,
-      "verdict": "DEAD",
-      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+      "from": "https://mezcalreycampero.com/product/cuishe-rc/",
+      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-29)"
     },
     {
+      "action": "removed",
       "species": "Jabalí",
-      "slug": "jabali",
       "producer": "Rey Campero",
-      "url": "https://mezcalreycampero.com/product/jabali-rc/",
-      "firstFailed": "2026-10-29",
-      "lastFailed": "2026-10-29",
-      "strikes": 1,
-      "verdict": "DEAD",
-      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+      "from": "https://mezcalreycampero.com/product/jabali-rc/",
+      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-29)"
     },
     {
+      "action": "removed",
       "species": "Madrecuixe",
-      "slug": "madrecuixe",
       "producer": "Rey Campero",
-      "url": "https://mezcalreycampero.com/product/madrecuishe-rc/",
-      "firstFailed": "2026-10-29",
-      "lastFailed": "2026-10-29",
-      "strikes": 1,
-      "verdict": "DEAD",
-      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+      "from": "https://mezcalreycampero.com/product/madrecuishe-rc/",
+      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-29)"
     },
     {
+      "action": "removed",
       "species": "Sierra Negra",
-      "slug": "sierra_negra",
       "producer": "Rey Campero",
-      "url": "https://mezcalreycampero.com/product/sierra-rc/",
-      "firstFailed": "2026-10-29",
-      "lastFailed": "2026-10-29",
-      "strikes": 1,
-      "verdict": "DEAD",
-      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+      "from": "https://mezcalreycampero.com/product/sierra-rc/",
+      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-29)"
     },
     {
+      "action": "removed",
       "species": "Tepextate",
-      "slug": "tepextate",
       "producer": "Rey Campero",
-      "url": "https://mezcalreycampero.com/product/tepeztate-rc/",
-      "firstFailed": "2026-10-29",
-      "lastFailed": "2026-10-29",
-      "strikes": 1,
-      "verdict": "DEAD",
-      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+      "from": "https://mezcalreycampero.com/product/tepeztate-rc/",
+      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-29)"
     },
     {
+      "action": "removed",
       "species": "Tobalá",
-      "slug": "tobala",
       "producer": "Rey Campero",
-      "url": "https://mezcalreycampero.com/product/tobala-rc/",
-      "firstFailed": "2026-10-29",
-      "lastFailed": "2026-10-29",
-      "strikes": 1,
-      "verdict": "DEAD",
-      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+      "from": "https://mezcalreycampero.com/product/tobala-rc/",
+      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-29)"
     },
     {
+      "action": "removed",
       "species": "Weber Azul",
-      "slug": "weber_azul",
       "producer": "Rey Campero",
-      "url": "https://mezcalreycampero.com/product/azul-rc/",
-      "firstFailed": "2026-10-29",
-      "lastFailed": "2026-10-29",
-      "strikes": 1,
-      "verdict": "DEAD",
-      "note": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE)"
+      "from": "https://mezcalreycampero.com/product/azul-rc/",
+      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-29)"
     },
     {
+      "action": "removed",
       "species": "Cimarrón",
-      "slug": "cimarron",
       "producer": "De Matachines",
-      "url": "https://sftequilashop.com/products/de-matachines-ahualulco-750ml?_pos=2&_sid=6f6f3ba80&_ss=r",
-      "firstFailed": "2026-10-29",
-      "lastFailed": "2026-10-29",
-      "strikes": 1,
-      "verdict": "INFO",
-      "note": "\"De Matachines Ahualulco 750ML\" is sold out"
+      "from": "https://sftequilashop.com/products/de-matachines-ahualulco-750ml?_pos=2&_sid=6f6f3ba80&_ss=r",
+      "why": "\"De Matachines Ahualulco 750ML\" is sold out (failing since 2026-10-29)"
     },
     {
+      "action": "removed",
       "species": "Pulquero",
-      "slug": "pulquero",
-      "producer": "Puntiagudo",
-      "url": "https://gomadreshop.com/products/puntiagudo-pulquero?_pos=1&_sid=ceaa25d05&_ss=r",
-      "firstFailed": "2026-10-29",
-      "lastFailed": "2026-10-29",
-      "strikes": 1,
-      "verdict": "INFO",
-      "note": "\"Puntiagudo - Pulquero\" is sold out"
-    },
-    {
-      "species": "Pulquero",
-      "slug": "pulquero",
       "producer": "Rufina",
-      "url": "https://gomadreshop.com/products/rufina-pulquero-puntas?_pos=2&_sid=ceaa25d05&_ss=r",
-      "firstFailed": "2026-10-29",
-      "lastFailed": "2026-10-29",
-      "strikes": 1,
-      "verdict": "INFO",
-      "note": "\"Rufina - Pulquero Puntas\" is sold out"
+      "from": "https://gomadreshop.com/products/rufina-pulquero-puntas?_pos=2&_sid=ceaa25d05&_ss=r",
+      "why": "\"Rufina - Pulquero Puntas\" is sold out (failing since 2026-10-29)"
     },
     {
+      "action": "removed",
       "species": "Sierra Negra",
-      "slug": "sierra_negra",
       "producer": "Marca Negra",
-      "url": "https://buen-mezcal.myshopify.com/products/kit-sierra-negra",
-      "firstFailed": "2026-10-29",
-      "lastFailed": "2026-10-29",
-      "strikes": 1,
-      "verdict": "INFO",
-      "note": "\"Kit Sierra Negra\" is sold out"
+      "from": "https://buen-mezcal.myshopify.com/products/kit-sierra-negra",
+      "why": "\"Kit Sierra Negra\" is sold out (failing since 2026-10-29)"
     },
     {
+      "action": "removed",
       "species": "Tepextate",
-      "slug": "tepextate",
       "producer": "Marca Negra",
-      "url": "https://buen-mezcal.myshopify.com/products/kit-tepeztate",
-      "firstFailed": "2026-10-29",
-      "lastFailed": "2026-10-29",
-      "strikes": 1,
-      "verdict": "INFO",
-      "note": "\"Kit Tepeztate\" is sold out"
+      "from": "https://buen-mezcal.myshopify.com/products/kit-tepeztate",
+      "why": "\"Kit Tepeztate\" is sold out (failing since 2026-10-29)"
     },
     {
+      "action": "removed",
       "species": "Tobalá",
-      "slug": "tobala",
       "producer": "Marca Negra",
-      "url": "https://buen-mezcal.myshopify.com/products/kit-tobala",
-      "firstFailed": "2026-10-29",
-      "lastFailed": "2026-10-29",
-      "strikes": 1,
-      "verdict": "INFO",
-      "note": "\"Kit Tobalá\" is sold out"
+      "from": "https://buen-mezcal.myshopify.com/products/kit-tobala",
+      "why": "\"Kit Tobalá\" is sold out (failing since 2026-10-29)"
     }
   ],
+  "urgent": [],
+  "suggestions": [],
+  "firstStrike": [],
   "noUs": [
     "Montana",
     "Lyobaa Coyote",
@@ -187,6 +128,11 @@
       "species": "Arroqueño",
       "producer": "Del Maguey",
       "url": "https://delmaguey.com/arroqueno/"
+    },
+    {
+      "species": "Arroqueño",
+      "producer": "Koch",
+      "url": "https://mezcalkoch.com/expresiones/arroqueno.php"
     },
     {
       "species": "Barril",
@@ -235,11 +181,6 @@
     },
     {
       "species": "Jabalí",
-      "producer": "Agua del Sol",
-      "url": "https://gomadreshop.com/products/agua-del-sol-jabali"
-    },
-    {
-      "species": "Jabalí",
       "producer": "Del Maguey",
       "url": "https://delmaguey.com/jabali/"
     },
@@ -254,9 +195,9 @@
       "url": "https://www.magueymelate.com/product/jabali-375-ml-noel/"
     },
     {
-      "species": "Lamparillo",
-      "producer": "Lamata",
-      "url": "https://gomadreshop.com/products/lamata-lamparillo-durango-50-3-babv?_pos=17&_sid=abaa5414d&_ss=r"
+      "species": "Lumbre",
+      "producer": "Koch",
+      "url": "https://mezcalkoch.com/expresiones/lumbre.php"
     },
     {
       "species": "Madrecuixe",
@@ -279,9 +220,19 @@
       "url": "https://www.magueymelate.com/product/maximiliana-375-ml-julio/"
     },
     {
+      "species": "Mexicano",
+      "producer": "Koch",
+      "url": "https://mezcalkoch.com/expresiones/mexicano.php"
+    },
+    {
       "species": "Papalote",
       "producer": "Maguey Melate",
       "url": "https://www.magueymelate.com/product/cupreata-2007-375ml-isaias/"
+    },
+    {
+      "species": "Pulquero",
+      "producer": "Puntiagudo",
+      "url": "https://gomadreshop.com/products/puntiagudo-pulquero?_pos=1&_sid=ceaa25d05&_ss=r"
     },
     {
       "species": "Sierra Negra",
@@ -336,5 +287,5 @@
   ],
   "catalogProducts": 291,
   "pullRequest": "",
-  "runUrl": "https://github.com/kimbersykes87-source/Mezcalomano/actions/runs/40899281873"
+  "runUrl": "https://github.com/kimbersykes87-source/Mezcalomano/actions/runs/41499816519"
 }
