@@ -1,6 +1,7 @@
 "use client";
 
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 import { useEffect, useState } from "react";
 
 /**
@@ -13,11 +14,15 @@ import { useEffect, useState } from "react";
  * 2. Google Analytics 4 (gtag.js). Only renders when NEXT_PUBLIC_GA_MEASUREMENT_ID
  *    is set (Production only in Vercel). The measurement ID is public by design.
  *    GA4 enhanced measurement counts App Router page changes on its own.
- * 3. Outbound link click counter. Any click on a link that leaves
+ * 3. Vercel Web Analytics (<Analytics />). Cookieless page views, read by the admin
+ *    dashboard through Vercel's analytics API. Only loads on this component's
+ *    not-ignored path, so own browsers stay out. Previews and local dev are
+ *    recorded under the "preview" environment and filtered out of the dashboard.
+ * 4. Outbound link click counter. Any click on a link that leaves
  *    mezcalomano.com is sent to /api/track with navigator.sendBeacon, which
  *    saves it to the Supabase `events` table. Links can add
  *    data-track-species and data-track-group for directory reporting.
- * 4. Own-browser switch. Open mezcalomano.com/?ignore=1 once in a browser to
+ * 5. Own-browser switch. Open mezcalomano.com/?ignore=1 once in a browser to
  *    stop it being counted anywhere (page views, GA4, clicks, and the shop if the
  *    theme snippet is added); ?ignore=0 turns counting back on. It sets a plain
  *    cookie `mm_ignore=1` on .mezcalomano.com, only in that browser.
@@ -106,6 +111,7 @@ export default function SiteAnalytics() {
 
   return (
     <>
+      <Analytics />
       {CF_BEACON_TOKEN && (
         <Script
           id="cf-web-analytics"
