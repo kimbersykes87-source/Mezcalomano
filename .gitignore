@@ -10,3 +10,6 @@ out
 CLAUDE.md
 # weekly directory job working files
 .bot/
+
+# Venues pipeline menu text cache (never commit)
+.cache/
