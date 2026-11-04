@@ -14,6 +14,8 @@ import { useEffect, useState } from "react";
  * 2. Google Analytics 4 (gtag.js). Only renders when NEXT_PUBLIC_GA_MEASUREMENT_ID
  *    is set (Production only in Vercel). The measurement ID is public by design.
  *    GA4 enhanced measurement counts App Router page changes on its own.
+ *    The same gtag.js also carries the Google Ads tag when
+ *    NEXT_PUBLIC_GOOGLE_ADS_ID is set (AW-..., Production only; public by design).
  * 3. Vercel Web Analytics (<Analytics />). Cookieless page views, read by the admin
  *    dashboard through Vercel's analytics API. Only loads on this component's
  *    not-ignored path, so own browsers stay out. Previews and local dev are
@@ -43,6 +45,9 @@ function readIgnore(): boolean {
 
 const CF_BEACON_TOKEN = process.env.NEXT_PUBLIC_CF_BEACON_TOKEN?.trim() ?? "";
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() ?? "";
+const ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID?.trim() ?? "";
+// One gtag.js loader serves every Google tag ID configured below.
+const GTAG_IDS = [GA_ID, ADS_ID].filter(Boolean);
 
 const OWN_HOSTS = new Set(["mezcalomano.com", "www.mezcalomano.com", "localhost"]);
 
@@ -120,14 +125,14 @@ export default function SiteAnalytics() {
           data-cf-beacon={JSON.stringify({ token: CF_BEACON_TOKEN, spa: true })}
         />
       )}
-      {GA_ID && (
+      {GTAG_IDS.length > 0 && (
         <>
-          <Script id="ga-loader" src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_ID)}`} strategy="afterInteractive" />
+          <Script id="ga-loader" src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GTAG_IDS[0])}`} strategy="afterInteractive" />
           <Script id="ga-init" strategy="afterInteractive">
             {`window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', '${GA_ID}');`}
+${GTAG_IDS.map((id) => `gtag('config', ${JSON.stringify(id)});`).join("\n")}`}
           </Script>
         </>
       )}
