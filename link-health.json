@@ -1,4 +1,16 @@
 {
-  "updated": "2026-11-02T18:22:08.139Z",
-  "links": {}
+  "updated": "2026-11-05T16:28:18.818Z",
+  "links": {
+    "jabali|https://gomadreshop.com/products/agua-del-sol-jabali": {
+      "species": "Jabalí",
+      "slug": "jabali",
+      "producer": "Agua del Sol",
+      "url": "https://gomadreshop.com/products/agua-del-sol-jabali",
+      "firstFailed": "2026-11-05",
+      "lastFailed": "2026-11-05",
+      "strikes": 1,
+      "verdict": "INFO",
+      "note": "\"Agua Del Sol - Jabali\" is sold out"
+    }
+  }
 }

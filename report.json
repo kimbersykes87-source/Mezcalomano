@@ -1,104 +1,31 @@
 {
-  "date": "2026-11-02",
-  "mode": "monday",
+  "date": "2026-11-05",
+  "mode": "thursday",
   "counts": {
     "BAD_URL": 0,
-    "DEAD": 7,
+    "DEAD": 0,
     "GENERIC": 1,
-    "BLOCKED": 33,
-    "INFO": 14,
-    "OK": 205
+    "BLOCKED": 15,
+    "INFO": 10,
+    "OK": 214
   },
-  "linksChecked": 260,
-  "autoChanges": [
-    {
-      "action": "removed",
-      "species": "Cuishe",
-      "producer": "Rey Campero",
-      "from": "https://mezcalreycampero.com/product/cuishe-rc/",
-      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-29)"
-    },
-    {
-      "action": "removed",
-      "species": "Jabalí",
-      "producer": "Rey Campero",
-      "from": "https://mezcalreycampero.com/product/jabali-rc/",
-      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-29)"
-    },
-    {
-      "action": "removed",
-      "species": "Madrecuixe",
-      "producer": "Rey Campero",
-      "from": "https://mezcalreycampero.com/product/madrecuishe-rc/",
-      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-29)"
-    },
-    {
-      "action": "removed",
-      "species": "Sierra Negra",
-      "producer": "Rey Campero",
-      "from": "https://mezcalreycampero.com/product/sierra-rc/",
-      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-29)"
-    },
-    {
-      "action": "removed",
-      "species": "Tepextate",
-      "producer": "Rey Campero",
-      "from": "https://mezcalreycampero.com/product/tepeztate-rc/",
-      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-29)"
-    },
-    {
-      "action": "removed",
-      "species": "Tobalá",
-      "producer": "Rey Campero",
-      "from": "https://mezcalreycampero.com/product/tobala-rc/",
-      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-29)"
-    },
-    {
-      "action": "removed",
-      "species": "Weber Azul",
-      "producer": "Rey Campero",
-      "from": "https://mezcalreycampero.com/product/azul-rc/",
-      "why": "No response (UNABLE_TO_VERIFY_LEAF_SIGNATURE) (failing since 2026-10-29)"
-    },
-    {
-      "action": "removed",
-      "species": "Cimarrón",
-      "producer": "De Matachines",
-      "from": "https://sftequilashop.com/products/de-matachines-ahualulco-750ml?_pos=2&_sid=6f6f3ba80&_ss=r",
-      "why": "\"De Matachines Ahualulco 750ML\" is sold out (failing since 2026-10-29)"
-    },
-    {
-      "action": "removed",
-      "species": "Pulquero",
-      "producer": "Rufina",
-      "from": "https://gomadreshop.com/products/rufina-pulquero-puntas?_pos=2&_sid=ceaa25d05&_ss=r",
-      "why": "\"Rufina - Pulquero Puntas\" is sold out (failing since 2026-10-29)"
-    },
-    {
-      "action": "removed",
-      "species": "Sierra Negra",
-      "producer": "Marca Negra",
-      "from": "https://buen-mezcal.myshopify.com/products/kit-sierra-negra",
-      "why": "\"Kit Sierra Negra\" is sold out (failing since 2026-10-29)"
-    },
-    {
-      "action": "removed",
-      "species": "Tepextate",
-      "producer": "Marca Negra",
-      "from": "https://buen-mezcal.myshopify.com/products/kit-tepeztate",
-      "why": "\"Kit Tepeztate\" is sold out (failing since 2026-10-29)"
-    },
-    {
-      "action": "removed",
-      "species": "Tobalá",
-      "producer": "Marca Negra",
-      "from": "https://buen-mezcal.myshopify.com/products/kit-tobala",
-      "why": "\"Kit Tobalá\" is sold out (failing since 2026-10-29)"
-    }
-  ],
+  "linksChecked": 240,
+  "autoChanges": [],
   "urgent": [],
   "suggestions": [],
-  "firstStrike": [],
+  "firstStrike": [
+    {
+      "species": "Jabalí",
+      "slug": "jabali",
+      "producer": "Agua del Sol",
+      "url": "https://gomadreshop.com/products/agua-del-sol-jabali",
+      "firstFailed": "2026-11-05",
+      "lastFailed": "2026-11-05",
+      "strikes": 1,
+      "verdict": "INFO",
+      "note": "\"Agua Del Sol - Jabali\" is sold out"
+    }
+  ],
   "noUs": [
     "Montana",
     "Lyobaa Coyote",
@@ -120,19 +47,9 @@
   ],
   "blocked": [
     {
-      "species": "Alto",
-      "producer": "Maguey Melate",
-      "url": "https://www.magueymelate.com/product/inaequidens-aged-in-glass-375-ml/"
-    },
-    {
       "species": "Arroqueño",
       "producer": "Del Maguey",
       "url": "https://delmaguey.com/arroqueno/"
-    },
-    {
-      "species": "Arroqueño",
-      "producer": "Koch",
-      "url": "https://mezcalkoch.com/expresiones/arroqueno.php"
     },
     {
       "species": "Barril",
@@ -150,34 +67,9 @@
       "url": "https://shop.klwines.com/products/details/1678724"
     },
     {
-      "species": "Chuparrosa",
-      "producer": "Maguey Melate",
-      "url": "https://www.magueymelate.com/product/chuparrosa-375-ml-sergio/"
-    },
-    {
-      "species": "Churique",
-      "producer": "Rancho Tepua",
-      "url": "https://lot001brands.com/rancho-tepua/lechuguilla/"
-    },
-    {
       "species": "Cuishe",
       "producer": "Del Maguey",
       "url": "https://delmaguey.com/cuixe/"
-    },
-    {
-      "species": "Espadilla",
-      "producer": "Maguey Melate",
-      "url": "https://www.magueymelate.com/product/espadilla-375-ml-noel/"
-    },
-    {
-      "species": "Espadín",
-      "producer": "Erstwhile",
-      "url": "https://www.erstwhilemezcal.com/product/espadin/"
-    },
-    {
-      "species": "Henequén",
-      "producer": "Erstwhile",
-      "url": "https://www.erstwhilemezcal.com/product/henequen/"
     },
     {
       "species": "Jabalí",
@@ -185,69 +77,34 @@
       "url": "https://delmaguey.com/jabali/"
     },
     {
-      "species": "Jabalí",
-      "producer": "Erstwhile",
-      "url": "https://www.erstwhilemezcal.com/product/jabali-silverio/"
-    },
-    {
-      "species": "Jabalí",
-      "producer": "Maguey Melate",
-      "url": "https://www.magueymelate.com/product/jabali-375-ml-noel/"
-    },
-    {
-      "species": "Lumbre",
-      "producer": "Koch",
-      "url": "https://mezcalkoch.com/expresiones/lumbre.php"
-    },
-    {
       "species": "Madrecuixe",
       "producer": "Del Maguey",
       "url": "https://delmaguey.com/madrecuixe/"
     },
     {
-      "species": "Madrecuixe",
-      "producer": "Erstwhile",
-      "url": "https://www.erstwhilemezcal.com/product/madrecuishe-ancestral/"
-    },
-    {
-      "species": "Madrecuixe",
-      "producer": "Koch",
-      "url": "https://mezcalkoch.com/expresiones/madrecuishe.php"
-    },
-    {
-      "species": "Masparillo",
-      "producer": "Maguey Melate",
-      "url": "https://www.magueymelate.com/product/maximiliana-375-ml-julio/"
+      "species": "Mexicano",
+      "producer": "Agua del Sol",
+      "url": "https://gomadreshop.com/products/agua-del-sol-mexicano-2023"
     },
     {
       "species": "Mexicano",
-      "producer": "Koch",
-      "url": "https://mezcalkoch.com/expresiones/mexicano.php"
+      "producer": "Dixeebe Mezcal",
+      "url": "https://gomadreshop.com/products/dixeebe-mexicano"
+    },
+    {
+      "species": "Mexicano",
+      "producer": "Rufina",
+      "url": "https://gomadreshop.com/products/rufina-mexicano"
     },
     {
       "species": "Papalote",
-      "producer": "Maguey Melate",
-      "url": "https://www.magueymelate.com/product/cupreata-2007-375ml-isaias/"
-    },
-    {
-      "species": "Pulquero",
-      "producer": "Puntiagudo",
-      "url": "https://gomadreshop.com/products/puntiagudo-pulquero?_pos=1&_sid=ceaa25d05&_ss=r"
-    },
-    {
-      "species": "Sierra Negra",
-      "producer": "Maguey Melate",
-      "url": "https://www.magueymelate.com/product/sierra-negra-375-ml-everardo/"
+      "producer": "Aguerrido",
+      "url": "https://gomadreshop.com/products/aguerrido-sonido-cupreata-edicion-especial-puntas"
     },
     {
       "species": "Tepextate",
       "producer": "Del Maguey",
       "url": "https://delmaguey.com/tepextate/"
-    },
-    {
-      "species": "Tepextate",
-      "producer": "Erstwhile",
-      "url": "https://www.erstwhilemezcal.com/product/tepeztate-ancestral/"
     },
     {
       "species": "Tepextate",
@@ -260,32 +117,12 @@
       "url": "https://delmaguey.com/tobala/"
     },
     {
-      "species": "Tobalá",
-      "producer": "Erstwhile",
-      "url": "https://www.erstwhilemezcal.com/product/tobala-ancestral/"
-    },
-    {
-      "species": "Tobaziche",
-      "producer": "Del Maguey",
-      "url": "https://delmaguey.com/tobaziche/"
-    },
-    {
-      "species": "Tobaziche",
-      "producer": "Koch",
-      "url": "https://mezcalkoch.com/expresiones/tobasiche.php"
-    },
-    {
-      "species": "Tobaziche",
-      "producer": "Maguey Melate",
-      "url": "https://www.magueymelate.com/product/felix-tobaziche-375-ml/"
-    },
-    {
       "species": "Verde",
       "producer": "Pechotierra",
       "url": "https://www.cuchillo.ca/items/pecho-tierra-verde"
     }
   ],
-  "catalogProducts": 291,
+  "catalogProducts": 292,
   "pullRequest": "",
-  "runUrl": "https://github.com/kimbersykes87-source/Mezcalomano/actions/runs/41499816519"
+  "runUrl": "https://github.com/kimbersykes87-source/Mezcalomano/actions/runs/42064692204"
 }
