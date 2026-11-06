@@ -128,7 +128,7 @@
   {
     "slug": "cuishe",
     "question": "Is Cuishe endangered?",
-    "answer": "It has not been formally assessed by the IUCN, but it is a local conservation concern.",
+    "answer": "It is listed as Vulnerable on the IUCN Red List.",
     "approved": false
   },
   {
@@ -158,7 +158,7 @@
   {
     "slug": "barril",
     "question": "Is Barril endangered?",
-    "answer": "It has not been formally assessed by the IUCN, but it is a local conservation concern.",
+    "answer": "It is listed as Vulnerable on the IUCN Red List.",
     "approved": false
   },
   {
@@ -188,7 +188,7 @@
   {
     "slug": "madrecuixe",
     "question": "Is Madrecuixe endangered?",
-    "answer": "It has not been formally assessed by the IUCN, but it is a local conservation concern.",
+    "answer": "It is listed as Vulnerable on the IUCN Red List.",
     "approved": false
   },
   {
@@ -218,7 +218,7 @@
   {
     "slug": "bicuixe",
     "question": "Is Bicuixe endangered?",
-    "answer": "It has not been formally assessed by the IUCN, but it is a local conservation concern.",
+    "answer": "It is listed as Vulnerable on the IUCN Red List.",
     "approved": false
   },
   {
@@ -242,13 +242,13 @@
   {
     "slug": "tobaziche",
     "question": "Who makes Tobaziche mezcal?",
-    "answer": "Our directory lists 11 producers making mezcal from Tobaziche, including Del Maguey, Neta and Lalocura. The full list, with links, is below.",
+    "answer": "Our directory lists 10 producers making mezcal from Tobaziche, including Neta, Lalocura and Grulani. The full list, with links, is below.",
     "approved": false
   },
   {
     "slug": "tobaziche",
     "question": "Is Tobaziche endangered?",
-    "answer": "It has not been formally assessed by the IUCN, but it is a local conservation concern.",
+    "answer": "It is listed as Vulnerable on the IUCN Red List.",
     "approved": false
   },
   {
@@ -272,7 +272,7 @@
   {
     "slug": "lumbre",
     "question": "Who makes Lumbre mezcal?",
-    "answer": "Our directory lists 3 producers making mezcal from Lumbre: Creador, Grulani and Koch. The full list, with links, is below.",
+    "answer": "Our directory lists 2 producers making mezcal from Lumbre: Creador and Grulani. The full list, with links, is below.",
     "approved": false
   },
   {
@@ -314,7 +314,7 @@
   {
     "slug": "montana",
     "question": "Is Montana endangered?",
-    "answer": "It has not been formally assessed by the IUCN.",
+    "answer": "It is assessed as Least Concern on the IUCN Red List.",
     "approved": false
   },
   {
@@ -380,13 +380,13 @@
   {
     "slug": "sierra_negra",
     "question": "Who makes Sierra Negra mezcal?",
-    "answer": "Our directory lists 3 producers making mezcal from Sierra Negra: Maguey Melate, Gozona and Cinco Sentidos. The full list, with links, is below.",
+    "answer": "Our directory lists 2 producers making mezcal from Sierra Negra: Gozona and Cinco Sentidos. The full list, with links, is below.",
     "approved": false
   },
   {
     "slug": "sierra_negra",
     "question": "Is Sierra Negra endangered?",
-    "answer": "It has not been formally assessed by the IUCN.",
+    "answer": "It is assessed as Least Concern on the IUCN Red List.",
     "approved": false
   },
   {
@@ -416,7 +416,7 @@
   {
     "slug": "coyote",
     "question": "Is Coyote endangered?",
-    "answer": "It has not been formally assessed by the IUCN.",
+    "answer": "It is assessed as Least Concern on the IUCN Red List.",
     "approved": false
   },
   {
@@ -440,7 +440,7 @@
   {
     "slug": "mexicano",
     "question": "Who makes Mexicano mezcal?",
-    "answer": "Our directory lists 13 producers making mezcal from Mexicano, including Rey Campero, Creador and El Jolgorio. The full list, with links, is below.",
+    "answer": "Our directory lists 12 producers making mezcal from Mexicano, including Rey Campero, Creador and El Jolgorio. The full list, with links, is below.",
     "approved": false
   },
   {
@@ -476,7 +476,7 @@
   {
     "slug": "masparillo",
     "question": "Is Masparillo endangered?",
-    "answer": "It has not been formally assessed by the IUCN.",
+    "answer": "It is assessed as Least Concern on the IUCN Red List.",
     "approved": false
   },
   {
@@ -500,7 +500,7 @@
   {
     "slug": "papalote",
     "question": "Who makes Papalote mezcal?",
-    "answer": "Our directory lists 10 producers making mezcal from Papalote, including Gracias a Dios, Amarás and Marca Negra. The full list, with links, is below.",
+    "answer": "Our directory lists 9 producers making mezcal from Papalote, including Gracias a Dios, Amarás and Marca Negra. The full list, with links, is below.",
     "approved": false
   },
   {
@@ -632,7 +632,7 @@
   {
     "slug": "cenizo",
     "question": "Is Cenizo endangered?",
-    "answer": "It has not been formally assessed by the IUCN, but it is a local conservation concern.",
+    "answer": "It has not been formally assessed by the IUCN.",
     "approved": false
   },
   {
@@ -668,7 +668,7 @@
   {
     "slug": "manso_sahuayo",
     "question": "Is Manso Sahuayo endangered?",
-    "answer": "It has not been formally assessed by the IUCN. It is widespread and widely cultivated.",
+    "answer": "It is assessed as Least Concern on the IUCN Red List.",
     "approved": false
   },
   {
@@ -770,7 +770,7 @@
   {
     "slug": "weber_azul",
     "question": "Is Weber Azul endangered?",
-    "answer": "It is assessed as Least Concern on the IUCN Red List.",
+    "answer": "It has not been formally assessed by the IUCN.",
     "approved": false
   },
   {
@@ -800,7 +800,7 @@
   {
     "slug": "verde",
     "question": "Is Verde endangered?",
-    "answer": "It has not been formally assessed by the IUCN.",
+    "answer": "It is assessed as Least Concern on the IUCN Red List.",
     "approved": false
   },
   {
@@ -836,7 +836,7 @@
   {
     "slug": "warash",
     "question": "Is Warash endangered?",
-    "answer": "The IUCN lists it as Data Deficient, which means there is not enough information to assess it.",
+    "answer": "It has not been formally assessed by the IUCN.",
     "approved": false
   },
   {
@@ -944,7 +944,7 @@
   {
     "slug": "pacifica",
     "question": "Is Pacífica endangered?",
-    "answer": "It has not been formally assessed by the IUCN.",
+    "answer": "It is assessed as Least Concern on the IUCN Red List.",
     "approved": false
   },
   {
@@ -974,7 +974,7 @@
   {
     "slug": "wocomahi",
     "question": "Is Wocomahi endangered?",
-    "answer": "It has not been formally assessed by the IUCN.",
+    "answer": "It is assessed as Least Concern on the IUCN Red List.",
     "approved": false
   },
   {
@@ -998,13 +998,13 @@
   {
     "slug": "jabali",
     "question": "Who makes Jabalí mezcal?",
-    "answer": "Our directory lists 11 producers making mezcal from Jabalí, including Del Maguey, Grulani and Mezcal de Leyendas. The full list, with links, is below.",
+    "answer": "Our directory lists 10 producers making mezcal from Jabalí, including Del Maguey, Grulani and Mezcal de Leyendas. The full list, with links, is below.",
     "approved": false
   },
   {
     "slug": "jabali",
     "question": "Is Jabalí endangered?",
-    "answer": "It has not been formally assessed by the IUCN, but it is a local conservation concern.",
+    "answer": "It is listed as Vulnerable on the IUCN Red List.",
     "approved": false
   },
   {
@@ -1136,7 +1136,7 @@
   {
     "slug": "espadilla",
     "question": "Is Espadilla endangered?",
-    "answer": "It is listed as Endangered on the IUCN Red List.",
+    "answer": "It is assessed as Least Concern on the IUCN Red List.",
     "approved": false
   },
   {
@@ -1202,7 +1202,7 @@
   {
     "slug": "castilla",
     "question": "Is Castilla endangered?",
-    "answer": "It has not been formally assessed by the IUCN, but it is a local conservation concern.",
+    "answer": "It is assessed as Least Concern on the IUCN Red List.",
     "approved": false
   },
   {
@@ -1268,13 +1268,13 @@
   {
     "slug": "pulquero",
     "question": "Who makes Pulquero mezcal?",
-    "answer": "Our directory lists 4 producers making mezcal from Pulquero, including Cortijo, Dixeebe Mezcal and Puntiagudo. The full list, with links, is below.",
+    "answer": "Our directory lists 3 producers making mezcal from Pulquero: Cortijo, Dixeebe Mezcal and MDM. The full list, with links, is below.",
     "approved": false
   },
   {
     "slug": "pulquero",
     "question": "Is Pulquero endangered?",
-    "answer": "It has not been formally assessed by the IUCN.",
+    "answer": "It is assessed as Least Concern on the IUCN Red List.",
     "approved": false
   },
   {
@@ -1310,7 +1310,7 @@
   {
     "slug": "pulque_chino",
     "question": "Is Pulque Chino endangered?",
-    "answer": "It has not been formally assessed by the IUCN. It is widespread and widely cultivated.",
+    "answer": "It is assessed as Least Concern on the IUCN Red List.",
     "approved": false
   },
   {
