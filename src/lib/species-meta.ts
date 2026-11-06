@@ -32,7 +32,14 @@ function joinList(items: string[]): string {
 export function placesText(s: Pick<Species, "states" | "geo_region">): string | null {
   const states = parseStates(s.states);
   if (states.length > 0 && states.length <= 3) return joinList(states);
-  return s.geo_region?.trim() || (states.length ? joinList(states) : null);
+  const region = (s.geo_region ?? "").replace(/\s*\(.*?\)\s*/g, " ").trim();
+  return region || (states.length ? joinList(states) : null);
+}
+
+/** "very_large" becomes "very large". */
+export function sizeClassLabel(v: string | null | undefined): string | null {
+  const t = (v ?? "").replace(/_/g, " ").trim();
+  return t || null;
 }
 
 /**
@@ -44,7 +51,7 @@ export function speciesMetaDescription(s: Species): string {
   const label = managementLabel(s.management_category);
   const places = placesText(s);
   const kind = label ? `${label} agave` : "agave";
-  const where = places ? ` from ${places}` : "";
+  const where = !places ? "" : /^widespread/i.test(places) ? " grown across Mexico" : ` from ${places}`;
   const first = `${s.common_name} mezcal comes from ${sci}, ${kind}${where}.`;
   const candidates = [
     `${first} Size, taste, producers and where to buy.`,

@@ -7,7 +7,7 @@ import { parseStates, type AgaveCard } from "@/lib/agave-cards";
 import { producerLinks } from "@/lib/producers";
 import { speciesDirectorySlug } from "@/lib/slug";
 import type { Species } from "@/types/species";
-import { compassWords, managementLabel, uniqueProducerNames } from "@/lib/species-meta";
+import { compassWords, managementLabel, sizeClassLabel, uniqueProducerNames } from "@/lib/species-meta";
 
 /** The compass cell holds three words in this order. */
 const COMPASS_SLOTS = ["Smoke", "Agave", "Fermentation"];
@@ -214,7 +214,7 @@ export default function SpeciesDetailClient({
             {species.size_category ? (
               <div>
                 <dt>Size class</dt>
-                <dd>{species.size_category}</dd>
+                <dd>{sizeClassLabel(species.size_category)}</dd>
               </div>
             ) : null}
             {size ? (
