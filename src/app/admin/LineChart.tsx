@@ -1,6 +1,6 @@
 /** Small server-rendered SVG line chart for daily series (no chart library). */
 
-type Series = { name: string; color: string; points: { day: string; value: number | null }[] };
+export type Series = { name: string; color: string; points: { day: string; value: number | null }[] };
 
 const W = 520;
 const H = 200;
