@@ -288,6 +288,13 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
                     </span>
                     <span>{c.postedOn ? longDay(c.postedOn) : ""}</span>
                   </div>
+                  {c.likes !== null || c.comments !== null ? (
+                    <div className="adm-post-meta">
+                      <span>
+                        {fmtNumber(c.likes ?? 0)} likes, {fmtNumber(c.comments ?? 0)} comments
+                      </span>
+                    </div>
+                  ) : null}
                   <div className="adm-post-bar">
                     <div style={{ width: `${Math.max(2, Math.round((c.views / maxViews) * 100))}%` }} />
                   </div>

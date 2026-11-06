@@ -140,12 +140,16 @@ export type PostCard = {
   postedOn: string | null;
   views: number;
   change: number | null;
+  likes: number | null;
+  comments: number | null;
 };
 
 /** Every known post with its newest view count (and the change since the snapshot before), most viewed first. */
 export async function postCards(): Promise<{ day: string | null; cards: PostCard[] }> {
   const db = serviceClient();
-  const [posts, views] = await Promise.all([
+  const likeQuery = (metric: string) =>
+    db.from("metrics_daily").select("dimension, value").eq("source", "instagram").eq("metric", metric).order("day", { ascending: false }).limit(600);
+  const [posts, views, likesRes, commentsRes] = await Promise.all([
     db.from("instagram_posts").select("shortcode, title, alt, thumb, posted_on"),
     db
       .from("metrics_daily")
@@ -154,6 +158,8 @@ export async function postCards(): Promise<{ day: string | null; cards: PostCard
       .eq("metric", "post_views")
       .order("day", { ascending: false })
       .limit(600),
+    likeQuery("post_likes"),
+    likeQuery("post_comments"),
   ]);
   const meta = new Map((posts.data ?? []).map((p) => [p.shortcode as string, p]));
   const latest = new Map<string, { day: string; value: number }>();
@@ -163,6 +169,13 @@ export async function postCards(): Promise<{ day: string | null; cards: PostCard
     if (!prev) latest.set(r.dimension, { day: r.day, value: Number(r.value) });
     else if (!before.has(r.dimension) && r.day < prev.day) before.set(r.dimension, Number(r.value));
   }
+  const newest = (rows: { dimension: string; value: number }[] | null) => {
+    const m = new Map<string, number>();
+    for (const r of rows ?? []) if (!m.has(r.dimension)) m.set(r.dimension, Number(r.value));
+    return m;
+  };
+  const likes = newest(likesRes.data as { dimension: string; value: number }[] | null);
+  const comments = newest(commentsRes.data as { dimension: string; value: number }[] | null);
   const keys = new Set([...meta.keys(), ...latest.keys()]);
   const cards = [...keys].map((k) => {
     const m = meta.get(k);
@@ -175,6 +188,8 @@ export async function postCards(): Promise<{ day: string | null; cards: PostCard
       postedOn: (m?.posted_on as string) ?? null,
       views: v?.value ?? 0,
       change: v && before.has(k) ? v.value - (before.get(k) as number) : null,
+      likes: likes.get(k) ?? null,
+      comments: comments.get(k) ?? null,
     };
   });
   cards.sort((a, b) => b.views - a.views);
