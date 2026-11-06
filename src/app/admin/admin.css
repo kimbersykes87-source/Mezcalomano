@@ -133,3 +133,40 @@
 .adm-fail { background: var(--adm-bg); border-left: 3px solid #d9694a; padding: 10px 12px; font-size: 14px; }
 .adm-subscribers summary { cursor: pointer; padding: 2px 0 10px; }
 .adm-subscribers[open] summary { margin-bottom: 4px; }
+
+/* Unified look (Nov 2026): style guide panels, olive numbers, phone first */
+.adm-pages {
+  flex-wrap: nowrap; overflow-x: auto; gap: 8px; scrollbar-width: none; position: sticky; top: 0; z-index: 6;
+  background: var(--adm-bg); padding-bottom: 10px; -webkit-overflow-scrolling: touch;
+}
+.adm-pages::-webkit-scrollbar { display: none; }
+.adm-pages a { flex: 0 0 auto; border-radius: 999px; padding: 8px 16px; white-space: nowrap; }
+.adm-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+.adm-tile, .adm-section {
+  background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 16px;
+}
+.adm-tile { border-top: 1px solid rgba(255, 255, 255, 0.14); }
+.adm-tile-value { color: var(--adm-olive); font-size: 30px; }
+.adm-tile-help { font-size: 12px; color: var(--adm-muted); margin-top: 6px; line-height: 1.3; }
+.adm-mini, .adm-post { border-radius: 12px; }
+.adm-post img { border-radius: 12px 12px 0 0; }
+.adm-mini-value { color: var(--adm-olive); }
+.adm-sections { position: static; }
+.adm-sections a { padding: 4px 0; }
+.adm-status { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0 0 16px; font-size: 14px; }
+.adm-status-item { display: flex; align-items: center; gap: 8px; }
+.adm-status-ok { color: var(--adm-good); }
+.adm-status-bad { color: var(--adm-bad); }
+.adm-status-none { color: var(--adm-muted); }
+.adm-status-note { color: var(--adm-muted); }
+.adm-foot { margin: 12px 0 0; }
+.adm-post-big { font-size: 20px; font-weight: 700; color: var(--adm-olive); margin-top: 2px; font-variant-numeric: tabular-nums; }
+.adm-post-big span { font-size: 13px; font-weight: 400; color: var(--adm-muted); }
+.adm-post-bar { border-radius: 2px; }
+.adm-post-bar div { background: var(--adm-olive); border-radius: 2px; }
+.adm-link-more { display: inline-block; margin-top: 12px; font-size: 14px; }
+.adm-posts { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+@media (max-width: 520px) {
+  .adm-section { padding: 14px; }
+  .adm-top { margin-bottom: 14px; }
+}

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { requireAdmin } from "@/lib/admin/auth";
 import { buildSummary, fmtMoney, fmtNumber, headlineChange, latestRuns, type Headline, type Period } from "@/lib/admin/summary";
-import { latestInstagram, postCards } from "@/lib/admin/instagram-manual";
+import { latestInstagram } from "@/lib/admin/instagram-manual";
 import { PERIODS, periodRange, longDay } from "@/lib/admin/period";
+import PeriodSwitch from "./PeriodSwitch";
 import LineChart from "./LineChart";
 import AdminActions from "./AdminActions";
 
@@ -106,7 +107,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
   const { p = "7" } = await searchParams;
   const key = PERIODS.some((x) => x.key === p) ? p : "7";
   const { from, to } = periodRange(key);
-  const [summary, runs, ig, posts] = await Promise.all([buildSummary(from, to), latestRuns(), latestInstagram(), postCards()]);
+  const [summary, runs, ig] = await Promise.all([buildSummary(from, to), latestRuns(), latestInstagram()]);
   const cur = summary.current;
   const notes = notesFor(cur, ["shop", "instagram", "tiktok"]);
   const head = (k: string) => summary.headlines.find((h) => h.key === k);
@@ -118,18 +119,11 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
   const hasTikTok = tiktok && tiktok.value !== null;
   const igRows = ig
     ? ([
-        ["Total followers", "followers", true],
-        ["Following", "following", true],
-        ["Posts", "posts", true],
-        ["Profile visits", "profile_views", false],
+        ["Followers", "followers", true],
         ["Views", "views", false],
-        ["Viewers", "reach", false],
-        ["Interactions", "interactions", false],
-        ["Accounts engaged", "accounts_engaged", false],
-        ["External link taps", "website_clicks", false],
+        ["Profile visits", "profile_views", false],
       ] as const).filter(([, m]) => ig.values[m] !== undefined)
     : [];
-  const maxViews = Math.max(1, ...posts.cards.map((c) => c.views));
 
   return (
     <div className="adm-wrap">
@@ -181,13 +175,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
               )}
             </div>
           </details>
-          <nav className="adm-periods" aria-label="Period">
-            {PERIODS.map((x) => (
-              <a key={x.key} href={`/admin?p=${x.key}`} aria-current={x.key === key ? "page" : undefined}>
-                {x.label}
-              </a>
-            ))}
-          </nav>
+          <PeriodSwitch base="/admin" active={key} />
           {key !== "week" && <div className="adm-sub">Includes today so far</div>}
         </div>
       </header>
@@ -195,7 +183,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
       <nav className="adm-sections" aria-label="Sections">
         <a href="#sales">Sales</a>
         <a href="#traffic">Traffic</a>
-        <a href="#audience">Audience and Instagram</a>
+        <a href="#audience">Audience</a>
         <a href="#engagement">Engagement</a>
       </nav>
 
@@ -237,14 +225,10 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
       </section>
 
       <section className="adm-section" id="audience">
-        <h2>Audience and Instagram</h2>
+        <h2>Audience</h2>
+        <h3 className="adm-h3">Instagram, latest figures</h3>
         {ig ? (
           <>
-            <p className="adm-sub" style={{ marginTop: 0 }}>
-              Newest entry, for the week ending {longDay(ig.day)}. Taken from the Instagram insights page every Sunday at 5:30 pm London;
-              <a href="/admin/instagram"> enter by hand</a> if it ever fails.
-              {ig.prevDay ? ` Change is against ${longDay(ig.prevDay)}.` : ""}
-            </p>
             <div className="adm-mini-grid">
               {igRows.map(([label, m, level]) => {
                 const diff = level && ig.prev[m] !== undefined ? ig.values[m] - ig.prev[m] : null;
@@ -259,49 +243,12 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
                 );
               })}
             </div>
+            <a className="adm-link-more" href="/admin/social">
+              All Instagram figures, charts and posts on Social Media
+            </a>
           </>
         ) : (
           <p className="adm-empty">No Instagram figures yet.</p>
-        )}
-
-        <h3 className="adm-h3" style={{ marginTop: 20 }}>
-          Posts, by views ({posts.cards.length})
-        </h3>
-        {posts.cards.length === 0 ? (
-          <p className="adm-empty">No posts recorded yet.</p>
-        ) : (
-          <div className="adm-posts">
-            {posts.cards.map((c) => (
-              <a className="adm-post" key={c.shortcode} href={`https://www.instagram.com/p/${c.shortcode}/`} target="_blank" rel="noopener noreferrer">
-                {c.thumb ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={c.thumb} alt={c.alt} loading="lazy" width={480} height={600} />
-                ) : (
-                  <div className="adm-post-blank">Open on Instagram</div>
-                )}
-                <div className="adm-post-body">
-                  <div className="adm-post-title">{c.title}</div>
-                  <div className="adm-post-meta">
-                    <span>
-                      {fmtNumber(c.views)} views
-                      {c.change ? <span className={c.change > 0 ? "adm-up" : "adm-down"}> {c.change > 0 ? "+" : ""}{c.change}</span> : null}
-                    </span>
-                    <span>{c.postedOn ? longDay(c.postedOn) : ""}</span>
-                  </div>
-                  {c.likes !== null || c.comments !== null ? (
-                    <div className="adm-post-meta">
-                      <span>
-                        {fmtNumber(c.likes ?? 0)} likes, {fmtNumber(c.comments ?? 0)} comments
-                      </span>
-                    </div>
-                  ) : null}
-                  <div className="adm-post-bar">
-                    <div style={{ width: `${Math.max(2, Math.round((c.views / maxViews) * 100))}%` }} />
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
         )}
         <div className="adm-cols" style={{ marginTop: 18 }}>
           <TopTable title="New email subscribers by source" rows={cur.top("email", "new_subscribers_by_source")} unit="People" />
