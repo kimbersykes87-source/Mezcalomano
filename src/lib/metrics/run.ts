@@ -1,5 +1,4 @@
 import { collectCloudflare, CF_SITES } from "@/lib/metrics/cloudflare";
-import { collectGa4 } from "@/lib/metrics/ga4";
 import { collectInstagram } from "@/lib/metrics/instagram";
 import { collectClicks, collectContacts } from "@/lib/metrics/local";
 import { collectEmailList, collectShop } from "@/lib/metrics/shopify";
@@ -12,7 +11,6 @@ type Collector = (day: string, start: Date, end: Date) => Promise<MetricRow[]>;
 const COLLECTORS: Record<string, Collector> = {
   web_main: (_d, s, e) => collectCloudflare(CF_SITES.web_main, s, e),
   web_shop: (_d, s, e) => collectCloudflare(CF_SITES.web_shop, s, e),
-  web_ga4: (d, _s, e) => collectGa4(d, e),
   shop: (d, s, e) => collectShop(d, s, e),
   email: (_d, s, e) => collectEmailList(s, e),
   contact: (_d, s, e) => collectContacts(s, e),
@@ -22,7 +20,7 @@ const COLLECTORS: Record<string, Collector> = {
 };
 
 /** Sources that make sense for a day that is still in progress (Instagram and TikTok are level snapshots, not daily). */
-const TODAY_SOURCES = ["web_main", "web_shop", "web_ga4", "shop", "email", "contact", "clicks"];
+const TODAY_SOURCES = ["web_main", "web_shop", "shop", "email", "contact", "clicks"];
 
 /** Collect the given sources for one London day, one at a time, so one failure never blocks the rest. */
 export async function collectDay(day: string, wanted?: string[]): Promise<Record<string, string>> {
