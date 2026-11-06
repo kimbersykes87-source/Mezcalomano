@@ -197,6 +197,9 @@ async function newestInstagram(after: string): Promise<{ values: Record<string, 
   return { values: pick(days[0]), prev: days[1] ? pick(days[1]) : {} };
 }
 
+/** Sources no longer collected; their old log lines must not keep the health badge red. */
+const RETIRED_SOURCES = new Set(["web_ga4"]);
+
 export async function latestRuns(): Promise<{ source: string; ok: boolean; ran_at: string; detail: string | null; day: string }[]> {
   const { data } = await serviceClient()
     .from("metrics_runs")
@@ -206,7 +209,7 @@ export async function latestRuns(): Promise<{ source: string; ok: boolean; ran_a
   const seen = new Set<string>();
   const out: { source: string; ok: boolean; ran_at: string; detail: string | null; day: string }[] = [];
   for (const r of data ?? []) {
-    if (seen.has(r.source)) continue;
+    if (RETIRED_SOURCES.has(r.source) || seen.has(r.source)) continue;
     seen.add(r.source);
     out.push(r);
   }
