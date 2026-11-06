@@ -9,6 +9,9 @@ import { speciesDirectorySlug } from "@/lib/slug";
 import type { Species } from "@/types/species";
 import { compassWords, managementLabel, uniqueProducerNames } from "@/lib/species-meta";
 
+/** The compass cell holds three words in this order. */
+const COMPASS_SLOTS = ["Smoke", "Agave", "Fermentation"];
+
 /** Cincoañero has no bottling on sale right now. */
 const NO_BOTTLING_SLUGS = new Set(["cincoanero"]);
 /** Bottlings sold as blends of several agaves. */
@@ -254,7 +257,10 @@ export default function SpeciesDetailClient({
             <p className="d-compass-h">The Discovery Deck flavor compass</p>
             <ul>
               {compass.map((w, i) => (
-                <li key={w + i}>{w}</li>
+                <li key={w + i}>
+                  {compass.length === 3 ? <b>{COMPASS_SLOTS[i]}</b> : null}
+                  {w}
+                </li>
               ))}
             </ul>
             <p className="d-compass-note">Taste is personal. Bottles vary by maker.</p>
