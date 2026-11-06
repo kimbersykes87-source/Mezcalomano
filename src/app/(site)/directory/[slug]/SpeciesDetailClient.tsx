@@ -14,8 +14,7 @@ const COMPASS_SLOTS = ["Smoke", "Agave", "Fermentation"];
 
 /** Cincoañero has no bottling on sale right now. */
 const NO_BOTTLING_SLUGS = new Set(["cincoanero"]);
-/** Bottlings sold as blends of several agaves. */
-const ENSEMBLE_SLUGS = new Set(["chahuiqui"]);
+
 
 /** How many states to list in the hero before summarising the rest. */
 const STATE_LIMIT = 3;
@@ -102,10 +101,8 @@ export default function SpeciesDetailClient({
   related?: { slug: string; title: string }[];
 }) {
   const slug = speciesDirectorySlug(species);
-  const rawProducers = producerLinks(species);
-  const producers = ENSEMBLE_SLUGS.has(slug)
-    ? rawProducers.map((p) => ({ ...p, name: `${p.name} (ensemble)` }))
-    : rawProducers;
+  // Chahuiqui's "(ensemble)" label lives in the producer names in the CSV.
+  const producers = producerLinks(species);
   const noBottling = NO_BOTTLING_SLUGS.has(slug) && producers.length === 0;
   const producerCount = uniqueProducerNames(producers.map((p) => p.name)).length;
   const management = managementLabel(species.management_category);
