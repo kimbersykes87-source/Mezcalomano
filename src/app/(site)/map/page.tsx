@@ -8,6 +8,7 @@ import centroid from "@turf/centroid";
 import { ChevronDown } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { getStatesInData, parseStatesForGeo } from "@/lib/map-utils";
+import { speciesDirectorySlug } from "@/lib/slug";
 import type { Species } from "@/types/species";
 
 const AGAVE_YELLOW = "#dfb725";
@@ -293,6 +294,13 @@ export default function MapPage() {
         const list = (data as Species[]) ?? [];
         debug("species loaded", list.length, "rows");
         setSpecies(list);
+        // /map?species={slug} opens on one species (links from the directory pages).
+        const wanted = new URLSearchParams(window.location.search).get("species")?.trim().toLowerCase();
+        const hit = wanted ? list.find((sp) => speciesDirectorySlug(sp) === wanted) : undefined;
+        if (hit) {
+          setSelectedCommonName(hit.common_name);
+          setFocus({ kind: "species", name: hit.common_name });
+        }
       }
       setLoading(false);
     }

@@ -8,6 +8,24 @@ import { speciesDirectorySlug, toSlug } from "@/lib/slug";
 import SpeciesDetailClient from "./SpeciesDetailClient";
 import { fetchAllSpecies } from "@/lib/species-list-server";
 import { toAgaveCard } from "@/lib/agave-cards";
+import { speciesMetaDescription, speciesTitle } from "@/lib/species-meta";
+import { faqForSlug } from "@/lib/species-faq";
+import { publishedDiaries } from "@/lib/diaries";
+import type { DiaryBlock } from "@/lib/diaries/types";
+
+function blockText(b: DiaryBlock): string {
+  if (b.type === "p" || b.type === "h2") return b.text;
+  if (b.type === "list") return b.items.join("\n");
+  return [...b.head, ...b.rows.flat()].join("\n");
+}
+
+/** Published Diaries posts whose body links to this directory page. */
+function relatedDiaries(slug: string) {
+  const link = new RegExp(`\\(/directory/${slug}(?=[)#?/])`);
+  return publishedDiaries()
+    .filter((e) => e.body.some((b) => link.test(blockText(b))))
+    .map((e) => ({ slug: e.slug, title: e.title }));
+}
 
 const DEFAULT_OG = OG_IMAGE_PATH;
 
@@ -35,26 +53,24 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: "Species not found" };
   }
 
-  const title = species.common_name;
-  const description =
-    species.description?.trim().slice(0, 160) ||
-    `${species.scientific_name}, an agave species in the Mezcalómano directory.`;
+  const title = speciesTitle(species);
+  const description = speciesMetaDescription(species);
   const cardImage = resolveMatrixImagePathForCommonName(species.common_name);
   const ogImage = cardImage ?? DEFAULT_OG;
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: { canonical: `/directory/${speciesDirectorySlug(species)}` },
     openGraph: {
-      title: `${title} | Mezcalómano`,
+      title,
       description,
       type: "article",
       images: [{ url: ogImage, width: 1200, height: 630 }],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} | Mezcalómano`,
+      title,
       description,
       images: [ogImage],
     },
@@ -82,11 +98,30 @@ export default async function SpeciesDetailPage({ params }: PageProps) {
   const all = await fetchAllSpecies();
   const rail = all.map((s) => toAgaveCard(s, resolveMatrixImagePathForCommonName(s.common_name)));
   const image = resolveMatrixImagePathForCommonName(species.common_name) ?? species.image_url;
+  const faq = faqForSlug(pathSlug);
+  const faqLd = faq.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faq.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      }
+    : null;
 
   return (
     <>
       <JsonLd data={breadcrumbLd} />
-      <SpeciesDetailClient species={species} image={image} rail={rail} />
+      {faqLd ? <JsonLd data={faqLd} /> : null}
+      <SpeciesDetailClient
+        species={species}
+        image={image}
+        rail={rail}
+        faq={faq}
+        related={relatedDiaries(pathSlug)}
+      />
     </>
   );
 }
