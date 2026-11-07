@@ -13,6 +13,7 @@ import { readFileSync, existsSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { randomUUID } from "crypto";
+import { producerDataProblems } from "./lib/producer-data.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = join(__dirname, "..");
@@ -105,12 +106,7 @@ async function main() {
     const producerLinksRaw = row.producer_links ?? "";
     const producerLinks = parseProducerLinks(producerLinksRaw);
 
-    const pCount = producers ? producers.split(",").length : 0;
-    const lCount = producerLinks ? producerLinks.split(",").length : 0;
     const name = String(row.common_name ?? "").trim();
-    if (pCount !== lCount && (pCount || lCount)) {
-      problems.push(`${name}: ${pCount} producers but ${lCount} links (names after the gap would open the wrong site)`);
-    }
     for (const u of producerLinks ? producerLinks.split(",") : []) {
       if (!/^https?:\/\//.test(u)) problems.push(`${name}: "${u.slice(0, 60)}" is not a URL`);
       else if ((u.match(/https?:\/\//g) || []).length > 1) problems.push(`${name}: two URLs run together: ${u.slice(0, 80)}`);
@@ -147,6 +143,18 @@ async function main() {
       ),
     };
   });
+
+  // Shared offline checks (scripts/lib/producer-data.mjs), the same ones the weekly link
+  // check reports. Blocking kinds put a wrong link in front of a customer: duplicate URL on
+  // one species, the same producer listed twice, a producer pointing at someone else's host,
+  // and mismatched counts. Advisory kinds are printed but do not stop a seed.
+  const shared = producerDataProblems(rows, projectRoot);
+  for (const pr of shared.filter((x) => x.blocking)) problems.push(`${pr.species} (${pr.kind}): ${pr.problem}`);
+  const notes = shared.filter((x) => !x.blocking);
+  if (notes.length) {
+    console.log(`\n${notes.length} note(s) worth a look (these do not stop the seed):`);
+    for (const pr of notes) console.log(`  - ${pr.species} (${pr.kind}): ${pr.problem}`);
+  }
 
   if (problems.length) {
     console.error(`\nNot seeding: ${problems.length} problem(s) in the CSV. Nothing was written to Supabase.\n`);
