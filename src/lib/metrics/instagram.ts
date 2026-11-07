@@ -61,9 +61,11 @@ export async function graphGet<T>(path: string, params: Record<string, string>):
   const url = new URL(path.startsWith("http") ? path : `${GRAPH}${path}`);
   for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
   const res = await fetch(url, { cache: "no-store" });
-  const json = (await res.json().catch(() => null)) as (T & { error?: { message?: string } }) | null;
+  const json = (await res.json().catch(() => null)) as (T & { error?: { message?: string; code?: number; error_subcode?: number; type?: string; fbtrace_id?: string } }) | null;
   if (!res.ok || !json || json.error) {
-    throw new Error(`Meta ${path.split("?")[0]}: ${json?.error?.message ?? `HTTP ${res.status}`}`);
+    const e = json?.error;
+    const extra = e ? ` (code ${e.code ?? "?"}${e.error_subcode ? `/${e.error_subcode}` : ""}, ${e.type ?? "no type"}, trace ${e.fbtrace_id ?? "none"}, HTTP ${res.status})` : "";
+    throw new Error(`Meta ${path.split("?")[0]}: ${e?.message ?? `HTTP ${res.status}`}${extra}`);
   }
   return json;
 }
