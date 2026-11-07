@@ -106,7 +106,10 @@ export async function savedEntry(weekEnd: string): Promise<Partial<Record<FieldK
 
 export async function hasEntry(weekEnd: string): Promise<boolean> {
   const e = await savedEntry(weekEnd);
-  return e.followers !== undefined && e.profileVisits !== undefined;
+  if (e.followers !== undefined && e.profileVisits !== undefined) return true;
+  // The nightly API pull saves yesterday's figures, so by Sunday evening the newest rows are dated Saturday.
+  const d = await savedEntry(addDays(weekEnd, -1));
+  return d.followers !== undefined && d.profileVisits !== undefined;
 }
 
 export type LatestInstagram = {
