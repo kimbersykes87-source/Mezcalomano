@@ -129,12 +129,6 @@ export default function SpeciesDetailClient({
         : /cultivated|planted|farmed/i.test(use)
           ? "Cultivated"
           : "Agave species";
-  const producersText =
-    producers.length > 0
-      ? us.length > 0
-        ? `${producers.length}, ${us.length} sell in the US`
-        : String(producers.length)
-      : null;
   const showBottleSection = producers.length > 0 || noBottling;
   const longName = species.common_name.length > 8;
 
@@ -160,12 +154,6 @@ export default function SpeciesDetailClient({
                 <div>
                   <dt>{states.length === 1 ? "State" : "States"}</dt>
                   <dd title={states.length > STATE_LIMIT ? states.join(", ") : undefined}>{statesText}</dd>
-                </div>
-              ) : null}
-              {producersText ? (
-                <div>
-                  <dt>Producers</dt>
-                  <dd>{producersText}</dd>
                 </div>
               ) : null}
             </dl>
@@ -286,7 +274,7 @@ export default function SpeciesDetailClient({
           {us.length > 0 ? (
             <>
               <p className="sub">
-                {us.length} US {us.length === 1 ? "shop ships" : "shops ship"} it. Your next pour just got way more epic.
+                {us.length} {us.length === 1 ? "producer sells" : "producers sell"} it in the US. Your next pour just got way more epic.
               </p>
               <ul className="d-buy">
                 {us.map((p, i) => (
