@@ -3,6 +3,10 @@ import type { MetricRow } from "./store";
 import { EXCLUDE_UNTIL, EXCLUDED_COUNTRY_CODE } from "./exclude";
 
 /**
+ * NOT in the nightly run (removed Nov 2026: no service account key could be created, and the dashboard
+ * does not read GA4 yet). To switch it back on, add `web_ga4: (d, _s, e) => collectGa4(d, e)` to COLLECTORS and
+ * "web_ga4" to TODAY_SOURCES in run.ts.
+ *
  * Page views, sessions and visitors from Google Analytics 4 (Data API).
  * Needs two env vars in Vercel:
  *   GA4_SERVICE_ACCOUNT_JSON  the service account key (the whole JSON file)
