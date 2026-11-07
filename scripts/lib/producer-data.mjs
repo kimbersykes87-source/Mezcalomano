@@ -168,7 +168,7 @@ const SPECIES_PATH_WORDS = {
   tepemete: ["tepemete"],
   chahuiqui: ["chahuiqui", "chawi"],
   espadilla: ["espadilla"],
-  cincoanero: ["cincoanero"],
+  cincoanero: ["cincoanero", "mexicanito"],
   castilla: ["castilla"],
   chuparrosa: ["chuparrosa"],
   pulquero: ["pulquero"],

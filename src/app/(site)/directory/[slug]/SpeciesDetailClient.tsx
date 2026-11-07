@@ -13,7 +13,9 @@ import { compassWords, managementLabel, sizeClassLabel, uniqueProducerNames } fr
 const COMPASS_SLOTS = ["Smoke", "Agave", "Fermentation"];
 
 /** Cincoañero has no bottling on sale right now. */
-const NO_BOTTLING_SLUGS = new Set(["cincoanero"]);
+// Species with no bottling on sale anywhere: the page says so instead of showing a producer
+// count. Cincoanero left this list on 2026-11-07 when a Mexicanito bottling was found.
+const NO_BOTTLING_SLUGS = new Set<string>([]);
 
 
 /** How many states to list in the hero before summarising the rest. */

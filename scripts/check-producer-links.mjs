@@ -72,11 +72,11 @@ const SPECIES_ALIASES = {
   tepemete: ["tepemete", "angustiarum"],
   chahuiqui: ["chahuiqui", "ensemble", "ensamble"],
   espadilla: ["espadilla", "angustifolia"],
-  cincoanero: ["cincoañero", "macroacantha"],
+  cincoanero: ["cincoañero", "macroacantha", "mexicanito"],
   castilla: ["castilla", "karwinskii"],
   chuparrosa: ["chuparrosa", "nussaviorum"],
   pulquero: ["pulquero", "mapisaga"],
-  pulque_chino: ["pulque chino", "pulquechino"],
+  pulque_chino: ["pulque chino", "pulquechino", "pulquero chino"],
 };
 
 /**
@@ -99,6 +99,7 @@ const HAND_CHECKED = {
   cenizo: { "https://claseazul.com/clase-azul-family/mezcal-clase-azul_durango": "2026-10-25" },
   papalote: { "https://claseazul.com/clase-azul-family/clase-azul-mezcal-guerrero": "2026-10-25" },
   espadin: { "https://shop.ilegalmezcal.com/products/joven-750": "2026-10-25", "https://casacortes.mx/ecommerce/producto/21": "2026-10-25" },
+  espadilla: { "https://astorwines.com/item/45477": "2026-11-07" },
 };
 
 const BUY_RE =

@@ -1,5 +1,5 @@
 {
-  "_about": "US shops whose full catalog the weekly directory job scans for new bottles (Shopify stores only: they publish /products.json). Order matters: earlier shops are preferred when several stock the same bottle. 'producerFrom' says where the shop puts the producer name: 'title' (text before the first ' - '), 'vendor', or 'tag:Producer_'. 'skipVendors' drops stock that is not shipped from the US.",
+  "_about": "US shops whose full catalog the weekly directory job scans for new bottles (Shopify stores only: they publish /products.json). Order matters: earlier shops are preferred when several stock the same bottle. 'producerFrom' says where the shop puts the producer name: 'title' (text before the first ' - '), 'vendor', or 'tag:Producer_'. 'skipVendors' drops stock that is not shipped from the US. 'match' finds a producer the directory already lists inside the product title, for shops that put their own name in 'vendor' and no separator in the title.",
   "maxUsLinksPerSpecies": 5,
   "shops": [
     {
@@ -19,6 +19,41 @@
       "skipVendors": [
         "ConciergeUK"
       ]
+    },
+    {
+      "host": "flaskfinewines.com",
+      "name": "Flask Fine Wine",
+      "producerFrom": "match"
+    },
+    {
+      "host": "elcerritoliquor.com",
+      "name": "El Cerrito Liquor",
+      "producerFrom": "match"
+    },
+    {
+      "host": "missionliquor.com",
+      "name": "Mission Wine & Spirits",
+      "producerFrom": "match"
+    },
+    {
+      "host": "woodencork.com",
+      "name": "Wooden Cork",
+      "producerFrom": "match"
+    },
+    {
+      "host": "theepicureantrader.com",
+      "name": "The Epicurean Trader",
+      "producerFrom": "match"
+    },
+    {
+      "host": "bittersandbottles.com",
+      "name": "Bitters & Bottles",
+      "producerFrom": "match"
+    },
+    {
+      "host": "mashandgrape.com",
+      "name": "Mash&Grape",
+      "producerFrom": "match"
     }
   ],
   "producerAliases": {
