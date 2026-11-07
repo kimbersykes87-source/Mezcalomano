@@ -7,6 +7,14 @@ import { parseStates, type AgaveCard } from "@/lib/agave-cards";
 import { producerLinks } from "@/lib/producers";
 import { speciesDirectorySlug } from "@/lib/slug";
 import type { Species } from "@/types/species";
+import { compassWords, managementLabel, sizeClassLabel, uniqueProducerNames } from "@/lib/species-meta";
+
+/** The compass cell holds three words in this order. */
+const COMPASS_SLOTS = ["Smoke", "Agave", "Fermentation"];
+
+/** Cincoañero has no bottling on sale right now. */
+const NO_BOTTLING_SLUGS = new Set(["cincoanero"]);
+
 
 /** How many states to list in the hero before summarising the rest. */
 const STATE_LIMIT = 3;
@@ -83,13 +91,25 @@ export default function SpeciesDetailClient({
   species,
   image,
   rail,
+  faq = [],
+  related = [],
 }: {
   species: Species;
   image: string | null;
   rail: AgaveCard[];
+  faq?: { q: string; a: string }[];
+  related?: { slug: string; title: string }[];
 }) {
   const slug = speciesDirectorySlug(species);
+  // Chahuiqui's "(ensemble)" label lives in the producer names in the CSV.
   const producers = producerLinks(species);
+  const noBottling = NO_BOTTLING_SLUGS.has(slug) && producers.length === 0;
+  const producerCount = uniqueProducerNames(producers.map((p) => p.name)).length;
+  const management = managementLabel(species.management_category);
+  const compass = compassWords(species.taste_highlight);
+  const hasFacts = Boolean(
+    species.nickname || species.size_category || management || species.elevation_range || species.conservation_status
+  );
   const us = producers.filter((p) => p.us && p.url);
   const others = producers.filter((p) => !(p.us && p.url));
   const states = parseStates(species.states);
@@ -109,12 +129,7 @@ export default function SpeciesDetailClient({
         : /cultivated|planted|farmed/i.test(use)
           ? "Cultivated"
           : "Agave species";
-  const producersText =
-    producers.length > 0
-      ? us.length > 0
-        ? `${producers.length}, ${us.length} sell in the US`
-        : String(producers.length)
-      : null;
+  const showBottleSection = producers.length > 0 || noBottling;
   const longName = species.common_name.length > 8;
 
   return (
@@ -139,12 +154,6 @@ export default function SpeciesDetailClient({
                 <div>
                   <dt>{states.length === 1 ? "State" : "States"}</dt>
                   <dd title={states.length > STATE_LIMIT ? states.join(", ") : undefined}>{statesText}</dd>
-                </div>
-              ) : null}
-              {producersText ? (
-                <div>
-                  <dt>Producers</dt>
-                  <dd>{producersText}</dd>
                 </div>
               ) : null}
             </dl>
@@ -177,15 +186,95 @@ export default function SpeciesDetailClient({
         </div>
       </section>
 
-      {producers.length > 0 ? (
+      <section className="d-sec d-facts" aria-label={`${species.common_name} at a glance`}>
+        {hasFacts ? (
+          <dl className="d-fact-list">
+            <div>
+              <dt>Scientific name</dt>
+              <dd>{species.scientific_name}</dd>
+            </div>
+            {species.nickname ? (
+              <div>
+                <dt>Nickname</dt>
+                <dd>{species.nickname}</dd>
+              </div>
+            ) : null}
+            {species.size_category ? (
+              <div>
+                <dt>Size class</dt>
+                <dd>{sizeClassLabel(species.size_category)}</dd>
+              </div>
+            ) : null}
+            {size ? (
+              <div>
+                <dt>Size</dt>
+                <dd>{size}</dd>
+              </div>
+            ) : null}
+            {management ? (
+              <div>
+                <dt>Management</dt>
+                <dd>{management}</dd>
+              </div>
+            ) : null}
+            {statesText ? (
+              <div>
+                <dt>{states.length === 1 ? "State" : "States"}</dt>
+                <dd>{states.join(", ")}</dd>
+              </div>
+            ) : null}
+            {species.elevation_range ? (
+              <div>
+                <dt>Elevation</dt>
+                <dd>{species.elevation_range}</dd>
+              </div>
+            ) : null}
+            {species.conservation_status ? (
+              <div>
+                <dt>Conservation</dt>
+                <dd>IUCN: {species.conservation_status}</dd>
+              </div>
+            ) : null}
+          </dl>
+        ) : null}
+        {compass.length > 0 ? (
+          <div className="d-compass">
+            <p className="d-compass-h">The Discovery Deck flavor compass</p>
+            <ul>
+              {compass.map((w, i) => (
+                <li key={w + i}>
+                  {compass.length === 3 ? <b>{COMPASS_SLOTS[i]}</b> : null}
+                  {w}
+                </li>
+              ))}
+            </ul>
+            <p className="d-compass-note">Taste is personal. Bottles vary by maker.</p>
+          </div>
+        ) : null}
+        <p className="d-maplink">
+          <Link href={`/map?species=${slug}`}>
+            See where <span className="notranslate" translate="no">{species.common_name}</span> grows on the map
+          </Link>
+        </p>
+      </section>
+
+      {showBottleSection ? (
         <section className="d-sec" id="grab-a-bottle" aria-labelledby="grab-a-bottle-title">
           <h2 id="grab-a-bottle-title">
             Grab a bottle of <span className="notranslate" translate="no">{species.common_name}</span>
           </h2>
+          {noBottling ? (
+            <p className="sub">No current bottling</p>
+          ) : (
+            <p className="d-count">
+              Who makes <span className="notranslate" translate="no">{species.common_name}</span> mezcal:{" "}
+              {producerCount} {producerCount === 1 ? "producer" : "producers"}
+            </p>
+          )}
           {us.length > 0 ? (
             <>
               <p className="sub">
-                {us.length} US {us.length === 1 ? "shop ships" : "shops ship"} it. Your next pour just got way more epic.
+                {us.length} {us.length === 1 ? "producer sells" : "producers sell"} it in the US. Your next pour just got way more epic.
               </p>
               <ul className="d-buy">
                 {us.map((p, i) => (
@@ -210,7 +299,7 @@ export default function SpeciesDetailClient({
                 ))}
               </ul>
             </>
-          ) : (
+          ) : noBottling ? null : (
             <p className="sub">These producers bottle it. None ship to the US yet.</p>
           )}
           {others.length > 0 ? (
@@ -231,6 +320,35 @@ export default function SpeciesDetailClient({
               .
             </p>
           ) : null}
+        </section>
+      ) : null}
+
+      {faq.length > 0 ? (
+        <section className="d-sec d-faq" aria-labelledby="faq-title">
+          <h2 id="faq-title">
+            Questions about <span className="notranslate" translate="no">{species.common_name}</span>
+          </h2>
+          <div>
+            {faq.map((f, i) => (
+              <details key={i}>
+                <summary>{f.q}</summary>
+                <p>{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {related.length > 0 ? (
+        <section className="d-sec d-related" aria-labelledby="related-title">
+          <h2 id="related-title">From the Diaries</h2>
+          <ul>
+            {related.map((r) => (
+              <li key={r.slug}>
+                <Link href={`/diaries/${r.slug}`}>{r.title}</Link>
+              </li>
+            ))}
+          </ul>
         </section>
       ) : null}
 

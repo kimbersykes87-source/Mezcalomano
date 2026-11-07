@@ -776,3 +776,24 @@ select.s-intl-in option{background:#2F322F;color:#FFFFFF}
 .j-table-wrap th,.j-table-wrap td{padding:10px 9px;letter-spacing:.01em}
 .j-table-wrap tbody th{width:27%}
 }
+
+/* Directory species page additions (Nov 2026) */
+.d-facts{padding-top:40px}
+.d-fact-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px 32px;margin:0}
+.d-fact-list dt{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#D4D3CB;margin-bottom:2px}
+.d-fact-list dd{margin:0;font-size:18px;font-weight:300}
+.d-compass{margin-top:28px}
+.d-compass-h{margin:0 0 8px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#D4D3CB}
+.d-compass ul{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:0;padding:0}
+.d-compass li{border:1px solid currentColor;border-radius:999px;padding:6px 16px;font-size:17px;font-weight:300}
+.d-compass-note{margin:10px 0 0;font-size:15px;font-weight:300;color:#D4D3CB}
+.d-maplink{margin:24px 0 0;font-size:18px;font-weight:300}
+.d-maplink a{text-decoration:underline;text-underline-offset:4px}
+.d-count{margin:8px 0 6px;font-size:18px;font-weight:300;color:#E6E4DA}
+.d-faq details{border-top:1px solid rgba(212,211,203,.3);padding:14px 0}
+.d-faq summary{cursor:pointer;font-size:19px;font-weight:400}
+.d-faq details p{margin:10px 0 0;font-size:17px;font-weight:300;line-height:1.6;color:#E6E4DA}
+.d-related ul{list-style:none;margin:16px 0 0;padding:0;font-size:18px;font-weight:300;line-height:1.9}
+.d-related a{text-decoration:underline;text-underline-offset:4px}
+@media (max-width:640px){.d-facts{padding-top:28px}.d-fact-list{grid-template-columns:1fr 1fr;gap:16px 20px}}
+.d-compass li b{display:block;font-size:11px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:#D4D3CB}

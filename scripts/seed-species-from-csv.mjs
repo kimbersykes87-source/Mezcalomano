@@ -83,6 +83,20 @@ async function main() {
   }
 
   console.log(`Loaded ${rows.length} rows from CSV`);
+
+  // Six directory fields (migration 20261106120000). Only written when the CSV carries the columns,
+  // so the old CSV still seeds before the migration is applied.
+  const NEW_FIELDS = [
+    "taste_highlight",
+    "nickname",
+    "size_category",
+    "management_category",
+    "elevation_range",
+    "conservation_status",
+  ];
+  const csvHeaders = new Set(parsed.meta.fields ?? []);
+  const newFields = NEW_FIELDS.filter((f) => csvHeaders.has(f));
+  console.log(newFields.length ? `New directory fields in CSV: ${newFields.join(", ")}` : "No new directory fields in CSV.");
   const problems = [];
 
   const speciesRows = rows.map((row, i) => {
@@ -128,6 +142,9 @@ async function main() {
       producer_links: producerLinks,
       habitat,
       image_url: null,
+      ...Object.fromEntries(
+        newFields.map((f) => [f, row[f] && String(row[f]).trim() ? String(row[f]).trim() : null])
+      ),
     };
   });
 
@@ -179,6 +196,7 @@ async function main() {
           producers: row.producers,
           producer_links: row.producer_links,
           habitat: row.habitat,
+          ...Object.fromEntries(newFields.map((f) => [f, row[f]])),
         })
         .eq("id", existingId);
       if (error) {
