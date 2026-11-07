@@ -111,7 +111,10 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
   const cur = summary.current;
   const notes = notesFor(cur, ["shop", "instagram", "tiktok"]);
   const head = (k: string) => summary.headlines.find((h) => h.key === k);
-  const failing = runs.filter((r) => !r.ok && !r.source.endsWith("_test"));
+  // A source that is simply not connected yet (TikTok) is shown in the table but is not a fault.
+  const notConnected = (r: { ok: boolean; detail: string | null }) => !r.ok && /not connected yet/i.test(r.detail ?? "");
+  const failing = runs.filter((r) => !r.ok && !notConnected(r) && !r.source.endsWith("_test"));
+  const connectedCount = runs.filter((r) => !notConnected(r)).length;
   const lastRun = runs.length ? new Date(Math.max(...runs.map((r) => new Date(r.ran_at).getTime()))) : null;
   const lastRunText = lastRun ? lastRun.toLocaleString("en-GB", { timeZone: "Europe/London", dateStyle: "medium", timeStyle: "short" }) : "never";
   const tiktok = head("tt_followers");
@@ -142,7 +145,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
               <span className="adm-dot" aria-hidden="true" />
               {failing.length
                 ? `${failing.length} source${failing.length === 1 ? "" : "s"} need attention`
-                : `All ${runs.length} sources OK, last run ${lastRunText}`}
+                : `All ${connectedCount} sources OK, last run ${lastRunText}`}
             </summary>
             <div className="adm-health-body">
               <table className="adm-table">
@@ -161,7 +164,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
                         {new Date(r.ran_at).toLocaleString("en-GB", { timeZone: "Europe/London", dateStyle: "medium", timeStyle: "short" })}
                         <div className="adm-sub">for {longDay(r.day)}</div>
                       </td>
-                      <td className={r.ok ? "adm-ok" : "adm-err"}>{r.ok ? "OK" : r.detail}</td>
+                      <td className={r.ok ? "adm-ok" : notConnected(r) ? "adm-sub" : "adm-err"}>{r.ok ? "OK" : notConnected(r) ? "Not connected yet" : r.detail}</td>
                     </tr>
                   ))}
                 </tbody>
