@@ -246,11 +246,15 @@ async function checkLink(slug, row, producer, url, keywords) {
   // A timeout or a refused connection is usually this run, not a dead link: with 8 requests
   // in flight a healthy host can drop one. Retry once before calling it DEAD, because two
   // DEAD verdicts two days apart make the weekly job swap or remove the link.
-  if (status === 0) {
-    await new Promise((res) => setTimeout(res, 2000));
+  // Observed 2026-11-07: grulani.com, which carries 7 links, returned ENOTFOUND twice two
+  // seconds apart and was serving HTTP 200 a minute later. So back off further before
+  // believing it, and give DNS two chances rather than one.
+  for (const waitMs of [3000, 8000]) {
+    if (status !== 0) break;
+    await new Promise((res) => setTimeout(res, waitMs));
     ({ status, finalUrl, body, error } = await fetchPage(url));
-    if (status === 0) error = `${error}, twice`;
   }
+  if (status === 0) error = `${error}, three times`;
   if (/sgcaptcha|meta http-equiv="refresh"[^>]*captcha/i.test(body)) {
     return { ...r, status, finalUrl, verdict: "BLOCKED", note: "Captcha served to automated checks; open it by hand" };
   }

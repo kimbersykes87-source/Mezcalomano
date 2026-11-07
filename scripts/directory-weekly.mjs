@@ -139,6 +139,42 @@ function speciesOf(title) {
 }
 
 /** Producer name from a product title: the text before the species name or the first " - ". */
+/**
+ * producerFrom "match": find a producer the directory already knows inside the product title.
+ *
+ * The three extraction modes assume the shop tells you the producer: Madre Shop writes
+ * "Neta - Pulquero Chino", Maguey Spirits fills `vendor`, Cask Cartel uses a Producer_ tag.
+ * General liquor retailers do neither. Mission Liquor puts its own name in `vendor` and
+ * writes "Tosba Dua Warash Joven Mezcal 750ml", with no separator to split on, so extraction
+ * would yield the shop or the whole title.
+ *
+ * So instead of extracting a name, test the title against the producers the directory already
+ * lists, plus the shop spellings in `producerAliases`. The trade is deliberate: this finds new
+ * bottles from known producers and never discovers a new producer, which is what filling the
+ * thin species needs, and it cannot invent a producer name that is not already ours.
+ */
+function makeProducerMatcher(dir) {
+  const entries = [];
+  const seen = new Set();
+  for (const sp of dir.species) {
+    for (const pr of sp.pairs) {
+      if (!pr.producer || seen.has(pr.producer)) continue;
+      seen.add(pr.producer);
+      entries.push({ name: pr.producer, probe: norm(pr.producer).replace(/\([^)]*\)/g, " ").replace(/[^a-z0-9]+/g, " ").trim() });
+    }
+  }
+  for (const [alias, canonical] of Object.entries(CATALOGS.producerAliases || {})) {
+    entries.push({ name: canonical, probe: norm(alias).replace(/[^a-z0-9]+/g, " ").trim() });
+  }
+  // Longest probe first, so "Mezcal de Leyendas" is preferred over a shorter name inside it.
+  entries.sort((a, b) => b.probe.length - a.probe.length);
+  return (title) => {
+    const t = " " + norm(title).replace(/[^a-z0-9]+/g, " ").trim() + " ";
+    const hit = entries.find((e) => e.probe.length >= 4 && t.includes(" " + e.probe + " "));
+    return hit ? hit.name : "";
+  };
+}
+
 function producerFromTitle(title) {
   let t = title.replace(/\s+/g, " ").trim();
   t = t.split(/\s+-\s*|-\s+|\s*\(|-(?=[A-Z])/)[0];
@@ -164,7 +200,7 @@ async function getJson(url) {
   return null;
 }
 
-async function loadCatalogs() {
+async function loadCatalogs(matchProducer = () => "") {
   const products = [];
   for (const shop of CATALOGS.shops) {
     let page = 1, got = 0;
@@ -177,6 +213,7 @@ async function loadCatalogs() {
         let producer = "";
         if (shop.producerFrom === "title") producer = producerFromTitle(p.title);
         else if (shop.producerFrom === "vendor") producer = p.vendor;
+        else if (shop.producerFrom === "match") producer = matchProducer(p.title);
         else if (shop.producerFrom.startsWith("tag:")) {
           const pre = shop.producerFrom.slice(4);
           producer = (p.tags || []).find((t) => t.startsWith(pre))?.slice(pre.length) || p.title.split(/\s+/).slice(0, 2).join(" ");
@@ -228,8 +265,8 @@ async function main() {
     if (nextLinks[k].strikes < 2) firstStrike.push(nextLinks[k]);
   }
 
-  const catalog = await loadCatalogs();
-  const inStock = catalog.filter((p) => p.available && p.species && p.price > 0);
+  const catalog = await loadCatalogs(makeProducerMatcher(dir));
+  const inStock = catalog.filter((p) => p.available && p.species && p.price > 0 && p.producer);
   const known = new Map();
   for (const sp of dir.species) for (const p of sp.pairs) known.set(producerKey(p.producer), p.producer);
   const canonicalProducer = (name) => {
