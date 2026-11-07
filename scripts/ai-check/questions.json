@@ -1,0 +1,8 @@
+{
+  "_note": "PLACEHOLDER questions for testing the machine only. Siona replaces these with her 10 questions, then the file is frozen for six months.",
+  "frozen": false,
+  "questions": [
+    { "id": "T1", "text": "PLACEHOLDER: what is a good gift for someone who loves mezcal?", "group": "gift" },
+    { "id": "T2", "text": "PLACEHOLDER: are there educational playing cards about agave?", "group": "education" }
+  ]
+}

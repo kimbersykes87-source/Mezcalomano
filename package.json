@@ -23,7 +23,9 @@
     "check:links": "node scripts/check-producer-links.mjs",
     "directory:weekly": "node scripts/directory-weekly.mjs",
     "check:brand": "node scripts/check-brand.mjs",
-    "test:venues": "node --test \"scripts/venues/test/*.test.mjs\""
+    "test:venues": "node --test \"scripts/venues/test/*.test.mjs\"",
+    "test:ai-check": "node scripts/ai-check/test.mjs",
+    "ai-check": "node scripts/ai-check/run.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.95.3",

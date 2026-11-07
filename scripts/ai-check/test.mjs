@@ -1,0 +1,20 @@
+// No network, no keys. Checks the scorer and the dry run.
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import { execFileSync } from "node:child_process";
+import { score } from "./score.mjs";
+const facts = JSON.parse(fs.readFileSync(new URL("./facts.json", import.meta.url), "utf8"));
+let s = score({ text: "The Mezcalómano Discovery Deck costs $29.99 and has 40 agave species. Ships Nov 30, US addresses only. Similar: TUYO.", links: [{ url: "https://shop.mezcalomano.com/x" }] }, facts);
+assert.ok(s.mentioned && s.domainLinked);
+assert.deepEqual(s.factsHit.sort(), ["price", "species", "ships", "usonly"].sort());
+assert.deepEqual(s.competitors, ["TUYO"]);
+s = score({ text: "Mezcalomano deck is $39.99 and weighs 150g", links: [] }, facts);
+assert.deepEqual(s.wrong.sort(), ["price_39", "weight_150"]);
+s = score({ text: "A cruise ship has a Discovery deck 5", links: [] }, facts);
+assert.ok(s.mentioned, "known false positive: cruise decks match 'discovery deck'");
+s = score({ text: "", links: [] }, facts);
+assert.ok(s.empty && !s.mentioned);
+const out = execFileSync("node", [new URL("./run.mjs", import.meta.url).pathname, "--dry-run", "--out", process.env.TMPDIR || "/tmp/ai-check-test"], { encoding: "utf8" });
+assert.match(out, /DRY RUN/);
+assert.match(out, /Placeholder questions/);
+console.log("ai-check tests passed");

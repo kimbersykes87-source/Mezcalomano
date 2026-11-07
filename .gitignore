@@ -13,3 +13,6 @@ CLAUDE.md
 
 # Venues pipeline menu text cache (never commit)
 .cache/
+
+# AI answer check output
+ai-check-results/
