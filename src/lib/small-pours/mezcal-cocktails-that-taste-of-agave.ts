@@ -7,7 +7,7 @@ export const mezcalCocktailsThatTasteOfAgave: PostEntry = {
     description: "Four simple mezcal cocktails with measures, and how to choose a mezcal for each so the agave stays in the glass.",
     category: "Drinks",
     answer: "A mezcal cocktail keeps the agave in the glass when you pick the mezcal to suit the drink and keep the mixers fresh and light. Here are four simple recipes, with the style of mezcal that suits each.",
-    status: "draft",
+    status: "review",
     updated: "2026-11-08",
     image: {
       src: "/small-pours/mezcal-cocktails-that-taste-of-agave-hero.jpg",

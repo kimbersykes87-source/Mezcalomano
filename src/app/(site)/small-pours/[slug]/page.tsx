@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     title: e.title,
     description: e.description,
     alternates: { canonical: url },
-    robots: e.status === "draft" ? { index: false, follow: false } : undefined,
+    robots: e.status === "published" ? undefined : { index: false, follow: false },
     openGraph: { type: "article", title: `${e.title} | Mezcalómano`, description: e.description, url, images: [{ url: e.image.src, width: e.image.width, height: e.image.height, alt: e.image.alt }] },
     twitter: { card: "summary_large_image", title: e.title, description: e.description, images: [e.image.src] },
   };
@@ -36,7 +36,7 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
   const { slug } = await params;
   const e = getPost(slug);
   if (!e) notFound();
-  const isDraft = e.status === "draft";
+  const isDraft = e.status !== "published";
   const url = `${SITE_URL}/small-pours/${e.slug}`;
 
   const articleLd = {

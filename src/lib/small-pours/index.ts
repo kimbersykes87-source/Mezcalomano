@@ -55,6 +55,8 @@ const ALL: PostEntry[] = [
 ];
 
 export const allPosts = (): PostEntry[] => ALL;
+/** Shown on the contents page: everything except drafts, so a batch can be walked before sign off. */
+export const listedPosts = (): PostEntry[] => ALL.filter((e) => e.status !== "draft");
 export const publishedPosts = (): PostEntry[] => ALL.filter((e) => e.status === "published");
 export const getPost = (slug: string): PostEntry | undefined => ALL.find((e) => e.slug === slug);
 /** The menu link and sitemap entries appear only once there is something to read. */

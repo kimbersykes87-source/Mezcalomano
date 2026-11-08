@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SMALL_POURS_NAME, hasPublishedPosts, publishedPosts } from "@/lib/small-pours";
+import { SMALL_POURS_NAME, hasPublishedPosts, listedPosts } from "@/lib/small-pours";
 
 const DESCRIPTION =
   "Notes from two people who love mezcal: agave species explained, how to read a label, gift ideas and tasting nights.";
@@ -34,7 +34,7 @@ function teaser(answer: string): string {
 }
 
 export default function SmallPoursPage() {
-  const entries = publishedPosts();
+  const entries = listedPosts();
   return (
     <article>
       <section className="j-head">
@@ -58,7 +58,11 @@ export default function SmallPoursPage() {
                     <span className="j-cat">{e.category}</span>
                     <h2>{e.title}</h2>
                     <p>{teaser(e.answer)}</p>
-                    <time dateTime={e.published}>{e.published ? formatDate(e.published) : ""}</time>
+                    {e.status === "review" ? (
+                      <span className="j-review">In review</span>
+                    ) : (
+                      <time dateTime={e.published}>{e.published ? formatDate(e.published) : ""}</time>
+                    )}
                   </Link>
                 </li>
               ))}

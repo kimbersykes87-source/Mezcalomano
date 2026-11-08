@@ -15,8 +15,13 @@ export interface PostEntry {
   category: string;
   /** The two-sentence answer shown under the title. */
   answer: string;
-  /** "draft" pages open at their URL with noindex but stay out of the list, menu and sitemap. */
-  status: "draft" | "published";
+  /**
+   * "draft"     opens at its URL with noindex, and stays out of the list, menu and sitemap.
+   * "review"    is listed on the contents page and keeps the review banner, still noindex and
+   *             still out of the menu and sitemap. For walking the batch before sign off.
+   * "published" is public: no banner, indexed, in the menu and the sitemap.
+   */
+  status: "draft" | "review" | "published";
   /** ISO date it went live. Required once published. */
   published?: string;
   /** ISO date of the last fact check. */

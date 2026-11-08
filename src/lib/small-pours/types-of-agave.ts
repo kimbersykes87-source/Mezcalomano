@@ -7,7 +7,7 @@ export const typesOfAgave: PostEntry = {
     description: "Every agave in our directory, grouped from cultivated to wild at risk, with its species and size.",
     category: "Agave",
     answer: "Mezcal can be made from many species of agave, and our directory covers 40 of them. The most common is Espadín (Agave angustifolia), a cultivated agave, while others range from managed wild giants like Madrecuixe to small wild agaves at risk like Tobalá. The tables below group them so you can scan species and size at a glance.",
-    status: "draft",
+    status: "review",
     updated: "2026-11-08",
     image: {
       src: "/small-pours/types-of-agave-hero.jpg",

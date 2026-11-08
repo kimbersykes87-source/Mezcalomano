@@ -717,6 +717,7 @@ select.s-intl-in option{background:#2F322F;color:#FFFFFF}
 .j-card p{font-size:17px;line-height:1.6;color:#E6E4DA}
 .j-card time{font-size:13px;letter-spacing:.06em;text-transform:uppercase;font-weight:400;color:#D4D3CB}
 .j-cat{font-size:13px;letter-spacing:.06em;text-transform:uppercase;font-weight:400;color:#84866D}
+.j-review{font-size:13px;letter-spacing:.06em;text-transform:uppercase;font-weight:400;color:#DFB725}
 .j-card:hover h2{text-decoration:underline;text-underline-offset:4px}
 .j-col{max-width:760px;margin:0 auto;padding:0 48px}
 .j-draft{background:#DFB725;color:#14150F}

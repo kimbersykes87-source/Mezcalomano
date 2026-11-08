@@ -216,7 +216,7 @@ for (const file of files) {
     description: over.description ?? fm.description,
     category,
     answer,
-    status: "draft",
+    status: "review",
     updated: CHECKED,
     image: { src: `/small-pours/${imgName}`, alt: fm.hero_alt, width, height },
     body: blocks,

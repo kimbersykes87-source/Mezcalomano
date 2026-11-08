@@ -7,7 +7,7 @@ export const isMezcalSmoky: PostEntry = {
     description: "Is mezcal smoky? Not always. Where the smoke comes from, why bottles vary so much, and how to find a mezcal with less of it.",
     category: "Flavor",
     answer: "No. Smoke in mezcal ranges from almost none to a clear campfire, and it mostly comes from how the agave is cooked, so it depends on the maker and the method as well as the plant. Our [Discovery Deck](https://shop.mezcalomano.com/products/discovery-deck), a card deck of 40 agaves used for mezcal, gives each agave three flavor words, for smoke, agave and fermentation. They are our own shorthand, not a rule. Taste is personal. Bottles vary by maker.",
-    status: "draft",
+    status: "review",
     updated: "2026-11-08",
     image: {
       src: "/small-pours/is-mezcal-smoky-hero.jpg",

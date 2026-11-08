@@ -7,7 +7,7 @@ export const karwinskiiFamilyExplained: PostEntry = {
     description: "Cuishe, Barril, Madrecuixe, Bicuixe and Tobaziche are all menu names for Agave karwinskii. Here is how the plants differ, and why they can taste different.",
     category: "Agave",
     answer: "Cuishe mezcal is mezcal made from [Cuishe](/directory/cuishe), a local name for a form of Agave karwinskii, a tall agave that grows slim, column-like stalks on a woody stem in the dry hills of Oaxaca and Puebla. Four more local names on our [Discovery Deck](https://shop.mezcalomano.com/products/discovery-deck), a card deck of 40 agaves used for mezcal, belong to the same species: [Barril](/directory/barril), [Madrecuixe](/directory/madrecuixe), [Bicuixe](/directory/bicuixe) and [Tobaziche](/directory/tobaziche). They share a species, but they can taste quite different.",
-    status: "draft",
+    status: "review",
     updated: "2026-11-08",
     image: {
       src: "/small-pours/karwinskii-family-explained-hero.jpg",

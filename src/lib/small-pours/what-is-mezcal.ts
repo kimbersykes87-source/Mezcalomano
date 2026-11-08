@@ -7,7 +7,7 @@ export const whatIsMezcal: PostEntry = {
     description: "What is mezcal? A Mexican spirit distilled from cooked agave. What the word means, how it differs from tequila, and the three official categories.",
     category: "Basics",
     answer: "Mezcal is a Mexican spirit distilled from the cooked hearts of agave plants. Mexico's official standard, NOM-070-SCFI-2016, defines it as 100% agave, made from mature agave hearts that are cooked, crushed, fermented and distilled, and harvested inside a legally protected region. It can be made from many kinds of agave, which is why no two mezcals taste quite alike.",
-    status: "draft",
+    status: "review",
     updated: "2026-11-08",
     image: {
       src: "/small-pours/what-is-mezcal-hero.jpg",

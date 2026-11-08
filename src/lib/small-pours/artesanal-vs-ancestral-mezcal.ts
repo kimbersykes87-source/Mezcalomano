@@ -7,7 +7,7 @@ export const artesanalVsAncestralMezcal: PostEntry = {
     description: "What is artesanal mezcal? How it differs from ancestral and plain mezcal under Mexico's official standard, NOM-070, in plain English.",
     category: "Basics",
     answer: "Artesanal mezcal (Mezcal Artesanal) is one of three categories in Mexico's official mezcal standard, [NOM-070-SCFI-2016](https://comercam-dom.org.mx/wp-content/uploads/2022/04/DOF-2017.02.23-NOM-070-SCFI-2016-Alcoholic-Beverages-Mezcal-Specifications.pdf). It is made with traditional methods: agave cooked in pits or raised stone basins, crushed with mauls, a tahona, a mill or a shredder, and distilled over direct fire in copper or clay stills. Ancestral is the strictest category, with stone pits only and distillation in clay pots, and plain Mezcal is the widest.",
-    status: "draft",
+    status: "review",
     updated: "2026-11-08",
     image: {
       src: "/small-pours/artesanal-vs-ancestral-mezcal-hero.jpg",
