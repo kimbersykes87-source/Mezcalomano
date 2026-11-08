@@ -16,3 +16,6 @@ CLAUDE.md
 
 # Local scratch: unpacked Small Pours packs, backups
 .tmp/
+
+# Stray folder-mount probes
+.mnt-test-*/
