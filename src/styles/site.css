@@ -703,7 +703,7 @@ select.s-intl-in option{background:#2F322F;color:#FFFFFF}
 .a-close .a-br{display:none}
 @media (max-width:600px){.a-close .a-br{display:inline}}
 
-/* Mezcal Diaries (working title): /diaries list and articles */
+/* Small Pours: /small-pours list and articles */
 .j-head{border-top:1px solid rgba(255,255,255,.10)}
 .j-head .s-wrap{padding-top:64px;padding-bottom:40px}
 .j-head h1{margin:16px 0 0;font-size:64px;line-height:1;font-weight:700;font-stretch:75%;letter-spacing:.04em;text-transform:uppercase}

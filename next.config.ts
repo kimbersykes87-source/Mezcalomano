@@ -24,6 +24,9 @@ const nextConfig: NextConfig = {
     { source: "/shop", destination: "https://shop.mezcalomano.com/products/discovery-deck", permanent: false },
     { source: "/matrix", destination: "/directory", permanent: true },
     { source: "/matrix/", destination: "/directory", permanent: true },
+    { source: "/diaries", destination: "/small-pours", permanent: true },
+    { source: "/diaries/:slug", destination: "/small-pours/:slug", permanent: true },
+    { source: "/small-pours/gifts-for-mezcal-lovers", destination: "/small-pours/gifts-for-tequila-lovers", permanent: true },
     ...directorySlugRedirects,
   ],
 };

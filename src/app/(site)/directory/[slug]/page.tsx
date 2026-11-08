@@ -10,19 +10,19 @@ import { fetchAllSpecies } from "@/lib/species-list-server";
 import { toAgaveCard } from "@/lib/agave-cards";
 import { speciesMetaDescription, speciesTitle } from "@/lib/species-meta";
 import { faqForSlug } from "@/lib/species-faq";
-import { publishedDiaries } from "@/lib/diaries";
-import type { DiaryBlock } from "@/lib/diaries/types";
+import { publishedPosts } from "@/lib/small-pours";
+import type { PostBlock } from "@/lib/small-pours/types";
 
-function blockText(b: DiaryBlock): string {
+function blockText(b: PostBlock): string {
   if (b.type === "p" || b.type === "h2") return b.text;
   if (b.type === "list") return b.items.join("\n");
   return [...b.head, ...b.rows.flat()].join("\n");
 }
 
-/** Published Diaries posts whose body links to this directory page. */
-function relatedDiaries(slug: string) {
+/** Published Small Pours posts whose body links to this directory page. */
+function relatedPosts(slug: string) {
   const link = new RegExp(`\\(/directory/${slug}(?=[)#?/])`);
-  return publishedDiaries()
+  return publishedPosts()
     .filter((e) => e.body.some((b) => link.test(blockText(b))))
     .map((e) => ({ slug: e.slug, title: e.title }));
 }
@@ -120,7 +120,7 @@ export default async function SpeciesDetailPage({ params }: PageProps) {
         image={image}
         rail={rail}
         faq={faq}
-        related={relatedDiaries(pathSlug)}
+        related={relatedPosts(pathSlug)}
       />
     </>
   );

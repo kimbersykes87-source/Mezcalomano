@@ -341,11 +341,11 @@ export default function SpeciesDetailClient({
 
       {related.length > 0 ? (
         <section className="d-sec d-related" aria-labelledby="related-title">
-          <h2 id="related-title">From the Diaries</h2>
+          <h2 id="related-title">From Small Pours</h2>
           <ul>
             {related.map((r) => (
               <li key={r.slug}>
-                <Link href={`/diaries/${r.slug}`}>{r.title}</Link>
+                <Link href={`/small-pours/${r.slug}`}>{r.title}</Link>
               </li>
             ))}
           </ul>

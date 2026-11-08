@@ -7,7 +7,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import centroid from "@turf/centroid";
 import { ChevronDown } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import { getStatesInData, parseStatesForGeo } from "@/lib/map-utils";
+import { getStatesInData, parseStatesForGeo, resolveStateParam } from "@/lib/map-utils";
 import { speciesDirectorySlug } from "@/lib/slug";
 import type { Species } from "@/types/species";
 
@@ -595,6 +595,31 @@ export default function MapPage() {
       });
       resizeObserverRef.current.observe(container);
       mapRef.current = map;
+
+      // /map?state={slug} opens on one state (links from Small Pours posts).
+      // Same three steps a tap on the map takes: highlight, side card, ease to it.
+      try {
+        const wantedState = new URLSearchParams(window.location.search).get("state")?.trim();
+        const geoNames = geoJson.features
+          .map((f) => f.properties?.state_name as string | undefined)
+          .filter((n): n is string => Boolean(n));
+        const stateName = wantedState ? resolveStateParam(wantedState, geoNames) : null;
+        if (stateName) {
+          setMapClickedStateRef.current(stateName);
+          setFocusRef.current({ kind: "state", name: stateName });
+          const feature = geoJson.features.find((f) => f.properties?.state_name === stateName);
+          const g = feature?.geometry;
+          if (g && (g.type === "Polygon" || g.type === "MultiPolygon")) {
+            const c = centroid({ type: "Feature", properties: {}, geometry: g } as GeoJSON.Feature<GeoJSON.Polygon | GeoJSON.MultiPolygon>);
+            const [lng, lat] = c.geometry.coordinates;
+            userMoved = true;
+            map.easeTo({ center: [lng, lat], zoom: Math.max(map.getZoom(), 4.4), duration: 0 });
+          }
+        }
+      } catch (err) {
+        debug("state param failed", err);
+      }
+
       debug("map fully initialized");
     });
 

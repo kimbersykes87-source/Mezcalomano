@@ -13,3 +13,6 @@ CLAUDE.md
 
 # Venues pipeline menu text cache (never commit)
 .cache/
+
+# Local scratch: unpacked Small Pours packs, backups
+.tmp/

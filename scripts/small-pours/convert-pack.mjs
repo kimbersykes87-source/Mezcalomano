@@ -1,0 +1,249 @@
+#!/usr/bin/env node
+/**
+ * Convert a signed off Small Pours pack (markdown + heroes) into PostEntry TypeScript files.
+ *
+ * Usage: node scripts/small-pours/convert-pack.mjs <packDir> [--write]
+ *
+ * Without --write it reports what it would do and changes nothing.
+ * Re-runnable: it regenerates each article file from the markdown, so a copy fix is a
+ * markdown edit plus another run, not a hand edit of TypeScript.
+ */
+import fs from "node:fs";
+import path from "node:path";
+
+const packDir = process.argv[2];
+const WRITE = process.argv.includes("--write");
+if (!packDir) {
+  console.error("usage: convert-pack.mjs <packDir> [--write]");
+  process.exit(1);
+}
+
+const REPO = path.resolve(path.dirname(new URL(import.meta.url).pathname), "../..");
+const LIB = path.join(REPO, "src/lib/small-pours");
+const PUBLIC_IMG = path.join(REPO, "public/small-pours");
+const CHECKED = "2026-11-08"; // the pack's sign off date
+
+/** Categories. The 8 that already existed keep theirs; the 6 new ones reuse existing labels. */
+const CATEGORY = {
+  "gifts-for-tequila-lovers": "Gifts",
+  "artesanal-vs-ancestral-mezcal": "Basics",
+  "bats-and-agave": "Culture",
+  "how-long-does-agave-take-to-grow": "Agave",
+  "is-mezcal-smoky": "Flavor",
+  "karwinskii-family-explained": "Agave",
+  "mezcal-cocktails-that-taste-of-agave": "Drinks",
+  "who-makes-mezcal": "Culture",
+  // new in batch 1, proposed from the existing vocabulary, for Siona to confirm
+  "what-is-mezcal": "Basics",
+  "types-of-agave": "Agave",
+  "what-does-mezcal-taste-like": "Flavor",
+  "joven-reposado-anejo-mezcal": "Basics",
+  "raicilla-bacanora-sotol": "Basics",
+  "can-mezcal-be-made-outside-mexico": "Rules",
+};
+
+/**
+ * Trims to signed off copy, kept here so they are explicit, survive a re-run and can be
+ * listed for Siona. Each one only shortens a field that broke the length guidance in
+ * types.ts; the wording and the search phrase are otherwise unchanged.
+ * AWAITING SIONA'S SIGN OFF (2026-11-08).
+ */
+const OVERRIDES = {
+  "gifts-for-tequila-lovers": {
+    title: "Gifts for Tequila and Mezcal Lovers, Not Another Bottle", // was 62 chars, guide is 60
+  },
+  "what-does-mezcal-taste-like": {
+    description:
+      "What does mezcal taste like? Cooked agave first, then fruit, herbs, smoke, minerals or funk. What shapes the flavor, and how to find one you like.", // was 165, guide is 155
+  },
+  "can-mezcal-be-made-outside-mexico": {
+    description:
+      "Can mezcal be made outside Mexico? No. Which states are in mezcal's denomination of origin, what other agave spirits are called, and the Jalisco case.", // was 158, guide is 155
+  },
+};
+
+/** Read a JPEG's pixel dimensions from its SOF marker. */
+function jpegSize(file) {
+  const b = fs.readFileSync(file);
+  let i = 2;
+  while (i < b.length) {
+    if (b[i] !== 0xff) { i++; continue; }
+    const m = b[i + 1];
+    if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) {
+      return { height: b.readUInt16BE(i + 5), width: b.readUInt16BE(i + 7) };
+    }
+    i += 2 + b.readUInt16BE(i + 2);
+  }
+  throw new Error(`could not read dimensions: ${file}`);
+}
+
+function parseFrontMatter(raw) {
+  const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/);
+  if (!m) throw new Error("no front matter");
+  const fm = {};
+  for (const line of m[1].split(/\r?\n/)) {
+    const k = line.match(/^([a-z_]+):\s*(.*)$/);
+    if (!k) continue;
+    let v = k[2].trim();
+    if (v.startsWith('"') && v.endsWith('"')) v = v.slice(1, -1);
+    fm[k[1]] = v;
+  }
+  return { fm, body: raw.slice(m[0].length) };
+}
+
+/** Markdown body (no front matter, no FAQ) into PostBlock objects. */
+function parseBlocks(md) {
+  const lines = md.split(/\r?\n/);
+  const blocks = [];
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+    if (!line.trim()) { i++; continue; }
+
+    if (line.startsWith("## ")) { blocks.push({ type: "h2", text: line.slice(3).trim() }); i++; continue; }
+    if (line.startsWith("### ")) { blocks.push({ type: "h3", text: line.slice(4).trim() }); i++; continue; }
+
+    if (line.trimStart().startsWith("|")) {
+      const rows = [];
+      while (i < lines.length && lines[i].trimStart().startsWith("|")) {
+        rows.push(lines[i].trim()); i++;
+      }
+      const cells = (r) => r.replace(/^\|/, "").replace(/\|$/, "").split("|").map((c) => c.trim());
+      const head = cells(rows[0]);
+      const body = rows.slice(1).filter((r) => !/^\|[\s:|-]+\|$/.test(r)).map(cells);
+      blocks.push({ type: "table", head, rows: body });
+      continue;
+    }
+
+    if (/^[-*]\s/.test(line.trim())) {
+      const items = [];
+      while (i < lines.length && /^[-*]\s/.test(lines[i].trim())) {
+        items.push(lines[i].trim().replace(/^[-*]\s+/, "")); i++;
+      }
+      blocks.push({ type: "list", items });
+      continue;
+    }
+
+    const para = [];
+    while (i < lines.length && lines[i].trim() && !lines[i].startsWith("#") &&
+           !lines[i].trimStart().startsWith("|") && !/^[-*]\s/.test(lines[i].trim())) {
+      para.push(lines[i].trim()); i++;
+    }
+    blocks.push({ type: "p", text: para.join(" ") });
+  }
+  return blocks;
+}
+
+function parseFaq(md) {
+  const out = [];
+  const parts = md.split(/^### /m).slice(1);
+  for (const p of parts) {
+    const [q, ...rest] = p.split(/\r?\n/);
+    const a = rest.join("\n").trim().split(/\r?\n\s*\r?\n/)[0].replace(/\s*\r?\n\s*/g, " ").trim();
+    if (q.trim() && a) out.push({ q: q.trim(), a });
+  }
+  return out;
+}
+
+const camel = (slug) => slug.replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase());
+/** JSON with unquoted keys where they are safe identifiers, to match the hand written files. */
+const ts = (v) =>
+  JSON.stringify(v, null, 2)
+    .replace(/^(\s*)"([A-Za-z_$][A-Za-z0-9_$]*)":/gm, "$1$2:")
+    .replace(/\n/g, "\n  ");
+
+// ---- run ----
+const postsDir = path.join(packDir, "posts");
+const files = fs.readdirSync(postsDir).filter((f) => f.endsWith(".md")).sort();
+
+const slugs = files.map((f) => parseFrontMatter(fs.readFileSync(path.join(postsDir, f), "utf8")).fm.slug);
+const inBatch = new Set(slugs);
+const strippedLinks = [];
+const overridden = [];
+const report = [];
+
+for (const file of files) {
+  const raw = fs.readFileSync(path.join(postsDir, file), "utf8");
+  const { fm, body } = parseFrontMatter(raw);
+  const slug = fm.slug;
+
+  const answerMatch = body.match(/\*\*Answer \(shown first\):\*\*\s*([\s\S]*?)(?=\r?\n\r?\n)/);
+  if (!answerMatch) throw new Error(`${file}: no answer block`);
+  let answer = answerMatch[1].replace(/\s*\r?\n\s*/g, " ").trim();
+
+  const afterAnswer = body.slice(answerMatch.index + answerMatch[0].length);
+  const faqIdx = afterAnswer.search(/^## FAQ\s*$/m);
+  const bodyMd = faqIdx === -1 ? afterAnswer : afterAnswer.slice(0, faqIdx);
+  const faqMd = faqIdx === -1 ? "" : afterAnswer.slice(faqIdx);
+
+  let blocks = parseBlocks(bodyMd);
+  const faq = parseFaq(faqMd);
+
+  // /diaries/ -> /small-pours/ , and drop links to posts not in this batch (keep the words)
+  const fix = (s) => {
+    let out = s.replace(/\/diaries\//g, "/small-pours/");
+    out = out.replace(/\[([^\]]+)\]\(\/small-pours\/([a-z0-9-]+)([^)]*)\)/g, (m0, label, target) => {
+      if (inBatch.has(target)) return m0;
+      strippedLinks.push({ post: slug, target, label });
+      return label;
+    });
+    return out;
+  };
+  const walk = (b) => {
+    if (b.type === "p" || b.type === "h2" || b.type === "h3") return { ...b, text: fix(b.text) };
+    if (b.type === "list") return { ...b, items: b.items.map(fix) };
+    return { ...b, head: b.head.map(fix), rows: b.rows.map((r) => r.map(fix)) };
+  };
+  blocks = blocks.map(walk);
+  answer = fix(answer);
+  const faqFixed = faq.map((f) => ({ q: fix(f.q), a: fix(f.a) }));
+
+  const srcImg = path.join(packDir, fm.hero_image);
+  const { width, height } = jpegSize(srcImg);
+  const imgName = `${slug}-hero.jpg`;
+
+  const category = CATEGORY[slug];
+  if (!category) throw new Error(`${file}: no category mapped for ${slug}`);
+
+  const over = OVERRIDES[slug] ?? {};
+  if (over.title || over.description) {
+    overridden.push({ slug, fields: Object.keys(over).join(", ") });
+  }
+
+  const entry = {
+    slug,
+    title: over.title ?? fm.title,
+    description: over.description ?? fm.description,
+    category,
+    answer,
+    status: "draft",
+    updated: CHECKED,
+    image: { src: `/small-pours/${imgName}`, alt: fm.hero_alt, width, height },
+    body: blocks,
+    faq: faqFixed,
+  };
+
+  const varName = camel(slug);
+  const out =
+    `import type { PostEntry } from "./types";\n\n` +
+    `/** Generated from the signed off pack by scripts/small-pours/convert-pack.mjs. Edit the markdown, not this file. */\n` +
+    `export const ${varName}: PostEntry = ${ts(entry)};\n`;
+
+  if (WRITE) {
+    fs.mkdirSync(PUBLIC_IMG, { recursive: true });
+    fs.copyFileSync(srcImg, path.join(PUBLIC_IMG, imgName));
+    fs.writeFileSync(path.join(LIB, `${slug}.ts`), out.replace(/\n/g, "\r\n"), "utf8");
+  }
+  report.push({ slug, varName, blocks: blocks.length, faq: faqFixed.length, image: `${width}x${height}` });
+}
+
+console.table(report);
+if (strippedLinks.length) {
+  console.log("\nLinks removed (words kept), target not in this batch:");
+  for (const s of strippedLinks) console.log(`  ${s.post}  ->  /${s.target}   "${s.label}"`);
+}
+if (overridden.length) {
+  console.log("\nTrimmed to fit the length guidance, awaiting Siona's sign off:");
+  for (const o of overridden) console.log(`  ${o.slug}  (${o.fields})`);
+}
+console.log(`\n${WRITE ? "WROTE" : "DRY RUN"}: ${report.length} posts`);
