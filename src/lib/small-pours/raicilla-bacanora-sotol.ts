@@ -7,7 +7,8 @@ export const raicillaBacanoraSotol: PostEntry = {
     description: "Raicilla, bacanora and sotol explained: which are agave spirits, where each comes from under Mexican law, and why sotol is not made from agave.",
     category: "Basics",
     answer: "Raicilla and bacanora are agave spirits with their own denominations of origin: raicilla from set municipalities of Jalisco and one of Nayarit, bacanora from Sonora. Sotol is the odd one out. It has a denomination of origin covering Chihuahua, Coahuila and Durango, but it is not made from agave at all. It comes from Dasylirion, a different plant.",
-    status: "review",
+    status: "published",
+    published: "2026-11-09",
     updated: "2026-11-08",
     image: {
       src: "/small-pours/raicilla-bacanora-sotol-hero.webp",

@@ -75,7 +75,7 @@ const OVERRIDES = {
  * Pass --force-images to overwrite anyway.
  */
 /** Kimber's sign off, slug to go-live date. Re-runs keep these published. */
-const APPROVED = { "types-of-agave": "2026-11-09", "what-is-mezcal": "2026-11-09", "what-does-mezcal-taste-like": "2026-11-09", "is-mezcal-smoky": "2026-11-09", "artesanal-vs-ancestral-mezcal": "2026-11-09", "joven-reposado-anejo-mezcal": "2026-11-09", "karwinskii-family-explained": "2026-11-09", "how-long-does-agave-take-to-grow": "2026-11-09", "who-makes-mezcal": "2026-11-09", "bats-and-agave": "2026-11-09", "can-mezcal-be-made-outside-mexico": "2026-11-09" };
+const APPROVED = { "types-of-agave": "2026-11-09", "what-is-mezcal": "2026-11-09", "what-does-mezcal-taste-like": "2026-11-09", "is-mezcal-smoky": "2026-11-09", "artesanal-vs-ancestral-mezcal": "2026-11-09", "joven-reposado-anejo-mezcal": "2026-11-09", "karwinskii-family-explained": "2026-11-09", "how-long-does-agave-take-to-grow": "2026-11-09", "who-makes-mezcal": "2026-11-09", "bats-and-agave": "2026-11-09", "can-mezcal-be-made-outside-mexico": "2026-11-09", "raicilla-bacanora-sotol": "2026-11-09" };
 
 const HERO_UPGRADED = new Set([
   "raicilla-bacanora-sotol", // 2400x1000 from Adobe Stock 366732977 "Sotol in the Chihuahuan Desert" (free licence, 6240x4160), crop y 1530 to 4130, 2026-11-09
