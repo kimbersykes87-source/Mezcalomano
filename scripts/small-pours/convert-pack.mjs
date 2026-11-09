@@ -75,7 +75,7 @@ const OVERRIDES = {
  * Pass --force-images to overwrite anyway.
  */
 /** Kimber's sign off, slug to go-live date. Re-runs keep these published. */
-const APPROVED = { "types-of-agave": "2026-11-09", "what-is-mezcal": "2026-11-09", "what-does-mezcal-taste-like": "2026-11-09" };
+const APPROVED = { "types-of-agave": "2026-11-09", "what-is-mezcal": "2026-11-09", "what-does-mezcal-taste-like": "2026-11-09", "is-mezcal-smoky": "2026-11-09" };
 
 const HERO_UPGRADED = new Set([
   "what-does-mezcal-taste-like", // 2400x1800 from Unsplash (Nahima Aparicio) full size, crop top 900, 2026-11-09
