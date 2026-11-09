@@ -11,9 +11,9 @@ export const howLongDoesAgaveTakeToGrow: PostEntry = {
     updated: "2026-11-08",
     image: {
       src: "/small-pours/how-long-does-agave-take-to-grow-hero.webp",
-      alt: "Rows of agave growing below a green mountain.",
-      width: 1200,
-      height: 900
+      alt: "A row of blue-green agave plants under a deep blue sky, with a dry hillside behind.",
+      width: 2400,
+      height: 1000
     },
     body: [
       {
@@ -92,7 +92,7 @@ export const howLongDoesAgaveTakeToGrow: PostEntry = {
       {
         type: "list",
         items: [
-          "**Supply cannot rise quickly.** A plant that takes 7 years or 25 cannot be ramped up in a season. Public radio reporting noted that agaves planted when the mezcal boom began would not yet be ready to harvest.",
+          "**Supply cannot rise quickly.** A plant that takes 7 years or 25 cannot be ramped up in a season. NPR reported in 2024 that [wild agaves that began growing when the mezcal boom started are still far from ready to harvest](https://www.npr.org/2024/02/04/1229044775/mexicos-wild-agave-plants-are-disappearing-will-mezcal-follow).",
           "**Slow plants cost more.** Years of land, care and risk go into every bottle, and the slowest agaves are the scarcest.",
           "**It is why variety matters.** Almost all mezcal comes from one fast-growing plant, so the slow agaves are the ones at risk."
         ]
