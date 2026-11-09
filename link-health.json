@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-05T16:28:18.818Z",
+  "updated": "2026-11-09T18:48:15.751Z",
   "links": {
-    "jabali|https://gomadreshop.com/products/agua-del-sol-jabali": {
-      "species": "Jabalí",
-      "slug": "jabali",
-      "producer": "Agua del Sol",
-      "url": "https://gomadreshop.com/products/agua-del-sol-jabali",
-      "firstFailed": "2026-11-05",
-      "lastFailed": "2026-11-05",
+    "sierra_negra|https://gomadreshop.com/products/5-sentidos-sierra-nergra": {
+      "species": "Sierra Negra",
+      "slug": "sierra_negra",
+      "producer": "Cinco Sentidos",
+      "url": "https://gomadreshop.com/products/5-sentidos-sierra-nergra",
+      "firstFailed": "2026-11-09",
+      "lastFailed": "2026-11-09",
       "strikes": 1,
       "verdict": "INFO",
-      "note": "\"Agua Del Sol - Jabali\" is sold out"
+      "note": "\"5 Sentidos - Sierra Negra\" is sold out"
     }
   }
 }
