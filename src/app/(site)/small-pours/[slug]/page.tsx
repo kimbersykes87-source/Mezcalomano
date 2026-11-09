@@ -6,7 +6,6 @@ import JsonLd from "@/components/JsonLd";
 import { SMALL_POURS_NAME, allPosts, getPost } from "@/lib/small-pours";
 import { autoLinkStates } from "@/lib/small-pours/auto-link-states";
 import { DISCOVERY_DECK_PRODUCT_URL, LOGO_IMAGE_PATH, SITE_URL } from "@/lib/site-seo";
-import { laterOf } from "@/lib/content-dates";
 
 type Params = { slug: string };
 
@@ -47,9 +46,6 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
     headline: e.title,
     description: e.description,
     image: [`${SITE_URL}${e.image.src}`],
-    datePublished: e.published,
-    // "updated" is the last fact check and can predate the go-live date, so never let modified fall before published.
-    dateModified: laterOf(e.updated, e.published),
     mainEntityOfPage: url,
     author: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "Mezcalómano" },
     publisher: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "Mezcalómano", logo: { "@type": "ImageObject", url: `${SITE_URL}${LOGO_IMAGE_PATH}` } },
