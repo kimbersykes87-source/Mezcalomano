@@ -33,6 +33,10 @@ const CATALOGS = JSON.parse(fs.readFileSync(path.join(ROOT, "data", "us-catalogs
 const US_HOSTS = new Set(JSON.parse(fs.readFileSync(path.join(ROOT, "data", "us-shops.json"), "utf8")).hosts.map((h) => h.replace(/^www\./, "")));
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36 MezcalomanoDirectoryBot/1.0 (+https://mezcalomano.com)";
 const DAY = 86400000;
+/** Circuit breaker: how much failure on one host means "the shop changed", not "bottles went". */
+const HOST_FAIL_LIMIT = 8;
+const HOST_FAIL_SHARE = 0.25;
+const HOST_MIN_LISTINGS = 4;
 
 const args = process.argv.slice(2);
 const arg = (k, d) => (args.includes(k) ? args[args.indexOf(k) + 1] : d);
@@ -135,6 +139,42 @@ function speciesOf(title) {
 }
 
 /** Producer name from a product title: the text before the species name or the first " - ". */
+/**
+ * producerFrom "match": find a producer the directory already knows inside the product title.
+ *
+ * The three extraction modes assume the shop tells you the producer: Madre Shop writes
+ * "Neta - Pulquero Chino", Maguey Spirits fills `vendor`, Cask Cartel uses a Producer_ tag.
+ * General liquor retailers do neither. Mission Liquor puts its own name in `vendor` and
+ * writes "Tosba Dua Warash Joven Mezcal 750ml", with no separator to split on, so extraction
+ * would yield the shop or the whole title.
+ *
+ * So instead of extracting a name, test the title against the producers the directory already
+ * lists, plus the shop spellings in `producerAliases`. The trade is deliberate: this finds new
+ * bottles from known producers and never discovers a new producer, which is what filling the
+ * thin species needs, and it cannot invent a producer name that is not already ours.
+ */
+function makeProducerMatcher(dir) {
+  const entries = [];
+  const seen = new Set();
+  for (const sp of dir.species) {
+    for (const pr of sp.pairs) {
+      if (!pr.producer || seen.has(pr.producer)) continue;
+      seen.add(pr.producer);
+      entries.push({ name: pr.producer, probe: norm(pr.producer).replace(/\([^)]*\)/g, " ").replace(/[^a-z0-9]+/g, " ").trim() });
+    }
+  }
+  for (const [alias, canonical] of Object.entries(CATALOGS.producerAliases || {})) {
+    entries.push({ name: canonical, probe: norm(alias).replace(/[^a-z0-9]+/g, " ").trim() });
+  }
+  // Longest probe first, so "Mezcal de Leyendas" is preferred over a shorter name inside it.
+  entries.sort((a, b) => b.probe.length - a.probe.length);
+  return (title) => {
+    const t = " " + norm(title).replace(/[^a-z0-9]+/g, " ").trim() + " ";
+    const hit = entries.find((e) => e.probe.length >= 4 && t.includes(" " + e.probe + " "));
+    return hit ? hit.name : "";
+  };
+}
+
 function producerFromTitle(title) {
   let t = title.replace(/\s+/g, " ").trim();
   t = t.split(/\s+-\s*|-\s+|\s*\(|-(?=[A-Z])/)[0];
@@ -160,7 +200,7 @@ async function getJson(url) {
   return null;
 }
 
-async function loadCatalogs() {
+async function loadCatalogs(matchProducer = () => "") {
   const products = [];
   for (const shop of CATALOGS.shops) {
     let page = 1, got = 0;
@@ -173,6 +213,7 @@ async function loadCatalogs() {
         let producer = "";
         if (shop.producerFrom === "title") producer = producerFromTitle(p.title);
         else if (shop.producerFrom === "vendor") producer = p.vendor;
+        else if (shop.producerFrom === "match") producer = matchProducer(p.title);
         else if (shop.producerFrom.startsWith("tag:")) {
           const pre = shop.producerFrom.slice(4);
           producer = (p.tags || []).find((t) => t.startsWith(pre))?.slice(pre.length) || p.title.split(/\s+/).slice(0, 2).join(" ");
@@ -224,8 +265,8 @@ async function main() {
     if (nextLinks[k].strikes < 2) firstStrike.push(nextLinks[k]);
   }
 
-  const catalog = await loadCatalogs();
-  const inStock = catalog.filter((p) => p.available && p.species && p.price > 0);
+  const catalog = await loadCatalogs(makeProducerMatcher(dir));
+  const inStock = catalog.filter((p) => p.available && p.species && p.price > 0 && p.producer);
   const known = new Map();
   for (const sp of dir.species) for (const p of sp.pairs) known.set(producerKey(p.producer), p.producer);
   const canonicalProducer = (name) => {
@@ -234,6 +275,46 @@ async function main() {
     if (alias) return alias;
     return known.get(k) || name;
   };
+
+  // 2b. per host circuit breaker.
+  //
+  // Madre Shop alone carries about a quarter of the directory's links. If a shop changes its
+  // URL structure, every one of its links fails on the same night, and without this the job
+  // would strike them all and then rewrite a quarter of the CSV in one commit. A whole host
+  // failing at once is nearly always one change at that shop, not that many bottles stopped
+  // being made, so it is a person's call.
+  //
+  // Strikes are still recorded, so nothing is forgotten. Only the automatic swap and removal
+  // are held back, and the host is reported as urgent.
+  const hostTotals = new Map();
+  for (const sp of dir.species) for (const pr of sp.pairs) {
+    const h = host(pr.url);
+    if (h) hostTotals.set(h, (hostTotals.get(h) || 0) + 1);
+  }
+  const hostFails = new Map();
+  for (const r of check.results) {
+    if (!failing(r)) continue;
+    const h = host(r.url);
+    if (!h) continue;
+    if (!hostFails.has(h)) hostFails.set(h, []);
+    hostFails.get(h).push(r);
+  }
+  const suspended = new Map();
+  for (const [h, rs] of hostFails) {
+    const total = hostTotals.get(h) || rs.length;
+    // Over HOST_FAIL_LIMIT links, or over HOST_FAIL_SHARE of the host's listings once the
+    // host carries at least HOST_MIN_LISTINGS. The floor matters: without it one dead link on
+    // a host that only carries one would count as 100% and nothing would ever be fixed.
+    const tooMany = rs.length > HOST_FAIL_LIMIT;
+    const tooLarge = total >= HOST_MIN_LISTINGS && rs.length / total > HOST_FAIL_SHARE;
+    if (tooMany || tooLarge) {
+      suspended.set(h, {
+        host: h, failing: rs.length, total,
+        why: tooMany ? `${rs.length} links on this host failed in one run` : `${rs.length} of its ${total} links failed in one run`,
+        species: [...new Set(rs.map((r) => r.species))],
+      });
+    }
+  }
 
   // 3. automatic fixes for links failing twice, at least two days apart
   const autoChanges = [], urgent = [];
@@ -244,6 +325,12 @@ async function main() {
     const idx = sp?.pairs.findIndex((p) => p.url === s.url);
     if (!sp || idx < 0) { delete nextLinks[k]; continue; }
     const pair = sp.pairs[idx];
+    const sus = suspended.get(host(pair.url));
+    if (sus) {
+      // Keep the strike (do not delete nextLinks[k]) so the history survives to the next run.
+      urgent.push({ species: sp.name, producer: pair.producer, url: pair.url, why: `${s.note} (failing since ${s.firstFailed}); left alone because ${sus.host} looks broken as a whole: ${sus.why}` });
+      continue;
+    }
     const pk = producerKey(canonicalProducer(pair.producer));
     const listed = new Set(sp.pairs.map((p) => cleanUrl(p.url)));
     const replacement = inStock.find((p) => p.species === sp.slug && producerKey(canonicalProducer(p.producer)) === pk && !listed.has(cleanUrl(p.url)));
@@ -320,6 +407,7 @@ async function main() {
     noUs: coverage.filter((c) => c.us.length === 0).map((c) => c.species),
     oneUs: coverage.filter((c) => c.us.length === 1).map((c) => `${c.species} (${c.us[0]})`),
     blocked, catalogProducts: catalog.length,
+    suspendedHosts: [...suspended.values()],
   };
   fs.writeFileSync(path.join(OUT, "report.json"), JSON.stringify(report, null, 2));
   fs.writeFileSync(path.join(OUT, "report.md"), toMarkdown(report));
@@ -330,6 +418,13 @@ function toMarkdown(r) {
   const L = [];
   L.push(`# Directory update, ${r.date} (${r.mode === "monday" ? "Monday scan" : "Thursday recheck"})`, "");
   L.push(`${r.linksChecked} links checked, ${r.catalogProducts} US shop products scanned. ${r.autoChanges.length} fixed automatically, ${r.suggestions.length} suggested, ${r.urgent.length} urgent.`, "");
+  if (r.suspendedHosts?.length) {
+    L.push("## Urgent: a whole shop looks broken, nothing was changed on it", "");
+    L.push("Open one of these links by hand. If the shop has changed its URL structure, fix the pattern rather than letting the next run swap each link one at a time.", "");
+    L.push("| Host | Failing | Listed | Species affected |", "|---|---|---|---|");
+    for (const h of r.suspendedHosts) L.push(`| ${h.host} | ${h.failing} | ${h.total} | ${h.species.join(", ")} |`);
+    L.push("");
+  }
   if (r.urgent.length) {
     L.push("## Urgent: species about to lose their last link", "");
     for (const u of r.urgent) L.push(`- **${u.species}**, ${u.producer}: ${u.why}. ${u.url}`);

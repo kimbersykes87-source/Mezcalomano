@@ -26,6 +26,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { producerDataProblems } from "./lib/producer-data.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CSV_PATH = path.join(__dirname, "..", "data", "Species_Final - Website.csv");
@@ -71,11 +72,11 @@ const SPECIES_ALIASES = {
   tepemete: ["tepemete", "angustiarum"],
   chahuiqui: ["chahuiqui", "ensemble", "ensamble"],
   espadilla: ["espadilla", "angustifolia"],
-  cincoanero: ["cincoañero", "macroacantha"],
+  cincoanero: ["cincoañero", "macroacantha", "mexicanito"],
   castilla: ["castilla", "karwinskii"],
   chuparrosa: ["chuparrosa", "nussaviorum"],
   pulquero: ["pulquero", "mapisaga"],
-  pulque_chino: ["pulque chino", "pulquechino"],
+  pulque_chino: ["pulque chino", "pulquechino", "pulquero chino"],
 };
 
 /**
@@ -98,6 +99,7 @@ const HAND_CHECKED = {
   cenizo: { "https://claseazul.com/clase-azul-family/mezcal-clase-azul_durango": "2026-10-25" },
   papalote: { "https://claseazul.com/clase-azul-family/clase-azul-mezcal-guerrero": "2026-10-25" },
   espadin: { "https://shop.ilegalmezcal.com/products/joven-750": "2026-10-25", "https://casacortes.mx/ecommerce/producto/21": "2026-10-25" },
+  espadilla: { "https://astorwines.com/item/45477": "2026-11-07" },
 };
 
 const BUY_RE =
@@ -241,7 +243,19 @@ async function checkLink(slug, row, producer, url, keywords) {
   const c = classify(slug, row, producer, url);
   if (c.verdict) return c;
   const { r, parsed } = c;
-  const { status, finalUrl, body, error } = await fetchPage(url);
+  let { status, finalUrl, body, error } = await fetchPage(url);
+  // A timeout or a refused connection is usually this run, not a dead link: with 8 requests
+  // in flight a healthy host can drop one. Retry once before calling it DEAD, because two
+  // DEAD verdicts two days apart make the weekly job swap or remove the link.
+  // Observed 2026-11-07: grulani.com, which carries 7 links, returned ENOTFOUND twice two
+  // seconds apart and was serving HTTP 200 a minute later. So back off further before
+  // believing it, and give DNS two chances rather than one.
+  for (const waitMs of [3000, 8000]) {
+    if (status !== 0) break;
+    await new Promise((res) => setTimeout(res, waitMs));
+    ({ status, finalUrl, body, error } = await fetchPage(url));
+  }
+  if (status === 0) error = `${error}, three times`;
   if (/sgcaptcha|meta http-equiv="refresh"[^>]*captcha/i.test(body)) {
     return { ...r, status, finalUrl, verdict: "BLOCKED", note: "Captcha served to automated checks; open it by hand" };
   }
@@ -303,19 +317,19 @@ async function main() {
   const structural = [];
   const jobs = [];
 
+  // Offline data checks, shared with the seed script so one rule lives in one place.
+  // See scripts/lib/producer-data.mjs for what each kind means.
+  const projectRoot = path.join(__dirname, "..");
+  for (const pr of producerDataProblems(rows, projectRoot)) {
+    if (only && pr.slug !== only) continue;
+    structural.push(pr);
+  }
+
   for (const row of rows) {
     const slug = toSlug(row.common_name);
     if (only && slug !== only) continue;
     const producers = splitList(row.producers);
     const links = splitList(row.producer_links);
-    if (producers.length !== links.length) {
-      structural.push({
-        species: row.common_name,
-        slug,
-        problem: `${producers.length} producers but ${links.length} links. Names after the first gap are paired with the wrong link on the site.`,
-      });
-    }
-    if (producers.length === 0) structural.push({ species: row.common_name, slug, problem: "No producers listed" });
     const keywords = keywordsFor(slug, row);
     const n = Math.max(producers.length, links.length);
     for (let i = 0; i < n; i++) {
@@ -359,10 +373,20 @@ async function main() {
   md.push("");
   md.push(`${results.length} links across ${bySpecies.size} species. ` + Object.entries(counts).map(([k, v]) => `**${k}** ${v}`).join(" · "));
   md.push("");
-  if (structural.length) {
+  const blocking = structural.filter((s) => s.blocking);
+  const advisory = structural.filter((s) => !s.blocking);
+  if (blocking.length) {
     md.push("## Data problems in the sheet (fix these first)");
     md.push("");
-    for (const s of structural) md.push(`- **${s.species}**: ${s.problem}`);
+    md.push("These stop `npm run seed:species`, so the site keeps the last good data until they are fixed.");
+    md.push("");
+    for (const s of blocking) md.push(`- **${s.species}** (${s.kind}): ${s.problem}`);
+    md.push("");
+  }
+  if (advisory.length) {
+    md.push("## Worth a look (not blocking)");
+    md.push("");
+    for (const s of advisory) md.push(`- **${s.species}** (${s.kind}): ${s.problem}`);
     md.push("");
   }
   if (noBuy.length) {
@@ -397,7 +421,7 @@ async function main() {
   const mdOut = args.includes("--md") ? args[args.indexOf("--md") + 1] : null;
   if (mdOut) fs.writeFileSync(mdOut, report);
 
-  if (counts.BAD_URL || counts.DEAD || structural.length) process.exitCode = 1;
+  if (counts.BAD_URL || counts.DEAD || blocking.length) process.exitCode = 1;
 }
 
 main().catch((e) => {
