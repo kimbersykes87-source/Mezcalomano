@@ -11,7 +11,7 @@ export const karwinskiiFamilyExplained: PostEntry = {
     updated: "2026-11-08",
     image: {
       src: "/small-pours/karwinskii-family-explained-hero.webp",
-      alt: "The five karwinskii cards from the Discovery Deck in a row on a tan leather pouf: Cuishe, Barril, Madrecuixe, Bicuixe and Tobaziche.",
+      alt: "The five karwinskii cards from the Discovery Deck in a row on tan leather: Cuishe, Barril, Madrecuixe, Bicuixe and Tobaziche.",
       width: 2000,
       height: 1500
     },
