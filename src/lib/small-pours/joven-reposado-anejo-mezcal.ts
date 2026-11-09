@@ -7,7 +7,8 @@ export const jovenReposadoAnejoMezcal: PostEntry = {
     description: "Is mezcal aged? What joven, reposado, añejo and madurado en vidrio mean on a mezcal label, why most mezcal is unaged, and how tequila differs.",
     category: "Basics",
     answer: "Most mezcal is not aged. Mexico's standard, NOM-070, sorts mezcal into classes, and the unaged one, Blanco o Joven, makes up the large majority of certified production. Reposado means 2 to 12 months in wood, Añejo means more than 12 months in wood, and Madurado en Vidrio means more than 12 months resting in glass. The words look like tequila's, but they do not all mean the same thing.",
-    status: "review",
+    status: "published",
+    published: "2026-11-09",
     updated: "2026-11-08",
     image: {
       src: "/small-pours/joven-reposado-anejo-mezcal-hero.webp",

@@ -75,7 +75,7 @@ const OVERRIDES = {
  * Pass --force-images to overwrite anyway.
  */
 /** Kimber's sign off, slug to go-live date. Re-runs keep these published. */
-const APPROVED = { "types-of-agave": "2026-11-09", "what-is-mezcal": "2026-11-09", "what-does-mezcal-taste-like": "2026-11-09", "is-mezcal-smoky": "2026-11-09", "artesanal-vs-ancestral-mezcal": "2026-11-09" };
+const APPROVED = { "types-of-agave": "2026-11-09", "what-is-mezcal": "2026-11-09", "what-does-mezcal-taste-like": "2026-11-09", "is-mezcal-smoky": "2026-11-09", "artesanal-vs-ancestral-mezcal": "2026-11-09", "joven-reposado-anejo-mezcal": "2026-11-09" };
 
 const HERO_UPGRADED = new Set([
   "joven-reposado-anejo-mezcal", // 2000x1500 from MZM_20240718_S14_palenque_barrels_01, centered crop, 2026-11-09
