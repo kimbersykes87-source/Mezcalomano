@@ -733,7 +733,7 @@ select.s-intl-in option{background:#2F322F;color:#FFFFFF}
 .j-hero img{display:block;width:100%;aspect-ratio:12/5;object-fit:cover;border-radius:16px}
 .j-body{padding:40px 0 80px}
 .j-body h2{margin:44px 0 14px;font-size:34px;line-height:1.08;font-weight:700;font-stretch:75%;letter-spacing:.04em;text-transform:uppercase}
-.j-body>.j-col>p{margin:0 0 20px;font-size:19px;line-height:1.7}
+.j-body>.j-col>p:not(.j-back){margin:0 0 20px;font-size:19px;line-height:1.7}
 .j-bullets{margin:0 0 20px}
 .j-bullets li{position:relative;padding:8px 0 8px 28px;font-size:19px;line-height:1.65}
 .j-bullets li::before{content:"";position:absolute;left:0;top:19px;width:10px;height:10px;border-radius:50%;background:#84866D}
@@ -769,7 +769,7 @@ select.s-intl-in option{background:#2F322F;color:#FFFFFF}
 .j-answer{font-size:19px}
 .j-body{padding:28px 0 48px}
 .j-body h2{font-size:28px;margin-top:34px}
-.j-body>.j-col>p,.j-bullets li{font-size:17px}
+.j-body>.j-col>p:not(.j-back),.j-bullets li{font-size:17px}
 .j-faq dt{font-size:17px}
 .j-faq dd{font-size:17px}
 .j-btn{width:100%}
