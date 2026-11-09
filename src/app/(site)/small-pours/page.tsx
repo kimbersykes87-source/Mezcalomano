@@ -21,10 +21,6 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title: `${SMALL_POURS_NAME} | Mezcalómano`, description: DESCRIPTION, images: [SHARE_IMAGE] },
 };
 
-function formatDate(iso: string) {
-  return new Date(iso + "T12:00:00Z").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" });
-}
-
 
 /**
  * Card teaser from the answer: links flattened to their words (a card is already a link),
@@ -69,11 +65,7 @@ export default function SmallPoursPage() {
                     <span className="j-cat">{e.category}</span>
                     <h2>{e.title}</h2>
                     <p>{teaser(e.answer)}</p>
-                    {e.status === "review" ? (
-                      <span className="j-review">In review</span>
-                    ) : (
-                      <time dateTime={e.published}>{e.published ? formatDate(e.published) : ""}</time>
-                    )}
+                    {e.status === "review" ? <span className="j-review">In review</span> : null}
                   </Link>
                 </li>
               ))}

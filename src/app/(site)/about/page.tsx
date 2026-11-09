@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element -- responsive srcset photos sized by CSS */
+// DRAFT title and description, pending Siona's sign-off.
 export const metadata = {
-  title: "About",
+  title: "Agave Education for the Mezcal-Curious",
   description:
-    "Mezcalómano celebrates agave through the Discovery Deck playing cards and a free species directory for mezcal lovers and the curious.",
+    "Mezcalómano is an agave education brand. Learn how we make the Discovery Deck, 40 agave playing cards, and our free agave directory.",
   alternates: { canonical: "/about" },
 };
 
@@ -69,6 +70,26 @@ export default function AboutPage() {
             <p>
               When your deck lands, scan the QR code to unlock our agave directory and discover even
               more: where different agaves grow across Mexico, and who&apos;s bottling them.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* DRAFT sources and corrections block, pending Siona's sign-off. No names or profiles, by decision. */}
+      <section className="a-body" aria-label="Sources and corrections">
+        <div className="s-wrap">
+          <div>
+            <p className="s-eyebrow">How we work</p>
+            <h2>Sources and corrections</h2>
+          </div>
+          <div className="a-text">
+            <p>
+              Mezcalómano is run by That&apos;s SaaS Limited, a UK company. Every figure we publish is traced to a
+              source on our <a href="/sources">Sources page</a>, and every article is reviewed before it goes live.
+            </p>
+            <p>
+              If we got something wrong, write to <a href="mailto:hola@mezcalomano.com">hola@mezcalomano.com</a>{" "}
+              and we will fix it.
             </p>
           </div>
         </div>

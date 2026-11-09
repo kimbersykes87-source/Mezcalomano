@@ -7,9 +7,9 @@ export const howToDrinkMezcal: PostEntry = {
     "How to drink mezcal: sip it neat from a small cup, smell first, keep water close, and try it with orange and sal de gusano. A simple guide for beginners.",
   category: "Basics",
   answer:
-    "Drink mezcal neat, in small pours, at room temperature, and sip it slowly from a small cup. Smell it first, take a small sip, wait, and keep a glass of water close by.",
+    "Drink mezcal neat, in small pours, at room temperature, and sip it slowly from a small cup. Smell it first, take a small sip, wait for the flavors to open, and keep a glass of water close by. Skip the shot and give the agave a minute.",
   status: "draft",
-  updated: "2026-10-31",
+  updated: "2026-11-09",
   image: {
     src: "/assets/photography/about-hero-2026-10-20-1200.jpg",
     alt: "The Mezcalómano Discovery Deck box beside four agave cards laid out in a row on a wood table.",
@@ -67,6 +67,15 @@ export const howToDrinkMezcal: PostEntry = {
       type: "p",
       text: "Yes, and many people do. A good rule is to taste a mezcal neat first, so you know what the agave is doing before anything else joins it. Our [directory](/directory) shows what each of the 40 agaves tastes like, and our Discovery Deck turns it into a game for the table.",
     },
+    { type: "h2", text: "Sources" },
+    {
+      type: "list",
+      items: [
+        "[Sal de gusano (Cocktail Society)](https://cocktail-society.com/barkeeping/sal-de-gusano/): what it is and how it is served.",
+        "Traditional serving practice in Oaxaca (copita, jícara, orange slices). General practice rather than a rule.",
+        "Mezcalómano agave directory and Discovery Deck card data: [mezcalomano.com/directory](/directory). More on [Sources](/sources).",
+      ],
+    },
   ],
   faq: [
     {
@@ -83,6 +92,7 @@ export const howToDrinkMezcal: PostEntry = {
     },
   ],
   reviewNotes: [
+    "DRAFT changes 2026-11-09 (SEO audit): added Sources section; answer lengthened to 40 to 60 words.",
     "Sources: general tradition and practice (copitas, jícaras, orange with sal de gusano, sipping neat) cross-checked against Cocktail Society on sal de gusano (https://cocktail-society.com/barkeeping/sal-de-gusano/) and several how-to-drink guides. Most of this is common practice, not law, so please sanity check it against your own experience.",
     "The pairing table is our suggestion built on the flavor compass. It is inference, not fact. Please taste before publishing and change any you disagree with.",
     "The line that cold dulls aroma, and the 'ounce or less' pour, are general guidance. Please confirm you are comfortable with them.",

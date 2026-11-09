@@ -1,0 +1,160 @@
+# Mezcalómano
+
+> Mezcalómano is an agave education brand. We make the Discovery Deck, a deck of playing cards that introduces 40 kinds of mezcal and the agaves behind them, and we publish a free agave directory and a short-reads series called Small Pours.
+
+## Key facts
+
+- Product: THE DISCOVERY DECK, 40 agave species, $29.99, sold at https://shop.mezcalomano.com/products/discovery-deck. Pre-orders ship from November 30, 2026. US addresses only for now.
+- Seller of record: That's SaaS Limited, a UK company, trading as Mezcalómano. Public email: hola@mezcalomano.com.
+- Espadín made up about 85% of certified mezcal in 2025 (COMERCAM, Informe Estadístico 2026).
+- Our approach is agave first: we describe taste, agave and common names, not brands.
+
+## Main pages
+
+- [Home](https://mezcalomano.com/): the Discovery Deck.
+- [Agave directory](https://mezcalomano.com/directory): all 40 agaves, with size, range, flavor notes and producers. One page per species at https://mezcalomano.com/directory/{slug}.
+- [Map of Mexico](https://mezcalomano.com/map): where each agave grows.
+- [Small Pours](https://mezcalomano.com/small-pours): short answers on agave and mezcal.
+- [Sources](https://mezcalomano.com/sources): where our facts come from.
+- [About](https://mezcalomano.com/about): who writes Mezcalómano.
+- [Press](https://mezcalomano.com/press): photos, logos and quick facts.
+- [Contact](https://mezcalomano.com/contact)
+- [Shop, Discovery Deck](https://shop.mezcalomano.com/products/discovery-deck)
+
+## Small Pours articles
+
+- [What Is Artesanal Mezcal? Artesanal vs Ancestral Explained](https://mezcalomano.com/small-pours/artesanal-vs-ancestral-mezcal): What is artesanal mezcal? How it differs from ancestral and plain mezcal under Mexico's official standard, NOM-070, in plain English.
+- [Bats and Agave: Why the Pollinators Matter](https://mezcalomano.com/small-pours/bats-and-agave): Why bats matter to agave: how they pollinate, why most mezcal agaves are harvested before they flower, and what that means for biodiversity.
+- [Can Mezcal Be Made Outside Mexico?](https://mezcalomano.com/small-pours/can-mezcal-be-made-outside-mexico): Can mezcal be made outside Mexico? No. Which states are in mezcal's denomination of origin, what other agave spirits are called, and the Jalisco case.
+- [Gifts for Tequila and Mezcal Lovers, Not Another Bottle](https://mezcalomano.com/small-pours/gifts-for-tequila-lovers): Gifts for tequila lovers and mezcal fans that aren't another bottle: copitas, a tasting, sal de gusano, a book and a deck that teaches 40 agaves.
+- [How Long Does Agave Take to Grow?](https://mezcalomano.com/small-pours/how-long-does-agave-take-to-grow): How long does agave take to grow? From about 6 to 8 years for espadín to 20 years or more for slow wild agaves, with real numbers from our 40 agaves.
+- [Does All Mezcal Taste Smoky?](https://mezcalomano.com/small-pours/is-mezcal-smoky): Is mezcal smoky? Not always. Where the smoke comes from, why bottles vary so much, and how to find a mezcal with less of it.
+- [Joven, Reposado, Añejo: Is Mezcal Aged?](https://mezcalomano.com/small-pours/joven-reposado-anejo-mezcal): Is mezcal aged? What joven, reposado, añejo and madurado en vidrio mean on a mezcal label, why most mezcal is unaged, and how tequila differs.
+- [Cuishe, Barril, Madrecuixe: One Agave, Many Names](https://mezcalomano.com/small-pours/karwinskii-family-explained): Cuishe, Barril, Madrecuixe, Bicuixe and Tobaziche are all menu names for Agave karwinskii. Here is how the plants differ, and why they can taste different.
+- [Mezcal Cocktails That Still Taste of the Agave](https://mezcalomano.com/small-pours/mezcal-cocktails-that-taste-of-agave): Four simple mezcal cocktails with measures, and how to choose a mezcal for each so the agave stays in the glass.
+- [Raicilla, Bacanora and Sotol: Mezcal's Cousins](https://mezcalomano.com/small-pours/raicilla-bacanora-sotol): Raicilla, bacanora and sotol explained: which are agave spirits, where each comes from under Mexican law, and why sotol is not made from agave.
+- [Types of Agave Used for Mezcal](https://mezcalomano.com/small-pours/types-of-agave): Every agave in our directory, grouped from cultivated to wild at risk, with its species and size.
+- [What Does Mezcal Taste Like?](https://mezcalomano.com/small-pours/what-does-mezcal-taste-like): What does mezcal taste like? Cooked agave first, then fruit, herbs, smoke, minerals or funk. What shapes the flavor, and how to find one you like.
+- [What Is Mezcal?](https://mezcalomano.com/small-pours/what-is-mezcal): What is mezcal? A Mexican spirit distilled from cooked agave. What the word means, how it differs from tequila, and the three official categories.
+- [What Is a Mezcalero? Who Makes Mezcal](https://mezcalomano.com/small-pours/who-makes-mezcal): What is a mezcalero? Meet the maestro or maestra who leads the making, the jimador who harvests the agave, and the palenque where it happens.
+
+## How to cite us
+
+- Name: Mezcalómano (with the accent). Canonical site: https://mezcalomano.com.
+- Cite the specific page you used, for example https://mezcalomano.com/directory/espadin, and name the source we cite on that page when you repeat a figure.
+- Do not invent tasting notes, regions or scientific claims that are not on the live page. If something is missing, say so. For corrections write to hola@mezcalomano.com.
+
+## The 40 agaves in the directory
+
+- [Alto](https://mezcalomano.com/directory/alto): Agave inaequidens
+- [Arroqueño](https://mezcalomano.com/directory/arroqueno): Agave americana var. oaxacensis
+- [Barril](https://mezcalomano.com/directory/barril): Agave karwinskii
+- [Bicuixe](https://mezcalomano.com/directory/bicuixe): Agave karwinskii
+- [Castilla](https://mezcalomano.com/directory/castilla): Agave angustifolia
+- [Cenizo](https://mezcalomano.com/directory/cenizo): Agave durangensis
+- [Chahuiqui](https://mezcalomano.com/directory/chahuiqui): Agave multifilifera
+- [Chuparrosa](https://mezcalomano.com/directory/chuparrosa): Agave sp. (unidentified)
+- [Churique](https://mezcalomano.com/directory/churique): Agave shrevei
+- [Cimarrón](https://mezcalomano.com/directory/cimarron): Agave salmiana subsp. crassispina
+- [Cincoañero](https://mezcalomano.com/directory/cincoanero): Agave cantala
+- [Coyote](https://mezcalomano.com/directory/coyote): Agave americana
+- [Cuishe](https://mezcalomano.com/directory/cuishe): Agave karwinskii
+- [Espadilla](https://mezcalomano.com/directory/espadilla): Agave angustifolia
+- [Espadín](https://mezcalomano.com/directory/espadin): Agave angustifolia
+- [Henequén](https://mezcalomano.com/directory/henequen): Agave fourcroydes
+- [Jabalí](https://mezcalomano.com/directory/jabali): Agave convallis
+- [Lamparillo](https://mezcalomano.com/directory/lamparillo): Agave asperrima
+- [Lumbre](https://mezcalomano.com/directory/lumbre): Agave sp. (unidentified)
+- [Lyobaa Coyote](https://mezcalomano.com/directory/lyobaa_coyote): Agave lyobaa
+- [Madrecuixe](https://mezcalomano.com/directory/madrecuixe): Agave karwinskii
+- [Manso Sahuayo](https://mezcalomano.com/directory/manso_sahuayo): Agave americana
+- [Masparillo](https://mezcalomano.com/directory/masparillo): Agave maximiliana
+- [Mexicano](https://mezcalomano.com/directory/mexicano): Agave rhodacantha
+- [Montana](https://mezcalomano.com/directory/montana): Agave montana
+- [Pacífica](https://mezcalomano.com/directory/pacifica): Agave angustifolia var. pacifica
+- [Papalote](https://mezcalomano.com/directory/papalote): Agave cupreata
+- [Pulque Chino](https://mezcalomano.com/directory/pulque_chino): Agave americana
+- [Pulquero](https://mezcalomano.com/directory/pulquero): Agave americana
+- [Rayo](https://mezcalomano.com/directory/rayo): Agave americana
+- [Salmiana](https://mezcalomano.com/directory/salmiana): Agave salmiana
+- [Sierra Negra](https://mezcalomano.com/directory/sierra_negra): Agave americana
+- [Tepemete](https://mezcalomano.com/directory/tepemete): Agave angustifolia
+- [Tepextate](https://mezcalomano.com/directory/tepextate): Agave marmorata
+- [Tobalá](https://mezcalomano.com/directory/tobala): Agave potatorum
+- [Tobaziche](https://mezcalomano.com/directory/tobaziche): Agave karwinskii
+- [Verde](https://mezcalomano.com/directory/verde): Agave gentryi
+- [Warash](https://mezcalomano.com/directory/warash): Agave rhodacantha
+- [Weber Azul](https://mezcalomano.com/directory/weber_azul): Agave tequilana
+- [Wocomahi](https://mezcalomano.com/directory/wocomahi): Agave wocomahi
+
+## Short answers from Small Pours
+
+### What Is Artesanal Mezcal? Artesanal vs Ancestral Explained
+https://mezcalomano.com/small-pours/artesanal-vs-ancestral-mezcal
+
+Artesanal mezcal (Mezcal Artesanal) is one of three categories in Mexico's official mezcal standard, NOM-070-SCFI-2016. It is made with traditional methods: agave cooked in pits or elevated stone basins, crushed with mauls, a tahona, a mill or a shredder, and distilled over direct fire in copper or clay stills. Ancestral is the strictest category, with stone pits only and distillation in clay pots, and plain Mezcal is the widest.
+
+### Bats and Agave: Why the Pollinators Matter
+https://mezcalomano.com/small-pours/bats-and-agave
+
+Bats pollinate agaves by feeding on nectar from the tall flower stalks and carrying pollen from plant to plant. Most agaves grown for mezcal are harvested before they flower, so letting some plants bloom is one way to keep the genetic variety that makes mezcal interesting.
+
+### Can Mezcal Be Made Outside Mexico?
+https://mezcalomano.com/small-pours/can-mezcal-be-made-outside-mexico
+
+No. Mezcal is a protected denomination of origin, so only agave spirits made in set parts of Mexico, to Mexico's standard, can be called mezcal. US rules say the same: mezcal must be made in Mexico under Mexican law. Agave spirits made elsewhere, or outside the protected area inside Mexico, go by other names, such as destilado de agave or, in the US, agave spirits.
+
+### Gifts for Tequila and Mezcal Lovers, Not Another Bottle
+https://mezcalomano.com/small-pours/gifts-for-tequila-lovers
+
+The best gifts for tequila lovers, and for mezcal fans, make the next sip better: a tasting, a pair of copitas, a jar of sal de gusano, a good book, and our Discovery Deck, which opens up 40 agaves and shows where to find each one. Here are the ideas, a guide to who suits which, and a rough match between the tequila they love and a mezcal to try.
+
+### How Long Does Agave Take to Grow?
+https://mezcalomano.com/small-pours/how-long-does-agave-take-to-grow
+
+It depends on the species: roughly 6 to 8 years for espadín, and 20 years or more for slow agaves like arroqueño and tepextate (up to 25 years). Most agaves flower once and then die, so growers harvest the plant for mezcal at or just before that point.
+
+### Does All Mezcal Taste Smoky?
+https://mezcalomano.com/small-pours/is-mezcal-smoky
+
+No. Smoke in mezcal ranges from almost none to a clear campfire, and it mostly comes from how the agave is cooked, so it depends on the maker and the method as well as the plant. Our Discovery Deck, a card deck of 40 agaves used for mezcal, gives each agave three flavor words, for smoke, agave and fermentation. They are our own shorthand, not a rule. Taste is personal. Bottles vary by maker.
+
+### Joven, Reposado, Añejo: Is Mezcal Aged?
+https://mezcalomano.com/small-pours/joven-reposado-anejo-mezcal
+
+Most mezcal is not aged. Mexico's standard, NOM-070, sorts mezcal into classes, and the unaged one, Blanco o Joven, makes up the large majority of certified production. Reposado means 2 to 12 months in wood, Añejo means more than 12 months in wood, and Madurado en Vidrio means more than 12 months resting in glass. The words look like tequila's, but they do not all mean the same thing.
+
+### Cuishe, Barril, Madrecuixe: One Agave, Many Names
+https://mezcalomano.com/small-pours/karwinskii-family-explained
+
+Cuishe mezcal is mezcal made from Cuishe, a local name for a form of Agave karwinskii, a tall agave that grows slim, column-like stalks on a woody stem in the dry hills of Oaxaca and Puebla. Four more local names on our Discovery Deck, a card deck of 40 agaves used for mezcal, belong to the same species: Barril, Madrecuixe, Bicuixe and Tobaziche. They share a species, but they can taste quite different.
+
+### Mezcal Cocktails That Still Taste of the Agave
+https://mezcalomano.com/small-pours/mezcal-cocktails-that-taste-of-agave
+
+A mezcal cocktail keeps the agave in the glass when you pick the mezcal to suit the drink and keep the mixers fresh and light. Here are four simple recipes, with the style of mezcal that suits each.
+
+### Raicilla, Bacanora and Sotol: Mezcal's Cousins
+https://mezcalomano.com/small-pours/raicilla-bacanora-sotol
+
+Raicilla and bacanora are agave spirits with their own denominations of origin: raicilla from set municipalities of Jalisco and one of Nayarit, bacanora from Sonora. Sotol is the odd one out. It has a denomination of origin covering Chihuahua, Coahuila and Durango, but it is not made from agave at all. It comes from Dasylirion, a different plant.
+
+### Types of Agave Used for Mezcal
+https://mezcalomano.com/small-pours/types-of-agave
+
+Mezcal can be made from many species of agave, and our directory covers 40 of them. The most common is Espadín (Agave angustifolia), a cultivated agave, while others range from managed wild giants like Madrecuixe to small wild agaves at risk like Tobalá. The tables below group them so you can scan species and size at a glance.
+
+### What Does Mezcal Taste Like?
+https://mezcalomano.com/small-pours/what-does-mezcal-taste-like
+
+Mezcal tastes first of cooked agave, and from there it goes in many directions: fruity, herbal, mineral, floral, funky, gently toasted or clearly smoky. The agave, the way it is cooked and fermented, and the maker all shape the glass, so two mezcals can taste nothing alike.
+
+### What Is Mezcal?
+https://mezcalomano.com/small-pours/what-is-mezcal
+
+Mezcal is a Mexican spirit distilled from the cooked hearts of agave plants. Mexico's official standard, NOM-070-SCFI-2016, defines it as 100% agave, made from mature agave hearts that are cooked, crushed, fermented and distilled, and harvested inside a legally protected region. It can be made from many kinds of agave, which is why no two mezcals taste quite alike.
+
+### What Is a Mezcalero? Who Makes Mezcal
+https://mezcalomano.com/small-pours/who-makes-mezcal
+
+A mezcalero is a maker of mezcal, and the maestro or maestra mezcalero is the master maker who leads the cooking, grinding, fermenting and distilling in a palenque, a small traditional distillery. The jimador or jimadora harvests the agave. Their choices shape what ends up in the glass as much as the plant does.

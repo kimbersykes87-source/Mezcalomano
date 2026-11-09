@@ -7,6 +7,7 @@ import AgaveImage from "@/components/AgaveImage";
 import { supabase } from "@/lib/supabase";
 import { getMatrixCardUrlMap, resolveSpeciesImageUrl } from "@/lib/matrix-card-urls";
 import { toAgaveCard, type AgaveCard } from "@/lib/agave-cards";
+import { cardImageAlt } from "@/lib/species-meta";
 import type { Species } from "@/types/species";
 
 /** Cards shown before "Show all": three rows of four on desktop. */
@@ -222,7 +223,7 @@ export default function DirectoryClient({ initialCards = [] }: { initialCards?: 
                           {c.usCount} US {c.usCount === 1 ? "shop" : "shops"}
                         </span>
                       ) : null}
-                      <AgaveImage src={c.img} alt={`${c.name} agave`} />
+                      <AgaveImage src={c.img} alt={cardImageAlt(c.name, c.sci)} />
                     </div>
                     <div className="tx">
                       <h3 className="notranslate" translate="no">

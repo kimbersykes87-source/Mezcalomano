@@ -33,10 +33,6 @@ function plain(text: string) {
   return text.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/\*\*([^*]+)\*\*/g, "$1");
 }
 
-function formatDate(iso: string) {
-  return new Date(iso + "T12:00:00Z").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" });
-}
-
 export default async function PostPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
   const e = getPost(slug);
@@ -50,14 +46,9 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
     headline: e.title,
     description: e.description,
     image: [`${SITE_URL}${e.image.src}`],
-    datePublished: e.published,
-    dateModified: e.updated,
     mainEntityOfPage: url,
-    author: [
-      { "@type": "Person", name: "Kimber" },
-      { "@type": "Person", name: "Siona" },
-    ],
-    publisher: { "@type": "Organization", name: "Mezcalómano", logo: { "@type": "ImageObject", url: `${SITE_URL}${LOGO_IMAGE_PATH}` } },
+    author: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "Mezcalómano" },
+    publisher: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "Mezcalómano", logo: { "@type": "ImageObject", url: `${SITE_URL}${LOGO_IMAGE_PATH}` } },
   };
   const faqLd = {
     "@context": "https://schema.org",
@@ -88,9 +79,6 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
           <p className="s-eyebrow">{e.category}</p>
           <h1>{e.title}</h1>
           <p className="j-answer"><PostText text={e.answer} /></p>
-          <p className="j-by">
-            By Kimber and Siona · {e.published ? formatDate(e.published) : "Draft"} · Checked {formatDate(e.updated)}
-          </p>
         </div>
       </header>
 

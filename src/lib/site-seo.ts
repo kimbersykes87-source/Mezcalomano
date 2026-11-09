@@ -16,6 +16,10 @@ export const HOME_META_DESCRIPTION =
 export const DISCOVERY_DECK_PRODUCT_DESCRIPTION =
   "A deck of playing cards that introduces 40 kinds of mezcal and the agaves behind them. 56 cards, poker size, with a QR code to the online agave directory.";
 
+/** Legal entity behind the brand. Seller of record since 2026-10-29. */
+export const LEGAL_NAME = "That's SaaS Limited";
+export const PUBLIC_EMAIL = "hola@mezcalomano.com";
+
 export const OG_IMAGE_PATH = "/assets/og/og-share-1200x630.jpg";
 
 export const LOGO_IMAGE_PATH = "/assets/favicon/app_icon_512.png";

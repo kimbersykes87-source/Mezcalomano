@@ -9,7 +9,7 @@ export const howToReadAMezcalLabel: PostEntry = {
   answer:
     "A mezcal label tells you the category (mezcal or destilado de agave), the agave, how it was made, and who made it. Look for the agave name first, then the lot number and the numbered certification seal, and use our flavor compass to guess what is in the bottle.",
   status: "draft",
-  updated: "2026-10-31",
+  updated: "2026-11-09",
   image: {
     src: "/assets/photography/about-tile-1-sign.jpg",
     alt: "A roadside sign pointing the way to Oaxaca, with a dog resting beneath it.",
@@ -84,6 +84,14 @@ export const howToReadAMezcalLabel: PostEntry = {
       type: "p",
       text: "Want the vocabulary in your pocket? Every card in our Discovery Deck carries the flavor compass, and a reference card explains each word.",
     },
+    { type: "h2", text: "Sources" },
+    {
+      type: "list",
+      items: [
+        "[NOM-070-SCFI-2016, official English translation hosted by COMERCAM](https://comercam-dom.org.mx/wp-content/uploads/2022/04/DOF-2017.02.23-NOM-070-SCFI-2016-Alcoholic-Beverages-Mezcal-Specifications.pdf): label requirements (section 6.1), allowed strength 35 to 55 percent (Table 2), categories (sections 4.4 to 4.4.3). The Spanish text prevails.",
+        "Mezcalómano [agave directory](/directory) and Discovery Deck card data for the agave names and flavor compass. More on [Sources](/sources).",
+      ],
+    },
   ],
   faq: [
     {
@@ -100,6 +108,7 @@ export const howToReadAMezcalLabel: PostEntry = {
     },
   ],
   reviewNotes: [
+    "DRAFT changes 2026-11-09 (SEO audit): added Sources section citing NOM-070-SCFI-2016.",
     "The mezcal vs destilado de agave wording comes from the deck's Introduction card. The card says 'producer code, batch or lot number'; the standard text I read names the producer's name, address and tax ID, a lot identification and a numbered certification seal, and does not define a 'producer code'. Check whether the card wording should change, or whether the producer NOM number on bottles is what the card means.",
     "Label requirements checked 31 Oct 2026 against section 6.1 of the official English translation of NOM-070-SCFI-2016 hosted by COMERCAM (Spanish prevails in disputes): category word, class word, 100% agave, ABV as % Alc. Vol., agave name, 'Protected Denomination of Origin', state, producer details and lot. ABV range 35 to 55 percent is Table 2.",
     "The 'Maker or maestro' and 'Production notes' bullets are optional extras that appear on some labels, not requirements.",

@@ -3,13 +3,18 @@ import Link from "next/link";
 import { DISCOVERY_DECK_PRODUCT_URL } from "@/lib/site-seo";
 import { PRESS_IMAGES, PRESS_KIT_ZIP, PRESS_LOGOS, PRESS_PACKSHOTS, formatMegabytes } from "@/lib/press";
 
+// DRAFT title and description, pending Siona's sign-off.
+const PRESS_TITLE = "Press Kit: Agave Card Deck Photos and Facts | Mezcalómano";
+const PRESS_DESCRIPTION =
+  "Photos, packshots, logos and quick facts for the Discovery Deck, 40 agave playing cards for the mezcal-curious. Press contact included.";
+
 export const metadata: Metadata = {
-  title: "Press",
-  description: "Images, facts and contact details for the Mezcalómano Discovery Deck.",
+  title: "Press Kit: Agave Card Deck Photos and Facts",
+  description: PRESS_DESCRIPTION,
   alternates: { canonical: "/press" },
   openGraph: {
-    title: "Press | Mezcalómano",
-    description: "Images, facts and contact details for the Mezcalómano Discovery Deck.",
+    title: PRESS_TITLE,
+    description: PRESS_DESCRIPTION,
     url: "/press",
     images: [
       {
@@ -22,8 +27,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Press | Mezcalómano",
-    description: "Images, facts and contact details for the Mezcalómano Discovery Deck.",
+    title: PRESS_TITLE,
+    description: PRESS_DESCRIPTION,
     images: ["/press/mezcalomano-press-share.jpg"],
   },
 };
