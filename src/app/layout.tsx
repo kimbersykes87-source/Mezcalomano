@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import {
-  FOUNDERS,
   LEGAL_NAME,
   PUBLIC_EMAIL,
-  personLd,
   LOGO_IMAGE_PATH,
   OG_IMAGE_PATH,
   SITE_META_DESCRIPTION,
@@ -35,7 +33,6 @@ const siteStructuredData = {
         url: `${SITE_URL}/contact`,
         availableLanguage: ["English"],
       },
-      founder: FOUNDERS.map((f) => personLd(f)),
       sameAs: [
         "https://www.instagram.com/mezcalomano/",
         "https://www.tiktok.com/@mezcalomano",
