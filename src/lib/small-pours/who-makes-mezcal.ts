@@ -7,7 +7,8 @@ export const whoMakesMezcal: PostEntry = {
     description: "What is a mezcalero? Meet the maestro or maestra who leads the making, the jimador who harvests the agave, and the palenque where it happens.",
     category: "Culture",
     answer: "A mezcalero is a maker of mezcal, and the maestro or maestra mezcalero is the master maker who leads the cooking, grinding, fermenting and distilling in a palenque, a small traditional distillery. The jimador or jimadora harvests the agave. Their choices shape what ends up in the glass as much as the plant does.",
-    status: "review",
+    status: "published",
+    published: "2026-11-09",
     updated: "2026-11-08",
     image: {
       src: "/small-pours/who-makes-mezcal-hero.webp",
