@@ -12,8 +12,8 @@ export const karwinskiiFamilyExplained: PostEntry = {
     image: {
       src: "/small-pours/karwinskii-family-explained-hero.webp",
       alt: "The Madrecuixe card from the Discovery Deck on a wood table.",
-      width: 1600,
-      height: 1200
+      width: 2000,
+      height: 1500
     },
     body: [
       {

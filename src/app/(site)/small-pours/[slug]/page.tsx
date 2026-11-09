@@ -28,6 +28,11 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   };
 }
 
+/** Flattens **bold** and [label](href) to plain words for structured data. */
+function plain(text: string) {
+  return text.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/\*\*([^*]+)\*\*/g, "$1");
+}
+
 function formatDate(iso: string) {
   return new Date(iso + "T12:00:00Z").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" });
 }
@@ -57,7 +62,7 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
   const faqLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: e.faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+    mainEntity: e.faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: plain(f.a) } })),
   };
 
   return (
@@ -82,7 +87,7 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
         <div className="j-col">
           <p className="s-eyebrow">{e.category}</p>
           <h1>{e.title}</h1>
-          <p className="j-answer">{e.answer}</p>
+          <p className="j-answer"><PostText text={e.answer} /></p>
           <p className="j-by">
             By Kimber and Siona · {e.published ? formatDate(e.published) : "Draft"} · Checked {formatDate(e.updated)}
           </p>
@@ -125,7 +130,7 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
             {e.faq.map((f) => (
               <div key={f.q}>
                 <dt>{f.q}</dt>
-                <dd>{f.a}</dd>
+                <dd><PostText text={f.a} /></dd>
               </div>
             ))}
           </dl>
