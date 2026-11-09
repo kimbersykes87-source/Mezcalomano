@@ -47,7 +47,7 @@ export const mezcalGlossary: PostEntry = {
       head: ["Term", "Meaning"],
       rows: [
         ["**Mezcal**", "A certified agave spirit made inside Mexico's Denomination of Origin. The broadest category, which allows more modern equipment."],
-        ["**Mezcal artesanal**", "Made in pits or raised stone basins, crushed with mauls, a tahona, mills or a shredder, and distilled over direct fire in copper or clay stills."],
+        ["**Mezcal artesanal**", "Made in pits or raised masonry ovens, crushed with mauls, a tahona, mills or a shredder, and distilled over direct fire in copper or clay stills."],
         ["**Mezcal ancestral**", "The most traditional category: stone pits only, and distillation in a clay pot over direct fire."],
         ["**Destilado de agave**", "An agave spirit made outside the rules or without certification. It cannot say mezcal, even when it is made with great care."],
         ["**DOM (Denomination of Origin)**", "The legal area and rule book that define where mezcal can be made and how."],
@@ -82,7 +82,7 @@ export const mezcalGlossary: PostEntry = {
   faq: [
     {
       q: "What is the difference between mezcal, artesanal and ancestral?",
-      a: "Mezcal is the broadest category and allows more modern equipment. Artesanal uses pits or raised stone basins and copper or clay stills. Ancestral is the most traditional, with stone pits only and a clay distilling pot.",
+      a: "Mezcal is the broadest category and allows more modern equipment. Artesanal uses pits or raised masonry ovens and copper or clay stills. Ancestral is the most traditional, with stone pits only and a clay distilling pot.",
     },
     {
       q: "What does destilado de agave mean?",
