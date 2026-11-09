@@ -7,13 +7,14 @@ export const whatDoesMezcalTasteLike: PostEntry = {
     description: "What does mezcal taste like? Cooked agave first, then fruit, herbs, smoke, minerals or funk. What shapes the flavor, and how to find one you like.",
     category: "Flavor",
     answer: "Mezcal tastes first of cooked agave, and from there it goes in many directions: fruity, herbal, mineral, floral, funky, gently toasted or clearly smoky. The agave, the way it is cooked and fermented, and the maker all shape the glass, so two mezcals can taste nothing alike.",
-    status: "review",
+    status: "published",
+    published: "2026-11-09",
     updated: "2026-11-08",
     image: {
       src: "/small-pours/what-does-mezcal-taste-like-hero.webp",
       alt: "A ridged glass of clear spirit resting on green leaves against a red backdrop.",
-      width: 1000,
-      height: 750
+      width: 2400,
+      height: 1800
     },
     body: [
       {
