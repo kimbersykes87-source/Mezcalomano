@@ -7,9 +7,9 @@ export const tobalaVsEspadin: PostEntry = {
     "Tobalá vs espadín: how the two agaves grow, why one is rare, and how they taste side by side, using our three-word flavor compass.",
   category: "Agave vs agave",
   answer:
-    "Espadín is the farmed, widely planted agave behind most mezcal, with a toasty, roasted, fruity profile. Tobalá is a small, mostly wild agave from rocky hillsides in Oaxaca, Puebla and Veracruz, with a toasty, floral, fruity profile. On our flavor compass the two differ by a single word, roasted versus floral, and the bigger difference is the plant itself.",
+    "Espadín is the farmed, widely planted agave behind most mezcal, with a toasty, roasted, fruity profile. Tobalá is a small, mostly wild agave from rocky slopes in Oaxaca, Puebla and Veracruz, with a toasty, floral, fruity profile. The compass differs by one word, but the plants differ much more.",
   status: "draft",
-  updated: "2026-10-31",
+  updated: "2026-11-09",
   image: {
     src: "/assets/photography/about-tile-4-agave.jpg",
     alt: "Rows of agave growing on a hillside in the Oaxacan highlands.",
@@ -32,7 +32,7 @@ export const tobalaVsEspadin: PostEntry = {
         ["How it grows", "Cultivated and very widely planted, about 6 to 8 years to maturity", "Wild and semi managed, on rocky slopes and cliffs"],
         ["Size", "About 2.5 to 4.5 feet", "About 0.8 to 2 feet"],
         ["Where", "26 states in our directory", "Oaxaca, Puebla and Veracruz"],
-        ["Share of production", "84.53% of certified mezcal in 2025", "A small fraction by comparison"],
+        ["Share of production", "About 85% of certified mezcal in 2025", "A small fraction by comparison"],
       ],
     },
     {
@@ -85,6 +85,15 @@ export const tobalaVsEspadin: PostEntry = {
       type: "p",
       text: "Start with an espadín as your baseline, then make Tobalá your first step sideways. Because the compass changes by only one word, you will notice exactly what the plant adds. After that, our [map](/map) shows where each of the 40 agaves grows, and the deck gives every one its own compass.",
     },
+    { type: "h2", text: "Sources" },
+    {
+      type: "list",
+      items: [
+        "[COMERCAM, Informe Estadístico 2026](https://comercam-dom.org.mx/wp-content/uploads/2026/05/INFORME-2026_VERSION-PUBLICA.pdf): espadín share of certified mezcal in 2025 (Tabla 2).",
+        "Mezcalómano agave directory pages: [Espadín](/directory/espadin) and [Tobalá](/directory/tobala), plus the Discovery Deck card data. More on [Sources](/sources).",
+        "Flavor compass definitions: Discovery Deck flavor guide card.",
+      ],
+    },
   ],
   faq: [
     {
@@ -101,6 +110,7 @@ export const tobalaVsEspadin: PostEntry = {
     },
   ],
   reviewNotes: [
+    "DRAFT changes 2026-11-09 (SEO audit): added Sources section; answer shortened to 40 to 60 words; espadin share now says about 85%.",
     "Every fact in the table comes from our directory data and the deck's Cards data: species names, nicknames, compass words, size, states, terrain and 'wild and semi managed'. The share of production is COMERCAM 2025 (84.53%). Please confirm they still match the cards and the species pages.",
     "'Small plants mean fewer bottles per plant' is an inference, not a directory fact. Keep it if you agree, or cut it.",
     "The one-word compass difference and the roasted vs floral descriptions use the definitions from the flavor guide card.",

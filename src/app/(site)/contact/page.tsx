@@ -1,9 +1,10 @@
 import ContactForm from "@/components/ContactForm";
 
+// DRAFT title and description, pending Siona's sign-off.
 export const metadata = {
-  title: "Contact",
+  title: "Contact Us: Agave, Orders and the Deck",
   description:
-    "Get in touch with Mezcalómano. Need help with an order, a shipping question, or anything else? We'll reply within 1 to 2 business days.",
+    "Questions about agave, the Discovery Deck, an order or shipping? Send us a note and we will reply within 1 to 2 business days.",
   alternates: { canonical: "/contact" },
 };
 

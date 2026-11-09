@@ -19,6 +19,16 @@ export function shortScientificName(name: string): string {
   return name.replace(/\s*\(.*\)\s*$/, "").trim();
 }
 
+/**
+ * Alt text for a species card image, the main content image on directory pages:
+ * "Alto agave card from the Mezcalómano Discovery Deck, Agave inaequidens".
+ * One helper so every place that shows a card uses the same wording.
+ */
+export function cardImageAlt(commonName: string, scientificName: string): string {
+  const sci = shortScientificName(scientificName);
+  return `${commonName} agave card from the Mezcalómano Discovery Deck${sci ? `, ${sci}` : ""}`;
+}
+
 export function speciesTitle(s: Pick<Species, "common_name" | "scientific_name">): string {
   return `${s.common_name} Mezcal (${shortScientificName(s.scientific_name)}) | Mezcalómano`;
 }

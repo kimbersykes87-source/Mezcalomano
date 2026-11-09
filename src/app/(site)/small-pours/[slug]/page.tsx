@@ -5,7 +5,8 @@ import PostText from "@/components/PostText";
 import JsonLd from "@/components/JsonLd";
 import { SMALL_POURS_NAME, allPosts, getPost } from "@/lib/small-pours";
 import { autoLinkStates } from "@/lib/small-pours/auto-link-states";
-import { DISCOVERY_DECK_PRODUCT_URL, LOGO_IMAGE_PATH, SITE_URL } from "@/lib/site-seo";
+import { DISCOVERY_DECK_PRODUCT_URL, FOUNDERS, LOGO_IMAGE_PATH, SITE_URL, personLd } from "@/lib/site-seo";
+import { laterOf } from "@/lib/content-dates";
 
 type Params = { slug: string };
 
@@ -51,13 +52,11 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
     description: e.description,
     image: [`${SITE_URL}${e.image.src}`],
     datePublished: e.published,
-    dateModified: e.updated,
+    // "updated" is the last fact check and can predate the go-live date, so never let modified fall before published.
+    dateModified: laterOf(e.updated, e.published),
     mainEntityOfPage: url,
-    author: [
-      { "@type": "Person", name: "Kimber" },
-      { "@type": "Person", name: "Siona" },
-    ],
-    publisher: { "@type": "Organization", name: "Mezcalómano", logo: { "@type": "ImageObject", url: `${SITE_URL}${LOGO_IMAGE_PATH}` } },
+    author: FOUNDERS.map((f) => personLd(f)),
+    publisher: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "Mezcalómano", logo: { "@type": "ImageObject", url: `${SITE_URL}${LOGO_IMAGE_PATH}` } },
   };
   const faqLd = {
     "@context": "https://schema.org",
@@ -89,7 +88,7 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
           <h1>{e.title}</h1>
           <p className="j-answer"><PostText text={e.answer} /></p>
           <p className="j-by">
-            By Kimber and Siona · {e.published ? formatDate(e.published) : "Draft"} · Checked {formatDate(e.updated)}
+            By <Link href="/about#kimber">Kimber</Link> and <Link href="/about#siona">Siona</Link> · {e.published ? formatDate(e.published) : "Draft"} · Checked {formatDate(laterOf(e.updated, e.published))}
           </p>
         </div>
       </header>

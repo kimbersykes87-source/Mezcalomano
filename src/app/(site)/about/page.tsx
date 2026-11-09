@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element -- responsive srcset photos sized by CSS */
+// DRAFT title and description, pending Siona's sign-off.
 export const metadata = {
-  title: "About",
+  title: "Agave Education for the Mezcal-Curious",
   description:
-    "Mezcalómano celebrates agave through the Discovery Deck playing cards and a free species directory for mezcal lovers and the curious.",
+    "Mezcalómano is an agave education brand. Meet the two people behind the Discovery Deck, 40 agave playing cards, and our free agave directory.",
   alternates: { canonical: "/about" },
 };
 
@@ -69,6 +70,32 @@ export default function AboutPage() {
             <p>
               When your deck lands, scan the QR code to unlock our agave directory and discover even
               more: where different agaves grow across Mexico, and who&apos;s bottling them.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* DRAFT bio block, pending Siona's sign-off. First names only, by decision. Anchors match the Person @ids in JSON-LD. */}
+      <section className="a-body" aria-label="Who writes Mezcalómano">
+        <div className="s-wrap">
+          <div>
+            <p className="s-eyebrow">Who we are</p>
+            <h2>Kimber and Siona</h2>
+          </div>
+          <div className="a-text">
+            <p id="kimber">
+              <strong>Kimber</strong> co-founded Mezcalómano and builds the Discovery Deck, the agave directory
+              and this site, working from the agave data, the official standards and the production reports listed
+              on our Sources page.
+            </p>
+            <p id="siona">
+              <strong>Siona</strong> co-founded Mezcalómano and has final sign off on every word of customer-facing
+              copy, including each Small Pours article, before it goes live.
+            </p>
+            <p>
+              Mezcalómano is run by That&apos;s SaaS Limited, a UK company. Every figure we publish is traced to a
+              source on our <a href="/sources">Sources page</a>. If we got something wrong, write to{" "}
+              <a href="mailto:hola@mezcalomano.com">hola@mezcalomano.com</a> and we will fix it.
             </p>
           </div>
         </div>

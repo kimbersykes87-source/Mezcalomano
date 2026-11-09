@@ -1,33 +1,45 @@
 # Mezcalómano
 
-> https://mezcalomano.com
+> Mezcalómano is an agave education brand. We make the Discovery Deck, a deck of playing cards that introduces 40 kinds of mezcal and the agaves behind them, and we publish a free agave directory and a short-reads series called Small Pours.
 
-Mezcalómano is a brand for mezcal lovers and the mezcal-curious. We sell the Discovery Deck, playing cards that introduce 40 kinds of mezcal and the agaves behind them, and publish a free agave species directory on this site.
+## Key facts
 
-## Primary URLs
+- Product: THE DISCOVERY DECK, 40 agave species, $29.99, sold at https://shop.mezcalomano.com/products/discovery-deck. Pre-orders ship from November 30, 2026. US addresses only for now.
+- Seller of record: That's SaaS Limited, a UK company, trading as Mezcalómano. Public email: hola@mezcalomano.com.
+- Espadín made up about 85% of certified mezcal in 2025 (COMERCAM, Informe Estadístico 2026).
+- Our approach is agave first: we describe taste, agave and common names, not brands.
 
-- Home: https://mezcalomano.com/
-- Agave directory (browse species): https://mezcalomano.com/directory
-- Species pages: https://mezcalomano.com/directory/{slug} (slug matches in-site links; may come from database `slug` or a normalized form of the common name)
-- Map of species: https://mezcalomano.com/map
-- About: https://mezcalomano.com/about
-- Contact: https://mezcalomano.com/contact
-- Press (images, facts and press contact): https://mezcalomano.com/press
-- Sources (where our figures come from, including COMERCAM data on espadín): https://mezcalomano.com/sources
+## Main pages
 
-## Shop
+- [Home](https://mezcalomano.com/): the Discovery Deck.
+- [Agave directory](https://mezcalomano.com/directory): all 40 agaves, with size, range, flavor notes and producers. One page per species at https://mezcalomano.com/directory/{slug}.
+- [Map of Mexico](https://mezcalomano.com/map): where each agave grows.
+- [Small Pours](https://mezcalomano.com/small-pours): short answers on agave and mezcal.
+- [Sources](https://mezcalomano.com/sources): where our facts come from.
+- [About](https://mezcalomano.com/about): who writes Mezcalómano.
+- [Press](https://mezcalomano.com/press): photos, logos and quick facts.
+- [Contact](https://mezcalomano.com/contact)
+- [Shop, Discovery Deck](https://shop.mezcalomano.com/products/discovery-deck)
 
-Purchases (Discovery Deck and other products) are on our Shopify store, not on the marketing domain:
+## Small Pours articles
 
-- Shop: https://shop.mezcalomano.com/products/discovery-deck
-- Discovery Deck product: https://shop.mezcalomano.com/products/discovery-deck
+- [What Is Artesanal Mezcal? Artesanal vs Ancestral Explained](https://mezcalomano.com/small-pours/artesanal-vs-ancestral-mezcal): What is artesanal mezcal? How it differs from ancestral and plain mezcal under Mexico's official standard, NOM-070, in plain English.
+- [Bats and Agave: Why the Pollinators Matter](https://mezcalomano.com/small-pours/bats-and-agave): Why bats matter to agave: how they pollinate, why most mezcal agaves are harvested before they flower, and what that means for biodiversity.
+- [Can Mezcal Be Made Outside Mexico?](https://mezcalomano.com/small-pours/can-mezcal-be-made-outside-mexico): Can mezcal be made outside Mexico? No. Which states are in mezcal's denomination of origin, what other agave spirits are called, and the Jalisco case.
+- [Gifts for Tequila and Mezcal Lovers, Not Another Bottle](https://mezcalomano.com/small-pours/gifts-for-tequila-lovers): Gifts for tequila lovers and mezcal fans that aren't another bottle: copitas, a tasting, sal de gusano, a book and a deck that teaches 40 agaves.
+- [How Long Does Agave Take to Grow?](https://mezcalomano.com/small-pours/how-long-does-agave-take-to-grow): How long does agave take to grow? From about 6 to 8 years for espadín to 20 years or more for slow wild agaves, with real numbers from our 40 agaves.
+- [Does All Mezcal Taste Smoky?](https://mezcalomano.com/small-pours/is-mezcal-smoky): Is mezcal smoky? Not always. Where the smoke comes from, why bottles vary so much, and how to find a mezcal with less of it.
+- [Joven, Reposado, Añejo: Is Mezcal Aged?](https://mezcalomano.com/small-pours/joven-reposado-anejo-mezcal): Is mezcal aged? What joven, reposado, añejo and madurado en vidrio mean on a mezcal label, why most mezcal is unaged, and how tequila differs.
+- [Cuishe, Barril, Madrecuixe: One Agave, Many Names](https://mezcalomano.com/small-pours/karwinskii-family-explained): Cuishe, Barril, Madrecuixe, Bicuixe and Tobaziche are all menu names for Agave karwinskii. Here is how the plants differ, and why they can taste different.
+- [Mezcal Cocktails That Still Taste of the Agave](https://mezcalomano.com/small-pours/mezcal-cocktails-that-taste-of-agave): Four simple mezcal cocktails with measures, and how to choose a mezcal for each so the agave stays in the glass.
+- [Raicilla, Bacanora and Sotol: Mezcal's Cousins](https://mezcalomano.com/small-pours/raicilla-bacanora-sotol): Raicilla, bacanora and sotol explained: which are agave spirits, where each comes from under Mexican law, and why sotol is not made from agave.
+- [Types of Agave Used for Mezcal](https://mezcalomano.com/small-pours/types-of-agave): Every agave in our directory, grouped from cultivated to wild at risk, with its species and size.
+- [What Does Mezcal Taste Like?](https://mezcalomano.com/small-pours/what-does-mezcal-taste-like): What does mezcal taste like? Cooked agave first, then fruit, herbs, smoke, minerals or funk. What shapes the flavor, and how to find one you like.
+- [What Is Mezcal?](https://mezcalomano.com/small-pours/what-is-mezcal): What is mezcal? A Mexican spirit distilled from cooked agave. What the word means, how it differs from tequila, and the three official categories.
+- [What Is a Mezcalero? Who Makes Mezcal](https://mezcalomano.com/small-pours/who-makes-mezcal): What is a mezcalero? Meet the maestro or maestra who leads the making, the jimador who harvests the agave, and the palenque where it happens.
 
-The marketing site path `/buy` redirects to that product URL.
+## How to cite us
 
-## Content source
-
-Directory and map content for species is loaded from our database (Supabase) when the site runs. Do not invent scientific claims, tasting notes, or regional facts that are not shown on the live page. If data is missing or incomplete, say so.
-
-## Contact
-
-Use https://mezcalomano.com/contact for questions to the team.
+- Name: Mezcalómano (with the accent). Canonical site: https://mezcalomano.com.
+- Cite the specific page you used, for example https://mezcalomano.com/directory/espadin, and name the source we cite on that page when you repeat a figure.
+- Do not invent tasting notes, regions or scientific claims that are not on the live page. If something is missing, say so. For corrections write to hola@mezcalomano.com.

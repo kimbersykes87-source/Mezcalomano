@@ -9,7 +9,7 @@ export const mezcalVsTequila: PostEntry = {
   answer:
     "Tequila is made from one plant, the blue Weber agave, while mezcal can be made from dozens of agaves, which is why its flavors range so widely. Mezcal is also traditionally cooked in earth pits, and that is where its reputation for smoke comes from, although not every mezcal is smoky.",
   status: "draft",
-  updated: "2026-10-31",
+  updated: "2026-11-09",
   image: {
     src: "/assets/photography/about-tile-2-pit.jpg",
     alt: "A guide explaining the stone roasting pit at a palenque in Oaxaca.",
@@ -39,7 +39,7 @@ export const mezcalVsTequila: PostEntry = {
     { type: "h2", text: "Why does mezcal have so many flavors?" },
     {
       type: "p",
-      text: "Because there are so many plants. Mezcal can be made from dozens of agaves, from the farmed espadín to wild agaves that take years to mature, and each one brings a different character. Espadín alone is about 85% of the total: it made up 84.53% of certified mezcal production in 2025, according to [COMERCAM, the council that certifies mezcal](https://comercam-dom.org.mx/wp-content/uploads/2026/05/INFORME-2026_VERSION-PUBLICA.pdf). That leaves a great deal of variety in the rest.",
+      text: "Because there are so many plants. Mezcal can be made from dozens of agaves, from the farmed espadín to wild agaves that take years to mature, and each one brings a different character. Espadín alone is about 85% of the total, according to [COMERCAM, the council that certifies mezcal](https://comercam-dom.org.mx/wp-content/uploads/2026/05/INFORME-2026_VERSION-PUBLICA.pdf), in its 2025 figures. That leaves a great deal of variety in the rest.",
     },
     {
       type: "p",
@@ -64,6 +64,17 @@ export const mezcalVsTequila: PostEntry = {
       type: "p",
       text: "If you know tequila, a good first step is a mezcal with a clean or toasty smoke word and fruit or herbs in its compass. Ask for it by agave name, such as [Papalote](/directory/papalote) (clean, herbal, fruity) or [Tobalá](/directory/tobala) (toasty, floral, fruity), and taste it next to a tequila you know. The compass on each card in our Discovery Deck is meant for exactly that.",
     },
+    { type: "h2", text: "Sources" },
+    {
+      type: "list",
+      items: [
+        "[COMERCAM, Informe Estadístico 2026](https://comercam-dom.org.mx/wp-content/uploads/2026/05/INFORME-2026_VERSION-PUBLICA.pdf): espadín share of certified mezcal in 2025.",
+        "[NOM-070-SCFI-2016, official English translation hosted by COMERCAM](https://comercam-dom.org.mx/wp-content/uploads/2022/04/DOF-2017.02.23-NOM-070-SCFI-2016-Alcoholic-Beverages-Mezcal-Specifications.pdf): mezcal categories (sections 4.4 to 4.4.3).",
+        "[Tequila Regulatory Council: what is tequila](https://old.crt.org.mx/index.php/en/el-tequila-2/que-es-el-tequila): NOM-006-SCFI-2012 definition (blue Weber agave; other sugars up to 49%).",
+        "[Earth, fire, smoke: roasting agave piñas to make mezcal (Oaxaca Culture)](https://oaxacaculture.com/2026/03/earth-fire-smoke-roasting-agave-pinas-to-make-mezcal/).",
+        "Mezcalómano agave directory and Discovery Deck card data: [mezcalomano.com/directory](/directory). More on [Sources](/sources).",
+      ],
+    },
   ],
   faq: [
     {
@@ -80,6 +91,7 @@ export const mezcalVsTequila: PostEntry = {
     },
   ],
   reviewNotes: [
+    "DRAFT changes 2026-11-09 (SEO audit): added Sources section; espadin share now says about 85%; tequila plant and sugar rule checked against the Tequila Regulatory Council page on NOM-006-SCFI-2012. Still unchecked against the standard text: steam ovens or pressure cookers for tequila, and the Jalisco-heartland wording.",
     "Our directory and card data supplies: Weber Azul (Agave tequilana, Jalisco, occasionally used in mezcal), the compass lines, and the count of 21 clean, 17 toasty, 2 smoky agaves, rechecked 31 Oct 2026 against the live Species_Final sheet (Churique now reads clean, mineral, lactic). The Cards CSV copies are older; re-export them.",
     "Facts from outside our data: tequila is made from blue Weber agave only, and mostly in Jalisco (100% agave tequila uses nothing else; mixto tequila may add other sugars; confirm the wording against NOM-006-SCFI-2012); tequila is steam baked in masonry ovens or autoclaves; Oaxaca as mezcal's heartland. The mezcal category methods (ancestral stone pits only, artesanal pits or raised masonry ovens, the widest category also allows autoclaves) were checked 31 Oct 2026 against the official English translation of NOM-070-SCFI-2016 hosted by COMERCAM (sections 4.4 to 4.4.3; Spanish prevails). The tequila statements rest on a third-party WSET Level 2 study guide summary and have not been checked against the tequila standard.",
     "'Usually little' smoke for tequila is my general statement, not a sourced one. Keep or soften.",

@@ -7,7 +7,7 @@ import { parseStates, type AgaveCard } from "@/lib/agave-cards";
 import { producerLinks } from "@/lib/producers";
 import { speciesDirectorySlug } from "@/lib/slug";
 import type { Species } from "@/types/species";
-import { compassWords, managementLabel, sizeClassLabel, uniqueProducerNames } from "@/lib/species-meta";
+import { cardImageAlt, compassWords, managementLabel, sizeClassLabel, uniqueProducerNames } from "@/lib/species-meta";
 
 /** The compass cell holds three words in this order. */
 const COMPASS_SLOTS = ["Smoke", "Agave", "Fermentation"];
@@ -76,7 +76,7 @@ function Rail({ cards, current }: { cards: AgaveCard[]; current: string }) {
           <li key={c.slug} className={c.slug === current ? "d-th on" : "d-th"}>
             <Link href={`/directory/${c.slug}`} aria-current={c.slug === current ? "page" : undefined}>
               <div className="t">
-                <AgaveImage src={c.img} alt="" />
+                <AgaveImage src={c.img} alt={cardImageAlt(c.name, c.sci)} />
               </div>
               <p className="notranslate" translate="no">
                 {c.name}
@@ -183,7 +183,7 @@ export default function SpeciesDetailClient({
             ) : null}
           </div>
           <div className="d-img">
-            <AgaveImage src={image} alt={`${species.common_name} agave`} eager />
+            <AgaveImage src={image} alt={cardImageAlt(species.common_name, species.scientific_name)} eager />
           </div>
         </div>
       </section>

@@ -16,6 +16,30 @@ export const HOME_META_DESCRIPTION =
 export const DISCOVERY_DECK_PRODUCT_DESCRIPTION =
   "A deck of playing cards that introduces 40 kinds of mezcal and the agaves behind them. 56 cards, poker size, with a QR code to the online agave directory.";
 
+/** Legal entity behind the brand. Seller of record since 2026-10-29. */
+export const LEGAL_NAME = "That's SaaS Limited";
+export const PUBLIC_EMAIL = "hola@mezcalomano.com";
+
+/**
+ * Founders, first names only (Kimber and Siona, by decision: no surnames anywhere on the site).
+ * Each Person has a stable @id and points to the About page, where the visible bio block lives.
+ */
+export const FOUNDERS = [
+  { id: `${SITE_URL}/about#kimber`, name: "Kimber" },
+  { id: `${SITE_URL}/about#siona`, name: "Siona" },
+] as const;
+
+/** Person entity for JSON-LD, with the same @id everywhere so search engines merge them. */
+export function personLd(f: (typeof FOUNDERS)[number]) {
+  return {
+    "@type": "Person",
+    "@id": f.id,
+    name: f.name,
+    url: `${SITE_URL}/about`,
+    worksFor: { "@id": `${SITE_URL}/#organization` },
+  };
+}
+
 export const OG_IMAGE_PATH = "/assets/og/og-share-1200x630.jpg";
 
 export const LOGO_IMAGE_PATH = "/assets/favicon/app_icon_512.png";

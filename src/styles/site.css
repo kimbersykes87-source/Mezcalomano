@@ -817,3 +817,11 @@ select.s-intl-in option{background:#2F322F;color:#FFFFFF}
   .j-table-wide td{padding:10px 0 0;border-top:0;font-size:16px;line-height:1.55}
   .j-table-wide td::before{content:attr(data-label);display:block;margin-bottom:1px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#84866D}
 }
+/* SEO additions 2026-11-09: About bio heading, Map intro text */
+.a-body h2{margin:16px 0 0;font-size:44px;line-height:1;font-weight:700;font-stretch:75%;letter-spacing:.04em;text-transform:uppercase}
+.m-about{border-top:1px solid rgba(255,255,255,.10)}
+.m-about .s-wrap{padding-top:40px;padding-bottom:56px;max-width:860px}
+.m-about h2{margin:0 0 16px;font-size:28px;line-height:1.1;font-weight:700;font-stretch:75%;letter-spacing:.04em;text-transform:uppercase}
+.m-about p{margin:0 0 14px;font-size:18px;line-height:1.6}
+.m-about a{text-decoration:underline}
+@media (max-width:600px){.a-body h2{font-size:28px}.m-about .s-wrap{padding-top:28px;padding-bottom:40px}.m-about p{font-size:16px}}
