@@ -78,6 +78,7 @@ const OVERRIDES = {
 const APPROVED = { "types-of-agave": "2026-11-09", "what-is-mezcal": "2026-11-09", "what-does-mezcal-taste-like": "2026-11-09", "is-mezcal-smoky": "2026-11-09", "artesanal-vs-ancestral-mezcal": "2026-11-09", "joven-reposado-anejo-mezcal": "2026-11-09", "karwinskii-family-explained": "2026-11-09", "how-long-does-agave-take-to-grow": "2026-11-09", "who-makes-mezcal": "2026-11-09", "bats-and-agave": "2026-11-09", "can-mezcal-be-made-outside-mexico": "2026-11-09", "raicilla-bacanora-sotol": "2026-11-09" };
 
 const HERO_UPGRADED = new Set([
+  "mezcal-cocktails-that-taste-of-agave", // 2400x1000 from Unsplash (Claude Piche) full size 3623x5697, full width, crop top 1390, 2026-11-09
   "raicilla-bacanora-sotol", // 2400x1000 from Adobe Stock 366732977 "Sotol in the Chihuahuan Desert" (free licence, 6240x4160), crop y 1530 to 4130, 2026-11-09
   "can-mezcal-be-made-outside-mexico", // 2400x1000 from MZM_20240626_S06_roadside_oaxaca-sign_01.heic (4284x5712 portrait), cropped to the sign: x 936 to 4284, y 1485, 3348x1395, 2026-11-09
   "who-makes-mezcal", // 2400x1000 from MZM_20240626_S05_palenque_bottle_02.heic (3024x4032 portrait, full width, crop top 780; bottle label removed in Photoshop by Kimber, edited file saved over the same JPG), 2026-11-09

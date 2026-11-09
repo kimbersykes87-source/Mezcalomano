@@ -12,8 +12,8 @@ export const mezcalCocktailsThatTasteOfAgave: PostEntry = {
     image: {
       src: "/small-pours/mezcal-cocktails-that-taste-of-agave-hero.webp",
       alt: "A cocktail garnished with a dried citrus wheel and a dried chile.",
-      width: 1000,
-      height: 750
+      width: 2400,
+      height: 1000
     },
     body: [
       {
