@@ -142,7 +142,13 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
               <Link className="j-btn j-btn-ghost" href="/directory">Browse the directory</Link>
             </div>
           </div>
-          <p className="j-back"><Link href="/small-pours" className="j-link">More {SMALL_POURS_NAME}</Link></p>
+          <p className="j-back">
+            <Link href="/small-pours" aria-label={`${SMALL_POURS_NAME}, all posts`}>
+              {/* eslint-disable-next-line @next/next/no-img-element -- fixed SVG logo */}
+              <img className="j-back-logo" src="/assets/brand/logos/small_pours_logo_stacked.svg" alt="" width={400} height={230} loading="lazy" />
+            </Link>
+            <Link href="/small-pours" className="j-link">More {SMALL_POURS_NAME}</Link>
+          </p>
         </div>
       </div>
     </article>

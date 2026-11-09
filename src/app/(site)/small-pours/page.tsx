@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SMALL_POURS_NAME, hasPublishedPosts, listedPosts } from "@/lib/small-pours";
 
+const SHARE_IMAGE = "/small-pours/small-pours-share-1200x630.png";
+
 const DESCRIPTION =
   "Notes from two people who love mezcal: agave species explained, how to read a label, gift ideas and tasting nights.";
 
@@ -10,7 +12,13 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   alternates: { canonical: "/small-pours" },
   robots: hasPublishedPosts() ? undefined : { index: false, follow: false },
-  openGraph: { title: `${SMALL_POURS_NAME} | Mezcalómano`, description: DESCRIPTION, url: "/small-pours" },
+  openGraph: {
+    title: `${SMALL_POURS_NAME} | Mezcalómano`,
+    description: DESCRIPTION,
+    url: "/small-pours",
+    images: [{ url: SHARE_IMAGE, width: 1200, height: 630, alt: "Small Pours by Mezcalómano, short reads on agave and mezcal" }],
+  },
+  twitter: { card: "summary_large_image", title: `${SMALL_POURS_NAME} | Mezcalómano`, description: DESCRIPTION, images: [SHARE_IMAGE] },
 };
 
 function formatDate(iso: string) {
@@ -40,7 +48,10 @@ export default function SmallPoursPage() {
       <section className="j-head">
         <div className="s-wrap">
           <p className="s-eyebrow">Notes from the road</p>
-          <h1>{SMALL_POURS_NAME}</h1>
+          <h1 className="j-logo-h">
+            {/* eslint-disable-next-line @next/next/no-img-element -- fixed SVG logo */}
+            <img className="j-logo" src="/assets/brand/logos/small_pours_logo_stacked.svg" alt={SMALL_POURS_NAME} width={400} height={230} fetchPriority="high" />
+          </h1>
           <p className="j-sub">Agaves explained, bottles decoded and tasting nights planned, by two people who can&apos;t stop reading labels.</p>
         </div>
       </section>

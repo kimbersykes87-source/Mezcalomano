@@ -708,6 +708,9 @@ select.s-intl-in option{background:#2F322F;color:#FFFFFF}
 .j-head .s-wrap{padding-top:64px;padding-bottom:40px}
 .j-head h1{margin:16px 0 0;font-size:64px;line-height:1;font-weight:700;font-stretch:75%;letter-spacing:.04em;text-transform:uppercase}
 .j-sub{margin:20px 0 0;max-width:720px;font-size:22px;line-height:1.45;font-style:italic}
+.j-head h1.j-logo-h{margin:8px 0 0;font-size:0;line-height:0}
+.j-logo{display:block;width:280px;height:auto;margin-left:-14px}
+.j-back-logo{display:block;width:150px;height:auto;margin:0 0 4px -8px}
 .j-list .s-wrap{padding-top:16px;padding-bottom:96px}
 .j-empty{font-size:19px;line-height:1.7}
 .j-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
@@ -759,6 +762,7 @@ select.s-intl-in option{background:#2F322F;color:#FFFFFF}
 @media (max-width:900px){
 .j-head .s-wrap{padding-top:28px;padding-bottom:20px}
 .j-head h1{font-size:34px}
+.j-logo{width:220px}
 .j-sub{font-size:19px}
 .j-list .s-wrap{padding-bottom:48px}
 .j-grid{grid-template-columns:1fr}
