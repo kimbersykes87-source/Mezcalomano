@@ -12,8 +12,8 @@ export const whatIsMezcal: PostEntry = {
     image: {
       src: "/small-pours/what-is-mezcal-hero.jpg",
       alt: "A man tending the clay stills at a palenque, with green hills behind.",
-      width: 1536,
-      height: 1152
+      width: 2400,
+      height: 1800
     },
     body: [
       {
