@@ -7,7 +7,8 @@ export const howLongDoesAgaveTakeToGrow: PostEntry = {
     description: "How long does agave take to grow? From about 6 to 8 years for espadín to 20 years or more for slow wild agaves, with real numbers from our 40 agaves.",
     category: "Agave",
     answer: "It depends on the species: roughly 6 to 8 years for espadín, and 20 years or more for slow agaves like arroqueño and tepextate (up to 25 years). Most agaves flower once and then die, so growers harvest the plant for mezcal at or just before that point.",
-    status: "review",
+    status: "published",
+    published: "2026-11-09",
     updated: "2026-11-08",
     image: {
       src: "/small-pours/how-long-does-agave-take-to-grow-hero.webp",
