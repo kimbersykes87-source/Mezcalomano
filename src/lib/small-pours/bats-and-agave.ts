@@ -7,7 +7,8 @@ export const batsAndAgave: PostEntry = {
     description: "Why bats matter to agave: how they pollinate, why most mezcal agaves are harvested before they flower, and what that means for biodiversity.",
     category: "Culture",
     answer: "Bats pollinate agaves by feeding on nectar from the tall flower stalks and carrying pollen from plant to plant. Most agaves grown for mezcal are harvested before they flower, so letting some plants bloom is one way to keep the genetic variety that makes mezcal interesting.",
-    status: "review",
+    status: "published",
+    published: "2026-11-09",
     updated: "2026-11-08",
     image: {
       src: "/small-pours/bats-and-agave-hero.webp",
