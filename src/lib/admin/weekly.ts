@@ -27,6 +27,13 @@ const day = (d: string) =>
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
+/** Referrer hosts of AI assistants, so the Monday email shows visits that came from them. */
+const AI_HOSTS = /(^|\.)(chatgpt\.com|chat\.openai\.com|openai\.com|gemini\.google\.com|bard\.google\.com|claude\.ai|perplexity\.ai|copilot\.microsoft\.com|you\.com|poe\.com)$/i;
+
+function aiReferrals(s: Summary): { name: string; value: number }[] {
+  return s.current.top("web_main", "visits_by_referrer", 500).filter((r) => AI_HOSTS.test(r.name.trim()));
+}
+
 function topList(title: string, rows: { name: string; value: number }[], unit: string): { html: string; text: string } {
   if (!rows.length) return { html: "", text: "" };
   const html = `<h3 style="font-size:15px;margin:22px 0 6px;color:#272926">${esc(title)}</h3><table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:14px">${rows
@@ -67,6 +74,7 @@ export function renderWeekly(s: Summary): { subject: string; html: string; text:
   const lists = [
     topList("Top pages on mezcalomano.com", s.current.top("web_main", "page_views_by_path", 5), "views"),
     topList("Where site visitors came from", s.current.top("web_main", "visits_by_referrer", 5), "visits"),
+    topList("Visits from AI assistants (ChatGPT, Gemini, Claude)", aiReferrals(s), "visits"),
     topList("Where shop sessions came from", s.current.top("shop", "sessions_by_referrer", 5), "sessions"),
     topList("Sales by product", s.current.top("shop", "units_by_sku", 5), "decks"),
     topList("Producer clicks by species", s.current.top("clicks", "producer_clicks_by_species", 5), "clicks"),
