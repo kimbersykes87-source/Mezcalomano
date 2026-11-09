@@ -74,6 +74,9 @@ const OVERRIDES = {
  * The pack image is left alone for these, so a re-run does not undo the upgrade.
  * Pass --force-images to overwrite anyway.
  */
+/** Kimber's sign off, slug to go-live date. Re-runs keep these published. */
+const APPROVED = { "types-of-agave": "2026-11-09" };
+
 const HERO_UPGRADED = new Set([
   "what-is-mezcal", // 2400x1800 from MZM_20240718_S14_palenque_horno_01, 2026-11-09
 ]);
@@ -227,7 +230,7 @@ for (const file of files) {
     description: over.description ?? fm.description,
     category,
     answer,
-    status: "review",
+    ...(APPROVED[slug] ? { status: "published", published: APPROVED[slug] } : { status: "review" }),
     updated: CHECKED,
     image: { src: `/small-pours/${imgName}`, alt: over.alt ?? fm.hero_alt, width, height },
     body: blocks,
