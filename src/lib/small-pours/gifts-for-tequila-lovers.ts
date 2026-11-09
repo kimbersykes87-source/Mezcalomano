@@ -7,7 +7,8 @@ export const giftsForTequilaLovers: PostEntry = {
     description: "Gifts for tequila lovers and mezcal fans that aren't another bottle: copitas, a tasting, sal de gusano, a book and a deck that teaches 40 agaves.",
     category: "Gifts",
     answer: "The best gifts for tequila lovers, and for mezcal fans, make the next sip better: a tasting, a pair of copitas, a jar of sal de gusano, a good book, and our Discovery Deck, which opens up 40 agaves and shows where to find each one. Here are the ideas, a guide to who suits which, and a rough match between the tequila they love and a mezcal to try.",
-    status: "review",
+    status: "published",
+    published: "2026-11-09",
     updated: "2026-11-08",
     image: {
       src: "/small-pours/gifts-for-tequila-lovers-hero.webp",
