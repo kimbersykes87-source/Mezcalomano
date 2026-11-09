@@ -11,9 +11,9 @@ export const whoMakesMezcal: PostEntry = {
     updated: "2026-11-08",
     image: {
       src: "/small-pours/who-makes-mezcal-hero.webp",
-      alt: "Two people working beside the stone tahona inside an open-sided palenque.",
-      width: 1200,
-      height: 900
+      alt: "Two people talking inside a palenque, with a stone wheel and a fermenting bottle in the foreground.",
+      width: 2400,
+      height: 1000
     },
     body: [
       {
