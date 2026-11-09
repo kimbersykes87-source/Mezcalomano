@@ -12,8 +12,8 @@ export const jovenReposadoAnejoMezcal: PostEntry = {
     image: {
       src: "/small-pours/joven-reposado-anejo-mezcal-hero.webp",
       alt: "Rows of wooden barrels on metal racks in a cool, white room.",
-      width: 1536,
-      height: 1152
+      width: 2000,
+      height: 1500
     },
     body: [
       {
