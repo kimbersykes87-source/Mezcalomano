@@ -96,7 +96,7 @@ export const artesanalVsAncestralMezcal: PostEntry = {
       },
       {
         type: "p",
-        text: "Not automatically. Ancestral is the most traditional, and artesanal is traditional with flexibility. Both can be excellent, and both can be forgettable. Taste decides, not the word on the bottle. Our Discovery Deck (ours) can help you compare agaves side by side."
+        text: "Not automatically. Ancestral is the most traditional, and artesanal is traditional with flexibility. Both can be excellent, and both can be forgettable. Taste decides, not the word on the bottle. Our Discovery Deck can help you compare agaves side by side."
       }
     ],
     faq: [
