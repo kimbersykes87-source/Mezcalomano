@@ -75,7 +75,7 @@ const OVERRIDES = {
  * Pass --force-images to overwrite anyway.
  */
 /** Kimber's sign off, slug to go-live date. Re-runs keep these published. */
-const APPROVED = { "types-of-agave": "2026-11-09", "what-is-mezcal": "2026-11-09", "what-does-mezcal-taste-like": "2026-11-09", "is-mezcal-smoky": "2026-11-09", "artesanal-vs-ancestral-mezcal": "2026-11-09", "joven-reposado-anejo-mezcal": "2026-11-09", "karwinskii-family-explained": "2026-11-09", "how-long-does-agave-take-to-grow": "2026-11-09", "who-makes-mezcal": "2026-11-09", "bats-and-agave": "2026-11-09", "can-mezcal-be-made-outside-mexico": "2026-11-09", "raicilla-bacanora-sotol": "2026-11-09", "gifts-for-tequila-lovers": "2026-11-09" };
+const APPROVED = { "types-of-agave": "2026-11-09", "what-is-mezcal": "2026-11-09", "what-does-mezcal-taste-like": "2026-11-09", "is-mezcal-smoky": "2026-11-09", "artesanal-vs-ancestral-mezcal": "2026-11-09", "joven-reposado-anejo-mezcal": "2026-11-09", "karwinskii-family-explained": "2026-11-09", "how-long-does-agave-take-to-grow": "2026-11-09", "who-makes-mezcal": "2026-11-09", "bats-and-agave": "2026-11-09", "can-mezcal-be-made-outside-mexico": "2026-11-09", "raicilla-bacanora-sotol": "2026-11-09", "gifts-for-tequila-lovers": "2026-11-09", "mezcal-cocktails-that-taste-of-agave": "2026-11-09" };
 
 const HERO_UPGRADED = new Set([
   "mezcal-cocktails-that-taste-of-agave", // 2400x1000 from Unsplash (Claude Piche) full size 3623x5697, full width, crop top 1390, 2026-11-09

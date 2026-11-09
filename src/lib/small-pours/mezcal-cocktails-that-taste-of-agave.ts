@@ -7,7 +7,8 @@ export const mezcalCocktailsThatTasteOfAgave: PostEntry = {
     description: "Four simple mezcal cocktails with measures, and how to choose a mezcal for each so the agave stays in the glass.",
     category: "Drinks",
     answer: "A mezcal cocktail keeps the agave in the glass when you pick the mezcal to suit the drink and keep the mixers fresh and light. Here are four simple recipes, with the style of mezcal that suits each.",
-    status: "review",
+    status: "published",
+    published: "2026-11-09",
     updated: "2026-11-08",
     image: {
       src: "/small-pours/mezcal-cocktails-that-taste-of-agave-hero.webp",
@@ -64,7 +65,7 @@ export const mezcalCocktailsThatTasteOfAgave: PostEntry = {
       {
         type: "list",
         items: [
-          "**Simple Margarita.** 2 oz mezcal, 1 oz fresh lime juice, 1/2 oz agave nectar. Shake with ice, strain over fresh ice, add a pinch of salt on the rim if you like. Pick a bright mezcal that is gentle on smoke, so the lime and the agave both come through.",
+          "**Simple Margarita.** 2 oz mezcal, 1 oz fresh lime juice, 1/2 oz agave nectar. Shake with ice, strain over fresh ice, add a pinch of salt on the rim if you like. Pick a bright mezcal that is gentle on smoke, so the lime and the agave both come through. It follows the Tommy's Margarita, created in the early 1990s by Julio Bermejo at Tommy's Mexican Restaurant in San Francisco, who sweetened with agave nectar instead of orange liqueur so the agave stays in front ([Punch](https://punchdrink.com/recipes/tommys-margarita/)).",
           "**Paloma.** 2 oz mezcal, 1/2 oz fresh lime juice, a pinch of salt. Build over ice, top with about 3 oz grapefruit soda (or fresh grapefruit juice and soda water), stir gently and add a grapefruit wedge. Pick a bright, gentle mezcal, so the grapefruit does not get lost.",
           "**Old Fashioned.** 2 oz mezcal, 1 teaspoon agave nectar, 2 dashes aromatic bitters. Stir with ice for 20 to 30 seconds, strain over one large cube and twist an orange peel over the top. Pick a rounder mezcal with more roast, which suits a stirred drink.",
           "**Mezcal Negroni.** A common build is equal parts: 1 oz mezcal, 1 oz sweet vermouth and 1 oz bitter red aperitivo. Stir with ice for 20 to 30 seconds, strain over one large cube and add an orange peel. Pick a bold mezcal that can stand up to the bitter aperitivo."
@@ -98,7 +99,7 @@ export const mezcalCocktailsThatTasteOfAgave: PostEntry = {
       },
       {
         type: "p",
-        text: "Yes. Use mezcal in place of tequila, as in the Simple Margarita above. If you want the lime up front, pick a mezcal that tastes gentle on smoke when you sip it neat."
+        text: "Yes. Use mezcal in place of tequila, as in the Simple Margarita above, which sweetens with agave nectar the way a Tommy's Margarita does. If you want the lime up front, pick a mezcal that tastes gentle on smoke when you sip it neat."
       },
       {
         type: "p",
