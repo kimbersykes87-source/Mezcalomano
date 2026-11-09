@@ -12,8 +12,8 @@ export const artesanalVsAncestralMezcal: PostEntry = {
     image: {
       src: "/small-pours/artesanal-vs-ancestral-mezcal-hero.webp",
       alt: "A guide explaining a stone-lined roasting pit at a palenque.",
-      width: 1200,
-      height: 900
+      width: 2000,
+      height: 1500
     },
     body: [
       {
@@ -33,7 +33,7 @@ export const artesanalVsAncestralMezcal: PostEntry = {
         rows: [
           [
             "Mezcal",
-            "The widest category. Cooking in underground ovens, stone basins or an autoclave; milling with a tahona, a Chilean or Egyptian mill, a shredder, a series of mills or a diffuser; fermentation in wood, stone or stainless steel tanks; and distillation in stills or continuous distillation, with copper or stainless steel coils."
+            "The widest category. Cooking in underground ovens, masonry ovens or an autoclave; milling with a tahona, a Chilean or Egyptian mill, a shredder, a series of mills or a diffuser; fermentation in wood, stone or stainless steel tanks; and distillation in stills or continuous distillation, with copper or stainless steel coils."
           ],
           [
             "Mezcal Artesanal",
