@@ -11,9 +11,9 @@ export const raicillaBacanoraSotol: PostEntry = {
     updated: "2026-11-08",
     image: {
       src: "/small-pours/raicilla-bacanora-sotol-hero.webp",
-      alt: "The Pacífica card and the Discovery Deck box on sandy ground.",
-      width: 1536,
-      height: 1152
+      alt: "Sotol plants and tall flower stalks across the Chihuahuan Desert, with distant mountains.",
+      width: 2400,
+      height: 1000
     },
     body: [
       {
