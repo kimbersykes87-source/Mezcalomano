@@ -107,12 +107,12 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
               );
             }
             return (
-              <div key={i} className="j-table-wrap">
+              <div key={i} className={b.head.length > 2 ? "j-table-wrap j-table-wide" : "j-table-wrap"}>
                 <table>
                   <thead><tr>{b.head.map((h) => <th key={h} scope="col">{h}</th>)}</tr></thead>
                   <tbody>
                     {b.rows.map((r) => (
-                      <tr key={r[0]}>{r.map((c, ci) => (ci === 0 ? <th key={c} scope="row"><PostText text={c} /></th> : <td key={c}><PostText text={c} /></td>))}</tr>
+                      <tr key={r[0]}>{r.map((c, ci) => (ci === 0 ? <th key={c} scope="row"><PostText text={c} /></th> : <td key={c} data-label={b.head[ci]}><PostText text={c} /></td>))}</tr>
                     ))}
                   </tbody>
                 </table>
@@ -137,7 +137,7 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
               <Link className="j-btn j-btn-ghost" href="/directory">Browse the directory</Link>
             </div>
           </div>
-          <p className="j-back"><Link href="/small-pours" className="j-link">All of {SMALL_POURS_NAME}</Link></p>
+          <p className="j-back"><Link href="/small-pours" className="j-link">More {SMALL_POURS_NAME}</Link></p>
         </div>
       </div>
     </article>
