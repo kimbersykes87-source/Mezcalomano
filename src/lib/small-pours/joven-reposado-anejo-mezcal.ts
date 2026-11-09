@@ -10,7 +10,7 @@ export const jovenReposadoAnejoMezcal: PostEntry = {
     status: "review",
     updated: "2026-11-08",
     image: {
-      src: "/small-pours/joven-reposado-anejo-mezcal-hero.jpg",
+      src: "/small-pours/joven-reposado-anejo-mezcal-hero.webp",
       alt: "Rows of wooden barrels on metal racks in a cool, white room.",
       width: 1536,
       height: 1152

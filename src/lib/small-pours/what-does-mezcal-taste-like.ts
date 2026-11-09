@@ -10,7 +10,7 @@ export const whatDoesMezcalTasteLike: PostEntry = {
     status: "review",
     updated: "2026-11-08",
     image: {
-      src: "/small-pours/what-does-mezcal-taste-like-hero.jpg",
+      src: "/small-pours/what-does-mezcal-taste-like-hero.webp",
       alt: "A ridged glass of clear spirit resting on green leaves against a red backdrop.",
       width: 1000,
       height: 750

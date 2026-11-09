@@ -10,7 +10,7 @@ export const karwinskiiFamilyExplained: PostEntry = {
     status: "review",
     updated: "2026-11-08",
     image: {
-      src: "/small-pours/karwinskii-family-explained-hero.jpg",
+      src: "/small-pours/karwinskii-family-explained-hero.webp",
       alt: "The Madrecuixe card from the Discovery Deck on a wood table.",
       width: 1600,
       height: 1200

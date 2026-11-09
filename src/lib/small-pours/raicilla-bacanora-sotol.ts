@@ -10,7 +10,7 @@ export const raicillaBacanoraSotol: PostEntry = {
     status: "review",
     updated: "2026-11-08",
     image: {
-      src: "/small-pours/raicilla-bacanora-sotol-hero.jpg",
+      src: "/small-pours/raicilla-bacanora-sotol-hero.webp",
       alt: "The Pacífica card and the Discovery Deck box on sandy ground.",
       width: 1536,
       height: 1152

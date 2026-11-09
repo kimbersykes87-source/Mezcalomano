@@ -10,7 +10,7 @@ export const howLongDoesAgaveTakeToGrow: PostEntry = {
     status: "review",
     updated: "2026-11-08",
     image: {
-      src: "/small-pours/how-long-does-agave-take-to-grow-hero.jpg",
+      src: "/small-pours/how-long-does-agave-take-to-grow-hero.webp",
       alt: "Rows of agave growing below a green mountain.",
       width: 1200,
       height: 900

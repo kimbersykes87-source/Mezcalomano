@@ -10,7 +10,7 @@ export const whoMakesMezcal: PostEntry = {
     status: "review",
     updated: "2026-11-08",
     image: {
-      src: "/small-pours/who-makes-mezcal-hero.jpg",
+      src: "/small-pours/who-makes-mezcal-hero.webp",
       alt: "Two people working beside the stone tahona inside an open-sided palenque.",
       width: 1200,
       height: 900

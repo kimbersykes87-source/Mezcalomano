@@ -10,7 +10,7 @@ export const typesOfAgave: PostEntry = {
     status: "review",
     updated: "2026-11-08",
     image: {
-      src: "/small-pours/types-of-agave-hero.jpg",
+      src: "/small-pours/types-of-agave-hero.webp",
       alt: "A hand holding a fan of four Discovery Deck agave cards in front of agave leaves.",
       width: 1440,
       height: 1080

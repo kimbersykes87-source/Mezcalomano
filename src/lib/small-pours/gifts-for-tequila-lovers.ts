@@ -10,7 +10,7 @@ export const giftsForTequilaLovers: PostEntry = {
     status: "review",
     updated: "2026-11-08",
     image: {
-      src: "/small-pours/gifts-for-tequila-lovers-hero.jpg",
+      src: "/small-pours/gifts-for-tequila-lovers-hero.webp",
       alt: "The Mezcalómano Discovery Deck box beside its Sierra Negra card on an olive background.",
       width: 1600,
       height: 1200

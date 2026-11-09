@@ -10,7 +10,7 @@ export const canMezcalBeMadeOutsideMexico: PostEntry = {
     status: "review",
     updated: "2026-11-08",
     image: {
-      src: "/small-pours/can-mezcal-be-made-outside-mexico-hero.jpg",
+      src: "/small-pours/can-mezcal-be-made-outside-mexico-hero.webp",
       alt: "A roadside sign pointing the way to Oaxaca, with a dog standing beneath it.",
       width: 1440,
       height: 1080

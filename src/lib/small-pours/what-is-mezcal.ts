@@ -10,8 +10,8 @@ export const whatIsMezcal: PostEntry = {
     status: "review",
     updated: "2026-11-08",
     image: {
-      src: "/small-pours/what-is-mezcal-hero.jpg",
-      alt: "A man tending the clay stills at a palenque, with green hills behind.",
+      src: "/small-pours/what-is-mezcal-hero.webp",
+      alt: "A man tending the brick-clad clay stills at a palenque, with green hills behind.",
       width: 2400,
       height: 1800
     },

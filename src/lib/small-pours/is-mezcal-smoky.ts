@@ -10,7 +10,7 @@ export const isMezcalSmoky: PostEntry = {
     status: "review",
     updated: "2026-11-08",
     image: {
-      src: "/small-pours/is-mezcal-smoky-hero.jpg",
+      src: "/small-pours/is-mezcal-smoky-hero.webp",
       alt: "Cooked agave piled in a stone tahona, ready to be crushed.",
       width: 1600,
       height: 1200

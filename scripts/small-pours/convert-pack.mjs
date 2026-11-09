@@ -10,6 +10,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import sharp from "sharp";
 
 const packDir = process.argv[2];
 const WRITE = process.argv.includes("--write");
@@ -21,6 +22,7 @@ if (!packDir) {
 const REPO = path.resolve(path.dirname(new URL(import.meta.url).pathname), "../..");
 const LIB = path.join(REPO, "src/lib/small-pours");
 const PUBLIC_IMG = path.join(REPO, "public/small-pours");
+const HERO_WEBP_QUALITY = 82; // matches scripts/build-hero-webp.mjs
 const CHECKED = "2026-11-08"; // the pack's sign off date
 
 /** Categories. The 8 that already existed keep theirs; the 6 new ones reuse existing labels. */
@@ -56,6 +58,11 @@ const OVERRIDES = {
     description:
       "What does mezcal taste like? Cooked agave first, then fruit, herbs, smoke, minerals or funk. What shapes the flavor, and how to find one you like.", // was 165, guide is 155
   },
+  "what-is-mezcal": {
+    // The stills are clay, clad in brick. "clay stills" alone reads as wrong to anyone
+    // looking at the photo, on a page whose own table turns on clay pots vs copper.
+    alt: "A man tending the brick-clad clay stills at a palenque, with green hills behind.",
+  },
   "can-mezcal-be-made-outside-mexico": {
     description:
       "Can mezcal be made outside Mexico? No. Which states are in mezcal's denomination of origin, what other agave spirits are called, and the Jalisco case.", // was 158, guide is 155
@@ -70,21 +77,6 @@ const OVERRIDES = {
 const HERO_UPGRADED = new Set([
   "what-is-mezcal", // 2400x1800 from MZM_20240718_S14_palenque_horno_01, 2026-11-09
 ]);
-
-/** Read a JPEG's pixel dimensions from its SOF marker. */
-function jpegSize(file) {
-  const b = fs.readFileSync(file);
-  let i = 2;
-  while (i < b.length) {
-    if (b[i] !== 0xff) { i++; continue; }
-    const m = b[i + 1];
-    if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) {
-      return { height: b.readUInt16BE(i + 5), width: b.readUInt16BE(i + 7) };
-    }
-    i += 2 + b.readUInt16BE(i + 2);
-  }
-  throw new Error(`could not read dimensions: ${file}`);
-}
 
 function parseFrontMatter(raw) {
   const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/);
@@ -208,17 +200,24 @@ for (const file of files) {
   const faqFixed = faq.map((f) => ({ q: fix(f.q), a: fix(f.a) }));
 
   const keepHero = HERO_UPGRADED.has(slug) && !process.argv.includes("--force-images");
-  const imgName = `${slug}-hero.jpg`;
+  const imgName = `${slug}-hero.webp`;
   const srcImg = path.join(packDir, fm.hero_image);
   const destImg = path.join(PUBLIC_IMG, imgName);
-  // an upgraded hero is the one that counts, so its real dimensions go in the entry
-  const { width, height } = jpegSize(keepHero && fs.existsSync(destImg) ? destImg : srcImg);
+  const heroInPlace = keepHero && fs.existsSync(destImg);
+
+  // Heroes ship as WebP: same quality as the site's other heroes at about a third less
+  // weight. An upgraded hero is left alone, and its real dimensions go in the entry.
+  if (WRITE && !heroInPlace) {
+    fs.mkdirSync(PUBLIC_IMG, { recursive: true });
+    await sharp(srcImg).webp({ quality: HERO_WEBP_QUALITY, effort: 6 }).toFile(destImg);
+  }
+  const { width, height } = await sharp(heroInPlace || WRITE ? destImg : srcImg).metadata();
 
   const category = CATEGORY[slug];
   if (!category) throw new Error(`${file}: no category mapped for ${slug}`);
 
   const over = OVERRIDES[slug] ?? {};
-  if (over.title || over.description) {
+  if (over.title || over.description || over.alt) {
     overridden.push({ slug, fields: Object.keys(over).join(", ") });
   }
 
@@ -230,7 +229,7 @@ for (const file of files) {
     answer,
     status: "review",
     updated: CHECKED,
-    image: { src: `/small-pours/${imgName}`, alt: fm.hero_alt, width, height },
+    image: { src: `/small-pours/${imgName}`, alt: over.alt ?? fm.hero_alt, width, height },
     body: blocks,
     faq: faqFixed,
   };
@@ -242,8 +241,6 @@ for (const file of files) {
     `export const ${varName}: PostEntry = ${ts(entry)};\n`;
 
   if (WRITE) {
-    fs.mkdirSync(PUBLIC_IMG, { recursive: true });
-    if (!keepHero) fs.copyFileSync(srcImg, path.join(PUBLIC_IMG, imgName));
     fs.writeFileSync(path.join(LIB, `${slug}.ts`), out.replace(/\n/g, "\r\n"), "utf8");
   }
   report.push({ slug, varName, blocks: blocks.length, faq: faqFixed.length, image: `${width}x${height}` });

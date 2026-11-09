@@ -10,7 +10,7 @@ export const artesanalVsAncestralMezcal: PostEntry = {
     status: "review",
     updated: "2026-11-08",
     image: {
-      src: "/small-pours/artesanal-vs-ancestral-mezcal-hero.jpg",
+      src: "/small-pours/artesanal-vs-ancestral-mezcal-hero.webp",
       alt: "A guide explaining a stone-lined roasting pit at a palenque.",
       width: 1200,
       height: 900

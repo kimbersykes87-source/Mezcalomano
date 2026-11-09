@@ -10,7 +10,7 @@ export const batsAndAgave: PostEntry = {
     status: "review",
     updated: "2026-11-08",
     image: {
-      src: "/small-pours/bats-and-agave-hero.jpg",
+      src: "/small-pours/bats-and-agave-hero.webp",
       alt: "A hand holding two Discovery Deck bat jokers up against a tall agave flower stalk and blue sky.",
       width: 1440,
       height: 1080
