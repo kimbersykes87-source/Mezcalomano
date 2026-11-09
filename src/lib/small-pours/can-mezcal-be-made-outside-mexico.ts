@@ -27,7 +27,7 @@ export const canMezcalBeMadeOutsideMexico: PostEntry = {
       },
       {
         type: "p",
-        text: "Outside Mexico, the name is protected in the US as well. Federal labeling rules [state](https://www.ecfr.gov/current/title-27/chapter-I/subchapter-A/part-5/subpart-I/section-5.148) that \"Mezcal must be made in Mexico, in compliance with the laws and regulations of Mexico.\""
+        text: "Outside Mexico, the name is protected in the US as well. Federal labeling rules [state](https://www.ecfr.gov/current/title-27/chapter-I/subchapter-A/part-5/subpart-I/section-5.148) that \"Mezcal must be made in Mexico, in compliance with the laws and regulations of Mexico governing the manufacture of Mezcal.\""
       },
       {
         type: "h2",

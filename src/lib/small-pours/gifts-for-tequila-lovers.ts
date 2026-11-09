@@ -42,7 +42,7 @@ export const giftsForTequilaLovers: PostEntry = {
       },
       {
         type: "p",
-        text: "Because a bottle is one agave, and the deck is 40. About 85% of mezcal is made from one agave, espadín ([COMERCAM, 2026 report](https://comercam-dom.org.mx/wp-content/uploads/2026/05/INFORME-2026_VERSION-PUBLICA.pdf)), so a bottle picked at random will most likely be the one they already know. The Discovery Deck shows them the other 39 and where to find each one. A bottle is gone in a few weekends; the deck stays on the bar, comes out at every party and points to their next pour every time they open it."
+        text: "Because a bottle is one agave, and the deck is 40. About 85% of mezcal is made from one agave, espadín ([COMERCAM, Informe Estadístico 2026](https://comercam-dom.org.mx/wp-content/uploads/2026/05/INFORME-2026_VERSION-PUBLICA.pdf)), so a bottle picked at random will most likely be the one they already know. The Discovery Deck shows them the other 39 and where to find each one. A bottle is gone in a few weekends; the deck stays on the bar, comes out at every party and points to their next pour every time they open it."
       },
       {
         type: "h2",

@@ -52,7 +52,7 @@ export const wormInMezcal: PostEntry = {
     },
     {
       type: "p",
-      text: "If you want to taste what worm salt does, try it with a mezcal described as clean and fruity in our flavor compass, such as [Madrecuixe](/directory/madrecuixe), where the orange and salt play against the fruit. The Discovery Deck (ours) shows the compass for all 40 agaves.",
+      text: "If you want to taste what worm salt does, try it with a mezcal described as clean and fruity in our flavor compass, such as [Madrecuixe](/directory/madrecuixe), where the orange and salt play against the fruit. Our Discovery Deck shows the compass for all 40 agaves.",
     },
   ],
   faq: [

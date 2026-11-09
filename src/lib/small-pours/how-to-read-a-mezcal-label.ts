@@ -82,7 +82,7 @@ export const howToReadAMezcalLabel: PostEntry = {
     },
     {
       type: "p",
-      text: "Want the vocabulary in your pocket? Every card in the Discovery Deck (ours) carries the flavor compass, and a reference card explains each word.",
+      text: "Want the vocabulary in your pocket? Every card in our Discovery Deck carries the flavor compass, and a reference card explains each word.",
     },
   ],
   faq: [

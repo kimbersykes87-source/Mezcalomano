@@ -104,7 +104,7 @@ export const whatIsMezcal: PostEntry = {
       },
       {
         type: "p",
-        text: "One agave does most of the work. According to [COMERCAM's 2026 report](https://comercam-dom.org.mx/wp-content/uploads/2026/05/INFORME-2026_VERSION-PUBLICA.pdf), espadín made up 84.53% of mezcal production in 2025. Blends (ensambles) were next at 6.23%, with [Cenizo](/directory/cenizo) at 2.00% and [Tobalá](/directory/tobala) at 1.78%."
+        text: "One agave does most of the work. According to [COMERCAM's Informe Estadístico 2026](https://comercam-dom.org.mx/wp-content/uploads/2026/05/INFORME-2026_VERSION-PUBLICA.pdf), espadín made up 84.53% of mezcal production in 2025. Blends (ensambles) were next at 6.23%, with [Cenizo](/directory/cenizo) at 2.00% and [Tobalá](/directory/tobala) at 1.78%."
       },
       {
         type: "p",

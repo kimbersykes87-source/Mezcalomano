@@ -62,7 +62,7 @@ export const mezcalVsTequila: PostEntry = {
     { type: "h2", text: "Which should you try first?" },
     {
       type: "p",
-      text: "If you know tequila, a good first step is a mezcal with a clean or toasty smoke word and fruit or herbs in its compass. Ask for it by agave name, such as [Papalote](/directory/papalote) (clean, herbal, fruity) or [Tobalá](/directory/tobala) (toasty, floral, fruity), and taste it next to a tequila you know. The compass on each card in the Discovery Deck (ours) is meant for exactly that.",
+      text: "If you know tequila, a good first step is a mezcal with a clean or toasty smoke word and fruit or herbs in its compass. Ask for it by agave name, such as [Papalote](/directory/papalote) (clean, herbal, fruity) or [Tobalá](/directory/tobala) (toasty, floral, fruity), and taste it next to a tequila you know. The compass on each card in our Discovery Deck is meant for exactly that.",
     },
   ],
   faq: [

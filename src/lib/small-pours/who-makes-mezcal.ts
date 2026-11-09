@@ -51,7 +51,7 @@ export const whoMakesMezcal: PostEntry = {
       },
       {
         type: "p",
-        text: "Our [Discovery Deck](https://shop.mezcalomano.com/products/discovery-deck) is a card deck of 40 agaves used for mezcal, and its face cards tip their hats to the people who keep the tradition alive. There are 12 of them: the jack is the jimador, the queen is the maestra and the king is the maestro, in each of the four suits. That split is for the game, not the work: women and men do every one of these jobs. Women have long worked in palenques, often without the title, and today maestras mezcaleras lead production and run family palenques ([Mexico News Daily](https://mexiconewsdaily.com/food/women-mezcal-industry-buck-male-tradition))."
+        text: "Our [Discovery Deck](https://shop.mezcalomano.com/products/discovery-deck) is a card deck of 40 agaves used for mezcal, and its face cards tip their hats to the people who keep the tradition alive. There are 12 of them: the jack is the jimador, the queen is the maestra and the king is the maestro, in each of the four suits. That split is for the game, not the work: women and men do every one of these jobs. Women have long worked in palenques, often without the title, and today women lead production and run family palenques ([Mexico News Daily](https://mexiconewsdaily.com/food/women-mezcal-industry-buck-male-tradition))."
       },
       {
         type: "table",

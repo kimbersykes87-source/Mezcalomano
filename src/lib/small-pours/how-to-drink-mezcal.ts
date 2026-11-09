@@ -65,7 +65,7 @@ export const howToDrinkMezcal: PostEntry = {
     { type: "h2", text: "Can you mix mezcal?" },
     {
       type: "p",
-      text: "Yes, and many people do. A good rule is to taste a mezcal neat first, so you know what the agave is doing before anything else joins it. Our [directory](/directory) shows what each of the 40 agaves tastes like, and the Discovery Deck (ours) turns it into a game for the table.",
+      text: "Yes, and many people do. A good rule is to taste a mezcal neat first, so you know what the agave is doing before anything else joins it. Our [directory](/directory) shows what each of the 40 agaves tastes like, and our Discovery Deck turns it into a game for the table.",
     },
   ],
   faq: [

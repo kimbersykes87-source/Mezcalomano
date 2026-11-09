@@ -76,7 +76,7 @@ export const isMezcalSmoky: PostEntry = {
       },
       {
         type: "p",
-        text: "Espadín, the agave behind about 85% of mezcal ([COMERCAM, 2026 report](https://comercam-dom.org.mx/wp-content/uploads/2026/05/INFORME-2026_VERSION-PUBLICA.pdf)), is made in every one of those categories, so its smoke can range as widely as the method. That is a good reason to stop worrying that every mezcal will taste like a campfire."
+        text: "Espadín, the agave behind about 85% of mezcal ([COMERCAM, Informe Estadístico 2026](https://comercam-dom.org.mx/wp-content/uploads/2026/05/INFORME-2026_VERSION-PUBLICA.pdf)), is made in every one of those categories, so its smoke can range as widely as the method. That is a good reason to stop worrying that every mezcal will taste like a campfire."
       },
       {
         type: "h2",

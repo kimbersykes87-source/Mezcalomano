@@ -47,7 +47,7 @@ export const batsAndAgave: PostEntry = {
       },
       {
         type: "p",
-        text: "Then there is the scale of one plant. About 85% of mezcal is made from a single agave, [Espadín](/directory/espadin) ([COMERCAM, 2026 report](https://comercam-dom.org.mx/wp-content/uploads/2026/05/INFORME-2026_VERSION-PUBLICA.pdf)). That is a lot of pressure on one plant."
+        text: "Then there is the scale of one plant. About 85% of mezcal is made from a single agave, [Espadín](/directory/espadin) ([COMERCAM, Informe Estadístico 2026](https://comercam-dom.org.mx/wp-content/uploads/2026/05/INFORME-2026_VERSION-PUBLICA.pdf)). That is a lot of pressure on one plant."
       },
       {
         type: "h2",
