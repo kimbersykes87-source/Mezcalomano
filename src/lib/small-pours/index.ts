@@ -64,5 +64,5 @@ export const getPost = (slug: string): PostEntry | undefined => ALL.find((e) => 
  * Holds the menu link, sitemap entries and contents page indexing back while the batch is reviewed.
  * Approved posts are live at their own URL; flip this to true once Kimber has signed off the whole batch.
  */
-export const LIST_SITE_WIDE = false;
+export const LIST_SITE_WIDE = true;
 export const hasPublishedPosts = (): boolean => LIST_SITE_WIDE && publishedPosts().length > 0;
