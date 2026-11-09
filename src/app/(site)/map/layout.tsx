@@ -5,7 +5,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Agave Map of Mexico: Where Mezcal Agaves Grow",
   description:
-    "See where 40 mezcal agaves grow across Mexico. Pick a species or a state to explore, from farmed espadín to wild tobalá, and the places each one comes from.",
+    "See where 40 mezcal agaves grow across Mexico. Pick a species or a state, from farmed espadín to wild tobalá, and the places each one comes from.",
   alternates: { canonical: "/map" },
 };
 
