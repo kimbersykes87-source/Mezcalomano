@@ -12,8 +12,8 @@ export const giftsForTequilaLovers: PostEntry = {
     image: {
       src: "/small-pours/gifts-for-tequila-lovers-hero.webp",
       alt: "The Mezcalómano Discovery Deck box beside its Sierra Negra card on an olive background.",
-      width: 1600,
-      height: 1200
+      width: 2400,
+      height: 1000
     },
     body: [
       {
@@ -53,7 +53,7 @@ export const giftsForTequilaLovers: PostEntry = {
       },
       {
         type: "p",
-        text: "The two worlds even overlap: [Weber Azul](/directory/weber_azul), the tequila plant, is occasionally used in mezcal in certain regions. It has its own card in our deck and its own page in our directory."
+        text: "The two worlds even overlap: [Weber Azul](/directory/weber_azul), the tequila plant, is [occasionally used in mezcal in certain regions](https://www.mezcalreviews.com/mezcal/pierde-almas-tequilana-weber/). It has its own card in our deck and its own page in our directory."
       },
       {
         type: "h2",
