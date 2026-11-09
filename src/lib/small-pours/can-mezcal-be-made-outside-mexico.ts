@@ -7,7 +7,8 @@ export const canMezcalBeMadeOutsideMexico: PostEntry = {
     description: "Can mezcal be made outside Mexico? No. Which states are in mezcal's denomination of origin, what other agave spirits are called, and the Jalisco case.",
     category: "Rules",
     answer: "No. Mezcal is a protected denomination of origin, so only agave spirits made in set parts of Mexico, to Mexico's standard, can be called mezcal. US rules say the same: mezcal must be made in Mexico under Mexican law. Agave spirits made elsewhere, or outside the protected area inside Mexico, go by other names, such as destilado de agave or, in the US, agave spirits.",
-    status: "review",
+    status: "published",
+    published: "2026-11-09",
     updated: "2026-11-08",
     image: {
       src: "/small-pours/can-mezcal-be-made-outside-mexico-hero.webp",
