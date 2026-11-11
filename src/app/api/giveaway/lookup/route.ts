@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
-import { lookupGiveaway } from "@/lib/giveaway/lookup";
+import { lookupGiveaway, testOutcome } from "@/lib/giveaway/lookup";
 import { normaliseEmail } from "@/lib/giveaway/agave-card-for-email";
 
 /**
  * POST /api/giveaway/lookup  { email, token }  ->  { ok, result }
  * Turnstile on every request, plus a per-IP limit, so nobody can probe addresses to see who entered.
- * The limit is per server instance (best effort); the test addresses are exempt so testing can loop.
+ * The limit is per server instance (best effort). Test addresses (see lookup.ts) skip both checks so testing can loop
+ * on any host: they never reveal anything about a real entrant.
  */
 const WINDOW_MS = 10 * 60_000;
 const MAX_PER_WINDOW = 8;
@@ -18,13 +19,6 @@ function limited(ip: string): boolean {
   hits.set(ip, recent);
   if (hits.size > 5000) hits.clear();
   return recent.length > MAX_PER_WINDOW;
-}
-
-function isTestEmail(email: string): boolean {
-  return (process.env.GIVEAWAY_TEST_EMAILS ?? "")
-    .toLowerCase()
-    .split(",")
-    .some((p) => p.split(":")[0].trim() === email);
 }
 
 async function verifyTurnstile(token: string): Promise<boolean> {
@@ -49,11 +43,12 @@ export async function POST(request: Request) {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) {
     return NextResponse.json({ ok: false, error: "Please enter the email address you entered with." }, { status: 400 });
   }
-  if (!token || !(await verifyTurnstile(token))) {
+  const isTest = testOutcome(email) !== null;
+  if (!isTest && (!token || !(await verifyTurnstile(token)))) {
     return NextResponse.json({ ok: false, error: "Verification failed. Please try again." }, { status: 400 });
   }
   const ip = (request.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() || "unknown";
-  if (!isTestEmail(email) && limited(ip)) {
+  if (!isTest && limited(ip)) {
     return NextResponse.json({ ok: false, error: "Too many tries. Please wait a few minutes." }, { status: 429 });
   }
   try {

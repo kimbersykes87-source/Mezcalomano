@@ -4,21 +4,39 @@
  * Env:
  *   GIVEAWAY_TEST_EMAILS  optional, e.g. "a@example.com:win,b@example.com:lose". These addresses always get that result,
  *                         at any date, without touching Shopify, so testing never adds anyone to the real draw.
+ *                         When it is not set, BUILT_IN_TESTS applies (SHA-256 of the address, so no address sits in this
+ *                         public repo). Set GIVEAWAY_TEST_EMAILS to "off" to switch all testing off before 2026-12-07.
  *   GIVEAWAY_RESULTS_AT   optional ISO time, defaults to DEFAULT_RESULTS_AT. Before it, real addresses get "not-yet".
  * Real path (after GIVEAWAY_RESULTS_AT): the Shopify customer with that email; entered = tag ENTRANT_TAG,
  * won = tag WINNER_TAG (Siona adds it to the winner after the draw).
  */
+import { createHash } from "node:crypto";
 import { shopifyAdminQuery } from "@/lib/shopify-subscribe";
 import { agaveCardForEmail, normaliseEmail } from "./agave-card-for-email";
 import { DEFAULT_RESULTS_AT, ENTRANT_TAG, WINNER_TAG, type LookupResult } from "./config";
 
-function testList(): Map<string, boolean> {
-  const out = new Map<string, boolean>();
-  for (const part of (process.env.GIVEAWAY_TEST_EMAILS ?? "").split(",")) {
-    const [email, outcome] = part.split(":").map((s) => (s ?? "").trim().toLowerCase());
-    if (email && (outcome === "win" || outcome === "lose")) out.set(email, outcome === "win");
+/** Kimber's test pair (2026-11-11): Siona's address wins, Kimber's does not. Hash of the trimmed lowercased email. */
+const BUILT_IN_TESTS: Record<string, boolean> = {
+  "1146a00eb331814d4744e807801768856f568aa2998b3b16af7ca7025d7b7adf": true,
+  "90cd33ac5b1b2a6ad249d380021bcca8600b5b641b854d613ae10d90eee52fab": false,
+};
+
+const sha256 = (s: string) => createHash("sha256").update(s).digest("hex");
+
+/** true = test win, false = test no win, null = not a test address. */
+export function testOutcome(rawEmail: string): boolean | null {
+  const email = normaliseEmail(rawEmail);
+  const env = (process.env.GIVEAWAY_TEST_EMAILS ?? "").trim();
+  if (env.toLowerCase() === "off") return null;
+  if (env) {
+    for (const part of env.split(",")) {
+      const [e, outcome] = part.split(":").map((x) => (x ?? "").trim().toLowerCase());
+      if (e === email && (outcome === "win" || outcome === "lose")) return outcome === "win";
+    }
+    return null;
   }
-  return out;
+  const hit = BUILT_IN_TESTS[sha256(email)];
+  return hit === undefined ? null : hit;
 }
 
 export function resultsOpen(now = new Date()): boolean {
@@ -33,9 +51,9 @@ export async function lookupGiveaway(rawEmail: string): Promise<LookupResult> {
   const card = agaveCardForEmail(email);
   if (!card) return { status: "not-entered" };
 
-  const tests = testList();
-  if (tests.has(email)) {
-    return { status: "result", won: tests.get(email)!, slug: card.slug, name: card.name, test: true };
+  const test = testOutcome(email);
+  if (test !== null) {
+    return { status: "result", won: test, slug: card.slug, name: card.name, test: true };
   }
   if (!resultsOpen()) return { status: "not-yet" };
 

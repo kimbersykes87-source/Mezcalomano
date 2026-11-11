@@ -10,6 +10,7 @@ All notable changes to the Mezcalómano marketing site project.
 - `POST /api/giveaway/lookup`: Turnstile plus a per-IP limit; returns only the asking address's own result. Test addresses in `GIVEAWAY_TEST_EMAILS` (`email:win,email:lose`) get that result at any date and never touch Shopify. Real addresses get "not yet" until `GIVEAWAY_RESULTS_AT` (default 2026-12-07 05:00 UTC), then Shopify customer tags decide: `giveaway-mezcal-culture` entered, `giveaway-winner` won.
 - `src/lib/giveaway/agave-card-for-email.ts`: FNV-1a over the trimmed lowercased email, mod 40, FROZEN list. Do not reorder.
 - All result lines are DRAFT placeholders, marked on the page, until Siona writes them.
+- Also served at mezcalomano.com/giveaway (unlinked, noindex) so it can be tested before the subdomain exists. Kimber's test pair (Siona wins, Kimber does not) is built in as SHA-256 hashes and skips Turnstile; set `GIVEAWAY_TEST_EMAILS=off` to switch testing off before 2026-12-07.
 
 ## [2026-10-28] - Analytics, phases 4 to 6 (TikTok, admin site, weekly email)
 

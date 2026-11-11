@@ -42,8 +42,11 @@ export function proxy(request: NextRequest) {
     return res;
   }
 
-  if (pathname.startsWith("/giveaway") && !isTestHost) {
-    return new NextResponse("Not found", { status: 404 });
+  if (pathname.startsWith("/giveaway")) {
+    // Also reachable at mezcalomano.com/giveaway for testing: unlinked, noindex.
+    const res = NextResponse.next();
+    res.headers.set("X-Robots-Tag", "noindex, nofollow");
+    return res;
   }
 
   if (pathname.startsWith("/admin") && !isTestHost) {

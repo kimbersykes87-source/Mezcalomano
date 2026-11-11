@@ -238,7 +238,7 @@ export default function GiveawayReveal() {
           <button
             className="gv-btn"
             type="submit"
-            disabled={!token || phase === "checking"}
+            disabled={phase === "checking"}
           >
             {phase === "checking" ? "Drawing..." : "Draw my card"}
           </button>
