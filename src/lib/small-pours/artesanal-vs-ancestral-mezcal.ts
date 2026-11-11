@@ -6,7 +6,7 @@ export const artesanalVsAncestralMezcal: PostEntry = {
     title: "What Is Artesanal Mezcal? Artesanal vs Ancestral Explained",
     description: "What is artesanal mezcal? How it differs from ancestral and plain mezcal under Mexico's official standard, NOM-070, in plain English.",
     category: "Basics",
-    answer: "Artesanal mezcal (Mezcal Artesanal) is one of three categories in Mexico's official mezcal standard, [NOM-070-SCFI-2016](https://comercam-dom.org.mx/wp-content/uploads/2022/04/DOF-2017.02.23-NOM-070-SCFI-2016-Alcoholic-Beverages-Mezcal-Specifications.pdf). It is made with traditional methods: agave cooked in pits or raised masonry ovens, crushed with mauls, a tahona, a mill or a shredder, and distilled over direct fire in copper or clay stills. Ancestral is the strictest category, with stone pits only and distillation in clay pots, and plain Mezcal is the widest.",
+    answer: "Artesanal mezcal (Mezcal Artesanal) is one of three categories in Mexico's official mezcal standard, [NOM-070-SCFI-2016](https://comercam-dom.org.mx/wp-content/uploads/2022/04/DOF-2017.02.23-NOM-070-SCFI-2016-Alcoholic-Beverages-Mezcal-Specifications.pdf). It is made with traditional methods: agave cooked in pits or elevated stone basins, crushed with mauls, a tahona, a mill or a shredder, and distilled over direct fire in copper or clay stills. Ancestral is the strictest category, with stone pits only and distillation in clay pots, and plain Mezcal is the widest.",
     status: "published",
     published: "2026-11-09",
     updated: "2026-11-08",
@@ -34,11 +34,11 @@ export const artesanalVsAncestralMezcal: PostEntry = {
         rows: [
           [
             "Mezcal",
-            "The widest category. Cooking in underground ovens, masonry ovens or an autoclave; milling with a tahona, a Chilean or Egyptian mill, a shredder, a series of mills or a diffuser; fermentation in wood, stone or stainless steel tanks; and distillation in stills or continuous distillation, with copper or stainless steel coils."
+            "The widest category. Cooking in underground ovens, stone basins or an autoclave; milling with a tahona, a Chilean or Egyptian mill, a shredder, a series of mills or a diffuser; fermentation in wood, stone or stainless steel tanks; and distillation in stills or continuous distillation, with copper or stainless steel coils."
           ],
           [
             "Mezcal Artesanal",
-            "Traditional methods with some flexibility: pits or raised masonry ovens for cooking; mauls, a tahona, mills or a shredder for crushing; fermentation in hollows in stone, earth or tree trunks, stone basins, animal skins, or wood or clay vessels; and direct fire in copper or clay stills."
+            "Traditional methods with some flexibility: pits or elevated stone basins for cooking; mauls, a tahona, mills or a shredder for crushing; fermentation in hollows in stone, earth or tree trunks, stone basins, animal skins, or wood or clay vessels; and direct fire in copper or clay stills."
           ],
           [
             "Mezcal Ancestral",
@@ -73,7 +73,7 @@ export const artesanalVsAncestralMezcal: PostEntry = {
       },
       {
         type: "p",
-        text: "Artesanal keeps traditional methods but allows more choice of tools (section 4.4.2). A maker might cook in a pit or a raised masonry oven, crush with mauls, a tahona, a mill or a shredder, ferment in stone, earth, wood, clay or animal skins with the agave fiber in or out, and distill over direct fire in a copper or clay still. It sits between the widest category and the strict ancestral one."
+        text: "Artesanal keeps traditional methods but allows more choice of tools (section 4.4.2). A maker might cook in a pit or a elevated stone basin, crush with mauls, a tahona, a mill or a shredder, ferment in stone, earth, wood, clay or animal skins with the agave fiber in or out, and distill over direct fire in a copper or clay still. It sits between the widest category and the strict ancestral one."
       },
       {
         type: "p",
@@ -103,7 +103,7 @@ export const artesanalVsAncestralMezcal: PostEntry = {
     faq: [
       {
         q: "What is the difference between artesanal and ancestral mezcal?",
-        a: "Both are traditional categories. Ancestral is stricter: stone pits for cooking, mauls, a tahona or an Egyptian or Chilean mill for crushing, and distillation in clay pots over direct fire. Artesanal also allows raised masonry ovens, a shredder and copper stills."
+        a: "Both are traditional categories. Ancestral is stricter: stone pits for cooking, mauls, a tahona or an Egyptian or Chilean mill for crushing, and distillation in clay pots over direct fire. Artesanal also allows elevated stone basins, a shredder and copper stills."
       },
       {
         q: "Is ancestral mezcal more expensive?",

@@ -51,7 +51,7 @@ export const whatDoesMezcalTasteLike: PostEntry = {
       },
       {
         type: "p",
-        text: "The label gives a clue. Under [NOM-070-SCFI-2016](https://platiica.economia.gob.mx/wp-content/uploads/sites/2/PDF_Normas_Publicas/070scfi2017.pdf), ancestral mezcal must be cooked in pit ovens only, artesanal in pit or raised masonry ovens, and the plain mezcal category may also use autoclaves (steam pressure cookers). For more, read [does all mezcal taste smoky?](/small-pours/is-mezcal-smoky)"
+        text: "The label gives a clue. Under [NOM-070-SCFI-2016](https://platiica.economia.gob.mx/wp-content/uploads/sites/2/PDF_Normas_Publicas/070scfi2017.pdf), ancestral mezcal must be cooked in pit ovens only, artesanal in pit or elevated stone basins, and the plain mezcal category may also use autoclaves (steam pressure cookers). For more, read [does all mezcal taste smoky?](/small-pours/is-mezcal-smoky)"
       },
       {
         type: "h2",

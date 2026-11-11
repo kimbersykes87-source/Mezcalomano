@@ -72,13 +72,13 @@ export const whatIsMezcal: PostEntry = {
         rows: [
           [
             "Mezcal",
-            "Pit ovens, raised masonry ovens or autoclaves (steam pressure cookers)",
+            "Pit ovens, elevated stone basins or autoclaves (steam pressure cookers)",
             "Includes mechanical shredders, mill trains and diffusers",
             "Pot stills, continuous stills or columns of copper or stainless steel"
           ],
           [
             "Mezcal Artesanal",
-            "Pit ovens or raised masonry ovens",
+            "Pit ovens or elevated stone basins",
             "By mallet, stone wheel (tahona), mill or shredder",
             "Over direct fire, in copper pot stills or clay pots, among others"
           ],
@@ -92,7 +92,7 @@ export const whatIsMezcal: PostEntry = {
       },
       {
         type: "p",
-        text: "Artesanal and ancestral mezcal also ferment in traditional vessels such as hollows in stone, earth or tree trunks, masonry tanks or wood. The category is printed on the label, so it tells you something real about how the bottle was made. Our post on [artesanal vs ancestral mezcal](/small-pours/artesanal-vs-ancestral-mezcal) goes deeper, and how to read a mezcal label shows where to find it."
+        text: "Artesanal and ancestral mezcal also ferment in traditional vessels such as hollows in stone, earth or tree trunks, stone tanks or wood. The category is printed on the label, so it tells you something real about how the bottle was made. Our post on [artesanal vs ancestral mezcal](/small-pours/artesanal-vs-ancestral-mezcal) goes deeper, and how to read a mezcal label shows where to find it."
       },
       {
         type: "p",

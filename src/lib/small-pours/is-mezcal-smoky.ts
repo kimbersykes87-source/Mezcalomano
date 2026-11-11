@@ -70,7 +70,7 @@ export const isMezcalSmoky: PostEntry = {
         type: "list",
         items: [
           "**Ancestral:** cooked in pit ovens only.",
-          "**Artesanal:** cooked in pit ovens or raised masonry ovens.",
+          "**Artesanal:** cooked in pit ovens or elevated stone basins.",
           "**Mezcal (the widest category):** may also be cooked in an autoclave, a pressure oven that uses steam instead of fire."
         ]
       },

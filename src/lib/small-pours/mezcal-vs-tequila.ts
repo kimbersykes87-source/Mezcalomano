@@ -28,7 +28,7 @@ export const mezcalVsTequila: PostEntry = {
       rows: [
         ["The plant", "One species: blue Weber agave (mixto tequila may also use other sugars)", "Many agaves. Our deck features 40"],
         ["Where", "Mostly Jalisco", "Made in a legally defined area, with Oaxaca as the heartland"],
-        ["Cooking", "Steam baked in masonry ovens or pressure cookers", "Traditionally in earth pits, in some styles in masonry ovens"],
+        ["Cooking", "Steam baked in masonry ovens or pressure cookers", "Traditionally in earth pits, in some styles in elevated stone basins"],
         ["Smoke", "Usually little", "From almost none to a clear campfire"],
       ],
     },
@@ -52,7 +52,7 @@ export const mezcalVsTequila: PostEntry = {
     },
     {
       type: "p",
-      text: "Mexico's mezcal rules have three categories. Ancestral mezcal is the strictest and uses stone pits only. Artesanal allows pits or raised masonry ovens. The widest category also allows autoclaves, which are steam pressure cookers. So \"mezcal\" on a label does not guarantee smoke, and the cooking method on the label is worth a look.",
+      text: "Mexico's mezcal rules have three categories. Ancestral mezcal is the strictest and uses stone pits only. Artesanal allows pits or elevated stone basins. The widest category also allows autoclaves, which are steam pressure cookers. So \"mezcal\" on a label does not guarantee smoke, and the cooking method on the label is worth a look.",
     },
     { type: "h2", text: "Is all mezcal smoky?" },
     {
@@ -93,7 +93,7 @@ export const mezcalVsTequila: PostEntry = {
   reviewNotes: [
     "DRAFT changes 2026-11-09 (SEO audit): added Sources section; espadin share now says about 85%; tequila plant and sugar rule checked against the Tequila Regulatory Council page on NOM-006-SCFI-2012. Still unchecked against the standard text: steam ovens or pressure cookers for tequila, and the Jalisco-heartland wording.",
     "Our directory and card data supplies: Weber Azul (Agave tequilana, Jalisco, occasionally used in mezcal), the compass lines, and the count of 21 clean, 17 toasty, 2 smoky agaves, rechecked 31 Oct 2026 against the live Species_Final sheet (Churique now reads clean, mineral, lactic). The Cards CSV copies are older; re-export them.",
-    "Facts from outside our data: tequila is made from blue Weber agave only, and mostly in Jalisco (100% agave tequila uses nothing else; mixto tequila may add other sugars; confirm the wording against NOM-006-SCFI-2012); tequila is steam baked in masonry ovens or autoclaves; Oaxaca as mezcal's heartland. The mezcal category methods (ancestral stone pits only, artesanal pits or raised masonry ovens, the widest category also allows autoclaves) were checked 31 Oct 2026 against the official English translation of NOM-070-SCFI-2016 hosted by COMERCAM (sections 4.4 to 4.4.3; Spanish prevails). The tequila statements rest on a third-party WSET Level 2 study guide summary and have not been checked against the tequila standard.",
+    "Facts from outside our data: tequila is made from blue Weber agave only, and mostly in Jalisco (100% agave tequila uses nothing else; mixto tequila may add other sugars; confirm the wording against NOM-006-SCFI-2012); tequila is steam baked in masonry ovens or autoclaves; Oaxaca as mezcal's heartland. The mezcal category methods (ancestral stone pits only, artesanal pits or elevated stone basins, the widest category also allows autoclaves) were checked 31 Oct 2026 against the official English translation of NOM-070-SCFI-2016 hosted by COMERCAM (sections 4.4 to 4.4.3; Spanish prevails). The tequila statements rest on a third-party WSET Level 2 study guide summary and have not been checked against the tequila standard.",
     "'Usually little' smoke for tequila is my general statement, not a sourced one. Keep or soften.",
     "The 'long roast with fire in the pit is the usual explanation' line is general knowledge. The linked account calls the roasted agave sweet and smoky but does not explain smoke levels.",
     "We are agave first, so this article names no brands and should not.",
