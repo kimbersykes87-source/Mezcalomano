@@ -14,6 +14,8 @@ export const DEFAULT_RESULTS_AT = "2026-12-07T17:00:00Z";
 /** Shopify customer tags: set by the entry page, and by Siona on the winner after the draw. */
 export const ENTRANT_TAG = "giveaway-mezcal-culture";
 export const WINNER_TAG = "giveaway-winner";
+/** Set by us when someone successfully looks up their own result, so Siona can segment the nudge on who has NOT looked. */
+export const CHECKED_TAG = "giveaway-checked";
 
 export type LookupResult =
   | { status: "result"; won: boolean; slug: string; name: string; test: boolean }

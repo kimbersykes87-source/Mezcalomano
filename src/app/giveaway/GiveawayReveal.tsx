@@ -17,7 +17,10 @@ const COPY = {
   lose: "This time it wasn't you.",
   loseSub: "Thanks for entering. The card is yours to explore.",
   meet: (name: string) => `Meet the ${name}`,
+  // Non-winners only. The 7 Dec email deliberately carries no code, so this page is the only place it is delivered.
+  codeLine: "Here's 10% off the Discovery Deck until December 14, with the code",
   notYet: "The draw is on December 7. Come back then to draw your card.",
+  code: "MEZCALCULTURE",
   notEntered: "We couldn't find an entry for that email. Check the spelling, or use the address you entered with.",
 };
 
@@ -250,6 +253,12 @@ export default function GiveawayReveal({ initialEmail = "" }: { initialEmail?: s
                   <Draft />
                   {r.won ? COPY.winSub : COPY.loseSub}
                 </p>
+                {!r.won && (
+                  <p className="gv-code">
+                    <Draft />
+                    {COPY.codeLine} <span className="gv-code-value">{COPY.code}</span>
+                  </p>
+                )}
                 <a className="gv-btn" href={`https://mezcalomano.com/directory/${r.slug}`}>
                   {COPY.meet(r.name)}
                 </a>

@@ -45,6 +45,20 @@
 .gv-result h2 { font-size: 20px; line-height: 1.2; font-weight: var(--font-weight-bold); }
 .gv-result p { font-size: 15px; line-height: 1.45; color: rgba(255, 255, 255, 0.85); margin-bottom: var(--space-2); }
 .gv-tag { align-self: center; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 8px; border-radius: var(--radius-sm); background: var(--color-terracotta); color: var(--color-white); font-weight: var(--font-weight-bold); }
+.gv-code {
+  margin: 0 0 0.9rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+}
+.gv-code-value {
+  display: inline-block;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.08em;
+  color: var(--color-yellow);
+  white-space: nowrap;
+}
 .gv-draft { color: var(--color-yellow); font-weight: var(--font-weight-bold); }
 @keyframes gv-fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .gv-result, .gv-skip { animation: none; } .gv-loader span { animation-duration: 2s; } }

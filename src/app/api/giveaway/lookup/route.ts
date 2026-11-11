@@ -9,7 +9,9 @@ import { normaliseEmail } from "@/lib/giveaway/agave-card-for-email";
  * on any host: they never reveal anything about a real entrant.
  */
 const WINDOW_MS = 10 * 60_000;
-const MAX_PER_WINDOW = 8;
+// Generous on purpose: offices, universities and mobile carriers put many people behind one IP, and locking a real
+// entrant out of their own result is worse than anything this prevents. Turnstile is the actual control.
+const MAX_PER_WINDOW = 30;
 const hits = new Map<string, number[]>();
 
 function limited(ip: string): boolean {
