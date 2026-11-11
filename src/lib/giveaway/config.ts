@@ -18,6 +18,8 @@ export const WINNER_TAG = "giveaway-winner";
 export const CHECKED_TAG = "giveaway-checked";
 
 export type LookupResult =
-  | { status: "result"; won: boolean; slug: string; name: string; test: boolean }
+  // `code` is only ever set for non-winners, and only server side: see GIVEAWAY_CODE in lookup.ts. Do not move the
+  // code string into this file, which ships to the browser.
+  | { status: "result"; won: boolean; slug: string; name: string; test: boolean; code?: string }
   | { status: "not-yet" }
   | { status: "not-entered" };

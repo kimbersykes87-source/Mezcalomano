@@ -22,6 +22,13 @@ const BUILT_IN_TESTS: Record<string, boolean> = {
   "90cd33ac5b1b2a6ad249d380021bcca8600b5b641b854d613ae10d90eee52fab": false,
 };
 
+/**
+ * Sent to non-winners only, and deliberately held HERE rather than in the page copy or in config.ts, both of which
+ * ship to the browser. Keeping it server side puts it behind Turnstile and behind actually being a tagged entrant,
+ * so it cannot be lifted out of the JS by someone who never entered.
+ */
+const GIVEAWAY_CODE = "MEZCALCULTURE";
+
 const sha256 = (s: string) => createHash("sha256").update(s).digest("hex");
 
 /** true = test win, false = test no win, null = not a test address. */
@@ -75,7 +82,7 @@ export async function lookupGiveaway(rawEmail: string): Promise<LookupResult> {
 
   const test = testOutcome(email);
   if (test !== null) {
-    return { status: "result", won: test, slug: card.slug, name: card.name, test: true };
+    return { status: "result", won: test, slug: card.slug, name: card.name, test: true, ...(test ? {} : { code: GIVEAWAY_CODE }) };
   }
   if (!resultsOpen()) return { status: "not-yet" };
 
@@ -87,5 +94,6 @@ export async function lookupGiveaway(rawEmail: string): Promise<LookupResult> {
   const tags = (node?.tags ?? []).map((t) => t.toLowerCase());
   if (!tags.includes(ENTRANT_TAG)) return { status: "not-entered" };
   if (node?.id && !tags.includes(CHECKED_TAG)) markChecked(node.id);
-  return { status: "result", won: tags.includes(WINNER_TAG), slug: card.slug, name: card.name, test: false };
+  const won = tags.includes(WINNER_TAG);
+  return { status: "result", won, slug: card.slug, name: card.name, test: false, ...(won ? {} : { code: GIVEAWAY_CODE }) };
 }
