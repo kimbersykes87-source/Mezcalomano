@@ -1,37 +1,50 @@
-/* giveaway.mezcalomano.com reveal page. Scope: .gv */
+/* giveaway reveal page (mezcalomano.com/giveaway, giveaway.mezcalomano.com). Scope: .gv
+   Phone first: header, square video and the panel under it fit one screen with no scrolling. */
 .gv {
-  min-height: 100vh;
+  min-height: 100svh;
   background: var(--color-dark);
   color: var(--color-white);
   display: flex;
   justify-content: center;
-  padding: var(--space-6) var(--space-4) var(--space-12);
+  padding: var(--space-4) var(--space-4) var(--space-8);
 }
-.gv-wrap { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: var(--space-6); }
+.gv-wrap { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: var(--space-4); }
 .gv-head { text-align: center; }
-.gv-eyebrow { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-olive); font-weight: var(--font-weight-semibold); }
-.gv-title { font-size: 28px; line-height: 1.15; font-weight: var(--font-weight-bold); margin-top: var(--space-2); }
-.gv-frame { position: relative; width: 100%; aspect-ratio: 4 / 5; border-radius: var(--radius-lg); overflow: hidden; background: #1b1c1a; }
+.gv-eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-olive); font-weight: var(--font-weight-semibold); }
+.gv-title { font-size: 24px; line-height: 1.15; font-weight: var(--font-weight-bold); margin-top: 2px; }
+
+.gv-frame { position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: var(--radius-lg); overflow: hidden; background: #1b1c1a; }
+.gv-frame.is-playing { cursor: pointer; }
 .gv-frame video, .gv-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.gv-loader { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(0, 0, 0, 0.25); }
+.gv-loader span { width: 36px; height: 36px; border-radius: 50%; border: 3px solid rgba(255, 255, 255, 0.25); border-top-color: var(--color-yellow); animation: gv-spin 0.8s linear infinite; }
+@keyframes gv-spin { to { transform: rotate(360deg); } }
+.gv-skip { position: absolute; right: 10px; bottom: 10px; font-size: 11px; padding: 4px 8px; border-radius: var(--radius-sm); background: rgba(0, 0, 0, 0.45); color: rgba(255, 255, 255, 0.8); pointer-events: none; animation: gv-fade 0.4s ease 1.5s both; }
+
+/* the panel keeps one height whatever it shows, so nothing under the video jumps */
+.gv-panel { min-height: 168px; }
 .gv-form { display: flex; flex-direction: column; gap: var(--space-3); }
-.gv-label { font-size: 14px; color: rgba(255, 255, 255, 0.8); }
 .gv-input {
   width: 100%; padding: 14px 16px; border-radius: var(--radius-md); border: 1px solid rgba(255, 255, 255, 0.25);
   background: rgba(255, 255, 255, 0.06); color: var(--color-white); font-size: 16px;
 }
+.gv-input::placeholder { color: rgba(255, 255, 255, 0.45); }
 .gv-input:focus { outline: 2px solid var(--color-yellow); outline-offset: 1px; }
 .gv-btn {
-  padding: 14px 16px; border-radius: var(--radius-md); border: 0; background: var(--color-yellow); color: var(--color-dark);
-  font-weight: var(--font-weight-bold); font-size: 16px; cursor: pointer;
+  display: block; width: 100%; text-align: center; padding: 14px 16px; border-radius: var(--radius-md); border: 0;
+  background: var(--color-yellow); color: var(--color-dark); font-weight: var(--font-weight-bold); font-size: 16px; cursor: pointer; text-decoration: none;
 }
-.gv-btn:disabled { opacity: 0.5; cursor: default; }
-.gv-btn-ghost { background: transparent; color: var(--color-white); border: 1px solid rgba(255, 255, 255, 0.35); }
+.gv-btn:disabled { opacity: 0.6; cursor: default; }
+.gv-link { background: none; border: 0; color: rgba(255, 255, 255, 0.75); font-size: 14px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; padding: 6px; }
+.gv-row { display: flex; justify-content: center; gap: var(--space-4); }
 .gv-error { color: #f0a58a; font-size: 14px; }
-.gv-result { text-align: center; display: flex; flex-direction: column; gap: var(--space-3); }
-.gv-result h2 { font-size: 24px; line-height: 1.2; font-weight: var(--font-weight-bold); }
-.gv-result p { font-size: 16px; line-height: 1.5; color: rgba(255, 255, 255, 0.85); }
-.gv-result a { color: var(--color-yellow); text-decoration: underline; text-underline-offset: 3px; }
-.gv-tag { align-self: center; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 8px; border-radius: var(--radius-sm); background: var(--color-terracotta); color: var(--color-white); font-weight: var(--font-weight-bold); }
+.gv-ts { display: flex; justify-content: center; margin-top: var(--space-2); }
+.gv-ts:empty { display: none; }
+
+.gv-result { text-align: center; display: flex; flex-direction: column; gap: var(--space-2); animation: gv-fade 0.5s ease both; }
+.gv-result h2 { font-size: 20px; line-height: 1.2; font-weight: var(--font-weight-bold); }
+.gv-result p { font-size: 15px; line-height: 1.45; color: rgba(255, 255, 255, 0.85); margin-bottom: var(--space-2); }
+.gv-tag { align-self: center; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 8px; border-radius: var(--radius-sm); background: var(--color-terracotta); color: var(--color-white); font-weight: var(--font-weight-bold); }
 .gv-draft { color: var(--color-yellow); font-weight: var(--font-weight-bold); }
-.gv-fine { font-size: 12px; text-align: center; color: rgba(255, 255, 255, 0.5); }
-.gv-form[hidden] { display: none; }
+@keyframes gv-fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .gv-result, .gv-skip { animation: none; } .gv-loader span { animation-duration: 2s; } }
