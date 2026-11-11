@@ -29,6 +29,9 @@ const nextConfig: NextConfig = {
     { source: "/small-pours/gifts-for-mezcal-lovers", destination: "/small-pours/gifts-for-tequila-lovers", permanent: true },
     ...directorySlugRedirects,
   ],
+  // Giveaway videos and stills live on R2 (media.mezcalomano.com); served through this site too, so the page
+  // never depends on a visitor's DNS knowing the newer subdomain.
+  rewrites: async () => [{ source: "/giveaway-media/:path*", destination: "https://media.mezcalomano.com/:path*" }],
 };
 
 export default nextConfig;
