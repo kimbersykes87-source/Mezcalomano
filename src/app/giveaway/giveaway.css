@@ -1,0 +1,37 @@
+/* giveaway.mezcalomano.com reveal page. Scope: .gv */
+.gv {
+  min-height: 100vh;
+  background: var(--color-dark);
+  color: var(--color-white);
+  display: flex;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4) var(--space-12);
+}
+.gv-wrap { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: var(--space-6); }
+.gv-head { text-align: center; }
+.gv-eyebrow { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-olive); font-weight: var(--font-weight-semibold); }
+.gv-title { font-size: 28px; line-height: 1.15; font-weight: var(--font-weight-bold); margin-top: var(--space-2); }
+.gv-frame { position: relative; width: 100%; aspect-ratio: 4 / 5; border-radius: var(--radius-lg); overflow: hidden; background: #1b1c1a; }
+.gv-frame video, .gv-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.gv-form { display: flex; flex-direction: column; gap: var(--space-3); }
+.gv-label { font-size: 14px; color: rgba(255, 255, 255, 0.8); }
+.gv-input {
+  width: 100%; padding: 14px 16px; border-radius: var(--radius-md); border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.06); color: var(--color-white); font-size: 16px;
+}
+.gv-input:focus { outline: 2px solid var(--color-yellow); outline-offset: 1px; }
+.gv-btn {
+  padding: 14px 16px; border-radius: var(--radius-md); border: 0; background: var(--color-yellow); color: var(--color-dark);
+  font-weight: var(--font-weight-bold); font-size: 16px; cursor: pointer;
+}
+.gv-btn:disabled { opacity: 0.5; cursor: default; }
+.gv-btn-ghost { background: transparent; color: var(--color-white); border: 1px solid rgba(255, 255, 255, 0.35); }
+.gv-error { color: #f0a58a; font-size: 14px; }
+.gv-result { text-align: center; display: flex; flex-direction: column; gap: var(--space-3); }
+.gv-result h2 { font-size: 24px; line-height: 1.2; font-weight: var(--font-weight-bold); }
+.gv-result p { font-size: 16px; line-height: 1.5; color: rgba(255, 255, 255, 0.85); }
+.gv-result a { color: var(--color-yellow); text-decoration: underline; text-underline-offset: 3px; }
+.gv-tag { align-self: center; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 8px; border-radius: var(--radius-sm); background: var(--color-terracotta); color: var(--color-white); font-weight: var(--font-weight-bold); }
+.gv-draft { color: var(--color-yellow); font-weight: var(--font-weight-bold); }
+.gv-fine { font-size: 12px; text-align: center; color: rgba(255, 255, 255, 0.5); }
+.gv-form[hidden] { display: none; }

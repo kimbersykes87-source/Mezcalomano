@@ -2,6 +2,15 @@
 
 All notable changes to the Mezcalómano marketing site project.
 
+## [2026-11-11] - Giveaway reveal page (test mode)
+
+### Added
+
+- **giveaway.mezcalomano.com** (host routed by `src/proxy.ts`, noindex; `/giveaway` 404s on the main site): type the entry email, a draw video plays from `media.mezcalomano.com` (R2 bucket `mezcalomano-giveaway`, 40 videos, 40 end stills, poster), the result shows below. Reduced motion skips straight to the still. Start over resets everything; nothing is stored.
+- `POST /api/giveaway/lookup`: Turnstile plus a per-IP limit; returns only the asking address's own result. Test addresses in `GIVEAWAY_TEST_EMAILS` (`email:win,email:lose`) get that result at any date and never touch Shopify. Real addresses get "not yet" until `GIVEAWAY_RESULTS_AT` (default 2026-12-07 05:00 UTC), then Shopify customer tags decide: `giveaway-mezcal-culture` entered, `giveaway-winner` won.
+- `src/lib/giveaway/agave-card-for-email.ts`: FNV-1a over the trimmed lowercased email, mod 40, FROZEN list. Do not reorder.
+- All result lines are DRAFT placeholders, marked on the page, until Siona writes them.
+
 ## [2026-10-28] - Analytics, phases 4 to 6 (TikTok, admin site, weekly email)
 
 ### Added
