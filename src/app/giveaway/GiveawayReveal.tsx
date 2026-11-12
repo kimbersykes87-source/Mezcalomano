@@ -8,7 +8,10 @@ import { GIVEAWAY_MEDIA, type LookupResult } from "@/lib/giveaway/config";
 
 type Phase = "idle" | "checking" | "loading" | "playing" | "done";
 
-const SQ = `${GIVEAWAY_MEDIA}/sq`; // square (1:1) set, so the whole flow fits one phone screen
+// Square (1:1) set, so the whole flow fits one phone screen. Versioned on purpose: R2 serves these cached a
+// year as immutable, so each render version goes up under its own prefix and this must match the one just
+// uploaded. v01 = /sq, v02 = /sq-v02 (reframed so the card fills the square, and stopped down to stay sharp).
+const SQ = `${GIVEAWAY_MEDIA}/sq-v02`;
 
 // DRAFT copy: placeholders until Siona writes and approves the real lines. Every line shows a DRAFT tag on the page.
 const COPY = {
