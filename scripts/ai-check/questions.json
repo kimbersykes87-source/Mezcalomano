@@ -1,0 +1,131 @@
+{
+  "_note": "Siona's 20 questions (file of 2026-11-09) with 3 swaps proposed by Claude on 2026-11-09, accepted by Siona and Kimber on 2026-11-09: dropped Q5 (recipe sites dominate), Q10 and Q11 (no dedicated page yet); added Q21 to Q23 (Q21 and Q22 are where we already appeared in November, Q23 is the generic directory question). Brand questions are asked by hand, not here. Frozen for six months from 2026-11-09. Change only with Siona and note the date.",
+  "frozen": true,
+  "questions": [
+    {
+      "id": "Q1",
+      "group": "gift",
+      "text": "What's a good gift for a mezcal lover?",
+      "winnable": "Yes"
+    },
+    {
+      "id": "Q2",
+      "group": "gift",
+      "text": "What's a fun way to learn about mezcal with friends?",
+      "winnable": "Yes"
+    },
+    {
+      "id": "Q3",
+      "group": "education",
+      "text": "What is mezcal?",
+      "winnable": "Hard"
+    },
+    {
+      "id": "Q4",
+      "group": "education",
+      "text": "What's the difference between mezcal and tequila?",
+      "winnable": "Hard"
+    },
+    {
+      "id": "Q6",
+      "group": "education",
+      "text": "What's the difference between sotol and mezcal?",
+      "winnable": "Medium"
+    },
+    {
+      "id": "Q7",
+      "group": "education",
+      "text": "What is raicilla?",
+      "winnable": "Medium"
+    },
+    {
+      "id": "Q8",
+      "group": "education",
+      "text": "What types of agave are used to make mezcal?",
+      "winnable": "Good"
+    },
+    {
+      "id": "Q9",
+      "group": "education",
+      "text": "Why is there a worm in mezcal?",
+      "winnable": "Good"
+    },
+    {
+      "id": "Q12",
+      "group": "education",
+      "text": "What is artesanal mezcal?",
+      "winnable": "Good"
+    },
+    {
+      "id": "Q13",
+      "group": "education",
+      "text": "What is a mezcalero?",
+      "winnable": "Good"
+    },
+    {
+      "id": "Q14",
+      "group": "education",
+      "text": "Does all mezcal taste smoky?",
+      "winnable": "Good"
+    },
+    {
+      "id": "Q15",
+      "group": "education",
+      "text": "How do you drink mezcal?",
+      "winnable": "Good"
+    },
+    {
+      "id": "Q16",
+      "group": "education",
+      "text": "How long does agave take to grow?",
+      "winnable": "Good"
+    },
+    {
+      "id": "Q17",
+      "group": "directory",
+      "text": "Where can I buy tobala mezcal in the US?",
+      "winnable": "Good"
+    },
+    {
+      "id": "Q18",
+      "group": "directory",
+      "text": "What is cuishe mezcal and where can I buy it?",
+      "winnable": "Best"
+    },
+    {
+      "id": "Q19",
+      "group": "directory",
+      "text": "Where can I buy espadin mezcal in the US?",
+      "winnable": "Medium"
+    },
+    {
+      "id": "Q20",
+      "group": "directory",
+      "text": "Where can I buy tepextate mezcal in the US?",
+      "winnable": "Good"
+    },
+    {
+      "id": "Q21",
+      "group": "product",
+      "text": "Are there educational playing cards about agave?",
+      "winnable": "Yes",
+      "origin": "added 2026-11-09, accepted"
+    },
+    {
+      "id": "Q22",
+      "group": "product",
+      "text": "Where can I buy a deck of agave cards?",
+      "winnable": "Yes",
+      "origin": "added 2026-11-09, accepted"
+    },
+    {
+      "id": "Q23",
+      "group": "directory",
+      "text": "Is there a directory of US mezcal shops and producers by agave species?",
+      "winnable": "Good",
+      "origin": "added 2026-11-09, accepted"
+    }
+  ],
+  "frozenOn": "2026-11-09",
+  "reviewOn": "2027-05-09"
+}

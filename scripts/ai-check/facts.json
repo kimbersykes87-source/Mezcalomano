@@ -1,0 +1,19 @@
+{
+  "_note": "Source: MAP_00_INDEX key facts, checked 2026-11-07. Update here when the facts change. Siona owns this file.",
+  "brandPattern": "mezcal[oó]mano|discovery deck",
+  "domainPattern": "mezcalomano\\.com",
+  "facts": [
+    { "id": "price", "label": "Price $29.99", "pattern": "29\\.99" },
+    { "id": "species", "label": "40 agave species", "pattern": "\\b40\\b[^.\\n]{0,30}(agave|species)" },
+    { "id": "ships", "label": "Ships from Nov 30", "pattern": "(nov(ember)?\\.?\\s*30|30\\s*nov)" },
+    { "id": "usonly", "label": "US addresses only", "pattern": "(u\\.?s\\.?|united states)[^.\\n]{0,40}(only|addresses)" },
+    { "id": "seller", "label": "Seller That's SaaS Limited", "pattern": "that.?s saas" },
+    { "id": "directory", "label": "Directory at mezcalomano.com/directory", "pattern": "mezcalomano\\.com/directory" }
+  ],
+  "wrongPatterns": [
+    { "id": "price_39", "label": "Wrong price $39.99", "pattern": "39\\.99" },
+    { "id": "weight_150", "label": "Wrong weight 150 g", "pattern": "150\\s?g\\b" },
+    { "id": "gente", "label": "Gente de Mezcal / Mezcalomano Kit (unknown partner)", "pattern": "gente de mezcal|mezcalomano kit" }
+  ],
+  "competitors": ["TUYO", "Agave ID Cards", "Mezcalistas", "Agave Atlas", "Mezcal Culture", "Ruth Bancroft", "Jose Cuervo", "Maguey Melate", "Agave Mixtape"]
+}

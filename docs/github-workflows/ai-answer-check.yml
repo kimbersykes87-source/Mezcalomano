@@ -1,0 +1,81 @@
+# Monthly AI answer check. SAVE BY HAND to .github/workflows/ai-answer-check.yml.
+# Claude cannot write under .github.
+#
+# Secrets used (names only, never values in Git):
+#   OPENAI_API_KEY, ANTHROPIC_API_KEY, GEMINI_API_KEY, SERPAPI_KEY
+#   optional: ANTHROPIC_WORKSPACE_ID (only if the Anthropic key is not scoped to a workspace)
+#   optional: WEEKLY_EMAIL_URL, WEEKLY_EMAIL_TOKEN (same values as Vercel; sends the five line email to hola@)
+#
+# Runs on the first Monday of the month. If a source mostly fails, the job fails and
+# GitHub emails the failure to the repo owner. Results go to the bot-reports branch, never to main.
+# First run: Actions > AI answer check > Run workflow with dry_run ticked, then once unticked.
+name: AI answer check
+
+on:
+  schedule:
+    - cron: "23 9 1-7 * 1" # Mondays that fall on day 1 to 7, 09:23 UTC (first Monday)
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Mock answers, no keys used"
+        type: boolean
+        default: true
+      only:
+        description: "Comma list of sources: openai,anthropic,gemini,google"
+        default: "openai,anthropic,gemini,google"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ai-answer-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      ANTHROPIC_WORKSPACE_ID: ${{ secrets.ANTHROPIC_WORKSPACE_ID }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+      WEEKLY_EMAIL_URL: ${{ secrets.WEEKLY_EMAIL_URL }}
+      WEEKLY_EMAIL_TOKEN: ${{ secrets.WEEKLY_EMAIL_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Tests (no network)
+        run: node scripts/ai-check/test.mjs
+      - name: Run the check
+        run: |
+          DRY=""
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "true" ]; then DRY="--dry-run"; fi
+          ONLY="${{ inputs.only || 'openai,anthropic,gemini,google' }}"
+          node scripts/ai-check/run.mjs $DRY --only "$ONLY" --out ai-check-results
+      - name: Keep the results (artifact, 90 days)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-check-results
+          path: ai-check-results
+          retention-days: 90
+          if-no-files-found: ignore
+      - name: Push results to the bot-reports branch
+        if: always() && !(github.event_name == 'workflow_dispatch' && inputs.dry_run)
+        run: |
+          git config user.name "ai-check-bot"
+          git config user.email "ai-check-bot@users.noreply.github.com"
+          cp -r ai-check-results /tmp/aic-out
+          git fetch origin bot-reports
+          git checkout -B bot-reports origin/bot-reports
+          mkdir -p ai-check
+          cp -r /tmp/aic-out/* ai-check/
+          git add ai-check
+          if git diff --cached --quiet; then echo "Nothing to commit"; else
+            git commit -m "AI answer check $(date -u +%Y-%m-%d)"
+            git push origin bot-reports
+          fi

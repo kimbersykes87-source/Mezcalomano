@@ -1,0 +1,9 @@
+{
+  "runsPerQuestion": { "openai": 3, "anthropic": 3, "gemini": 3, "google": 2 },
+  "delayMs": 1500,
+  "openai": { "model": "gpt-6-astra" },
+  "anthropic": { "model": "claude-sonnet-5-5", "tool": "web_search_20260318", "maxContinues": 5 },
+  "gemini": { "api": "interactions", "model": "gemini-3.8-flash" },
+  "google": { "gl": "us", "hl": "en" },
+  "failRateAlert": 0.5
+}
