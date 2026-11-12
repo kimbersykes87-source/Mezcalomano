@@ -1,430 +1,105 @@
 {
-  "date": "2026-11-09",
-  "mode": "monday",
+  "date": "2026-11-12",
+  "mode": "thursday",
   "counts": {
     "BAD_URL": 0,
-    "DEAD": 0,
+    "DEAD": 7,
     "GENERIC": 1,
-    "BLOCKED": 15,
-    "INFO": 9,
-    "OK": 215
+    "BLOCKED": 12,
+    "INFO": 8,
+    "OK": 211
   },
-  "linksChecked": 240,
+  "linksChecked": 239,
   "autoChanges": [
     {
-      "action": "removed",
-      "species": "Jabalí",
-      "producer": "Agua del Sol",
-      "from": "https://gomadreshop.com/products/agua-del-sol-jabali",
-      "why": "\"Agua Del Sol - Jabali\" is sold out (failing since 2026-11-05)"
+      "action": "replaced",
+      "species": "Sierra Negra",
+      "producer": "Cinco Sentidos",
+      "from": "https://gomadreshop.com/products/5-sentidos-sierra-nergra",
+      "to": "https://flaskfinewines.com/products/5-sentidos-sierra-negra",
+      "why": "\"5 Sentidos - Sierra Negra\" is sold out (failing since 2026-11-09)",
+      "shop": "Flask Fine Wine"
     }
   ],
   "urgent": [],
-  "suggestions": [
-    {
-      "action": "swap",
-      "species": "Espadín",
-      "slug": "espadin",
-      "producer": "Lalocura",
-      "from": "https://www.mezcallalocura.com/espadin",
-      "to": "https://flaskfinewines.com/products/copy-of-lalocura-ensamble-tobasiche-espadin-mezcal-95-86pf-500ml",
-      "title": "Lalocura Espadin Mezcal 96.46pf 500ml",
-      "shop": "Flask Fine Wine",
-      "price": 124.99
-    },
-    {
-      "action": "swap",
-      "species": "Espadín",
-      "slug": "espadin",
-      "producer": "Real Minero",
-      "from": "https://realminero.com.mx/producto/espadin-375ml/",
-      "to": "https://elcerritoliquor.com/products/real-minero-espadin-mezcal-750ml",
-      "title": "Real Minero Espadin Mezcal 750ml",
-      "shop": "El Cerrito Liquor",
-      "price": 125
-    },
-    {
-      "action": "swap",
-      "species": "Espadín",
-      "slug": "espadin",
-      "producer": "QuiQuiRiQui",
-      "from": "https://www.quiquiriquimezcal.com/services-9-1",
-      "to": "https://theepicureantrader.com/products/quiquiriqui-casa-espadin-mezcal-1l",
-      "title": "QuiQuiRiQui - 'Casa' Mezcal (Espadin | 1L)",
-      "shop": "The Epicurean Trader",
-      "price": 55
-    },
-    {
-      "action": "swap",
-      "species": "Tobalá",
-      "slug": "tobala",
-      "producer": "Cinco Sentidos",
-      "from": "https://www.drink5sentidos.com/buy-tobala-lalo",
-      "to": "https://flaskfinewines.com/products/5-sentidos-mezcal-tobala-batch-tbalb09-19",
-      "title": "5 Sentidos Mezcal Tobala Lalo",
-      "shop": "Flask Fine Wine",
-      "price": 149.97
-    },
-    {
-      "action": "swap",
-      "species": "Tepextate",
-      "slug": "tepextate",
-      "producer": "Koch",
-      "from": "https://mezcalkoch.com/expresiones/tepeztate.php",
-      "to": "https://elcerritoliquor.com/products/koch-el-mezcal-de-oaxaca-tepeztate-artesanal-mezcal-750ml",
-      "title": "Koch el Mezcal de Oaxaca Tepeztate  Artesanal Mezcal 750ml",
-      "shop": "El Cerrito Liquor",
-      "price": 71.99
-    },
-    {
-      "action": "swap",
-      "species": "Tepextate",
-      "slug": "tepextate",
-      "producer": "Gusto Historico",
-      "from": "https://www.skurnik.com/sku/destilado-de-agave-tepextate-eusebio-santos-gusto-historico/",
-      "to": "https://elcerritoliquor.com/products/gusto-historico-ignacio-juarez-puntas-tepeztate-59-9-abv-750ml",
-      "title": "Gusto Historico Ignacio Juarez Tepextate Agave Spirit 750ml",
-      "shop": "El Cerrito Liquor",
-      "price": 179.99
-    },
-    {
-      "action": "swap",
-      "species": "Tepextate",
-      "slug": "tepextate",
-      "producer": "El Jolgorio",
-      "from": "https://casacortes.mx/ecommerce/producto/23",
-      "to": "https://bittersandbottles.com/products/el-jolgorio-tepeztate-mezcal",
-      "title": "El Jolgorio Tepeztate Mezcal",
-      "shop": "Bitters & Bottles",
-      "price": 149.5
-    },
-    {
-      "action": "swap",
-      "species": "Cuishe",
-      "slug": "cuishe",
-      "producer": "Lalocura",
-      "from": "https://www.mezcallalocura.com/index",
-      "to": "https://flaskfinewines.com/products/copy-of-lalocura-san-martinero-mezcal-500ml",
-      "title": "Lalocura Cuishe Mezcal 97.4pf 500ml",
-      "shop": "Flask Fine Wine",
-      "price": 151.99
-    },
-    {
-      "action": "swap",
-      "species": "Cuishe",
-      "slug": "cuishe",
-      "producer": "Bozal",
-      "from": "http://bozalmezcal.com/spirits/#",
-      "to": "https://elcerritoliquor.com/products/bozal-single-maguey-cuishe-mezcal-750ml",
-      "title": "Bozal Single Maguey Cuishe Mezcal 750ml",
-      "shop": "El Cerrito Liquor",
-      "price": 76.99
-    },
-    {
-      "action": "add",
-      "species": "Cuishe",
-      "slug": "cuishe",
-      "producer": "Rey Campero",
-      "to": "https://elcerritoliquor.com/products/rey-campero-cuishe-mezcal-joven",
-      "title": "Rey Campero Cuishe Joven Mezcal",
-      "shop": "El Cerrito Liquor",
-      "price": 99.95
-    },
-    {
-      "action": "swap",
-      "species": "Barril",
-      "slug": "barril",
-      "producer": "El Jolgorio",
-      "from": "https://casacortes.mx/ecommerce/producto/19",
-      "to": "https://bittersandbottles.com/products/el-jolgorio-barril-mezcal",
-      "title": "El Jolgorio Barril Mezcal",
-      "shop": "Bitters & Bottles",
-      "price": 139.5
-    },
-    {
-      "action": "swap",
-      "species": "Madrecuixe",
-      "slug": "madrecuixe",
-      "producer": "Cinco Sentidos",
-      "from": "https://www.drink5sentidos.com/buy-madrecuixe",
-      "to": "https://flaskfinewines.com/products/5-sentidos-madrecuixe",
-      "title": "5 Sentidos Madrecuixe",
-      "shop": "Flask Fine Wine",
-      "price": 149.99
-    },
-    {
-      "action": "swap",
-      "species": "Tobaziche",
-      "slug": "tobaziche",
-      "producer": "Koch",
-      "from": "https://mezcalkoch.com/expresiones/tobasiche.php",
-      "to": "https://elcerritoliquor.com/products/koch-el-mezcal-de-oaxaca-tobasiche-mezcal-750ml",
-      "title": "Koch el Mezcal de Oaxaca Tobasiche Mezcal 750ml",
-      "shop": "El Cerrito Liquor",
-      "price": 71.99
-    },
-    {
-      "action": "add",
-      "species": "Tobaziche",
-      "slug": "tobaziche",
-      "producer": "El Jolgorio",
-      "to": "https://bittersandbottles.com/products/el-jolgorio-tobasiche-mezcal",
-      "title": "El Jolgorio Tobasiche \"Black Bottle\" Mezcal",
-      "shop": "Bitters & Bottles",
-      "price": 175.5
-    },
-    {
-      "action": "add",
-      "species": "Lumbre",
-      "slug": "lumbre",
-      "producer": "Amarás",
-      "to": "https://elcerritoliquor.com/products/amores-amaras-logia-lumbre-c2-joven-mezcal-700ml",
-      "title": "Amores Amaras Logia Lumbre C2 Joven Mezcal 700ml",
-      "shop": "El Cerrito Liquor",
-      "price": 449.99
-    },
-    {
-      "action": "swap",
-      "species": "Arroqueño",
-      "slug": "arroqueno",
-      "producer": "Amarás",
-      "from": "https://mezcalamaras.com/en/products/arroqueno",
-      "to": "https://elcerritoliquor.com/products/amaras-reserva-especial-ancestral-c2-arroqueno-joven-mezcal-750ml",
-      "title": "Amaras Reserva Especial Ancestral C2 Arroqueno Joven  Mezcal 750ml",
-      "shop": "El Cerrito Liquor",
-      "price": 192.99
-    },
-    {
-      "action": "swap",
-      "species": "Arroqueño",
-      "slug": "arroqueno",
-      "producer": "Siete Misterios",
-      "from": "https://www.sietemisterios.com/en/#buy-now-container",
-      "to": "https://bittersandbottles.com/products/siete-misterios-arroqueno-mezcal",
-      "title": "Siete Misterios Arroqueno Mezcal",
-      "shop": "Bitters & Bottles",
-      "price": 154.5
-    },
-    {
-      "action": "add",
-      "species": "Sierra Negra",
-      "slug": "sierra_negra",
-      "producer": "Rezpiral",
-      "to": "https://flaskfinewines.com/products/rezpiral-abel-martinez-tobala-750ml",
-      "title": "Rezpiral Series 9 Abel Martinez  Sierra Negra 750ml",
-      "shop": "Flask Fine Wine",
-      "price": 149.99
-    },
-    {
-      "action": "add",
-      "species": "Sierra Negra",
-      "slug": "sierra_negra",
-      "producer": "Yuku Savi",
-      "to": "https://flaskfinewines.com/products/yuku-savi-agave-spirits-siera-negra-de-puebla-de-feliz-macedas-750ml",
-      "title": "Yuku Savi Agave Spirits Sierra Negra de Puebla de Feliz Macedas 750ml",
-      "shop": "Flask Fine Wine",
-      "price": 179.99
-    },
-    {
-      "action": "add",
-      "species": "Sierra Negra",
-      "slug": "sierra_negra",
-      "producer": "Amarás",
-      "to": "https://mashandgrape.com/products/mezcal-amaras-logia-sierra-negra-700-ml",
-      "title": "Pre-Order: Mezcal Amarás Logia Sierra Negra 700 ml",
-      "shop": "Mash&Grape",
-      "price": 124.99
-    },
-    {
-      "action": "swap",
-      "species": "Coyote",
-      "slug": "coyote",
-      "producer": "Siete Misterios",
-      "from": "https://www.sietemisterios.com/en/#buy-now-container",
-      "to": "https://elcerritoliquor.com/products/los-siete-misterios-coyote-mezcal-joven-750ml",
-      "title": "Los Siete Misterios Coyote Mezcal Joven 750ml",
-      "shop": "El Cerrito Liquor",
-      "price": 125
-    },
-    {
-      "action": "swap",
-      "species": "Coyote",
-      "slug": "coyote",
-      "producer": "El Jolgorio",
-      "from": "https://casacortes.mx/ecommerce/producto/13",
-      "to": "https://bittersandbottles.com/products/el-jolgorio-coyote-ancestral-mezcal",
-      "title": "El Jolgorio Coyote Ancestral Mezcal",
-      "shop": "Bitters & Bottles",
-      "price": 259.5
-    },
-    {
-      "action": "swap",
-      "species": "Mexicano",
-      "slug": "mexicano",
-      "producer": "El Jolgorio",
-      "from": "https://casacortes.mx/ecommerce/producto/6",
-      "to": "https://bittersandbottles.com/products/el-jolgorio-mexicano-mezcal",
-      "title": "El Jolgorio Mexicano Mezcal",
-      "shop": "Bitters & Bottles",
-      "price": 139.5
-    },
-    {
-      "action": "add",
-      "species": "Papalote",
-      "slug": "papalote",
-      "producer": "Mal Bien",
-      "to": "https://flaskfinewines.com/products/mal-bien-mezcal-capon-papalote-de-ciro-javier-barranca-750ml",
-      "title": "Mal Bien Mezcal Capon Papalote de Ciro & Javier Barranca 750ml",
-      "shop": "Flask Fine Wine",
-      "price": 149.97
-    },
-    {
-      "action": "swap",
-      "species": "Papalote",
-      "slug": "papalote",
-      "producer": "Amarás",
-      "from": "https://mezcalamaras.com/en/products/amaras-cupreata",
-      "to": "https://elcerritoliquor.com/products/amaras-cupreata-mezcal-joven-artesanal-750ml",
-      "title": "Amaras Cupreata Mezcal Joven Artesanal 750ml",
-      "shop": "El Cerrito Liquor",
-      "price": 68.99
-    },
-    {
-      "action": "swap",
-      "species": "Salmiana",
-      "slug": "salmiana",
-      "producer": "The Lost Explorer",
-      "from": "https://thelostexplorer.com/mezcal/salmiana/",
-      "to": "https://flaskfinewines.com/products/the-lost-explorer-mezcal-salmiana-12-yr",
-      "title": "The Lost Explorer Mezcal Salmiana 12 yr",
-      "shop": "Flask Fine Wine",
-      "price": 179.97
-    },
-    {
-      "action": "swap",
-      "species": "Cenizo",
-      "slug": "cenizo",
-      "producer": "Amarás",
-      "from": "https://mezcalamaras.com/en/products/logia-cenizo",
-      "to": "https://woodencork.com/products/amaras-logia-cenizo-joven-mezcal-700ml",
-      "title": "Amaras Logia Cenizo Joven Mezcal 700ml",
-      "shop": "Wooden Cork",
-      "price": 79.99
-    },
-    {
-      "action": "add",
-      "species": "Lyobaa Coyote",
-      "slug": "lyobaa_coyote",
-      "producer": "Agua del Sol",
-      "to": "https://flaskfinewines.com/products/agua-del-sol-coyote-lyobaa-de-maestro-raul-garcia-750ml",
-      "title": "Agua del Sol Coyote Lyobaa de Maestro Raul Garcia 750ml",
-      "shop": "Flask Fine Wine",
-      "price": 169.97
-    },
-    {
-      "action": "add",
-      "species": "Verde",
-      "slug": "verde",
-      "producer": "Mezcal de Leyendas",
-      "to": "https://elcerritoliquor.com/products/mezcal-de-leyendas-maguey-verde-mezcal-artesanal-blanco-750ml",
-      "title": "Mezcal de Leyendas Maguey Verde Mezcal Artesanal Blanco 750ml",
-      "shop": "El Cerrito Liquor",
-      "price": 65.99
-    },
-    {
-      "action": "add",
-      "species": "Pacífica",
-      "slug": "pacifica",
-      "producer": "Rancho Tepua",
-      "to": "https://flaskfinewines.com/products/copy-of-rancho-tepua-sotol-pelmilla-blanco-lot-4-104pf-750ml",
-      "title": "Rancho Tepua Bacanora Blanco Lot 12 90pf 750ml",
-      "shop": "Flask Fine Wine",
-      "price": 86.99
-    },
-    {
-      "action": "swap",
-      "species": "Pacífica",
-      "slug": "pacifica",
-      "producer": "Kilinga",
-      "from": "https://kilingabacanora.com/product/kilinga-silvestre/",
-      "to": "https://theepicureantrader.com/products/kilinga-anejo-bacanora-750ml",
-      "title": "Kilinga - Anejo Bacanora (750ML)",
-      "shop": "The Epicurean Trader",
-      "price": 60
-    },
-    {
-      "action": "add",
-      "species": "Jabalí",
-      "slug": "jabali",
-      "producer": "Dixeebe Mezcal",
-      "to": "https://gomadreshop.com/products/dixeebe-jabali-edition-2",
-      "title": "Dixeebe - Jabalí Edition 3",
-      "shop": "Madre Shop",
-      "price": 101
-    },
-    {
-      "action": "swap",
-      "species": "Lamparillo",
-      "slug": "lamparillo",
-      "producer": "Ultramundo",
-      "from": "https://ultramundo.mx/usa-shop/?v=5435c69ed3bc",
-      "to": "https://elcerritoliquor.com/products/ultramundo-lamparillo-gilberto-roldan-750ml",
-      "title": "Ultramundo Lamparillo Mezcal 750ml",
-      "shop": "El Cerrito Liquor",
-      "price": 149.95
-    },
-    {
-      "action": "add",
-      "species": "Espadilla",
-      "slug": "espadilla",
-      "producer": "Yuku Savi",
-      "to": "https://theepicureantrader.com/products/yuku-savi-espadilla-mezcal-espadilla-750ml",
-      "title": "Yuku Savi - 'Espadilla' Mezcal (Espadilla | 750ML)",
-      "shop": "The Epicurean Trader",
-      "price": 185
-    },
-    {
-      "action": "add",
-      "species": "Chuparrosa",
-      "slug": "chuparrosa",
-      "producer": "Dixeebe Mezcal",
-      "to": "https://flaskfinewines.com/products/dixeebe-mazhcail-chuparrosa-edition-no-1-104pf-375ml",
-      "title": "Dixeebe Mazhcail Chuparrosa Edition No. 1 104pf 375ml",
-      "shop": "Flask Fine Wine",
-      "price": 99.97
-    },
-    {
-      "action": "add",
-      "species": "Pulquero",
-      "slug": "pulquero",
-      "producer": "Rey Campero",
-      "to": "https://gomadreshop.com/products/rey-campero-pulquero",
-      "title": "Rey Campero - Pulquero",
-      "shop": "Madre Shop",
-      "price": 118
-    },
-    {
-      "action": "add",
-      "species": "Pulquero",
-      "slug": "pulquero",
-      "producer": "Rezpiral",
-      "to": "https://flaskfinewines.com/products/copy-of-rezpiral-series-9-castilla-de-maestra-berta-vasquez-750ml",
-      "title": "Rezpiral Series 9 Pulquero de maestra Reina Sanchez 750ml",
-      "shop": "Flask Fine Wine",
-      "price": 169.99
-    }
-  ],
+  "suggestions": [],
   "firstStrike": [
     {
-      "species": "Sierra Negra",
-      "slug": "sierra_negra",
-      "producer": "Cinco Sentidos",
-      "url": "https://gomadreshop.com/products/5-sentidos-sierra-nergra",
-      "firstFailed": "2026-11-09",
-      "lastFailed": "2026-11-09",
+      "species": "Barril",
+      "slug": "barril",
+      "producer": "Koch",
+      "url": "https://mezcalkoch.com/expresiones/barril.php",
+      "firstFailed": "2026-11-12",
+      "lastFailed": "2026-11-12",
       "strikes": 1,
-      "verdict": "INFO",
-      "note": "\"5 Sentidos - Sierra Negra\" is sold out"
+      "verdict": "DEAD",
+      "note": "HTTP 404"
+    },
+    {
+      "species": "Barril",
+      "slug": "barril",
+      "producer": "Mal De Amor",
+      "url": "https://gomadreshop.com/products/mal-amor-3",
+      "firstFailed": "2026-11-12",
+      "lastFailed": "2026-11-12",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "Product removed from the shop (Shopify returns 404 for it)"
+    },
+    {
+      "species": "Madrecuixe",
+      "slug": "madrecuixe",
+      "producer": "Koch",
+      "url": "https://mezcalkoch.com/expresiones/madrecuishe.php",
+      "firstFailed": "2026-11-12",
+      "lastFailed": "2026-11-12",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "HTTP 404"
+    },
+    {
+      "species": "Madrecuixe",
+      "slug": "madrecuixe",
+      "producer": "Rufina",
+      "url": "https://gomadreshop.com/products/rufina-madre-cuishe",
+      "firstFailed": "2026-11-12",
+      "lastFailed": "2026-11-12",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "Product removed from the shop (Shopify returns 404 for it)"
+    },
+    {
+      "species": "Mexicano",
+      "slug": "mexicano",
+      "producer": "Rufina",
+      "url": "https://gomadreshop.com/products/rufina-mexicano",
+      "firstFailed": "2026-11-12",
+      "lastFailed": "2026-11-12",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "Product removed from the shop (Shopify returns 404 for it)"
+    },
+    {
+      "species": "Tepextate",
+      "slug": "tepextate",
+      "producer": "Koch",
+      "url": "https://mezcalkoch.com/expresiones/tepeztate.php",
+      "firstFailed": "2026-11-12",
+      "lastFailed": "2026-11-12",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "HTTP 404"
+    },
+    {
+      "species": "Tobaziche",
+      "slug": "tobaziche",
+      "producer": "Koch",
+      "url": "https://mezcalkoch.com/expresiones/tobasiche.php",
+      "firstFailed": "2026-11-12",
+      "lastFailed": "2026-11-12",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "HTTP 404"
     }
   ],
   "noUs": [
@@ -434,7 +109,6 @@
   ],
   "oneUs": [
     "Lumbre (Creador)",
-    "Sierra Negra (Gozona)",
     "Cimarrón (Chacolo)",
     "Manso Sahuayo (La Luna)",
     "Churique (Cumbrita de la Sierra)",
@@ -473,6 +147,11 @@
       "url": "https://astorwines.com/item/45477"
     },
     {
+      "species": "Espadilla",
+      "producer": "Tosba",
+      "url": "https://gomadreshop.com/products/tosba-espadilla?_pos=1&_sid=44efcc9cb&_ss=r"
+    },
+    {
       "species": "Jabalí",
       "producer": "Del Maguey",
       "url": "https://delmaguey.com/jabali/"
@@ -481,26 +160,6 @@
       "species": "Madrecuixe",
       "producer": "Del Maguey",
       "url": "https://delmaguey.com/madrecuixe/"
-    },
-    {
-      "species": "Mexicano",
-      "producer": "Dixeebe Mezcal",
-      "url": "https://gomadreshop.com/products/dixeebe-mexicano"
-    },
-    {
-      "species": "Mexicano",
-      "producer": "Rufina",
-      "url": "https://gomadreshop.com/products/rufina-mexicano"
-    },
-    {
-      "species": "Papalote",
-      "producer": "Aguerrido",
-      "url": "https://gomadreshop.com/products/aguerrido-sonido-cupreata-edicion-especial-puntas"
-    },
-    {
-      "species": "Pulque Chino",
-      "producer": "NETA",
-      "url": "https://gomadreshop.com/products/neta-pulquero-copy"
     },
     {
       "species": "Tepextate",
@@ -523,8 +182,21 @@
       "url": "https://www.cuchillo.ca/items/pecho-tierra-verde"
     }
   ],
-  "catalogProducts": 1913,
-  "suspendedHosts": [],
+  "catalogProducts": 1900,
+  "suspendedHosts": [
+    {
+      "host": "mezcalkoch.com",
+      "failing": 4,
+      "total": 5,
+      "why": "4 of its 5 links failed in one run",
+      "species": [
+        "Barril",
+        "Madrecuixe",
+        "Tepextate",
+        "Tobaziche"
+      ]
+    }
+  ],
   "pullRequest": "https://github.com/kimbersykes87-source/Mezcalomano/pull/38",
-  "runUrl": "https://github.com/kimbersykes87-source/Mezcalomano/actions/runs/42677204359"
+  "runUrl": "https://github.com/kimbersykes87-source/Mezcalomano/actions/runs/43262402624"
 }

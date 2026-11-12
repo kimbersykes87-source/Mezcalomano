@@ -1,16 +1,82 @@
 {
-  "updated": "2026-11-09T18:48:15.751Z",
+  "updated": "2026-11-12T16:47:26.749Z",
   "links": {
-    "sierra_negra|https://gomadreshop.com/products/5-sentidos-sierra-nergra": {
-      "species": "Sierra Negra",
-      "slug": "sierra_negra",
-      "producer": "Cinco Sentidos",
-      "url": "https://gomadreshop.com/products/5-sentidos-sierra-nergra",
-      "firstFailed": "2026-11-09",
-      "lastFailed": "2026-11-09",
+    "barril|https://mezcalkoch.com/expresiones/barril.php": {
+      "species": "Barril",
+      "slug": "barril",
+      "producer": "Koch",
+      "url": "https://mezcalkoch.com/expresiones/barril.php",
+      "firstFailed": "2026-11-12",
+      "lastFailed": "2026-11-12",
       "strikes": 1,
-      "verdict": "INFO",
-      "note": "\"5 Sentidos - Sierra Negra\" is sold out"
+      "verdict": "DEAD",
+      "note": "HTTP 404"
+    },
+    "barril|https://gomadreshop.com/products/mal-amor-3": {
+      "species": "Barril",
+      "slug": "barril",
+      "producer": "Mal De Amor",
+      "url": "https://gomadreshop.com/products/mal-amor-3",
+      "firstFailed": "2026-11-12",
+      "lastFailed": "2026-11-12",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "Product removed from the shop (Shopify returns 404 for it)"
+    },
+    "madrecuixe|https://mezcalkoch.com/expresiones/madrecuishe.php": {
+      "species": "Madrecuixe",
+      "slug": "madrecuixe",
+      "producer": "Koch",
+      "url": "https://mezcalkoch.com/expresiones/madrecuishe.php",
+      "firstFailed": "2026-11-12",
+      "lastFailed": "2026-11-12",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "HTTP 404"
+    },
+    "madrecuixe|https://gomadreshop.com/products/rufina-madre-cuishe": {
+      "species": "Madrecuixe",
+      "slug": "madrecuixe",
+      "producer": "Rufina",
+      "url": "https://gomadreshop.com/products/rufina-madre-cuishe",
+      "firstFailed": "2026-11-12",
+      "lastFailed": "2026-11-12",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "Product removed from the shop (Shopify returns 404 for it)"
+    },
+    "mexicano|https://gomadreshop.com/products/rufina-mexicano": {
+      "species": "Mexicano",
+      "slug": "mexicano",
+      "producer": "Rufina",
+      "url": "https://gomadreshop.com/products/rufina-mexicano",
+      "firstFailed": "2026-11-12",
+      "lastFailed": "2026-11-12",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "Product removed from the shop (Shopify returns 404 for it)"
+    },
+    "tepextate|https://mezcalkoch.com/expresiones/tepeztate.php": {
+      "species": "Tepextate",
+      "slug": "tepextate",
+      "producer": "Koch",
+      "url": "https://mezcalkoch.com/expresiones/tepeztate.php",
+      "firstFailed": "2026-11-12",
+      "lastFailed": "2026-11-12",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "HTTP 404"
+    },
+    "tobaziche|https://mezcalkoch.com/expresiones/tobasiche.php": {
+      "species": "Tobaziche",
+      "slug": "tobaziche",
+      "producer": "Koch",
+      "url": "https://mezcalkoch.com/expresiones/tobasiche.php",
+      "firstFailed": "2026-11-12",
+      "lastFailed": "2026-11-12",
+      "strikes": 1,
+      "verdict": "DEAD",
+      "note": "HTTP 404"
     }
   }
 }
