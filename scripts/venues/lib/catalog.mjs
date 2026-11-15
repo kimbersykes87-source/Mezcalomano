@@ -116,10 +116,28 @@ export function catalogUrls(origin, platform, page = 1) {
 
 /** Fetch a store catalog politely (robots.txt, 1 request per second per host, page cap). */
 export async function fetchCatalog(siteUrl, politeGet) {
-  const origin = new URL(/^https?:/.test(siteUrl) ? siteUrl : `https://${siteUrl}`).origin;
-  const home = await politeGet(origin);
+  const u = new URL(/^https?:/.test(siteUrl) ? siteUrl : `https://${siteUrl}`);
+  // Listed sites are often http or missing www; try the likely variants once before giving up.
+  const variants = [...new Set([u.origin, `https://${u.host}`, `https://${u.host.replace(/^www\./, "")}`, `https://www.${u.host.replace(/^www\./, "")}`])];
+  let origin = variants[0], home = null;
+  for (const v of variants) {
+    const h = await politeGet(v);
+    if (h.ok) { origin = new URL(v).origin; home = h; break; }
+    home = h;
+    if (["robots", "noindex", "blocked"].includes(h.reason)) break;
+  }
   if (!home.ok) return { ok: false, reason: home.reason };
-  const platform = detectPlatform(home.text);
+  let platform = detectPlatform(home.text);
+  if (!platform) {
+    // Custom domains and headless themes hide the platform marker; probe the public product list directly.
+    for (const guess of ["shopify", "woocommerce"]) {
+      const probe = await politeGet(catalogUrls(origin, guess, 1));
+      try {
+        const j = probe.ok ? JSON.parse(probe.text ?? probe.body.toString("utf8")) : null;
+        if (guess === "shopify" ? Array.isArray(j?.products) : Array.isArray(j) && j.length && j[0].name) { platform = guess; break; }
+      } catch { /* not JSON */ }
+    }
+  }
   if (!platform) return { ok: false, reason: "no_catalog" };
   const products = [];
   for (let page = 1; page <= MAX_CATALOG_PAGES; page++) {
