@@ -15,7 +15,13 @@ alter table public.venues
     check (licence_status is null or licence_status in ('active', 'expired', 'suspended', 'surrendered', 'unknown')),
   add column if not exists licence_expires_on date,
   add column if not exists licence_checked_at timestamptz,
-  add column if not exists auto_published_at timestamptz;
+  add column if not exists auto_published_at timestamptz,
+  add column if not exists contact_email text,
+  add column if not exists contact_email_source text
+    check (contact_email_source is null or contact_email_source in ('website', 'overture', 'owner')),
+  add column if not exists contact_email_page text,
+  add column if not exists contact_checked_at timestamptz,
+  add column if not exists contact_opt_out_at timestamptz;
 
 create unique index if not exists venues_licence_uidx
   on public.venues (licence_state, licence_number)
@@ -26,5 +32,6 @@ alter table public.venue_claims
   add column if not exists source_kind text not null default 'menu_line'
     check (source_kind in ('menu_line', 'catalog_product', 'owner', 'community'));
 
+comment on column public.venues.contact_email is 'Business contact address for outreach. Never exposed publicly: RLS has no policies and venues.geojson must not include it. Honour contact_opt_out_at at once.';
 comment on column public.venues.chain_status is 'independent, chain (4 or more US locations by normalized name or domain, or national chain list), or unknown';
 comment on column public.venue_claims.source_kind is 'menu_line for bars and restaurants, catalog_product for store online catalogs. Store claims expire after 60 days, bar claims after 12 months unless reconfirmed.';

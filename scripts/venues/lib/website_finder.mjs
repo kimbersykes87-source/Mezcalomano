@@ -53,7 +53,7 @@ export function indexPlaces(places) {
   return { grid, byZip };
 }
 
-/** Best website for a licence record, or null. Returns { website, place_id, score, distance_m, how }. */
+/** Best website for a licence record, or null. Returns { website, place_id, email, score, distance_m, how }. */
 export function findWebsite(record, index) {
   let best = null;
   if (Number.isFinite(record.lat) && Number.isFinite(record.lng)) {
@@ -64,7 +64,7 @@ export function findWebsite(record, index) {
         if (d > MAX_DISTANCE_M) continue;
         const s = nameScore(record.name, p.name);
         if (s >= 0.5 && (!best || s > best.score || (s === best.score && d < best.distance_m))) {
-          best = { website: p.website, place_id: p.id, score: s, distance_m: Math.round(d), how: "name_and_distance" };
+          best = { website: p.website, place_id: p.id, email: p.email || null, score: s, distance_m: Math.round(d), how: "name_and_distance" };
         }
       }
     }
@@ -72,7 +72,7 @@ export function findWebsite(record, index) {
   if (!best && record.zip) {
     for (const p of index.byZip.get(String(record.zip).slice(0, 5)) ?? []) {
       const s = jaccard(record.name, p.name);
-      if (s >= 0.99 && (!best || s > best.score)) best = { website: p.website, place_id: p.id, score: s, distance_m: null, how: "name_and_zip" };
+      if (s >= 0.99 && (!best || s > best.score)) best = { website: p.website, place_id: p.id, email: p.email || null, score: s, distance_m: null, how: "name_and_zip" };
     }
   }
   return best;

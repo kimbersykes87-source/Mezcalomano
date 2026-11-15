@@ -21,7 +21,7 @@ for (const st of states) {
   let found = 0;
   for (const r of rows) {
     const m = findWebsite(r, index);
-    if (m) { r.website = m.website; r.website_match = { place_id: m.place_id, score: m.score, how: m.how, distance_m: m.distance_m }; found++; }
+    if (m) { r.website = m.website; if (m.email) r.overture_email = m.email; r.website_match = { place_id: m.place_id, score: m.score, how: m.how, distance_m: m.distance_m }; found++; }
   }
   fs.writeFileSync(file, JSON.stringify(rows));
   const stores = rows.filter((r) => r.venue_type === "store");
