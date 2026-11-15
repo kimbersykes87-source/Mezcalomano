@@ -68,9 +68,44 @@ export function previewValid(raw: string): boolean {
   return timingSafeEqual(Buffer.from(want), Buffer.from(got));
 }
 
+type EntrantNode = { email?: string | null; defaultEmailAddress?: { emailAddress: string | null } | null };
 type EntrantsPage = {
-  customers: { pageInfo: { hasNextPage: boolean; endCursor: string | null }; nodes: { email: string | null }[] };
+  customers: { pageInfo: { hasNextPage: boolean; endCursor: string | null }; nodes: EntrantNode[] };
 };
+
+/**
+ * `Customer.email` is deprecated in favour of `defaultEmailAddress.emailAddress`, and the two live in different
+ * Admin API versions. Ask for the modern one, fall back to the old one once, and remember which answered. Without
+ * this, bumping SHOPIFY_API_VERSION would quietly return entrants with no address: every code would stop resolving
+ * and every link on 7 Dec would read "that link doesn't match an entry" with nothing in the logs to explain it.
+ */
+const EMAIL_FIELDS = ["defaultEmailAddress { emailAddress }", "email"];
+let emailField: string | null = null;
+
+const entrantsQuery = (field: string) => `query GiveawayEntrants($q: String!, $after: String) {
+  customers(first: 100, query: $q, after: $after) {
+    pageInfo { hasNextPage endCursor }
+    nodes { ${field} }
+  }
+}`;
+
+const nodeEmail = (n: EntrantNode): string | null => n.defaultEmailAddress?.emailAddress ?? n.email ?? null;
+
+async function fetchEntrants(q: string, after: string | null): Promise<EntrantsPage> {
+  if (emailField) return shopifyAdminQuery<EntrantsPage>(entrantsQuery(emailField), { q, after });
+  let lastError: unknown;
+  for (const field of EMAIL_FIELDS) {
+    try {
+      const data = await shopifyAdminQuery<EntrantsPage>(entrantsQuery(field), { q, after });
+      emailField = field;
+      return data;
+    } catch (e) {
+      lastError = e;
+      console.warn(`[giveaway] customer email field "${field}" was rejected, trying the next one`);
+    }
+  }
+  throw lastError instanceof Error ? lastError : new Error("No usable customer email field on this API version.");
+}
 
 const CACHE_MS = 5 * 60_000;
 let cache: { at: number; byCode: Map<string, string> } | null = null;
@@ -80,20 +115,13 @@ export async function entrantCodeMap(): Promise<Map<string, string>> {
   if (cache && Date.now() - cache.at < CACHE_MS) return cache.byCode;
   const byCode = new Map<string, string>();
   let after: string | null = null;
-  for (let page = 0; page < 40; page++) {
-    const data: EntrantsPage = await shopifyAdminQuery<EntrantsPage>(
-      `query GiveawayEntrants($q: String!, $after: String) {
-         customers(first: 250, query: $q, after: $after) {
-           pageInfo { hasNextPage endCursor }
-           nodes { email }
-         }
-       }`,
-      { q: `tag:'${ENTRANT_TAG}'`, after }
-    );
+  for (let page = 0; page < 200; page++) {
+    const data = await fetchEntrants(`tag:'${ENTRANT_TAG}'`, after);
     for (const n of data.customers?.nodes ?? []) {
-      if (!n.email) continue;
-      const code = codeForEmail(n.email);
-      if (code) byCode.set(code, normaliseEmail(n.email));
+      const address = nodeEmail(n);
+      if (!address) continue;
+      const code = codeForEmail(address);
+      if (code) byCode.set(code, normaliseEmail(address));
     }
     if (!data.customers?.pageInfo?.hasNextPage) break;
     after = data.customers.pageInfo.endCursor;
