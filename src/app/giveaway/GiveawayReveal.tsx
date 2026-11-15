@@ -21,6 +21,9 @@ const COPY = {
   codeLine: "Here's 10% off the Discovery Deck until December 14, with the code",
   notYet: "The draw is on December 7. Come back then to draw your card.",
   notEntered: "We couldn't find an entry for that email. Check the spelling, or use the address you entered with.",
+  // Shown instead of the email box when they arrived on their own link, so there is nothing to type.
+  ready: "This link is yours. Turn your card.",
+  codeNotFound: "That link doesn't match an entry. Enter the address you signed up with instead.",
 };
 
 function Draft() {
@@ -33,34 +36,34 @@ type Turnstile = {
 };
 const ts = () => (typeof window !== "undefined" ? (window.turnstile as unknown as Turnstile | undefined) : undefined);
 
-export default function GiveawayReveal({ initialEmail = "" }: { initialEmail?: string }) {
+export default function GiveawayReveal({ initialCode = "", preview = "" }: { initialCode?: string; preview?: string }) {
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
   const videoRef = useRef<HTMLVideoElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const tsRef = useRef<HTMLDivElement>(null);
   const tsId = useRef<string | null>(null);
   const tokenRef = useRef("");
-  const [email, setEmail] = useState(initialEmail);
-  const [prefilled, setPrefilled] = useState(Boolean(initialEmail));
+  const [email, setEmail] = useState("");
+  const [code, setCode] = useState(initialCode);
   const [phase, setPhase] = useState<Phase>("idle");
   const [result, setResult] = useState<LookupResult | null>(null);
   const [error, setError] = useState("");
   const [still, setStill] = useState(false);
 
-  // The email came in on the link (?e=...): take it out of the address bar so it is not shared or bookmarked.
+  // The code came in on the link (?c=...): take it out of the address bar so it is not shared, bookmarked, or
+  // handed on in the referrer when they tap through to the directory.
   useEffect(() => {
     const p = new URLSearchParams(window.location.search);
-    if (!p.has("e") && !p.has("email")) return;
-    p.delete("e");
-    p.delete("email");
+    if (!p.has("c")) return;
+    p.delete("c");
     const q = p.toString();
     window.history.replaceState(null, "", window.location.pathname + (q ? `?${q}` : ""));
   }, []);
 
   const btnRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
-    if (prefilled) btnRef.current?.focus({ preventScroll: true });
-  }, [prefilled]);
+    if (code) btnRef.current?.focus({ preventScroll: true });
+  }, [code]);
 
   // Turnstile, invisible unless Cloudflare needs the person to do something
   useEffect(() => {
@@ -141,7 +144,7 @@ export default function GiveawayReveal({ initialEmail = "" }: { initialEmail?: s
       const r = await fetch("/api/giveaway/lookup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, token }),
+        body: JSON.stringify({ ...(code ? { code } : { email }), token, ...(preview ? { preview } : {}) }),
       });
       res = await r.json();
     } catch {
@@ -205,6 +208,7 @@ export default function GiveawayReveal({ initialEmail = "" }: { initialEmail?: s
     setResult(null);
     setError("");
     setStill(false);
+    setCode(""); // fall back to the address: whatever the link did, they can still get to their own result
     setPhase("idle");
   }
 
@@ -242,6 +246,7 @@ export default function GiveawayReveal({ initialEmail = "" }: { initialEmail?: s
         {phase === "done" && result ? (
           <div className="gv-result">
             {r?.test && <span className="gv-tag">Test result</span>}
+            {preview && <span className="gv-tag">Rehearsal, results opened early</span>}
             {r && (
               <>
                 <h2>
@@ -290,7 +295,7 @@ export default function GiveawayReveal({ initialEmail = "" }: { initialEmail?: s
               <>
                 <p>
                   <Draft />
-                  {COPY.notEntered}
+                  {code ? COPY.codeNotFound : COPY.notEntered}
                 </p>
                 <button type="button" className="gv-link" onClick={startOver}>
                   Try another email
@@ -300,21 +305,25 @@ export default function GiveawayReveal({ initialEmail = "" }: { initialEmail?: s
           </div>
         ) : (
           <form className="gv-form" onSubmit={draw}>
-            <input
-              id="gv-email"
-              className="gv-input"
-              type="email"
-              autoComplete="email"
-              placeholder="The email you entered with"
-              aria-label="The email you entered with"
-              required
-              readOnly={busy}
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                setPrefilled(false);
-              }}
-            />
+            {code ? (
+              <p className="gv-ready">
+                <Draft />
+                {COPY.ready}
+              </p>
+            ) : (
+              <input
+                id="gv-email"
+                className="gv-input"
+                type="email"
+                autoComplete="email"
+                placeholder="The email you entered with"
+                aria-label="The email you entered with"
+                required
+                readOnly={busy}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            )}
             <button ref={btnRef} className="gv-btn" type="submit" disabled={busy}>
               {busy ? "Drawing..." : "Draw my card"}
             </button>

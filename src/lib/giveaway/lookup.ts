@@ -14,6 +14,7 @@ import { after } from "next/server";
 import { createHash } from "node:crypto";
 import { shopifyAdminQuery } from "@/lib/shopify-subscribe";
 import { agaveCardForEmail, normaliseEmail } from "./agave-card-for-email";
+import { emailForCode } from "./entrant-code";
 import { CHECKED_TAG, DEFAULT_RESULTS_AT, ENTRANT_TAG, WINNER_TAG, type LookupResult } from "./config";
 
 /** Kimber's test pair (2026-11-11): Siona's address wins, Kimber's does not. Hash of the trimmed lowercased email. */
@@ -75,7 +76,7 @@ function markChecked(customerId: string): void {
   }
 }
 
-export async function lookupGiveaway(rawEmail: string): Promise<LookupResult> {
+export async function lookupGiveaway(rawEmail: string, previewResults = false): Promise<LookupResult> {
   const email = normaliseEmail(rawEmail);
   const card = agaveCardForEmail(email);
   if (!card) return { status: "not-entered" };
@@ -84,7 +85,7 @@ export async function lookupGiveaway(rawEmail: string): Promise<LookupResult> {
   if (test !== null) {
     return { status: "result", won: test, slug: card.slug, name: card.name, test: true, ...(test ? {} : { code: GIVEAWAY_CODE }) };
   }
-  if (!resultsOpen()) return { status: "not-yet" };
+  if (!resultsOpen() && !previewResults) return { status: "not-yet" };
 
   const data = await shopifyAdminQuery<CustomerTags>(
     `query GiveawayCustomer($q: String!) { customers(first: 1, query: $q) { nodes { id tags } } }`,
@@ -96,4 +97,15 @@ export async function lookupGiveaway(rawEmail: string): Promise<LookupResult> {
   if (node?.id && !tags.includes(CHECKED_TAG)) markChecked(node.id);
   const won = tags.includes(WINNER_TAG);
   return { status: "result", won, slug: card.slug, name: card.name, test: false, ...(won ? {} : { code: GIVEAWAY_CODE }) };
+}
+
+/**
+ * The path the 7 Dec link takes. Deliberately has no test bypass: a code only ever resolves against the real entrant
+ * list, so following a real link exercises exactly what every entrant will go through on the day.
+ */
+export async function lookupGiveawayByCode(rawCode: string, previewResults = false): Promise<LookupResult> {
+  if (!resultsOpen() && !previewResults) return { status: "not-yet" };
+  const email = await emailForCode(rawCode);
+  if (!email) return { status: "not-entered" };
+  return lookupGiveaway(email, previewResults);
 }

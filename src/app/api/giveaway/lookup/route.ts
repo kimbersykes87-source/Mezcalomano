@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
-import { lookupGiveaway, testOutcome } from "@/lib/giveaway/lookup";
+import { lookupGiveaway, lookupGiveawayByCode, testOutcome } from "@/lib/giveaway/lookup";
 import { normaliseEmail } from "@/lib/giveaway/agave-card-for-email";
+import { normaliseCode, previewValid } from "@/lib/giveaway/entrant-code";
 
 /**
- * POST /api/giveaway/lookup  { email, token }  ->  { ok, result }
+ * POST /api/giveaway/lookup  { code, token } or { email, token }  ->  { ok, result }
+ * A code comes off the 7 Dec link and can only open its own result; the address is the fallback for anyone who has
+ * lost the link.
  * Turnstile on every request, plus a per-IP limit, so nobody can probe addresses to see who entered.
  * The limit is per server instance (best effort). Test addresses (see lookup.ts) skip both checks so testing can loop
  * on any host: they never reveal anything about a real entrant.
@@ -34,18 +37,22 @@ async function verifyTurnstile(token: string): Promise<boolean> {
 }
 
 export async function POST(request: Request) {
-  let body: { email?: unknown; token?: unknown };
+  let body: { email?: unknown; token?: unknown; code?: unknown; preview?: unknown };
   try {
     body = await request.json();
   } catch {
     return NextResponse.json({ ok: false, error: "Bad request." }, { status: 400 });
   }
+  const code = typeof body.code === "string" ? normaliseCode(body.code) : "";
+  // Signed rehearsal flag: lifts the 7 Dec date gate only, and only for someone holding a signature we issued.
+  const preview = typeof body.preview === "string" && previewValid(body.preview);
   const email = normaliseEmail(typeof body.email === "string" ? body.email : "");
   const token = typeof body.token === "string" ? body.token : "";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) {
+  if (!code && (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254)) {
     return NextResponse.json({ ok: false, error: "Please enter the email address you entered with." }, { status: 400 });
   }
-  const isTest = testOutcome(email) !== null;
+  // A code is always the real path, test addresses included, so a link behaves on the day exactly as it does now.
+  const isTest = !code && testOutcome(email) !== null;
   if (!isTest && (!token || !(await verifyTurnstile(token)))) {
     return NextResponse.json({ ok: false, error: "Verification failed. Please try again." }, { status: 400 });
   }
@@ -54,7 +61,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "Too many tries. Please wait a few minutes." }, { status: 429 });
   }
   try {
-    const result = await lookupGiveaway(email);
+    const result = code ? await lookupGiveawayByCode(code, preview) : await lookupGiveaway(email, preview);
     return NextResponse.json({ ok: true, result }, { headers: { "Cache-Control": "no-store" } });
   } catch (e) {
     console.error("[giveaway] lookup failed:", e);
