@@ -31,7 +31,9 @@ export async function GET(request: Request) {
   // The public site, never this request's origin: this endpoint is normally hit on admin.mezcalomano.com, and an
   // origin-derived link would send all 700 entrants to the admin subdomain.
   const base = SITE_URL + "/giveaway";
-  const one = normaliseEmail(url.searchParams.get("email") ?? "");
+  // "?email=you+gw1@..." decodes the + as a space, and plus-addresses are exactly what gets used for testing.
+  // No address can contain a space, so putting the + back is unambiguous and saves hand-encoding the URL.
+  const one = normaliseEmail((url.searchParams.get("email") ?? "").replace(/ /g, "+"));
 
   if (one) {
     const code = codeForEmail(one);
