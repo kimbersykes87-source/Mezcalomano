@@ -18,10 +18,10 @@ export const metadata: Metadata = {
     url: "/press",
     images: [
       {
-        url: "/press/mezcalomano-press-share.jpg",
+        url: "/press/mezcalomano-press-share-2026-11-15.jpg",
         width: 1200,
         height: 630,
-        alt: "Stop The Press. A hand holding four Mezcalómano agave playing cards in front of agave leaves",
+        alt: "Stop the Press. A hand holding four Mezcalómano agave playing cards in front of agave leaves",
       },
     ],
   },
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: PRESS_TITLE,
     description: PRESS_DESCRIPTION,
-    images: ["/press/mezcalomano-press-share.jpg"],
+    images: ["/press/mezcalomano-press-share-2026-11-15.jpg"],
   },
 };
 
