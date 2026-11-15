@@ -63,7 +63,7 @@ export function findWebsite(record, index) {
         const d = haversineM(record.lat, record.lng, p.lat, p.lng);
         if (d > MAX_DISTANCE_M) continue;
         const s = nameScore(record.name, p.name);
-        if (s >= 0.5 && (!best || s > best.score || (s === best.score && d < best.distance_m))) {
+        if (s >= 0.67 && (!best || s > best.score || (s === best.score && d < best.distance_m))) {
           best = { website: p.website, place_id: p.id, email: p.email || null, score: s, distance_m: Math.round(d), how: "name_and_distance" };
         }
       }
