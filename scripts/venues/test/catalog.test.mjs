@@ -39,3 +39,29 @@ test("fetchCatalog reads JSON from body when text is absent", async () => {
   assert.equal(c.ok, true);
   assert.equal(c.products.length, 1);
 });
+
+import { needsAudit, brandConcentration } from "../lib/catalog.mjs";
+test("brand phrase does not count as a species", () => {
+  const r = analyzeCatalog(shop([["Rayo Seco Cupreata Agave Spirit 97pf 750ml"], ["Mezcal Tobalá 750ml"]]), table);
+  assert.equal(r.claims.some((c) => c.species_slug === "rayo"), false);
+  assert.ok(r.claims.some((c) => c.species_slug === "papalote"), "cupreata still counts as its own species");
+});
+
+test("everyday word needs a spirit signal in the title", () => {
+  const weak = analyzeCatalog(shop([["Verde Momento Blanco"], ["Mezcal Tobalá 750ml"]]), table);
+  assert.equal(weak.claims.some((c) => c.species_slug === "verde" && c.counts), false);
+  const ok = analyzeCatalog(shop([["Mal Bien Verde Mezcal 750ml"], ["Mezcal Tobalá 750ml"]]), table);
+  assert.ok(storeQualifies(ok));
+});
+
+test("angustifolia variants are recorded but do not count", () => {
+  const r = analyzeCatalog(shop([["Zinacantan Espadilla Mezcal 750ml"], ["Mezcal Tobalá 750ml"]]), table);
+  assert.equal(r.distinctNonEspadin.includes("espadilla"), false);
+  assert.equal(storeQualifies(r), false);
+});
+
+test("barely qualifying or single brand stores are flagged for audit", () => {
+  const r = analyzeCatalog(shop([["Mezcal Tobalá 750ml"], ["Mezcal Tepextate 750ml"]]), table);
+  assert.equal(needsAudit(r), true);
+  assert.ok(brandConcentration(r).share > 0);
+});

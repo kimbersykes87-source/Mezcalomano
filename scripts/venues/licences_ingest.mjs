@@ -9,6 +9,7 @@ import { execFileSync } from "node:child_process";
 import Papa from "papaparse";
 import { ADAPTERS } from "./lib/licences/index.mjs";
 import { labelChains } from "./lib/chain.mjs";
+import { prefilter } from "./lib/prefilter.mjs";
 import { USER_AGENT } from "./lib/robots.mjs";
 
 const OUT = path.resolve(".cache/venues/licences");
@@ -42,15 +43,22 @@ const all = [];
 for (const st of run) {
   if (!SOURCES[st]) { console.error(`unknown state ${st}`); continue; }
   const rows = await load(st);
-  const kept = rows.map((r) => ADAPTERS[st](r, today)).filter(Boolean);
+  const adapted = rows.map((r) => ADAPTERS[st](r, today)).filter(Boolean);
+  const { kept, dropped } = prefilter(adapted);
   all.push(...kept);
-  console.log(`${st}: raw ${rows.length}, kept ${kept.length}`);
+  console.log(`${st}: raw ${rows.length}, adapted ${adapted.length}, prefilter dropped ${dropped.length}, kept ${kept.length}`);
 }
 // Chain labels need every state together so national chains are counted across the pilot.
 const labelled = labelChains(all);
 for (const st of run) {
-  const rows = labelled.filter((r) => r.licence_state === st);
-  fs.writeFileSync(path.join(OUT, `${st}.json`), JSON.stringify(rows));
+  const file = path.join(OUT, `${st}.json`);
+  // Keep coordinates from an earlier geocode run so a re-ingest never throws them away.
+  const prior = fs.existsSync(file) ? new Map(JSON.parse(fs.readFileSync(file, "utf8")).filter((r) => r.lat != null).map((r) => [r.licence_number, r])) : new Map();
+  const rows = labelled.filter((r) => r.licence_state === st).map((r) => {
+    const p = prior.get(r.licence_number);
+    return r.lat == null && p && p.address === r.address ? { ...r, lat: p.lat, lng: p.lng, geocode_match: p.geocode_match } : r;
+  });
+  fs.writeFileSync(file, JSON.stringify(rows));
   const chains = rows.filter((r) => r.chain_status === "chain").length;
   console.log(`${st}: wrote ${rows.length} (chains ${chains}, with coordinates ${rows.filter((r) => r.lat != null).length})`);
 }

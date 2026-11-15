@@ -4,11 +4,18 @@
 // is "Listed on their website on [date]", never "in stock". No network in the pure functions.
 
 import { analyzeMenu } from "./extract.mjs";
+import { aliasNeedsContext } from "./aliases.mjs";
 import { foldAccents } from "./text.mjs";
 
 export const MAX_CATALOG_PAGES = 8;
 const MEZCAL_RE = /\bmezcal(es)?\b|\bagave spirit|\bdestilado de agave\b/;
 const TEQUILA_ONLY_RE = /\btequila\b/;
+
+// Brand names that contain a species word. Removed from the title before matching. Extend by editing.
+export const BRAND_PHRASES = ["rayo seco", "verde momento", "coyote cielo", "el jabali", "alto mezcal brand"];
+// An everyday word (verde, coyote, rayo...) only counts when the title also shows a spirit signal.
+const SPIRIT_SIGNAL_RE = /mezcal|agave|maguey|ensamble|ensemble|ancestral|artesanal|destilado|\b\d{2,3}(\.\d)?\s?(pf|proof|%)|\b\d{3,4}\s?ml\b|\bliter\b/;
+const stripBrands = (title) => BRAND_PHRASES.reduce((t, b) => t.replace(new RegExp(b, "ig"), " brand "), title);
 
 /** Normalize Shopify or WooCommerce JSON into { title, type, tags, vendor, available, price }. */
 export function normalizeProducts(json, platform) {
@@ -47,18 +54,50 @@ export function isMezcalProduct(p) {
  */
 export function analyzeCatalog(products, table) {
   const mezcal = products.filter(isMezcalProduct);
-  const lines = ["## Mezcal", ...mezcal.map((p) => `${p.title.replace(/\s+/g, " ").trim()} ${p.price}`.trim())];
+  const lines = ["## Mezcal", ...mezcal.map((p) => `${stripBrands(p.title).replace(/\s+/g, " ").trim()} ${p.price}`.trim())];
   const result = analyzeMenu({ text: lines.join("\n"), format: "html" }, table);
-  const byTitle = new Map(mezcal.map((p) => [p.title.replace(/\s+/g, " ").trim(), p]));
-  result.claims = result.claims.map((c) => ({ ...c, source_kind: "catalog_product", product_available: byTitle.get(c.line_text?.replace(/\s+\$[\d.]+$/, ""))?.available ?? null }));
+  const byTitle = new Map(mezcal.map((p) => [stripBrands(p.title).replace(/\s+/g, " ").trim(), p]));
+  result.claims = result.claims.map((c) => {
+    const product = byTitle.get(c.line_text?.replace(/\s+\$[\d.]+$/, ""));
+    const weakWord = aliasNeedsContext(c.matched_alias) && !SPIRIT_SIGNAL_RE.test(foldAccents(c.line_text ?? ""));
+    return {
+      ...c, source_kind: "catalog_product", product_available: product?.available ?? null,
+      vendor: product?.vendor || null,
+      counts: c.counts && !weakWord, confidence: weakWord ? "weak" : c.confidence,
+      reasons: weakWord ? [...c.reasons, "everyday_word_no_spirit_signal"] : c.reasons,
+    };
+  });
+  result.distinctNonEspadin = [...new Set(result.claims.filter((c) => c.counts && !c.angustifolia_variant).map((c) => c.species_slug || c.species_group))];
   result.catalog = { products: products.length, mezcal_products: mezcal.length };
   if (mezcal.length === 0) return { ...result, status: "no_menu_found", failureReason: "no_menu_found" };
   return result;
 }
 
-/** Auto-verified store: 2 or more distinct non-espadín species from catalog products. */
+/**
+ * Auto-verified store: 2 or more distinct non-espadín species from catalog products.
+ * Angustifolia variants (espadilla, castilla) are recorded but do not count, like espadín.
+ */
 export function storeQualifies(result) {
   return result.status === "ok" && result.distinctNonEspadin.length >= 2;
+}
+
+/** Share of counted claims that come from one vendor or one leading brand word. High share goes to the audit list. */
+export function brandConcentration(result) {
+  const counted = result.claims.filter((c) => c.counts && !c.angustifolia_variant);
+  if (counted.length === 0) return { top: null, share: 0 };
+  const tally = new Map();
+  for (const c of counted) {
+    const k = foldAccents(c.vendor || c.line_text.split(/\s+/)[0]).trim();
+    tally.set(k, (tally.get(k) ?? 0) + 1);
+  }
+  const [top, n] = [...tally.entries()].sort((a, b) => b[1] - a[1])[0];
+  return { top, share: n / counted.length };
+}
+
+/** A qualifying store is flagged for audit when it barely qualifies or one brand supplies most matches. */
+export function needsAudit(result) {
+  if (!storeQualifies(result)) return false;
+  return result.distinctNonEspadin.length === 2 || brandConcentration(result).share >= 0.6;
 }
 
 /** Detect platform from the site home page HTML and headers text. */
