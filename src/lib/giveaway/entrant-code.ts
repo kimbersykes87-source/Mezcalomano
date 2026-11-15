@@ -1,0 +1,114 @@
+/**
+ * Per-entrant reveal codes (server only).
+ *
+ * The 7 Dec email links each entrant to /giveaway?c=<their code>, so nobody types an address and a link can only ever
+ * open its own result. The code is an HMAC of the entrant's address under GIVEAWAY_CODE_SECRET, which buys three things:
+ *   - it cannot be guessed or forged, so editing the URL cannot surface somebody else's result;
+ *   - the address is not in the link, so it stays out of browser history, referrers and the sending tool;
+ *   - nothing is stored, so a code can be recomputed whenever it is needed and the export script and this page agree
+ *     by construction rather than by keeping a table in step.
+ *
+ * Turning a code back into an entrant means scanning the entrant list: one short paginated read of the customers
+ * carrying ENTRANT_TAG, cached for a few minutes. At a few hundred entrants that costs less than writing a code onto
+ * every customer, and it sidesteps the lag in Shopify's tag search index.
+ *
+ * Env: GIVEAWAY_CODE_SECRET, 32 or more random characters, the same value here and wherever the export script runs.
+ * Without it codes are off and the page falls back to asking for the address.
+ */
+import { createHmac, timingSafeEqual } from "node:crypto";
+import { shopifyAdminQuery } from "@/lib/shopify-subscribe";
+import { normaliseEmail } from "./agave-card-for-email";
+import { ENTRANT_TAG } from "./config";
+
+/** 32 characters, so 5 bits each. No i, l, o or 1: a code may be read off a phone screen or over the phone. */
+const ALPHABET = "abcdefghjkmnpqrstuvwxyz023456789";
+export const CODE_LENGTH = 10; // 50 bits
+
+const secret = (): string => (process.env.GIVEAWAY_CODE_SECRET ?? "").trim();
+
+/** False when no secret is configured: the page then asks for the address instead, rather than issuing weak codes. */
+export const codesEnabled = (): boolean => secret().length >= 16;
+
+/** Tolerates however the code arrives: pasted with spaces, upper case, or wrapped in punctuation by a mail client. */
+export const normaliseCode = (raw: string): string => raw.trim().toLowerCase().replace(/[^a-z0-9]/g, "");
+
+export function codeForEmail(rawEmail: string): string | null {
+  const s = secret();
+  if (!s) return null;
+  const mac = createHmac("sha256", s).update(normaliseEmail(rawEmail)).digest();
+  let acc = 0;
+  let bits = 0;
+  let out = "";
+  for (let i = 0; i < mac.length && out.length < CODE_LENGTH; i++) {
+    acc = (acc << 8) | mac[i];
+    bits += 8;
+    while (bits >= 5 && out.length < CODE_LENGTH) {
+      bits -= 5;
+      out += ALPHABET[(acc >> bits) & 31];
+    }
+  }
+  return out;
+}
+
+/**
+ * Opens results before GIVEAWAY_RESULTS_AT for a rehearsal against the real entrant list. Derived from the same secret,
+ * so it cannot be forged and it dies when the secret is rotated. It does NOT fake a result: it only lifts the date
+ * gate, so before the draw is tagged every entrant reads as a non-winner, which is the point of the gate in the first
+ * place. Anything seen through it is provisional and the page says so.
+ */
+export function previewSignature(): string | null {
+  const s = secret();
+  return s ? createHmac("sha256", s).update("preview-results").digest("hex").slice(0, 16) : null;
+}
+
+export function previewValid(raw: string): boolean {
+  const want = previewSignature();
+  const got = (raw ?? "").trim().toLowerCase();
+  if (!want || got.length !== want.length) return false;
+  return timingSafeEqual(Buffer.from(want), Buffer.from(got));
+}
+
+type EntrantsPage = {
+  customers: { pageInfo: { hasNextPage: boolean; endCursor: string | null }; nodes: { email: string | null }[] };
+};
+
+const CACHE_MS = 5 * 60_000;
+let cache: { at: number; byCode: Map<string, string> } | null = null;
+
+/** code -> address, for every customer currently carrying the entrant tag. */
+export async function entrantCodeMap(): Promise<Map<string, string>> {
+  if (cache && Date.now() - cache.at < CACHE_MS) return cache.byCode;
+  const byCode = new Map<string, string>();
+  let after: string | null = null;
+  for (let page = 0; page < 40; page++) {
+    const data: EntrantsPage = await shopifyAdminQuery<EntrantsPage>(
+      `query GiveawayEntrants($q: String!, $after: String) {
+         customers(first: 250, query: $q, after: $after) {
+           pageInfo { hasNextPage endCursor }
+           nodes { email }
+         }
+       }`,
+      { q: `tag:'${ENTRANT_TAG}'`, after }
+    );
+    for (const n of data.customers?.nodes ?? []) {
+      if (!n.email) continue;
+      const code = codeForEmail(n.email);
+      if (code) byCode.set(code, normaliseEmail(n.email));
+    }
+    if (!data.customers?.pageInfo?.hasNextPage) break;
+    after = data.customers.pageInfo.endCursor;
+  }
+  cache = { at: Date.now(), byCode };
+  return byCode;
+}
+
+export async function emailForCode(rawCode: string): Promise<string | null> {
+  const code = normaliseCode(rawCode);
+  if (!codesEnabled() || code.length !== CODE_LENGTH) return null;
+  return (await entrantCodeMap()).get(code) ?? null;
+}
+
+/** Used by the tests and by anything that has just changed the entrant list. */
+export function clearEntrantCodeCache(): void {
+  cache = null;
+}
