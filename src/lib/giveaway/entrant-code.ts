@@ -20,9 +20,18 @@ import { shopifyAdminQuery } from "@/lib/shopify-subscribe";
 import { normaliseEmail } from "./agave-card-for-email";
 import { ENTRANT_TAG } from "./config";
 
-/** 32 characters, so 5 bits each. No i, l, o or 1: a code may be read off a phone screen or over the phone. */
-const ALPHABET = "abcdefghjkmnpqrstuvwxyz023456789";
-export const CODE_LENGTH = 10; // 50 bits
+/**
+ * Hex, 16 characters, 64 bits. The format is dictated by Shopify Email, which renders the 7 Dec campaign and can
+ * compute this itself from the recipient's address:
+ *
+ *   {{ customer.email | downcase | hmac_sha256: "<GIVEAWAY_CODE_SECRET>" | slice: 0, 16 }}
+ *
+ * Liquid has hmac_sha256 (lower case hex), downcase and slice, but no base32 and no access to customer metafields,
+ * verified in the campaign editor on 2026-11-15. Keeping both sides on plain truncated hex means the email computes
+ * each recipient's own code as it sends: nothing is stored, no merge file, no manual step on the day. Changing this
+ * encoding, this length, or normaliseEmail silently breaks every link in a saved campaign template.
+ */
+export const CODE_LENGTH = 16;
 
 const secret = (): string => (process.env.GIVEAWAY_CODE_SECRET ?? "").trim();
 
@@ -35,19 +44,8 @@ export const normaliseCode = (raw: string): string => raw.trim().toLowerCase().r
 export function codeForEmail(rawEmail: string): string | null {
   const s = secret();
   if (!s) return null;
-  const mac = createHmac("sha256", s).update(normaliseEmail(rawEmail)).digest();
-  let acc = 0;
-  let bits = 0;
-  let out = "";
-  for (let i = 0; i < mac.length && out.length < CODE_LENGTH; i++) {
-    acc = (acc << 8) | mac[i];
-    bits += 8;
-    while (bits >= 5 && out.length < CODE_LENGTH) {
-      bits -= 5;
-      out += ALPHABET[(acc >> bits) & 31];
-    }
-  }
-  return out;
+  // Must stay byte for byte identical to the Liquid above: lower case address, HMAC-SHA256, lower case hex, first 16.
+  return createHmac("sha256", s).update(normaliseEmail(rawEmail)).digest("hex").slice(0, CODE_LENGTH);
 }
 
 /**
