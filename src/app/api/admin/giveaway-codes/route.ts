@@ -1,7 +1,13 @@
 import { NextResponse } from "next/server";
 import { isLoggedIn } from "@/lib/admin/auth";
 import { normaliseEmail } from "@/lib/giveaway/agave-card-for-email";
-import { codeForEmail, codesEnabled, entrantCodeMap, previewSignature } from "@/lib/giveaway/entrant-code";
+import {
+  clearEntrantCodeCache,
+  codeForEmail,
+  codesEnabled,
+  entrantCodeMap,
+  previewSignature,
+} from "@/lib/giveaway/entrant-code";
 
 /**
  * The reveal codes for the 7 Dec email, logged-in only.
@@ -28,6 +34,9 @@ export async function GET(request: Request) {
     const code = codeForEmail(one);
     if (!code) return NextResponse.json({ ok: false, error: "Could not make a code." }, { status: 500 });
     const sig = previewSignature();
+    // Drop the 5 minute cache first: during a rehearsal this is pulled seconds after someone has entered, and a stale
+    // list would report them as not entered and hand back a link that says the same.
+    clearEntrantCodeCache();
     const entered = (await entrantCodeMap()).has(code);
     return NextResponse.json({
       ok: true,
