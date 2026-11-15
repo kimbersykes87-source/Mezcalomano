@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { isLoggedIn } from "@/lib/admin/auth";
+import { SITE_URL } from "@/lib/site-seo";
 import { normaliseEmail } from "@/lib/giveaway/agave-card-for-email";
 import {
   clearEntrantCodeCache,
@@ -27,7 +28,9 @@ export async function GET(request: Request) {
   }
 
   const url = new URL(request.url);
-  const base = url.origin + "/giveaway";
+  // The public site, never this request's origin: this endpoint is normally hit on admin.mezcalomano.com, and an
+  // origin-derived link would send all 700 entrants to the admin subdomain.
+  const base = SITE_URL + "/giveaway";
   const one = normaliseEmail(url.searchParams.get("email") ?? "");
 
   if (one) {
