@@ -145,8 +145,8 @@ export default function PressPage() {
           <h2 id="press-makers">Who made it</h2>
           <div>
             <p>
-              Mezcalómano is the two of us, a curious pair who have spent about ten years tasting mezcal and asking
-              questions, many of them on trips to Mexico. We don’t work in the drinks trade; this started as a passion.
+              Mezcalómano is a curious pair who have spent about ten years tasting mezcal and asking questions, many
+              of them on trips to Mexico. We don’t work in the drinks trade; this started as a passion.
             </p>
             <p>
               We started writing down everything we were learning about each agave, and it grew into the Discovery
