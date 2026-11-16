@@ -1,7 +1,7 @@
 import { requireAdmin } from "@/lib/admin/auth";
 import { buildSummary, latestRuns, type Period } from "@/lib/admin/summary";
 import { latestInstagram, postCards } from "@/lib/admin/instagram-manual";
-import { periodKey as readPeriod, periodRange, longDay } from "@/lib/admin/period";
+import { isCumulative, periodKey as readPeriod, periodRange, longDay } from "@/lib/admin/period";
 import SocialView, { type SocialData, type Stat } from "./SocialView";
 
 export const dynamic = "force-dynamic";
@@ -27,7 +27,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
   const { p } = await searchParams;
   const key = readPeriod(p);
   const { from, to } = periodRange(key);
-  const [summary, runs, ig, posts] = await Promise.all([buildSummary(from, to), latestRuns(), latestInstagram(), postCards()]);
+  const [summary, runs, ig, posts] = await Promise.all([buildSummary(from, to, { compare: !isCumulative(key) }), latestRuns(), latestInstagram(), postCards()]);
   const cur = summary.current;
   const prev = summary.previous;
   const run = runs.find((r) => r.source === "instagram");
