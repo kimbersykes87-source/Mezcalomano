@@ -4,6 +4,7 @@ import { fmtMoney, fmtNumber } from "@/lib/admin/summary";
 import { liveCached, section } from "@/lib/sources/cache";
 import { livePress, type PressRow } from "@/lib/sources/press";
 import { PRESS_LINK_BASE } from "@/lib/press-links";
+import RefreshButton from "./RefreshButton";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -54,7 +55,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ f
             Promo list, menu Tracked links. Clicks are counted here; orders are matched in Shopify from the link&apos;s UTMs.
           </p>
         </div>
-        <a className="adm-btn" href={`/admin/acquisition?fresh=${Date.now()}`}>Refresh now</a>
+        <RefreshButton />
       </div>
 
       {!res.ok && (
