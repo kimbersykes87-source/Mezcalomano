@@ -13,7 +13,7 @@
 .gv-eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-olive); font-weight: var(--font-weight-semibold); }
 .gv-title { font-size: 24px; line-height: 1.15; font-weight: var(--font-weight-bold); margin-top: 2px; }
 /* reserves the taller of the two header states so the video does not shift when the headline becomes the result */
-.gv-head { min-height: 132px; }
+.gv-head { min-height: 140px; }
 .gv-intro { font-size: 14px; line-height: 1.45; color: rgba(255, 255, 255, 0.78); margin-top: var(--space-2); }
 
 .gv-frame { position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: var(--radius-lg); overflow: hidden; background: #1b1c1a; }

@@ -14,8 +14,8 @@ const SQ = `${GIVEAWAY_MEDIA}/sq`; // square (1:1) set, so the whole flow fits o
 const COPY = {
   title: "Did you win?",
   intro:
-    "We drew one winner of the Mezcalomano Discovery Deck on December 7. Tap below to see your result. We'll also deal you one of the 40 agaves from the deck.",
-  win: "You won the Mezcalomano Discovery Deck.",
+    "We drew one winner of the Mezcalómano Discovery Deck on December 7. Tap below to see your result. We'll also deal you one of the 40 agaves from the deck.",
+  win: "You won the Mezcalómano Discovery Deck.",
   winSub:
     "We've emailed you from hola@mezcalomano.com. Reply by December 10, 11:59 p.m. ET with your full name and US shipping address so we can send your deck. Check your spam folder if you can't see it.",
   lose: "This time it wasn't you.",
@@ -24,7 +24,7 @@ const COPY = {
   meet: (name: string) => `Meet the ${name}`,
   shop: "Shop the deck",
   // Non-winners only. The 7 Dec email deliberately carries no code, so this page is the only place it is delivered.
-  codeLead: "Thanks for entering. Here's 10% off the Mezcalomano Discovery Deck until December 14 with code",
+  codeLead: "Thanks for entering. Here's 10% off the Mezcalómano Discovery Deck until December 14 with code",
   codeTail: "It works on the two-pack and five-pack too.",
   // DRAFT, still mine: edge states Siona has not signed off.
   notYet: "The draw is on December 7. Come back then to see your result.",
