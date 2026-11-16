@@ -10,21 +10,31 @@ type Phase = "idle" | "checking" | "loading" | "playing" | "done";
 
 const SQ = `${GIVEAWAY_MEDIA}/sq`; // square (1:1) set, so the whole flow fits one phone screen
 
-// DRAFT copy: placeholders until Siona writes and approves the real lines. Every line shows a DRAFT tag on the page.
+// Siona's approved copy, 16 Nov. The three lines still tagged DRAFT below are mine and are waiting on her.
 const COPY = {
-  win: "You won the Discovery Deck.",
-  winSub: "Check your inbox for our email from hola@mezcalomano.com and reply by December 10 with your US shipping address.",
+  title: "Did you win?",
+  intro:
+    "We drew one winner of the Mezcalomano Discovery Deck on December 7. Tap below to see your result. We'll also deal you one of the 40 agaves from the deck.",
+  win: "You won the Mezcalomano Discovery Deck.",
+  winSub:
+    "We've emailed you from hola@mezcalomano.com. Reply by December 10, 11:59 p.m. ET with your full name and US shipping address so we can send your deck. Check your spam folder if you can't see it.",
   lose: "This time it wasn't you.",
-  loseSub: "Thanks for entering. The card is yours to explore.",
+  // Both endings name the card the same way, so the agave is the point of the page either way.
+  card: (name: string) => `Your card is the ${name}, one of the 40 agaves in the deck.`,
   meet: (name: string) => `Meet the ${name}`,
+  shop: "Shop the deck",
   // Non-winners only. The 7 Dec email deliberately carries no code, so this page is the only place it is delivered.
-  codeLine: "Here's 10% off the Discovery Deck until December 14, with the code",
-  notYet: "The draw is on December 7. Come back then to draw your card.",
+  codeLead: "Thanks for entering. Here's 10% off the Mezcalomano Discovery Deck until December 14 with code",
+  codeTail: "It works on the two-pack and five-pack too.",
+  // DRAFT, still mine: edge states Siona has not signed off.
+  notYet: "The draw is on December 7. Come back then to see your result.",
   notEntered: "We couldn't find an entry for that email. Check the spelling, or use the address you entered with.",
-  // Shown instead of the email box when they arrived on their own link, so there is nothing to type.
-  ready: "This link is yours. Turn your card.",
   codeNotFound: "That link doesn't match an entry. Enter the address you signed up with instead.",
 };
+
+/** Non-winners only, tagged so the giveaway's own traffic to the deck is separable in analytics. */
+const SHOP_URL =
+  "https://shop.mezcalomano.com/products/discovery-deck?utm_source=mezcal-culture&utm_medium=web&utm_campaign=giveaway-2026&utm_content=reveal-page";
 
 function Draft() {
   return <span className="gv-draft">DRAFT </span>;
@@ -218,8 +228,10 @@ export default function GiveawayReveal({ initialCode = "", preview = "" }: { ini
   return (
     <main className="gv-wrap">
       <header className="gv-head">
-        <div className="gv-eyebrow">Mezcalómano x Mezcal Culture</div>
-        <h1 className="gv-title">Draw your card</h1>
+        <div className="gv-eyebrow">Mezcalómano x Mezcal Culture Giveaway</div>
+        {/* The headline itself carries the result, so the answer is the first thing read, not a line under the card. */}
+        <h1 className="gv-title">{r ? (r.won ? COPY.win : COPY.lose) : COPY.title}</h1>
+        {!r && <p className="gv-intro">{COPY.intro}</p>}
       </header>
 
       <div ref={frameRef} className={`gv-frame${phase === "playing" ? " is-playing" : ""}`} onClick={skip}>
@@ -249,23 +261,23 @@ export default function GiveawayReveal({ initialCode = "", preview = "" }: { ini
             {preview && <span className="gv-tag">Rehearsal, results opened early</span>}
             {r && (
               <>
-                <h2>
-                  <Draft />
-                  {r.won ? COPY.win : COPY.lose}
-                </h2>
-                <p>
-                  <Draft />
-                  {r.won ? COPY.winSub : COPY.loseSub}
-                </p>
+                <p className="gv-card">{COPY.card(r.name)}</p>
+                {r.won && <p>{COPY.winSub}</p>}
                 {!r.won && r.code && (
                   <p className="gv-code">
-                    <Draft />
-                    {COPY.codeLine} <span className="gv-code-value">{r.code}</span>
+                    {COPY.codeLead} <span className="gv-code-value">{r.code}</span>. {COPY.codeTail}
                   </p>
                 )}
-                <a className="gv-btn" href={`https://mezcalomano.com/directory/${r.slug}`}>
-                  {COPY.meet(r.name)}
-                </a>
+                <div className="gv-btns">
+                  <a className="gv-btn" href={`https://mezcalomano.com/directory/${r.slug}`}>
+                    {COPY.meet(r.name)}
+                  </a>
+                  {!r.won && (
+                    <a className="gv-btn gv-btn--ghost" href={SHOP_URL}>
+                      {COPY.shop}
+                    </a>
+                  )}
+                </div>
                 <div className="gv-row">
                   {!still && (
                     <button type="button" className="gv-link" onClick={watchAgain}>
@@ -305,12 +317,7 @@ export default function GiveawayReveal({ initialCode = "", preview = "" }: { ini
           </div>
         ) : (
           <form className="gv-form" onSubmit={draw}>
-            {code ? (
-              <p className="gv-ready">
-                <Draft />
-                {COPY.ready}
-              </p>
-            ) : (
+            {!code && (
               <input
                 id="gv-email"
                 className="gv-input"
@@ -325,12 +332,12 @@ export default function GiveawayReveal({ initialCode = "", preview = "" }: { ini
               />
             )}
             <button ref={btnRef} className="gv-btn" type="submit" disabled={busy}>
-              {busy ? "Drawing..." : "Draw my card"}
+              {busy ? "Drawing..." : "See my result"}
             </button>
             {error && <p className="gv-error">{error}</p>}
           </form>
         )}
-        <div ref={tsRef} className="gv-ts" />
+        <div ref={tsRef} className={`gv-ts${phase === "done" ? " is-hidden" : ""}`} />
       </section>
     </main>
   );
