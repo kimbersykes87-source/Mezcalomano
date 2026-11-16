@@ -27,12 +27,6 @@
 /* the panel keeps one height whatever it shows, so nothing under the video jumps */
 .gv-panel { min-height: 168px; }
 .gv-form { display: flex; flex-direction: column; gap: var(--space-3); }
-.gv-input {
-  width: 100%; padding: 14px 16px; border-radius: var(--radius-md); border: 1px solid rgba(255, 255, 255, 0.25);
-  background: rgba(255, 255, 255, 0.06); color: var(--color-white); font-size: 16px;
-}
-.gv-input::placeholder { color: rgba(255, 255, 255, 0.45); }
-.gv-input:focus { outline: 2px solid var(--color-yellow); outline-offset: 1px; }
 .gv-btn {
   display: block; width: 100%; text-align: center; padding: 14px 16px; border-radius: var(--radius-md); border: 0;
   background: var(--color-yellow); color: var(--color-dark); font-weight: var(--font-weight-bold); font-size: 16px; cursor: pointer; text-decoration: none;
@@ -65,7 +59,7 @@
   color: var(--color-yellow);
   white-space: nowrap;
 }
-.gv-draft { color: var(--color-yellow); font-weight: var(--font-weight-bold); }
+.gv-need-link { text-align: center; font-size: 15px; line-height: 1.5; color: rgba(255, 255, 255, 0.85); margin: 0; }
 @keyframes gv-fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .gv-result, .gv-skip { animation: none; } .gv-loader span { animation-duration: 2s; } }
 

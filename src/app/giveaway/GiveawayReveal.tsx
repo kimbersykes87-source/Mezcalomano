@@ -26,19 +26,19 @@ const COPY = {
   // Non-winners only. The 7 Dec email deliberately carries no code, so this page is the only place it is delivered.
   codeLead: "Thanks for entering. Here's 10% off the Mezcalómano Discovery Deck until December 14 with code",
   codeTail: "It works on the two-pack and five-pack too.",
-  // DRAFT, still mine: edge states Siona has not signed off.
   notYet: "The draw is on December 7. Come back then to see your result.",
-  notEntered: "We couldn't find an entry for that email. Check the spelling, or use the address you entered with.",
-  codeNotFound: "That link doesn't match an entry. Enter the address you signed up with instead.",
+  // Shown when there is no code: no link, or a code that does not resolve. There is no address box to offer instead.
+  needLink:
+    "Open the link from your December 7 email to see your result. If it isn't working, email hola@mezcalomano.com and we'll look it up for you.",
 };
+
+/** Held for this tab only, so a reload or a tap back still works once the code is out of the address bar. */
+const STORE_KEY = "mm-giveaway-code";
+const clean = (raw: string) => raw.trim().toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 32);
 
 /** Non-winners only, tagged so the giveaway's own traffic to the deck is separable in analytics. */
 const SHOP_URL =
   "https://shop.mezcalomano.com/products/discovery-deck?utm_source=mezcal-culture&utm_medium=web&utm_campaign=giveaway-2026&utm_content=reveal-page";
-
-function Draft() {
-  return <span className="gv-draft">DRAFT </span>;
-}
 
 type Turnstile = {
   render: (el: HTMLElement, opts: Record<string, unknown>) => string;
@@ -53,21 +53,31 @@ export default function GiveawayReveal({ initialCode = "", preview = "" }: { ini
   const tsRef = useRef<HTMLDivElement>(null);
   const tsId = useRef<string | null>(null);
   const tokenRef = useRef("");
-  const [email, setEmail] = useState("");
   const [code, setCode] = useState(initialCode);
   const [phase, setPhase] = useState<Phase>("idle");
   const [result, setResult] = useState<LookupResult | null>(null);
   const [error, setError] = useState("");
   const [still, setStill] = useState(false);
 
-  // The code came in on the link (?c=...): take it out of the address bar so it is not shared, bookmarked, or
-  // handed on in the referrer when they tap through to the directory.
+  // The code came in on the link (?c=...): keep it for this tab, then take it out of the address bar so it is not
+  // shared, bookmarked, or handed on in the referrer when they tap through to the directory. It is stashed in
+  // sessionStorage because there is no address box to fall back on if they reload.
   useEffect(() => {
     const p = new URLSearchParams(window.location.search);
-    if (!p.has("c")) return;
-    p.delete("c");
-    const q = p.toString();
-    window.history.replaceState(null, "", window.location.pathname + (q ? `?${q}` : ""));
+    const fromUrl = clean(p.get("c") ?? "");
+    if (fromUrl) {
+      try {
+        sessionStorage.setItem(STORE_KEY, fromUrl);
+      } catch {}
+      p.delete("c");
+      const q = p.toString();
+      window.history.replaceState(null, "", window.location.pathname + (q ? `?${q}` : ""));
+      return;
+    }
+    try {
+      const saved = clean(sessionStorage.getItem(STORE_KEY) ?? "");
+      if (saved) setCode(saved);
+    } catch {}
   }, []);
 
   const btnRef = useRef<HTMLButtonElement>(null);
@@ -154,7 +164,7 @@ export default function GiveawayReveal({ initialCode = "", preview = "" }: { ini
       const r = await fetch("/api/giveaway/lookup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...(code ? { code } : { email }), token, ...(preview ? { preview } : {}) }),
+        body: JSON.stringify({ code, token, ...(preview ? { preview } : {}) }),
       });
       res = await r.json();
     } catch {
@@ -218,8 +228,7 @@ export default function GiveawayReveal({ initialCode = "", preview = "" }: { ini
     setResult(null);
     setError("");
     setStill(false);
-    setCode(""); // fall back to the address: whatever the link did, they can still get to their own result
-    setPhase("idle");
+    setPhase("idle"); // the code is kept: it is the only way back to a result
   }
 
   const r = result?.status === "result" ? result : null;
@@ -292,50 +301,20 @@ export default function GiveawayReveal({ initialCode = "", preview = "" }: { ini
                 </div>
               </>
             )}
-            {result.status === "not-yet" && (
-              <>
-                <p>
-                  <Draft />
-                  {COPY.notYet}
-                </p>
-                <button type="button" className="gv-link" onClick={startOver}>
-                  Try another email
-                </button>
-              </>
-            )}
-            {result.status === "not-entered" && (
-              <>
-                <p>
-                  <Draft />
-                  {code ? COPY.codeNotFound : COPY.notEntered}
-                </p>
-                <button type="button" className="gv-link" onClick={startOver}>
-                  Try another email
-                </button>
-              </>
-            )}
+            {result.status === "not-yet" && <p>{COPY.notYet}</p>}
+            {result.status === "not-entered" && <p>{COPY.needLink}</p>}
           </div>
         ) : (
-          <form className="gv-form" onSubmit={draw}>
-            {!code && (
-              <input
-                id="gv-email"
-                className="gv-input"
-                type="email"
-                autoComplete="email"
-                placeholder="The email you entered with"
-                aria-label="The email you entered with"
-                required
-                readOnly={busy}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            )}
-            <button ref={btnRef} className="gv-btn" type="submit" disabled={busy}>
-              {busy ? "Drawing..." : "See my result"}
-            </button>
-            {error && <p className="gv-error">{error}</p>}
-          </form>
+          code ? (
+            <form className="gv-form" onSubmit={draw}>
+              <button ref={btnRef} className="gv-btn" type="submit" disabled={busy}>
+                {busy ? "Drawing..." : "See my result"}
+              </button>
+              {error && <p className="gv-error">{error}</p>}
+            </form>
+          ) : (
+            <p className="gv-need-link">{COPY.needLink}</p>
+          )
         )}
         <div ref={tsRef} className={`gv-ts${phase === "done" ? " is-hidden" : ""}`} />
       </section>
