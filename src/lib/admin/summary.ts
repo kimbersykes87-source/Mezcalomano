@@ -143,6 +143,7 @@ export async function buildSummary(from: string, to: string): Promise<Summary> {
     flow("orders", "Orders", "shop", "orders"),
     flow("units", "Decks sold", "shop", "units"),
     flow("net_sales", "Net sales", "shop", "net_sales", "money"),
+    flow("samples", "Free samples sent (decks)", "shop", "samples_decks"),
     flow("new_subscribers", "New email subscribers", "email", "new_subscribers"),
     level("list_total", "Email list size", "email", "list_total"),
     level("ig_followers", "Instagram followers", "instagram", "followers"),
