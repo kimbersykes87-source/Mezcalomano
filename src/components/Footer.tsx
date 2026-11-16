@@ -19,6 +19,7 @@ export default function Footer() {
           <a href="https://www.tiktok.com/@mezcalomano" target="_blank" rel="noopener noreferrer">TikTok</a>
           <Link href="/press">Press</Link>
           <Link href="/sources">Sources</Link>
+          <a href="https://shop.mezcalomano.com/policies/contact-information">Company info</a>
         </nav>
       </div>
     </footer>

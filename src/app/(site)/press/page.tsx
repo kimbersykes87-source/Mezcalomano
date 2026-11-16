@@ -145,8 +145,13 @@ export default function PressPage() {
           <h2 id="press-makers">Who made it</h2>
           <div>
             <p>
-              Two mezcal lovers who kept going back to Oaxaca, tasting everything they could find and asking
-              questions along the way.
+              Mezcalómano is the two of us, a curious pair who have spent about ten years tasting mezcal and asking
+              questions, many of them on trips to Mexico. We don’t work in the drinks trade; this started as a passion.
+            </p>
+            <p>
+              We started writing down everything we were learning about each agave, and it grew into the Discovery
+              Deck: 40 kinds of mezcal, 39 of them made from something other than espadín. The QR code on the box
+              opens our agave directory, which shows where each one grows and who bottles it.
             </p>
           </div>
         </div>

@@ -84,8 +84,7 @@ export default function AboutPage() {
           </div>
           <div className="a-text">
             <p>
-              Mezcalómano is run by That&apos;s SaaS Limited, a UK company. Every figure we publish is traced to a
-              source on our <a href="/sources">Sources page</a>, and every article is reviewed before it goes live.
+              Every figure we publish is traced to a source on our <a href="/sources">Sources page</a>, and every article is reviewed before it goes live.
             </p>
             <p>
               If we got something wrong, write to <a href="mailto:hola@mezcalomano.com">hola@mezcalomano.com</a>{" "}
