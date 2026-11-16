@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { requireAdmin } from "@/lib/admin/auth";
 import { fmtMoney, fmtNumber, pctChange } from "@/lib/admin/summary";
-import { periodKey as readPeriod, periodRange } from "@/lib/admin/period";
+import { isCumulative, periodKey as readPeriod, periodRange } from "@/lib/admin/period";
 import { liveCached } from "@/lib/sources/cache";
 import { liveShop, liveOrders, previousRange, type ShopOrders, type ShopSessions } from "@/lib/sources/shop";
 import LiveBar from "../LiveBar";
@@ -92,7 +92,9 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
 
   const [live, before] = await Promise.all([
     liveCached(`shop:${from}:${to}`, fresh, () => liveShop(from, to)),
-    liveCached(`shop-prev:${prev.from}:${prev.to}`, fresh, () => liveOrders(prev.from, prev.to).then((o): ShopOrders | null => o).catch(() => null)),
+    isCumulative(key)
+      ? Promise.resolve({ data: null as ShopOrders | null })
+      : liveCached(`shop-prev:${prev.from}:${prev.to}`, fresh, () => liveOrders(prev.from, prev.to).then((o): ShopOrders | null => o).catch(() => null)),
   ]);
   const { orders, sessions } = live.data;
   const o = orders.ok ? orders.data : null;
@@ -238,7 +240,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
         How this is counted: sales are Shopify orders created in the period (London days), counting paid orders only: test, cancelled and test code orders are left out, and $0 orders are free samples, counted apart.
         Decks count decks, not line items: a Two-Pack is 2 decks, a Five-Pack 5, press insert cards none.
         Net sales are items after discounts minus refunds. Sessions are Shopify&apos;s own count and can differ from website visits on the Overview.
-        Changes compare with the previous period of the same length.
+        Changes compare with the previous period of the same length; Since launch and Year to date are running totals with no comparison.
       </p>
     </div>
   );

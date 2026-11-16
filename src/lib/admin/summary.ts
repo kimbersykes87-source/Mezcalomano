@@ -112,7 +112,8 @@ export type Summary = {
 };
 
 /** Current period [from, to] and the same length immediately before it. */
-export async function buildSummary(from: string, to: string): Promise<Summary> {
+export async function buildSummary(from: string, to: string, opts: { compare?: boolean } = {}): Promise<Summary> {
+  const compare = opts.compare ?? true;
   const len = daysBetween(from, to);
   const prevFrom = addDays(from, -len);
   const prevTo = addDays(from, -1);
@@ -124,14 +125,14 @@ export async function buildSummary(from: string, to: string): Promise<Summary> {
     key,
     label,
     value: current.value(source, metric),
-    previous: previous.value(source, metric),
+    previous: compare ? previous.value(source, metric) : null,
     format,
   });
   const level = (key: string, label: string, source: string, metric: string): Headline => ({
     key,
     label,
     value: current.value(source, metric),
-    previous: previous.value(source, metric),
+    previous: compare ? previous.value(source, metric) : null,
     format: "number",
     kind: "level",
   });

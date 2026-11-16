@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { requireAdmin } from "@/lib/admin/auth";
 import { buildSummary, fmtMoney, fmtNumber, headlineChange, latestRuns, type Headline, type Period } from "@/lib/admin/summary";
 import { latestInstagram } from "@/lib/admin/instagram-manual";
-import { PERIODS, periodRange, longDay } from "@/lib/admin/period";
+import { PERIODS, isCumulative, periodRange, longDay } from "@/lib/admin/period";
 import PeriodSwitch from "./PeriodSwitch";
 import LineChart from "./LineChart";
 import AdminActions from "./AdminActions";
@@ -107,7 +107,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
   const { p = "7" } = await searchParams;
   const key = PERIODS.some((x) => x.key === p) ? p : "7";
   const { from, to } = periodRange(key);
-  const [summary, runs, ig] = await Promise.all([buildSummary(from, to), latestRuns(), latestInstagram()]);
+  const [summary, runs, ig] = await Promise.all([buildSummary(from, to, { compare: !isCumulative(key) }), latestRuns(), latestInstagram()]);
   const cur = summary.current;
   const notes = notesFor(cur, ["shop", "instagram", "tiktok"]);
   const head = (k: string) => summary.headlines.find((h) => h.key === k);
