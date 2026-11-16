@@ -1,82 +1,71 @@
 {
-  "updated": "2026-11-12T16:47:26.749Z",
+  "updated": "2026-11-16T18:32:22.998Z",
   "links": {
-    "barril|https://mezcalkoch.com/expresiones/barril.php": {
-      "species": "Barril",
-      "slug": "barril",
-      "producer": "Koch",
-      "url": "https://mezcalkoch.com/expresiones/barril.php",
-      "firstFailed": "2026-11-12",
-      "lastFailed": "2026-11-12",
+    "coyote|https://mezcalcolores.com/producto/mezcal-coyote/": {
+      "species": "Coyote",
+      "slug": "coyote",
+      "producer": "Mezcal Colores",
+      "url": "https://mezcalcolores.com/producto/mezcal-coyote/",
+      "firstFailed": "2026-11-16",
+      "lastFailed": "2026-11-16",
       "strikes": 1,
       "verdict": "DEAD",
-      "note": "HTTP 404"
+      "note": "No response (UND_ERR_CONNECT_TIMEOUT, three times)"
     },
-    "barril|https://gomadreshop.com/products/mal-amor-3": {
-      "species": "Barril",
-      "slug": "barril",
-      "producer": "Mal De Amor",
-      "url": "https://gomadreshop.com/products/mal-amor-3",
-      "firstFailed": "2026-11-12",
-      "lastFailed": "2026-11-12",
+    "cuishe|https://mezcalcolores.com/producto/mezcal-cuishe/": {
+      "species": "Cuishe",
+      "slug": "cuishe",
+      "producer": "Mezcal Colores",
+      "url": "https://mezcalcolores.com/producto/mezcal-cuishe/",
+      "firstFailed": "2026-11-16",
+      "lastFailed": "2026-11-16",
       "strikes": 1,
       "verdict": "DEAD",
-      "note": "Product removed from the shop (Shopify returns 404 for it)"
+      "note": "No response (UND_ERR_CONNECT_TIMEOUT, three times)"
     },
-    "madrecuixe|https://mezcalkoch.com/expresiones/madrecuishe.php": {
-      "species": "Madrecuixe",
-      "slug": "madrecuixe",
-      "producer": "Koch",
-      "url": "https://mezcalkoch.com/expresiones/madrecuishe.php",
-      "firstFailed": "2026-11-12",
-      "lastFailed": "2026-11-12",
+    "espadin|https://mezcalcolores.com/producto/mezcal-maguey-espadin/": {
+      "species": "Espadín",
+      "slug": "espadin",
+      "producer": "Mezcal Colores",
+      "url": "https://mezcalcolores.com/producto/mezcal-maguey-espadin/",
+      "firstFailed": "2026-11-16",
+      "lastFailed": "2026-11-16",
       "strikes": 1,
       "verdict": "DEAD",
-      "note": "HTTP 404"
+      "note": "No response (UND_ERR_CONNECT_TIMEOUT, three times)"
     },
-    "madrecuixe|https://gomadreshop.com/products/rufina-madre-cuishe": {
-      "species": "Madrecuixe",
-      "slug": "madrecuixe",
-      "producer": "Rufina",
-      "url": "https://gomadreshop.com/products/rufina-madre-cuishe",
-      "firstFailed": "2026-11-12",
-      "lastFailed": "2026-11-12",
+    "jabali|https://mezcalcolores.com/producto/mezcal-maguey-jabali/": {
+      "species": "Jabalí",
+      "slug": "jabali",
+      "producer": "Mezcal Colores",
+      "url": "https://mezcalcolores.com/producto/mezcal-maguey-jabali/",
+      "firstFailed": "2026-11-16",
+      "lastFailed": "2026-11-16",
       "strikes": 1,
       "verdict": "DEAD",
-      "note": "Product removed from the shop (Shopify returns 404 for it)"
+      "note": "No response (UND_ERR_CONNECT_TIMEOUT, three times)"
     },
-    "mexicano|https://gomadreshop.com/products/rufina-mexicano": {
-      "species": "Mexicano",
-      "slug": "mexicano",
-      "producer": "Rufina",
-      "url": "https://gomadreshop.com/products/rufina-mexicano",
-      "firstFailed": "2026-11-12",
-      "lastFailed": "2026-11-12",
-      "strikes": 1,
-      "verdict": "DEAD",
-      "note": "Product removed from the shop (Shopify returns 404 for it)"
-    },
-    "tepextate|https://mezcalkoch.com/expresiones/tepeztate.php": {
+    "tepextate|https://mezcalcolores.com/producto/mezcal-tepeztate/": {
       "species": "Tepextate",
       "slug": "tepextate",
-      "producer": "Koch",
-      "url": "https://mezcalkoch.com/expresiones/tepeztate.php",
-      "firstFailed": "2026-11-12",
-      "lastFailed": "2026-11-12",
+      "producer": "Mezcal Colores",
+      "url": "https://mezcalcolores.com/producto/mezcal-tepeztate/",
+      "firstFailed": "2026-11-16",
+      "lastFailed": "2026-11-16",
       "strikes": 1,
       "verdict": "DEAD",
-      "note": "HTTP 404"
+      "note": "No response (UND_ERR_CONNECT_TIMEOUT, three times)"
     },
-    "tobaziche|https://mezcalkoch.com/expresiones/tobasiche.php": {
-      "species": "Tobaziche",
-      "slug": "tobaziche",
-      "producer": "Koch",
-      "url": "https://mezcalkoch.com/expresiones/tobasiche.php",
-      "firstFailed": "2026-11-12",
-      "lastFailed": "2026-11-12",
+    "tobala|https://mezcalcolores.com/producto/mezcal-tobala/": {
+      "species": "Tobalá",
+      "slug": "tobala",
+      "producer": "Mezcal Colores",
+      "url": "https://mezcalcolores.com/producto/mezcal-tobala/",
+      "firstFailed": "2026-11-16",
+      "lastFailed": "2026-11-16",
       "strikes": 1,
       "verdict": "DEAD",
-      "note": "HTTP 404"
+      "note": "No response (UND_ERR_CONNECT_TIMEOUT, three times)"
     }
   }
 }
