@@ -12,6 +12,9 @@
 .gv-head { text-align: center; }
 .gv-eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-olive); font-weight: var(--font-weight-semibold); }
 .gv-title { font-size: 24px; line-height: 1.15; font-weight: var(--font-weight-bold); margin-top: 2px; }
+/* reserves the taller of the two header states so the video does not shift when the headline becomes the result */
+.gv-head { min-height: 132px; }
+.gv-intro { font-size: 14px; line-height: 1.45; color: rgba(255, 255, 255, 0.78); margin-top: var(--space-2); }
 
 .gv-frame { position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: var(--radius-lg); overflow: hidden; background: #1b1c1a; }
 .gv-frame.is-playing { cursor: pointer; }
@@ -35,15 +38,18 @@
   background: var(--color-yellow); color: var(--color-dark); font-weight: var(--font-weight-bold); font-size: 16px; cursor: pointer; text-decoration: none;
 }
 .gv-btn:disabled { opacity: 0.6; cursor: default; }
+.gv-btn--ghost { background: transparent; color: var(--color-white); border: 1px solid rgba(255, 255, 255, 0.3); }
+.gv-btns { display: flex; flex-direction: column; gap: var(--space-2); }
 .gv-link { background: none; border: 0; color: rgba(255, 255, 255, 0.75); font-size: 14px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; padding: 6px; }
 .gv-row { display: flex; justify-content: center; gap: var(--space-4); }
 .gv-error { color: #f0a58a; font-size: 14px; }
 .gv-ts { display: flex; justify-content: center; margin-top: var(--space-2); }
-.gv-ts:empty { display: none; }
+.gv-ts:empty, .gv-ts.is-hidden { display: none; }
 
 .gv-result { text-align: center; display: flex; flex-direction: column; gap: var(--space-2); animation: gv-fade 0.5s ease both; }
 .gv-result h2 { font-size: 20px; line-height: 1.2; font-weight: var(--font-weight-bold); }
 .gv-result p { font-size: 15px; line-height: 1.45; color: rgba(255, 255, 255, 0.85); margin-bottom: var(--space-2); }
+.gv-card { font-weight: var(--font-weight-semibold); color: var(--color-white) !important; }
 .gv-tag { align-self: center; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 8px; border-radius: var(--radius-sm); background: var(--color-terracotta); color: var(--color-white); font-weight: var(--font-weight-bold); }
 .gv-code {
   margin: 0 0 0.9rem;
@@ -63,4 +69,3 @@
 @keyframes gv-fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .gv-result, .gv-skip { animation: none; } .gv-loader span { animation-duration: 2s; } }
 
-.gv-ready { text-align: center; font-size: 15px; line-height: 1.45; color: rgba(255, 255, 255, 0.85); margin: 0; }
