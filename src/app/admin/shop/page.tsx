@@ -121,6 +121,12 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
           {o.excluded.cancelled === 1 ? "" : "s"}.
         </p>
       )}
+      {o && o.samples.orders > 0 && (
+        <p className="adm-note">
+          Free samples (orders worth $0, such as press and influencer decks) are not counted as orders or sales: {o.samples.orders} sample
+          order{o.samples.orders === 1 ? "" : "s"}, {o.samples.decks} deck{o.samples.decks === 1 ? "" : "s"} in this period.
+        </p>
+      )}
 
       {!orders.ok && <Failed what="Orders and sales" error={orders.error} />}
       {o && (
@@ -129,8 +135,9 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
           <Tile label="Net sales" value={o.netSales} before={p?.netSales} money />
           <Tile label="Total sales (with shipping and tax)" value={o.totalSales} before={p?.totalSales} money />
           <Tile label="Average order value" value={o.aov} before={p?.aov} money />
-          <Tile label="Units sold" value={o.units} before={p?.units} />
+          <Tile label="Decks sold" value={o.units} before={p?.units} />
           <Tile label="Discounts given" value={o.discounts} before={p?.discounts} money />
+          <Tile label="Free samples sent (decks)" value={o.samples.decks} before={p?.samples?.decks} />
         </section>
       )}
 
@@ -187,8 +194,8 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
           <section className="adm-section">
             <h2>Products</h2>
             <Table
-              head={["Product", "Orders", "Units", "Line sales"]}
-              rows={o.products.map((x) => [x.sku ? `${x.name} (${x.sku})` : x.name, x.orders, x.units, fmtMoney(x.lineSales)])}
+              head={["Product", "Orders", "Units", "Decks", "Line sales"]}
+              rows={o.products.map((x) => [x.sku ? `${x.name} (${x.sku})` : x.name, x.orders, x.units, x.decks, fmtMoney(x.lineSales)])}
               empty="No orders in this period yet."
             />
           </section>
@@ -228,7 +235,8 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
       </div>
 
       <p className="adm-sub">
-        How this is counted: sales are Shopify orders created in the period (London days), not counting test, cancelled or test code orders.
+        How this is counted: sales are Shopify orders created in the period (London days), counting paid orders only: test, cancelled and test code orders are left out, and $0 orders are free samples, counted apart.
+        Decks count decks, not line items: a Two-Pack is 2 decks, a Five-Pack 5, press insert cards none.
         Net sales are items after discounts minus refunds. Sessions are Shopify&apos;s own count and can differ from website visits on the Overview.
         Changes compare with the previous period of the same length.
       </p>
