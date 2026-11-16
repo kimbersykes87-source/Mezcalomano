@@ -14,7 +14,7 @@ const SQ = `${GIVEAWAY_MEDIA}/sq`; // square (1:1) set, so the whole flow fits o
 const COPY = {
   title: "Did you win?",
   intro:
-    "We drew one winner of the Mezcalómano Discovery Deck on December 7. Tap below to see your result. We'll also deal you one of the 40 agaves from the deck.",
+    "We drew one winner of the Mezcalómano Discovery Deck on December 7. Tap below to see your result. Whatever it says, you'll meet one of the 40 agaves in the deck.",
   win: "You won the Mezcalómano Discovery Deck.",
   winSub:
     "We've emailed you from hola@mezcalomano.com. Reply by December 10, 11:59 p.m. ET with your full name and US shipping address so we can send your deck. Check your spam folder if you can't see it.",
