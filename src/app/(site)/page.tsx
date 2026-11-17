@@ -29,8 +29,7 @@ const discoveryDeckProductLd = {
     url: DISCOVERY_DECK_PRODUCT_URL,
     priceCurrency: "USD",
     price: "29.99",
-    availability: "https://schema.org/PreOrder",
-    availabilityStarts: "2026-11-30",
+    availability: "https://schema.org/InStock",
     itemCondition: "https://schema.org/NewCondition",
   },
 };
@@ -80,7 +79,7 @@ export default function HomePage() {
               <span>Gift it or keep it.</span>
             </h1>
             <Link href="/buy" className="s-cta cta">
-              Pre-order the Discovery Deck
+              Shop the Discovery Deck
             </Link>
           </div>
           <div className="h-photo">
@@ -99,7 +98,7 @@ export default function HomePage() {
         <div className="s-wrap">
           <strong>$29.99</strong>
           <p>
-            Free US shipping. Pre-orders ship from November 30. Order by December 14 for US Christmas delivery.
+            Free US shipping. In stock and shipping now. Order by December 14 for US Christmas delivery.
             <span>Gift it to the friend who always orders espadín. Or keep it.</span>
           </p>
         </div>

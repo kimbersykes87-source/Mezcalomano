@@ -129,7 +129,7 @@ export const giftsForTequilaLovers: PostEntry = {
       },
       {
         type: "p",
-        text: "Order the Discovery Deck by December 14 for US Christmas delivery. Pre-orders ship from November 30. Classes and tastings fill up in December, so book early."
+        text: "Order the Discovery Deck by December 14 for US Christmas delivery. It’s in stock and ships within 2 business days. Classes and tastings fill up in December, so book early."
       },
       {
         type: "p",

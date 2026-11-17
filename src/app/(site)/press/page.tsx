@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 const QUICK_FACTS = [
   { label: "Price", value: "$29.99", note: "Free US standard shipping" },
   { label: "In the deck", value: "40", note: "Kinds of mezcal" },
-  { label: "Pre-orders", value: "Open now", note: "Ships from November 30" },
+  { label: "In stock", value: "Now", note: "Ships within 2 business days" },
   { label: "Order by", value: "Dec 14", note: "For US Christmas delivery" },
 ];
 

@@ -11,7 +11,7 @@ export const SITE_META_DESCRIPTION =
 
 /** Slightly more homepage-specific for social previews. */
 export const HOME_META_DESCRIPTION =
-  "Playing cards that introduce 40 kinds of mezcal and the agaves behind them. $29.99, free US shipping. Pre-orders ship November 30, in time for Christmas.";
+  "Playing cards that introduce 40 kinds of mezcal and the agaves behind them. $29.99, free US shipping. In stock now, in time for Christmas.";
 
 export const DISCOVERY_DECK_PRODUCT_DESCRIPTION =
   "A deck of playing cards that introduces 40 kinds of mezcal and the agaves behind them. 56 cards, poker size, with a QR code to the online agave directory.";

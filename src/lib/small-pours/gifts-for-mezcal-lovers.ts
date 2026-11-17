@@ -59,7 +59,7 @@ export const giftsForMezcalLovers: PostEntry = {
     { type: "h2", text: "When do you need to order for Christmas?" },
     {
       type: "p",
-      text: "Order the Discovery Deck by December 14 for US Christmas delivery. Pre-orders ship from November 30. For classes and tastings, book early: December fills up fast.",
+      text: "Order the Discovery Deck by December 14 for US Christmas delivery. It’s in stock and ships within 2 business days. For classes and tastings, book early: December fills up fast.",
     },
     {
       type: "p",
@@ -81,7 +81,7 @@ export const giftsForMezcalLovers: PostEntry = {
     },
   ],
   reviewNotes: [
-    "Facts used: 85% espadín (sourced to COMERCAM, Informe Estadístico 2026), deck contents, $29.99, free US shipping, pre-orders from Nov 30, order by Dec 14. Please confirm they are still right.",
+    "Facts used: 85% espadín (sourced to COMERCAM, Informe Estadístico 2026), deck contents, $29.99, free US shipping, in stock, ships within 2 business days, order by Dec 14. Please confirm they are still right.",
     "We are agave first, so this article names no brands and should not. If a gift needs more detail, describe it by what it is: the shape and material of the cups, the kind of book, which agaves to look for in a flight, and how it tastes.",
     "Add one photo of the cards with a pair of copitas, if you have one, to replace the hero image.",
     "Check the claim about orange and salt as the classic Oaxaca serving, and the shipping line, against your own experience and the Sources page.",
