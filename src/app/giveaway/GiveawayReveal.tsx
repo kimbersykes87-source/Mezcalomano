@@ -76,6 +76,8 @@ export default function GiveawayReveal({ initialCode = "", preview = "" }: { ini
     }
     try {
       const saved = clean(sessionStorage.getItem(STORE_KEY) ?? "");
+      // sessionStorage only exists in the browser, so it cannot seed initial state without a hydration mismatch
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-off read of external storage on mount
       if (saved) setCode(saved);
     } catch {}
   }, []);
