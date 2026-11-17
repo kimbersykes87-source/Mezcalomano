@@ -1,0 +1,5 @@
+#!/bin/sh
+# Runs the same lint as CI before every push, so a red CI never reaches GitHub.
+# Switched on by `npm install` (the prepare script). Skip once with: git push --no-verify
+echo "pre-push: npm run lint"
+npm run lint --silent || { echo "Lint failed. Fix it, or push with --no-verify."; exit 1; }

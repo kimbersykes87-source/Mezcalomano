@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint src",
+    "prepare": "git config core.hooksPath .githooks || exit 0",
     "build:matrix-cards": "node src/scripts/build-matrix-cards.js",
     "build:og-icon-png": "node scripts/build-og-icon-png.js",
     "build:press-kit": "node scripts/build-press-kit.mjs",
