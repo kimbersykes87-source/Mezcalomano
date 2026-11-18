@@ -108,8 +108,8 @@ export default function PressPage() {
               deck of playing cards that introduces 40 kinds of mezcal and the agaves behind them. Each agave card
               gives its local and species name, a memorable nickname, and a flavor compass for smoke, agave and
               fermentation. A QR code on the box opens an online directory of where each agave grows and who&apos;s
-              bottling it. No producer pays to be listed. It&apos;s a field guide, a tasting companion and a
-              conversation starter. And it&apos;s still a proper deck of cards, so deal a hand while you pour.
+              bottling it. No producer pays to be listed. It&apos;s half cheat sheet, half conversation starter,
+              and still a proper deck of cards, so deal a hand while you pour.
             </p>
           </div>
         </div>
