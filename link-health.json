@@ -1,38 +1,4 @@
 {
-  "updated": "2026-11-19T17:22:08.487Z",
-  "links": {
-    "castilla|https://fermentandstill.com/products/burrito-fiestero-ancestral-agave-castilla?srsltid=AfmBOop8bnhTeESr7h-qk11kjRsNEZP78HG48zDoCGpgFNxZPFkKeOQc": {
-      "species": "Castilla",
-      "slug": "castilla",
-      "producer": "Burrito",
-      "url": "https://fermentandstill.com/products/burrito-fiestero-ancestral-agave-castilla?srsltid=AfmBOop8bnhTeESr7h-qk11kjRsNEZP78HG48zDoCGpgFNxZPFkKeOQc",
-      "firstFailed": "2026-11-19",
-      "lastFailed": "2026-11-19",
-      "strikes": 1,
-      "verdict": "DEAD",
-      "note": "HTTP 404"
-    },
-    "papalote|https://gomadreshop.com/products/animas-maguey-papalote": {
-      "species": "Papalote",
-      "slug": "papalote",
-      "producer": "Animas",
-      "url": "https://gomadreshop.com/products/animas-maguey-papalote",
-      "firstFailed": "2026-11-19",
-      "lastFailed": "2026-11-19",
-      "strikes": 1,
-      "verdict": "INFO",
-      "note": "\"Animas - Papalote\" is sold out"
-    },
-    "papalote|https://flaskfinewines.com/products/mal-bien-mezcal-capon-papalote-de-ciro-javier-barranca-750ml": {
-      "species": "Papalote",
-      "slug": "papalote",
-      "producer": "Mal Bien",
-      "url": "https://flaskfinewines.com/products/mal-bien-mezcal-capon-papalote-de-ciro-javier-barranca-750ml",
-      "firstFailed": "2026-11-19",
-      "lastFailed": "2026-11-19",
-      "strikes": 1,
-      "verdict": "INFO",
-      "note": "\"Mal Bien Mezcal Capon Papalote de Ciro & Javier Barranca 750ml\" is sold out"
-    }
-  }
+  "updated": "2026-11-23T20:13:48.631Z",
+  "links": {}
 }

@@ -1,16 +1,20 @@
-# Directory update, 2026-11-19 (Thursday recheck)
+# Directory update, 2026-11-23 (Monday scan)
 
-252 links checked, 1914 US shop products scanned. 1 fixed automatically, 0 suggested, 0 urgent.
+251 links checked, 1898 US shop products scanned. 3 fixed automatically, 3 suggested, 0 urgent.
 
 ## Fixed automatically (live on the site)
 
-- **Coyote**, Mezcal Colores: removed (HTTP 503 (failing since 2026-11-16)). Was https://mezcalcolores.com/producto/mezcal-coyote/
+- **Castilla**, Burrito: removed (HTTP 404 (failing since 2026-11-19)). Was https://fermentandstill.com/products/burrito-fiestero-ancestral-agave-castilla?srsltid=AfmBOop8bnhTeESr7h-qk11kjRsNEZP78HG48zDoCGpgFNxZPFkKeOQc
+- **Papalote**, Animas: removed ("Animas - Papalote" is sold out (failing since 2026-11-19)). Was https://gomadreshop.com/products/animas-maguey-papalote
+- **Papalote**, Mal Bien: dead link replaced with Mission Wine & Spirits https://missionliquor.com/products/mal-bien-mezcal-papalote-refugio-calzada-750ml (was https://flaskfinewines.com/products/mal-bien-mezcal-capon-papalote-de-ciro-javier-barranca-750ml; "Mal Bien Mezcal Capon Papalote de Ciro & Javier Barranca 750ml" is sold out (failing since 2026-11-19))
 
-## Failing for the first time (fixed next run if still failing)
+## Suggested, waiting for approval in the pull request
 
-- Castilla, Burrito: HTTP 404. https://fermentandstill.com/products/burrito-fiestero-ancestral-agave-castilla?srsltid=AfmBOop8bnhTeESr7h-qk11kjRsNEZP78HG48zDoCGpgFNxZPFkKeOQc
-- Papalote, Animas: "Animas - Papalote" is sold out. https://gomadreshop.com/products/animas-maguey-papalote
-- Papalote, Mal Bien: "Mal Bien Mezcal Capon Papalote de Ciro & Javier Barranca 750ml" is sold out. https://flaskfinewines.com/products/mal-bien-mezcal-capon-papalote-de-ciro-javier-barranca-750ml
+| Species | Change | Producer | Bottle | Shop | Price |
+|---|---|---|---|---|---|
+| Lumbre | Add | Amarás | [Amores Amaras Logia Lumbre C2 Joven Mezcal 700ml](https://elcerritoliquor.com/products/amores-amaras-logia-lumbre-c2-joven-mezcal-700ml) | El Cerrito Liquor | $450 |
+| Coyote | Move to US shop | El Jolgorio | [El Jolgorio Coyote Ancestral Mezcal](https://bittersandbottles.com/products/el-jolgorio-coyote-ancestral-mezcal) | Bitters & Bottles | $260 |
+| Jabalí | Add | Dixeebe Mezcal | [Dixeebe - Jabalí Edition 3](https://gomadreshop.com/products/dixeebe-jabali-edition-2) | Madre Shop | $101 |
 
 ## US coverage
 

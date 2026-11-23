@@ -1,61 +1,75 @@
 {
-  "date": "2026-11-19",
-  "mode": "thursday",
+  "date": "2026-11-23",
+  "mode": "monday",
   "counts": {
     "BAD_URL": 0,
-    "DEAD": 2,
+    "DEAD": 1,
     "GENERIC": 1,
     "BLOCKED": 15,
     "INFO": 9,
     "OK": 225
   },
-  "linksChecked": 252,
+  "linksChecked": 251,
   "autoChanges": [
     {
       "action": "removed",
-      "species": "Coyote",
-      "producer": "Mezcal Colores",
-      "from": "https://mezcalcolores.com/producto/mezcal-coyote/",
-      "why": "HTTP 503 (failing since 2026-11-16)"
+      "species": "Castilla",
+      "producer": "Burrito",
+      "from": "https://fermentandstill.com/products/burrito-fiestero-ancestral-agave-castilla?srsltid=AfmBOop8bnhTeESr7h-qk11kjRsNEZP78HG48zDoCGpgFNxZPFkKeOQc",
+      "why": "HTTP 404 (failing since 2026-11-19)"
+    },
+    {
+      "action": "removed",
+      "species": "Papalote",
+      "producer": "Animas",
+      "from": "https://gomadreshop.com/products/animas-maguey-papalote",
+      "why": "\"Animas - Papalote\" is sold out (failing since 2026-11-19)"
+    },
+    {
+      "action": "replaced",
+      "species": "Papalote",
+      "producer": "Mal Bien",
+      "from": "https://flaskfinewines.com/products/mal-bien-mezcal-capon-papalote-de-ciro-javier-barranca-750ml",
+      "to": "https://missionliquor.com/products/mal-bien-mezcal-papalote-refugio-calzada-750ml",
+      "why": "\"Mal Bien Mezcal Capon Papalote de Ciro & Javier Barranca 750ml\" is sold out (failing since 2026-11-19)",
+      "shop": "Mission Wine & Spirits"
     }
   ],
   "urgent": [],
-  "suggestions": [],
-  "firstStrike": [
+  "suggestions": [
     {
-      "species": "Castilla",
-      "slug": "castilla",
-      "producer": "Burrito",
-      "url": "https://fermentandstill.com/products/burrito-fiestero-ancestral-agave-castilla?srsltid=AfmBOop8bnhTeESr7h-qk11kjRsNEZP78HG48zDoCGpgFNxZPFkKeOQc",
-      "firstFailed": "2026-11-19",
-      "lastFailed": "2026-11-19",
-      "strikes": 1,
-      "verdict": "DEAD",
-      "note": "HTTP 404"
+      "action": "add",
+      "species": "Lumbre",
+      "slug": "lumbre",
+      "producer": "Amarás",
+      "to": "https://elcerritoliquor.com/products/amores-amaras-logia-lumbre-c2-joven-mezcal-700ml",
+      "title": "Amores Amaras Logia Lumbre C2 Joven Mezcal 700ml",
+      "shop": "El Cerrito Liquor",
+      "price": 449.99
     },
     {
-      "species": "Papalote",
-      "slug": "papalote",
-      "producer": "Animas",
-      "url": "https://gomadreshop.com/products/animas-maguey-papalote",
-      "firstFailed": "2026-11-19",
-      "lastFailed": "2026-11-19",
-      "strikes": 1,
-      "verdict": "INFO",
-      "note": "\"Animas - Papalote\" is sold out"
+      "action": "swap",
+      "species": "Coyote",
+      "slug": "coyote",
+      "producer": "El Jolgorio",
+      "from": "https://casacortes.mx/ecommerce/producto/13",
+      "to": "https://bittersandbottles.com/products/el-jolgorio-coyote-ancestral-mezcal",
+      "title": "El Jolgorio Coyote Ancestral Mezcal",
+      "shop": "Bitters & Bottles",
+      "price": 259.5
     },
     {
-      "species": "Papalote",
-      "slug": "papalote",
-      "producer": "Mal Bien",
-      "url": "https://flaskfinewines.com/products/mal-bien-mezcal-capon-papalote-de-ciro-javier-barranca-750ml",
-      "firstFailed": "2026-11-19",
-      "lastFailed": "2026-11-19",
-      "strikes": 1,
-      "verdict": "INFO",
-      "note": "\"Mal Bien Mezcal Capon Papalote de Ciro & Javier Barranca 750ml\" is sold out"
+      "action": "add",
+      "species": "Jabalí",
+      "slug": "jabali",
+      "producer": "Dixeebe Mezcal",
+      "to": "https://gomadreshop.com/products/dixeebe-jabali-edition-2",
+      "title": "Dixeebe - Jabalí Edition 3",
+      "shop": "Madre Shop",
+      "price": 101
     }
   ],
+  "firstStrike": [],
   "noUs": [
     "Montana",
     "Wocomahi"
@@ -149,8 +163,8 @@
       "url": "https://www.cuchillo.ca/items/pecho-tierra-verde"
     }
   ],
-  "catalogProducts": 1914,
+  "catalogProducts": 1898,
   "suspendedHosts": [],
-  "pullRequest": "",
-  "runUrl": "https://github.com/kimbersykes87-source/Mezcalomano/actions/runs/44576349811"
+  "pullRequest": "https://github.com/kimbersykes87-source/Mezcalomano/pull/42",
+  "runUrl": "https://github.com/kimbersykes87-source/Mezcalomano/actions/runs/45257093182"
 }
