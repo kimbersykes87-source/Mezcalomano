@@ -9,6 +9,7 @@ const PAGES = [
   { href: "/admin/email", label: "Email", match: "email" },
   { href: "/admin/acquisition", label: "Acquisition / Press", match: "acquisition" },
   { href: "/admin/social", label: "Social Media", match: "social" },
+  { href: "/admin/qr", label: "Box QR", match: "qr" },
 ] as const;
 
 /** Page switcher at the top of every dashboard page (hidden on the login page). */
