@@ -1,75 +1,31 @@
 {
-  "date": "2026-11-23",
-  "mode": "monday",
+  "date": "2026-11-26",
+  "mode": "thursday",
   "counts": {
     "BAD_URL": 0,
-    "DEAD": 1,
+    "DEAD": 0,
     "GENERIC": 1,
-    "BLOCKED": 15,
-    "INFO": 9,
-    "OK": 225
+    "BLOCKED": 12,
+    "INFO": 43,
+    "OK": 193
   },
-  "linksChecked": 251,
-  "autoChanges": [
-    {
-      "action": "removed",
-      "species": "Castilla",
-      "producer": "Burrito",
-      "from": "https://fermentandstill.com/products/burrito-fiestero-ancestral-agave-castilla?srsltid=AfmBOop8bnhTeESr7h-qk11kjRsNEZP78HG48zDoCGpgFNxZPFkKeOQc",
-      "why": "HTTP 404 (failing since 2026-11-19)"
-    },
-    {
-      "action": "removed",
-      "species": "Papalote",
-      "producer": "Animas",
-      "from": "https://gomadreshop.com/products/animas-maguey-papalote",
-      "why": "\"Animas - Papalote\" is sold out (failing since 2026-11-19)"
-    },
-    {
-      "action": "replaced",
-      "species": "Papalote",
-      "producer": "Mal Bien",
-      "from": "https://flaskfinewines.com/products/mal-bien-mezcal-capon-papalote-de-ciro-javier-barranca-750ml",
-      "to": "https://missionliquor.com/products/mal-bien-mezcal-papalote-refugio-calzada-750ml",
-      "why": "\"Mal Bien Mezcal Capon Papalote de Ciro & Javier Barranca 750ml\" is sold out (failing since 2026-11-19)",
-      "shop": "Mission Wine & Spirits"
-    }
-  ],
+  "linksChecked": 249,
+  "autoChanges": [],
   "urgent": [],
-  "suggestions": [
+  "suggestions": [],
+  "firstStrike": [
     {
-      "action": "add",
-      "species": "Lumbre",
-      "slug": "lumbre",
-      "producer": "Amarás",
-      "to": "https://elcerritoliquor.com/products/amores-amaras-logia-lumbre-c2-joven-mezcal-700ml",
-      "title": "Amores Amaras Logia Lumbre C2 Joven Mezcal 700ml",
-      "shop": "El Cerrito Liquor",
-      "price": 449.99
-    },
-    {
-      "action": "swap",
-      "species": "Coyote",
-      "slug": "coyote",
-      "producer": "El Jolgorio",
-      "from": "https://casacortes.mx/ecommerce/producto/13",
-      "to": "https://bittersandbottles.com/products/el-jolgorio-coyote-ancestral-mezcal",
-      "title": "El Jolgorio Coyote Ancestral Mezcal",
-      "shop": "Bitters & Bottles",
-      "price": 259.5
-    },
-    {
-      "action": "add",
-      "species": "Jabalí",
-      "slug": "jabali",
-      "producer": "Dixeebe Mezcal",
-      "to": "https://gomadreshop.com/products/dixeebe-jabali-edition-2",
-      "title": "Dixeebe - Jabalí Edition 3",
-      "shop": "Madre Shop",
-      "price": 101
+      "species": "Espadín",
+      "slug": "espadin",
+      "producer": "QuiQuiRiQui",
+      "url": "https://theepicureantrader.com/products/quiquiriqui-casa-espadin-mezcal-1l",
+      "firstFailed": "2026-11-26",
+      "lastFailed": "2026-11-26",
+      "strikes": 1,
+      "verdict": "INFO",
+      "note": "\"QuiQuiRiQui - 'Casa' Mezcal (Espadin | 1L)\" is sold out"
     }
   ],
-  "firstStrike": [],
   "noUs": [
     "Montana",
     "Wocomahi"
@@ -128,21 +84,6 @@
       "url": "https://delmaguey.com/madrecuixe/"
     },
     {
-      "species": "Madrecuixe",
-      "producer": "Koch",
-      "url": "https://mezcalkoch.com/expresiones/madrecuishe.php"
-    },
-    {
-      "species": "Pulque Chino",
-      "producer": "NETA",
-      "url": "https://gomadreshop.com/products/neta-pulquero-copy"
-    },
-    {
-      "species": "Pulquero",
-      "producer": "Rey Campero",
-      "url": "https://gomadreshop.com/products/rey-campero-pulquero"
-    },
-    {
       "species": "Tepextate",
       "producer": "Del Maguey",
       "url": "https://delmaguey.com/tepextate/"
@@ -163,8 +104,8 @@
       "url": "https://www.cuchillo.ca/items/pecho-tierra-verde"
     }
   ],
-  "catalogProducts": 1898,
+  "catalogProducts": 1899,
   "suspendedHosts": [],
   "pullRequest": "https://github.com/kimbersykes87-source/Mezcalomano/pull/42",
-  "runUrl": "https://github.com/kimbersykes87-source/Mezcalomano/actions/runs/45257093182"
+  "runUrl": "https://github.com/kimbersykes87-source/Mezcalomano/actions/runs/45875675835"
 }

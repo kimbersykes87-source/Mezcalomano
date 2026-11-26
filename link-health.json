@@ -1,4 +1,16 @@
 {
-  "updated": "2026-11-23T20:13:48.631Z",
-  "links": {}
+  "updated": "2026-11-26T18:25:06.813Z",
+  "links": {
+    "espadin|https://theepicureantrader.com/products/quiquiriqui-casa-espadin-mezcal-1l": {
+      "species": "Espadín",
+      "slug": "espadin",
+      "producer": "QuiQuiRiQui",
+      "url": "https://theepicureantrader.com/products/quiquiriqui-casa-espadin-mezcal-1l",
+      "firstFailed": "2026-11-26",
+      "lastFailed": "2026-11-26",
+      "strikes": 1,
+      "verdict": "INFO",
+      "note": "\"QuiQuiRiQui - 'Casa' Mezcal (Espadin | 1L)\" is sold out"
+    }
+  }
 }
